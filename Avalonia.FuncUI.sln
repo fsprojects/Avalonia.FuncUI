@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI", "Avalonia.FuncUI\Avalonia.FuncUI.fsproj", "{09688F87-2F10-456B-A228-E55AFF0DA3DE}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.UnitTests", "Avalonia.FuncUI.UnitTests\Avalonia.FuncUI.UnitTests.fsproj", "{3D6BBB49-E127-4141-A296-BA504C597FA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{09688F87-2F10-456B-A228-E55AFF0DA3DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09688F87-2F10-456B-A228-E55AFF0DA3DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09688F87-2F10-456B-A228-E55AFF0DA3DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D6BBB49-E127-4141-A296-BA504C597FA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D6BBB49-E127-4141-A296-BA504C597FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D6BBB49-E127-4141-A296-BA504C597FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D6BBB49-E127-4141-A296-BA504C597FA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
