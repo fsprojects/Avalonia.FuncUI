@@ -7,7 +7,7 @@ module BuildersTests =
     open Avalonia.Controls
 
     [<Fact>]
-    let ``Avalonia Property is set`` () =
+    let ``IControl Property is set`` () =
         let _value = "some text"
         let _width = 100.0
         let _tag = System.Guid.NewGuid() :> obj
@@ -23,3 +23,14 @@ module BuildersTests =
         Assert.Equal(_value, textControl.Text)
         Assert.Equal(_width, textControl.Width)
         Assert.Equal(_tag, textControl.Tag)
+
+    [<Fact>]
+    let ``Content is set`` () =
+        let textView = textblock {
+            text "Text"
+        }
+
+        let buttonView = button {
+            contentView textView
+        }
+        0

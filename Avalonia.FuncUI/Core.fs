@@ -1,6 +1,7 @@
-﻿namespace Avalonia.FuncUI.Core
+﻿namespace rec Avalonia.FuncUI.Core
 
 open Avalonia.Controls
+open Portable.Xaml
 
 type IAttr<'view> =
     abstract member Apply : 'view -> unit
@@ -17,7 +18,13 @@ type Attr<'view, 'value> =
 module Attr =
     let create<'view, 'value when 'view :> IControl>(value: 'value, apply: 'view * 'value -> unit) : IAttr<'view> =
         { Attr.value = value; Attr.apply = apply; } :> IAttr<'view>
-            
+      
+[<RequireQualifiedAccess>]
+type ViewContent =
+| None
+| Single of IViewElement
+| Multiply of IViewElement list
+
 type IViewElement = 
     abstract member Create : unit -> IControl
     abstract member Update : IControl -> unit
@@ -27,6 +34,7 @@ type ViewElement<'view when 'view :> IControl> =
         create: unit -> 'view
         update: 'view * IAttr<'view> list -> unit
         attrs: IAttr<'view> list
+        content: ViewContent
     }
     interface IViewElement with
         member this.Update view : unit =
@@ -39,4 +47,9 @@ type ViewElement<'view when 'view :> IControl> =
 
 module ViewElement =
     let create<'view when 'view :> IControl> create update attrs =
-        { ViewElement.create = create; ViewElement.update = update; attrs = attrs; }
+        {
+            ViewElement.create = create;
+            ViewElement.update = update;
+            ViewElement.attrs = attrs;
+            ViewElement.content = ViewContent.None
+        }

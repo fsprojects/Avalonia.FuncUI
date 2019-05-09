@@ -365,14 +365,50 @@ module Builders =
             )
             { view with attrs = attr :: view.attrs }
 
+    type ContentControlBuilder<'view when 'view :> IControl>() =
+        inherit TemplatedControlBuilder<'view>()
+    
+        [<CustomOperation("content")>]
+        member __.Content (view: ViewElement<'view>, value: IControl) : ViewElement<'view> =
+            let attr = Attr.create<'view, IControl>(value, fun (c, v) ->
+                c.SetValue(ContentControl.ContentProperty, v)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("contentView")>]
+        member __.ContentView (view: ViewElement<'view>, value: IViewElement) : ViewElement<'view> =
+            { view with content = ViewContent.Single value }
+
+        [<CustomOperation("contentTemplate")>]
+        member __.ContentTemplate (view: ViewElement<'view>, value: Avalonia.Controls.Templates.IDataTemplate) : ViewElement<'view> =
+            let attr = Attr.create<'view, Avalonia.Controls.Templates.IDataTemplate>(value, fun (c, v) ->
+                c.SetValue(ContentControl.ContentTemplateProperty, v)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("horizontalContentAlignment")>]
+        member __.HorizontalContentAlignment (view: ViewElement<'view>, value: Avalonia.Layout.HorizontalAlignment) : ViewElement<'view> =
+            let attr = Attr.create<'view, Avalonia.Layout.HorizontalAlignment>(value, fun (c, v) ->
+                c.SetValue(ContentControl.HorizontalContentAlignmentProperty, v)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("verticalContentAlignment")>]
+        member __.VerticalContentAlignment (view: ViewElement<'view>, value: Avalonia.Layout.VerticalAlignment) : ViewElement<'view> =
+            let attr = Attr.create<'view, Avalonia.Layout.VerticalAlignment>(value, fun (c, v) ->
+                c.SetValue(ContentControl.VerticalContentAlignmentProperty, v)
+            )
+            { view with attrs = attr :: view.attrs }
+
     type ButtonBuilder<'view when 'view :> Button>() =
-        inherit ControlBuilder<Button>()
+        inherit ContentControlBuilder<Button>()
 
         member __.Yield (item: 'a) =
             {
                 create = (fun () -> new Button());
                 update = (fun (view, attrs) -> attrs |> List.iter (fun attr -> attr.Apply view));
-                attrs = []
+                attrs = [];
+                content = ViewContent.None;
             }     
 
         [<CustomOperation("command")>]
@@ -389,7 +425,8 @@ module Builders =
             {
                 create = (fun () -> new TextBlock());
                 update = (fun (view, attrs) -> attrs |> List.iter (fun attr -> attr.Apply view));
-                attrs = []
+                attrs = [];
+                content = ViewContent.None;
             }
             
         [<CustomOperation("text")>]
