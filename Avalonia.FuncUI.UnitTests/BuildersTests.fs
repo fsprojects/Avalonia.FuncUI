@@ -5,6 +5,7 @@ module BuildersTests =
     open Avalonia.FuncUI.Builders
     open Xunit
     open Avalonia.Controls
+    open Avalonia.Media
 
     [<Fact>]
     let ``IControl Property is set`` () =
@@ -26,11 +27,11 @@ module BuildersTests =
 
     [<Fact>]
     let ``Content is set`` () =
-        let textView = textblock {
-            text "Text"
-        }
-
         let buttonView = button {
-            contentView textView
+            background Brushes.Azure
+            foreground Brushes.Brown
+            contentView (textblock {
+                text "some text"
+            })
         }
         0

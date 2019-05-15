@@ -400,6 +400,114 @@ module Builders =
             )
             { view with attrs = attr :: view.attrs }
 
+    type TopLevelBuilder<'view when 'view :> IControl>() =
+        inherit ContentControlBuilder<'view>()
+    
+        [<CustomOperation("clientSize")>]
+        member __.ClientSize (view: ViewElement<'view>, value: Size) : ViewElement<'view> =
+            let attr = Attr.create<'view, Size>(value, fun (c, v) ->
+                c.SetValue(TopLevel.ClientSizeProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("pointerOverElement")>]
+        member __.PointerOverElement (view: ViewElement<'view>, value: Avalonia.Input.IInputElement) : ViewElement<'view> =
+            let attr = Attr.create<'view, Avalonia.Input.IInputElement>(value, fun (c, v) ->
+                c.SetValue(TopLevel.PointerOverElementProperty, v)
+            )
+            { view with attrs = attr :: view.attrs }
+
+    type WindowBaseBuilder<'view when 'view :> IControl>() =
+        inherit TopLevelBuilder<'view>()
+    
+        [<CustomOperation("isActive")>]
+        member __.IsActive (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
+            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
+                c.SetValue(WindowBase.IsActiveProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("owner")>]
+        member __.Owner (view: ViewElement<'view>, value: WindowBase) : ViewElement<'view> =
+            let attr = Attr.create<'view, WindowBase>(value, fun (c, v) ->
+                c.SetValue(WindowBase.OwnerProperty, v)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("topmost")>]
+        member __.Topmost (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
+            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
+                c.SetValue(WindowBase.TopmostProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+    type WindowBuilder<'view when 'view :> IControl>() =
+        inherit WindowBaseBuilder<'view>()
+    
+        member __.Yield (item: 'a) =
+            {
+                create = (fun () -> new Window());
+                update = (fun (view, attrs) -> attrs |> List.iter (fun attr -> attr.Apply view));
+                attrs = [];
+                content = ViewContent.None;
+            }    
+
+        [<CustomOperation("sizeToContent")>]
+        member __.SizeToContent (view: ViewElement<'view>, value: SizeToContent) : ViewElement<'view> =
+            let attr = Attr.create<'view, SizeToContent>(value, fun (c, v) ->
+                c.SetValue(Window.SizeToContentProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("hasSystemDecoration")>]
+        member __.HasSystemDecoration (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
+            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
+                c.SetValue(Window.HasSystemDecorationsProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("showInTaskbar")>]
+        member __.ShowInTaskbar (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
+            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
+                c.SetValue(Window.ShowInTaskbarProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("windowState")>]
+        member __.WindowState (view: ViewElement<'view>, value: WindowState) : ViewElement<'view> =
+            let attr = Attr.create<'view, WindowState>(value, fun (c, v) ->
+                c.SetValue(Window.WindowStateProperty, v)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("title")>]
+        member __.Title (view: ViewElement<'view>, value: string) : ViewElement<'view> =
+            let attr = Attr.create<'view, string>(value, fun (c, v) ->
+                c.SetValue(Window.TitleProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("icon")>]
+        member __.Icon (view: ViewElement<'view>, value: WindowIcon) : ViewElement<'view> =
+            let attr = Attr.create<'view, WindowIcon>(value, fun (c, v) ->
+                c.SetValue(Window.IconProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("windowStartupLocation")>]
+        member __.WindowStartupLocation (view: ViewElement<'view>, value: WindowStartupLocation) : ViewElement<'view> =
+            let attr = Attr.create<'view, WindowStartupLocation>(value, fun (c, v) ->
+                c.SetValue(Window.WindowStartupLocationProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
+        [<CustomOperation("canResize")>]
+        member __.CanResize (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
+            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
+                c.SetValue(Window.CanResizeProperty, value)
+            )
+            { view with attrs = attr :: view.attrs }
+
     type ButtonBuilder<'view when 'view :> Button>() =
         inherit ContentControlBuilder<Button>()
 
@@ -413,10 +521,17 @@ module Builders =
 
         [<CustomOperation("command")>]
         member __.Command (view: ViewElement<'view>, value: unit -> unit) : ViewElement<'view>=
-            let attr = Attr.create<'view, unit -> unit>(value, fun (c, v) -> c.SetValue(Button.CommandProperty, v))
+            let attr = Attr.create<'view, unit -> unit>(value, fun (c, v) ->
+                c.SetValue(Button.CommandProperty, v)
+            )
             { view with attrs = attr :: view.attrs }
 
-    let button = ButtonBuilder<Button>()
+        [<CustomOperation("click")>]
+        member __.Click (view: ViewElement<'view>, value: Avalonia.Interactivity.RoutedEventArgs -> unit) : ViewElement<'view>=
+            let attr = Attr.create<'view, Avalonia.Interactivity.RoutedEventArgs -> unit>(value, fun (c, v) -> 
+                ()
+            )
+            { view with attrs = attr :: view.attrs }
 
     type TextBlockBuilder<'view when 'view :> TextBlock>() =
         inherit ControlBuilder<TextBlock>()
@@ -434,4 +549,7 @@ module Builders =
             let attr = Attr.create<'view, string>(value, fun (c, v) -> c.SetValue(TextBlock.TextProperty, v))
             { view with attrs = attr :: view.attrs }
 
+
+    let window = WindowBuilder<Window>()
+    let button = ButtonBuilder<Button>()
     let textblock = TextBlockBuilder<TextBlock>()

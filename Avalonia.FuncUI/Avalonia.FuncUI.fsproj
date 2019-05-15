@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Include="Core.fs" />
+    <Compile Include="Hosts.fs" />
     <Compile Include="Builders.fs" />
   </ItemGroup>
 
