@@ -1,5 +1,30 @@
 ﻿namespace Avalonia.FuncUI.SmallSampleApp
 
+open Avalonia.FuncUI.Hosts
+open Avalonia
+
+type MainWindow() as this =
+    inherit HostWindow()
+
+    do
+        base.Title <- "FuncUI Sample"
+        base.Height <- 800.0
+        base.Width <- 1000.0    
+        
+        (this :> IViewHost).View(Views.Counter.view Views.Counter.init)
+       
+        //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
+        //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
+        ()
+
+type App() =
+    inherit Application()
+
+    override this.Initialize() =
+        this.Styles.Load "resm:Avalonia.Themes.Default.DefaultTheme.xaml?assembly=Avalonia.Themes.Default"
+        this.Styles.Load "resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default"
+        ()
+
 module Program =
     open Avalonia
     open Avalonia.Logging.Serilog

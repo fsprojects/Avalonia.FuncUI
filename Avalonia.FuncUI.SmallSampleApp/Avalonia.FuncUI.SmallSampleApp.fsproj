@@ -7,9 +7,8 @@
 
   <ItemGroup>
     <Compile Include="Lib.fs" />
-    <Compile Include="MainWindow.fs" />
-    <Compile Include="App.fs" />
-    <Compile Include="Program.fs" />
+    <Compile Include="Views.fs" />
+    <Compile Include="Main.fs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,12 @@ module Builders =
     open Avalonia.FuncUI.Core
     open Avalonia
 
+    type BaseBuilder<'view when 'view :> IControl>() =
+        member __.Run (view: ViewElement<'view>) =
+            view :> IViewElement              
+
     type AnimatableBuilder<'view when 'view :> IControl>() =
+        inherit BaseBuilder<'view>()
 
         [<CustomOperation("clock")>]
         member __.Clock (view: ViewElement<'view>, value: Avalonia.Animation.IClock) : ViewElement<'view> =
@@ -514,7 +519,9 @@ module Builders =
         member __.Yield (item: 'a) =
             {
                 create = (fun () -> new Button());
-                update = (fun (view, attrs) -> attrs |> List.iter (fun attr -> attr.Apply view));
+                update = (fun (view, attrs) ->
+                    attrs |> List.iter (fun attr -> attr.Apply view)
+                 );
                 attrs = [];
                 content = ViewContent.None;
             }     
