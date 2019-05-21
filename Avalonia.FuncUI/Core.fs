@@ -1,55 +1,48 @@
 ﻿namespace rec Avalonia.FuncUI.Core
 
 open Avalonia.Controls
-open Portable.Xaml
+open System
+open Avalonia
+open Avalonia.Interactivity
 
-type IAttr<'view> =
-    abstract member Apply : 'view -> unit
-
-type Attr<'view, 'value> =
+type PropertyAttr =
     {
-        value: 'value;
-        apply: 'view * 'value -> unit
+        Property : AvaloniaProperty
+        Value : obj
     }
-    interface IAttr<'view> with
-        member this.Apply (view : 'view) =
-            this.apply (view, this.value)
 
-module Attr =
-    let create<'view, 'value when 'view :> IControl>(value: 'value, apply: 'view * 'value -> unit) : IAttr<'view> =
-        { Attr.value = value; Attr.apply = apply; } :> IAttr<'view>
-      
-[<RequireQualifiedAccess>]
-type ViewContent =
-| None
-| Single of IViewElement
-| Multiply of IViewElement list
-
-type IViewElement = 
-    abstract member Create : unit -> IControl
-    abstract member Update : IControl -> unit
-
-type ViewElement<'view when 'view :> IControl> =
+type EventAttr =
     {
-        create: unit -> 'view
-        update: 'view * IAttr<'view> list -> unit
-        attrs: IAttr<'view> list
-        content: ViewContent
+        Event : RoutedEvent
+        Value : RoutedEventArgs
     }
-    interface IViewElement with
-        member this.Update view : unit =
-            this.update(view :?> 'view, this.attrs)
 
-        member this.Create () : IControl =
-            let control = this.create()
-            this.update(control, this.attrs)
-            control :> IControl
+type Attr =
+    | Property of PropertyAttr
+    | Event of EventAttr
 
-module ViewElement =
-    let create<'view when 'view :> IControl> create update attrs =
-        {
-            ViewElement.create = create;
-            ViewElement.update = update;
-            ViewElement.attrs = attrs;
-            ViewElement.content = ViewContent.None
-        }
+    member this.Id =
+        match this with
+        | Property property ->
+            "Property." + property.Property.Name
+        | Event event ->
+            "Event." + event.Event.Name
+
+type AttrInfo =
+    {
+        ViewType : Type
+        Attr : Attr
+    }
+
+    static member Create(viewType: Type, attr : Attr) =
+        { ViewType = viewType; Attr = attr }
+
+
+type ViewElement =
+    {
+        ViewType: Type
+        Attrs: AttrInfo list
+    }  
+
+    static member Create(viewType: Type, attrs: AttrInfo list) =
+        { ViewType = viewType; Attrs = attrs; }

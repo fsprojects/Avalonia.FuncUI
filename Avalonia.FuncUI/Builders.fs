@@ -2,6 +2,8 @@
 
 open Avalonia.Controls
 
+(*
+
 [<AutoOpen>]
 module Builders =
     open Avalonia.FuncUI.Core
@@ -560,3 +562,6 @@ module Builders =
     let window = WindowBuilder<Window>()
     let button = ButtonBuilder<Button>()
     let textblock = TextBlockBuilder<TextBlock>()
+
+
+*)

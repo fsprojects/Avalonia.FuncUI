@@ -14,7 +14,7 @@ module Views =
             current : int
         }
 
-        let view (state: State) : IViewElement =
+        let view (state: State) : ViewElement =
             button {
                 background (SolidColorBrush(Colors.Green))
                 contentView (textblock { text "Test Text" })

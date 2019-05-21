@@ -2,9 +2,10 @@
 
 open Avalonia.FuncUI.Core
 open Avalonia.Controls
+open Avalonia.FuncUI.VirtualDom
 
 type IViewHost =
-    abstract member View: IViewElement -> unit
+    abstract member View: ViewElement -> unit
 
 type HostWindow() =
     inherit Window()
@@ -13,8 +14,8 @@ type HostWindow() =
         member this.View viewElement =
             match this.Content with
             | null ->
-                this.Content <- viewElement.Create()
+                this.Content <- View.create viewElement
             | _ ->
-                viewElement.Update(this.Content :?> Avalonia.Controls.IControl)
+                View.update (this.Content :?> IControl) None viewElement
        
     

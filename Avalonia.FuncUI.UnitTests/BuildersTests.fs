@@ -6,7 +6,7 @@ module BuildersTests =
     open Xunit
     open Avalonia.Controls
     open Avalonia.Media
-
+    (*
     [<Fact>]
     let ``IControl Property is set`` () =
         let _value = "some text"
@@ -34,4 +34,4 @@ module BuildersTests =
                 text "some text"
             })
         }
-        0
+        0*)

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="VirtualDomTests.fs" />
     <Compile Include="BuildersTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
