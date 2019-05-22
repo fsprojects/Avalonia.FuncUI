@@ -1,12 +1,14 @@
 namespace Avalonia.FuncUI.UnitTests
 
+open Avalonia.FuncUI.VirtualDom
+
 module BuildersTests =
     open Avalonia.FuncUI.Core
     open Avalonia.FuncUI.Builders
     open Xunit
     open Avalonia.Controls
     open Avalonia.Media
-    (*
+    
     [<Fact>]
     let ``IControl Property is set`` () =
         let _value = "some text"
@@ -19,7 +21,7 @@ module BuildersTests =
             tag _tag
         }
 
-        let textControl = (textView :> IViewElement).Create() :?> TextBlock
+        let textControl = (View.create textView) :?> TextBlock
 
         Assert.Equal(_value, textControl.Text)
         Assert.Equal(_width, textControl.Width)
@@ -34,4 +36,4 @@ module BuildersTests =
                 text "some text"
             })
         }
-        0*)
+        0
