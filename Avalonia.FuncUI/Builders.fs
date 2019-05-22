@@ -2,7 +2,7 @@
 
 open Avalonia.Controls
 
-(*
+
 
 [<AutoOpen>]
 module Builders =
@@ -10,558 +10,377 @@ module Builders =
     open Avalonia
 
     type BaseBuilder<'view when 'view :> IControl>() =
-        member __.Run (view: ViewElement<'view>) =
-            view :> IViewElement              
+        member __.Yield (item: 'a) =
+            ViewElement.create (typeof<'view>, [])
 
     type AnimatableBuilder<'view when 'view :> IControl>() =
         inherit BaseBuilder<'view>()
 
         [<CustomOperation("clock")>]
-        member __.Clock (view: ViewElement<'view>, value: Avalonia.Animation.IClock) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Animation.IClock>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Animation.Animatable.ClockProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Clock (view: ViewElement, value: Avalonia.Animation.IClock) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Animation.Animatable.ClockProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("transitions")>]
-        member __.Transitions (view: ViewElement<'view>, value: Avalonia.Animation.Transitions) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Animation.Transitions>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Animation.Animatable.TransitionsProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Transitions (view: ViewElement, value: Avalonia.Animation.Transitions) : ViewElement=
+            let attr = Attr.createProperty (Avalonia.Animation.Animatable.TransitionsProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type StyledElementBuilder<'view when 'view :> IControl>() =
         inherit AnimatableBuilder<'view>()
 
         [<CustomOperation("dataContext")>]
-        member __.DataContext (view: ViewElement<'view>, value: obj) : ViewElement<'view> =
-            let attr = Attr.create<'view, obj>(value, fun (c, v) ->
-                c.SetValue(StyledElement.DataContextProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.DataContext (view: ViewElement, value: obj) : ViewElement =
+            let attr = Attr.createProperty (StyledElement.DataContextProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("name")>]
-        member __.Name (view: ViewElement<'view>, value: string) : ViewElement<'view> =
-            let attr = Attr.create<'view, string>(value, fun (c, v) ->
-                c.SetValue(StyledElement.NameProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Name (view: ViewElement, value: string) : ViewElement =
+            let attr = Attr.createProperty (StyledElement.NameProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("parent")>]
-        member __.Parent (view: ViewElement<'view>, value: IStyledElement) : ViewElement<'view> =
-            let attr = Attr.create<'view, IStyledElement>(value, fun (c, v) ->
-                c.SetValue(StyledElement.ParentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Parent (view: ViewElement, value: IStyledElement) : ViewElement =
+            let attr = Attr.createProperty (StyledElement.ParentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("templatedParent")>]
-        member __.TemplatedParent (view: ViewElement<'view>, value: Avalonia.Styling.ITemplatedControl) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Styling.ITemplatedControl>(value, fun (c, v) ->
-                c.SetValue(StyledElement.TemplatedParentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }   
+        member __.TemplatedParent (view: ViewElement, value: Avalonia.Styling.ITemplatedControl) : ViewElement =
+            let attr = Attr.createProperty (StyledElement.TemplatedParentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type VisualBuilder<'view when 'view :> IControl>() =
         inherit StyledElementBuilder<'view>()
 
         [<CustomOperation("bounds")>]
-        member __.Bounds (view: ViewElement<'view>, value: Rect) : ViewElement<'view> =
-            let attr = Attr.create<'view, Rect>(value, fun (c, v) ->
-                c.SetValue(Visual.BoundsProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Bounds (view: ViewElement, value: Rect) : ViewElement =
+            let attr = Attr.createProperty (Visual.BoundsProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("transformedBounds")>]
-        member __.TransformedBounds (view: ViewElement<'view>, value: Avalonia.VisualTree.TransformedBounds option) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.VisualTree.TransformedBounds option>(value, fun (c, v) ->
-                match v with
-                | Some v -> c.SetValue(Visual.TransformedBoundsProperty, System.Nullable(v))
-                | None -> c.SetValue(Visual.TransformedBoundsProperty, System.Nullable())
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.TransformedBounds (view: ViewElement, value: Avalonia.VisualTree.TransformedBounds option) : ViewElement =
+            let attr = Attr.createProperty (Visual.TransformedBoundsProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("clipToBounds")>]
-        member __.ClipToBounds (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Visual.ClipToBoundsProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.ClipToBounds (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Visual.ClipToBoundsProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("clip")>]
-        member __.Clip (view: ViewElement<'view>, value: Avalonia.Media.Geometry) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.Geometry>(value, fun (c, v) ->
-                c.SetValue(Visual.ClipProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Clip (view: ViewElement, value: Avalonia.Media.Geometry) : ViewElement =
+            let attr = Attr.createProperty (Visual.ClipToBoundsProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("isVisible")>]
-        member __.IsVisible (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Visual.IsVisibleProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.IsVisible (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Visual.IsVisibleProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("opacity")>]
-        member __.Opacity (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Visual.OpacityProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Opacity (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Visual.OpacityProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("opacityMask")>]
-        member __.OpacityMast (view: ViewElement<'view>, value: Avalonia.Media.IBrush) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.IBrush>(value, fun (c, v) ->
-                c.SetValue(Visual.OpacityMaskProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.OpacityMast (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
+            let attr = Attr.createProperty (Visual.OpacityMaskProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("renderTransform")>]
-        member __.RenderTransform (view: ViewElement<'view>, value: Avalonia.Media.Transform) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.Transform>(value, fun (c, v) ->
-                c.SetValue(Visual.RenderTransformProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.RenderTransform (view: ViewElement, value: Avalonia.Media.Transform) : ViewElement =
+            let attr = Attr.createProperty (Visual.RenderTransformProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("renderTransformOrigin")>]
-        member __.RenderTransformOrigin (view: ViewElement<'view>, value: RelativePoint) : ViewElement<'view> =
-            let attr = Attr.create<'view, RelativePoint>(value, fun (c, v) ->
-                c.SetValue(Visual.RenderTransformOriginProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.RenderTransformOrigin (view: ViewElement, value: RelativePoint) : ViewElement =
+            let attr = Attr.createProperty (Visual.RenderTransformOriginProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("visualParent")>]
-        member __.VisualParent (view: ViewElement<'view>, value: Avalonia.VisualTree.IVisual) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.VisualTree.IVisual>(value, fun (c, v) ->
-                c.SetValue(Visual.VisualParentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.VisualParent (view: ViewElement, value: Avalonia.VisualTree.IVisual) : ViewElement =
+            let attr = Attr.createProperty (Visual.VisualParentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("zIndex")>]
-        member __.ZIndex (view: ViewElement<'view>, value: int) : ViewElement<'view> =
-            let attr = Attr.create<'view, int>(value, fun (c, v) ->
-                c.SetValue(Visual.ZIndexProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.ZIndex (view: ViewElement, value: int) : ViewElement =
+            let attr = Attr.createProperty (Visual.ZIndexProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type LayoutableBuilder<'view when 'view :> IControl>() =
         inherit VisualBuilder<'view>()
 
         [<CustomOperation("desiredSize")>]
-        member __.DesiredSize (view: ViewElement<'view>, value: Size) : ViewElement<'view> =
-            let attr = Attr.create<'view, Size>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.DesiredSizeProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.DesiredSize (view: ViewElement, value: Size) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.DesiredSizeProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("width")>]
-        member __.Width (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.WidthProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Width (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.WidthProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("height")>]
-        member __.Height (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.HeightProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Height (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.HeightProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("minWidth")>]
-        member __.MinWidth (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.MinWidthProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.MinWidth (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.MinWidthProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("minHeight")>]
-        member __.MinHeight (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.MinHeightProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.MinHeight (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.MinHeightProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("maxWidth")>]
-        member __.MaxWidth (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.MaxWidthProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.MaxWidth (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.MaxWidthProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("maxHeight")>]
-        member __.MaxHeight (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.MaxHeightProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.MaxHeight (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.MaxHeightProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("margin")>]
-        member __.Margin (view: ViewElement<'view>, value: Thickness) : ViewElement<'view> =
-            let attr = Attr.create<'view, Thickness>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.MarginProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Margin (view: ViewElement, value: Thickness) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.MarginProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("horizontalAlignment")>]
-        member __.HorizontalAlignment (view: ViewElement<'view>, value: Avalonia.Layout.HorizontalAlignment) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Layout.HorizontalAlignment>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.HorizontalAlignmentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.HorizontalAlignment (view: ViewElement, value: Avalonia.Layout.HorizontalAlignment) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.HorizontalAlignmentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("verticalAlignment")>]
-        member __.VerticalAlignment (view: ViewElement<'view>, value: Avalonia.Layout.VerticalAlignment) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Layout.VerticalAlignment>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.VerticalAlignmentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.VerticalAlignment (view: ViewElement, value: Avalonia.Layout.VerticalAlignment) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.VerticalAlignmentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("useLayoutRounding")>]
-        member __.UseLayoutRounding (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Layout.Layoutable.UseLayoutRoundingProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.UseLayoutRounding (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Layout.Layoutable.UseLayoutRoundingProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type InputElementBuilder<'view when 'view :> IControl>() =
         inherit LayoutableBuilder<'view>()
 
         [<CustomOperation("focusable")>]
-        member __.Focusable (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Input.InputElement.FocusableProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Focusable (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Input.InputElement.FocusableProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("isEnabled")>]
-        member __.IsEnabled (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Input.InputElement.IsEnabledProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.IsEnabled (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Input.InputElement.IsEnabledProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("isEnabledCore")>]
-        member __.IsEnabledCore (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Input.InputElement.IsEnabledCoreProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.IsEnabledCore (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Input.InputElement.IsEnabledCoreProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("cursor")>]
-        member __.Cursor (view: ViewElement<'view>, value: Avalonia.Input.Cursor) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Input.Cursor>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Input.InputElement.CursorProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Cursor (view: ViewElement, value: Avalonia.Input.Cursor) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Input.InputElement.CursorProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("isFocused")>]
-        member __.IsFocused (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Input.InputElement.IsFocusedProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.IsFocused (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Input.InputElement.IsFocusedProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("isHitTestVisible")>]
-        member __.IsHitTestVisible (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Input.InputElement.IsHitTestVisibleProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.IsHitTestVisible (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Input.InputElement.IsHitTestVisibleProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("isPointerOver")>]
-        member __.IsPointerOverProperty (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Input.InputElement.IsPointerOverProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.IsPointerOverProperty (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Input.InputElement.IsPointerOverProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type ControlBuilder<'view when 'view :> IControl>() =
         inherit InputElementBuilder<'view>()
     
         [<CustomOperation("focusAdorner")>]
-        member __.FocusAdorner (view: ViewElement<'view>, value: ITemplate<IControl>) : ViewElement<'view> =
-            let attr = Attr.create<'view, ITemplate<IControl>>(value, fun (c, v) ->
-                c.SetValue(Control.FocusAdornerProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.FocusAdorner (view: ViewElement, value: ITemplate<IControl>) : ViewElement =
+            let attr = Attr.createProperty (Control.FocusAdornerProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("tag")>]
-        member __.Tag (view: ViewElement<'view>, value: obj) : ViewElement<'view> =
-            let attr = Attr.create<'view, obj>(value, fun (c, v) ->
-                c.SetValue(Control.TagProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Tag (view: ViewElement, value: obj) : ViewElement =
+            let attr = Attr.createProperty (Control.TagProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("contextMenu")>]
-        member __.ContextMenu (view: ViewElement<'view>, value: ContextMenu) : ViewElement<'view> =
-            let attr = Attr.create<'view, ContextMenu>(value, fun (c, v) ->
-                c.SetValue(Control.ContextMenuProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.ContextMenu (view: ViewElement, value: ContextMenu) : ViewElement =
+            let attr = Attr.createProperty (Control.ContextMenuProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type TemplatedControlBuilder<'view when 'view :> IControl>() =
         inherit ControlBuilder<'view>()
     
         [<CustomOperation("background")>]
-        member __.Background (view: ViewElement<'view>, value: Avalonia.Media.IBrush) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.IBrush>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.BackgroundProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Background (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.BackgroundProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("borderBrush")>]
-        member __.BorderBrush (view: ViewElement<'view>, value: Avalonia.Media.IBrush) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.IBrush>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.BorderBrushProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.BorderBrush (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.BorderBrushProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("borderThickness")>]
-        member __.BorderThickness (view: ViewElement<'view>, value: Thickness) : ViewElement<'view> =
-            let attr = Attr.create<'view, Thickness>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.BorderThicknessProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.BorderThickness (view: ViewElement, value: Thickness) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.BorderThicknessProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("fontFamily")>]
-        member __.FontFamily (view: ViewElement<'view>, value: Thickness) : ViewElement<'view> =
-            let attr = Attr.create<'view, Thickness>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.FontFamily (view: ViewElement, value: Thickness) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("fontSize")>]
-        member __.FontSize (view: ViewElement<'view>, value: double) : ViewElement<'view> =
-            let attr = Attr.create<'view, double>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.FontSizeProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.FontSize (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("fontStyle")>]
-        member __.FontStyle (view: ViewElement<'view>, value: Avalonia.Media.FontStyle) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.FontStyle>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.FontStyleProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.FontStyle (view: ViewElement, value: Avalonia.Media.FontStyle) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontStyleProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("fontWeight")>]
-        member __.FontWeight (view: ViewElement<'view>, value: Avalonia.Media.FontWeight) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.FontWeight>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.FontWeightProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.FontWeight (view: ViewElement, value: Avalonia.Media.FontWeight) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontWeightProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("foreground")>]
-        member __.Foreground (view: ViewElement<'view>, value: Avalonia.Media.IBrush) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Media.IBrush>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Foreground (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("padding")>]
-        member __.Padding (view: ViewElement<'view>, value: Thickness) : ViewElement<'view> =
-            let attr = Attr.create<'view, Thickness>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.PaddingProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Padding (view: ViewElement, value: Thickness) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.PaddingProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("template")>]
-        member __.Template (view: ViewElement<'view>, value: Avalonia.Controls.Templates.IControlTemplate) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Controls.Templates.IControlTemplate>(value, fun (c, v) ->
-                c.SetValue(Avalonia.Controls.Primitives.TemplatedControl.TemplateProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Template (view: ViewElement, value: Avalonia.Controls.Templates.IControlTemplate) : ViewElement =
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.TemplateProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type ContentControlBuilder<'view when 'view :> IControl>() =
         inherit TemplatedControlBuilder<'view>()
     
         [<CustomOperation("content")>]
-        member __.Content (view: ViewElement<'view>, value: IControl) : ViewElement<'view> =
-            let attr = Attr.create<'view, IControl>(value, fun (c, v) ->
-                c.SetValue(ContentControl.ContentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Content (view: ViewElement, value: IControl) : ViewElement =
+            let attr = Attr.createProperty (ContentControl.ContentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("contentView")>]
-        member __.ContentView (view: ViewElement<'view>, value: IViewElement) : ViewElement<'view> =
-            { view with content = ViewContent.Single value }
+        member __.ContentView (view: ViewElement, value: ViewElement) : ViewElement =
+            let attr = Attr.createProperty (ContentControl.ContentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("contentTemplate")>]
-        member __.ContentTemplate (view: ViewElement<'view>, value: Avalonia.Controls.Templates.IDataTemplate) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Controls.Templates.IDataTemplate>(value, fun (c, v) ->
-                c.SetValue(ContentControl.ContentTemplateProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.ContentTemplate (view: ViewElement, value: Avalonia.Controls.Templates.IDataTemplate) : ViewElement =
+            let attr = Attr.createProperty (ContentControl.ContentTemplateProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("horizontalContentAlignment")>]
-        member __.HorizontalContentAlignment (view: ViewElement<'view>, value: Avalonia.Layout.HorizontalAlignment) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Layout.HorizontalAlignment>(value, fun (c, v) ->
-                c.SetValue(ContentControl.HorizontalContentAlignmentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.HorizontalContentAlignment (view: ViewElement, value: Avalonia.Layout.HorizontalAlignment) : ViewElement =
+            let attr = Attr.createProperty (ContentControl.HorizontalContentAlignmentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("verticalContentAlignment")>]
-        member __.VerticalContentAlignment (view: ViewElement<'view>, value: Avalonia.Layout.VerticalAlignment) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Layout.VerticalAlignment>(value, fun (c, v) ->
-                c.SetValue(ContentControl.VerticalContentAlignmentProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
-
-    type TopLevelBuilder<'view when 'view :> IControl>() =
-        inherit ContentControlBuilder<'view>()
-    
-        [<CustomOperation("clientSize")>]
-        member __.ClientSize (view: ViewElement<'view>, value: Size) : ViewElement<'view> =
-            let attr = Attr.create<'view, Size>(value, fun (c, v) ->
-                c.SetValue(TopLevel.ClientSizeProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("pointerOverElement")>]
-        member __.PointerOverElement (view: ViewElement<'view>, value: Avalonia.Input.IInputElement) : ViewElement<'view> =
-            let attr = Attr.create<'view, Avalonia.Input.IInputElement>(value, fun (c, v) ->
-                c.SetValue(TopLevel.PointerOverElementProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
-
-    type WindowBaseBuilder<'view when 'view :> IControl>() =
-        inherit TopLevelBuilder<'view>()
-    
-        [<CustomOperation("isActive")>]
-        member __.IsActive (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(WindowBase.IsActiveProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("owner")>]
-        member __.Owner (view: ViewElement<'view>, value: WindowBase) : ViewElement<'view> =
-            let attr = Attr.create<'view, WindowBase>(value, fun (c, v) ->
-                c.SetValue(WindowBase.OwnerProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("topmost")>]
-        member __.Topmost (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(WindowBase.TopmostProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-    type WindowBuilder<'view when 'view :> IControl>() =
-        inherit WindowBaseBuilder<'view>()
-    
-        member __.Yield (item: 'a) =
-            {
-                create = (fun () -> new Window());
-                update = (fun (view, attrs) -> attrs |> List.iter (fun attr -> attr.Apply view));
-                attrs = [];
-                content = ViewContent.None;
-            }    
-
-        [<CustomOperation("sizeToContent")>]
-        member __.SizeToContent (view: ViewElement<'view>, value: SizeToContent) : ViewElement<'view> =
-            let attr = Attr.create<'view, SizeToContent>(value, fun (c, v) ->
-                c.SetValue(Window.SizeToContentProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("hasSystemDecoration")>]
-        member __.HasSystemDecoration (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Window.HasSystemDecorationsProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("showInTaskbar")>]
-        member __.ShowInTaskbar (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Window.ShowInTaskbarProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("windowState")>]
-        member __.WindowState (view: ViewElement<'view>, value: WindowState) : ViewElement<'view> =
-            let attr = Attr.create<'view, WindowState>(value, fun (c, v) ->
-                c.SetValue(Window.WindowStateProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("title")>]
-        member __.Title (view: ViewElement<'view>, value: string) : ViewElement<'view> =
-            let attr = Attr.create<'view, string>(value, fun (c, v) ->
-                c.SetValue(Window.TitleProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("icon")>]
-        member __.Icon (view: ViewElement<'view>, value: WindowIcon) : ViewElement<'view> =
-            let attr = Attr.create<'view, WindowIcon>(value, fun (c, v) ->
-                c.SetValue(Window.IconProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("windowStartupLocation")>]
-        member __.WindowStartupLocation (view: ViewElement<'view>, value: WindowStartupLocation) : ViewElement<'view> =
-            let attr = Attr.create<'view, WindowStartupLocation>(value, fun (c, v) ->
-                c.SetValue(Window.WindowStartupLocationProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
-
-        [<CustomOperation("canResize")>]
-        member __.CanResize (view: ViewElement<'view>, value: bool) : ViewElement<'view> =
-            let attr = Attr.create<'view, bool>(value, fun (c, v) ->
-                c.SetValue(Window.CanResizeProperty, value)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.VerticalContentAlignment (view: ViewElement, value: Avalonia.Layout.VerticalAlignment) : ViewElement =
+            let attr = Attr.createProperty (ContentControl.VerticalContentAlignmentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type ButtonBuilder<'view when 'view :> Button>() =
         inherit ContentControlBuilder<Button>()
 
-        member __.Yield (item: 'a) =
-            {
-                create = (fun () -> new Button());
-                update = (fun (view, attrs) ->
-                    attrs |> List.iter (fun attr -> attr.Apply view)
-                 );
-                attrs = [];
-                content = ViewContent.None;
-            }     
-
         [<CustomOperation("command")>]
-        member __.Command (view: ViewElement<'view>, value: unit -> unit) : ViewElement<'view>=
-            let attr = Attr.create<'view, unit -> unit>(value, fun (c, v) ->
-                c.SetValue(Button.CommandProperty, v)
-            )
-            { view with attrs = attr :: view.attrs }
+        member __.Command (view: ViewElement, value: System.Windows.Input.ICommand) : ViewElement=
+            let attr = Attr.createProperty (Button.CommandProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
-        [<CustomOperation("click")>]
-        member __.Click (view: ViewElement<'view>, value: Avalonia.Interactivity.RoutedEventArgs -> unit) : ViewElement<'view>=
-            let attr = Attr.create<'view, Avalonia.Interactivity.RoutedEventArgs -> unit>(value, fun (c, v) -> 
-                ()
-            )
-            { view with attrs = attr :: view.attrs }
+        [<CustomOperation("commandParameter")>]
+        member __.Click (view: ViewElement, value: obj) : ViewElement=
+            let attr = Attr.createProperty (Button.CommandParameterProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
     type TextBlockBuilder<'view when 'view :> TextBlock>() =
         inherit ControlBuilder<TextBlock>()
-
-        member __.Yield (item: 'a) =
-            {
-                create = (fun () -> new TextBlock());
-                update = (fun (view, attrs) -> attrs |> List.iter (fun attr -> attr.Apply view));
-                attrs = [];
-                content = ViewContent.None;
-            }
             
         [<CustomOperation("text")>]
-        member __.Text (view: ViewElement<'view>, value: string) : ViewElement<'view>=
-            let attr = Attr.create<'view, string>(value, fun (c, v) -> c.SetValue(TextBlock.TextProperty, v))
-            { view with attrs = attr :: view.attrs }
+        member __.Text (view: ViewElement, value: string) : ViewElement=
+            let attr = Attr.createProperty (TextBlock.TextProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
 
 
-    let window = WindowBuilder<Window>()
     let button = ButtonBuilder<Button>()
     let textblock = TextBlockBuilder<TextBlock>()
 
 
-*)
