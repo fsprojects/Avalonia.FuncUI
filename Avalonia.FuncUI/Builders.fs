@@ -281,14 +281,14 @@ module Builders =
             { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("fontFamily")>]
-        member __.FontFamily (view: ViewElement, value: Thickness) : ViewElement =
+        member __.FontFamily (view: ViewElement, value: Avalonia.Media.FontFamily) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty, value)
             let attrInfo = AttrInfo.create(typeof<'view>, attr)
             { view with Attrs = attrInfo :: view.Attrs }
 
         [<CustomOperation("fontSize")>]
         member __.FontSize (view: ViewElement, value: double) : ViewElement =
-            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty, value)
+            let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontSizeProperty, value)
             let attrInfo = AttrInfo.create(typeof<'view>, attr)
             { view with Attrs = attrInfo :: view.Attrs }
 

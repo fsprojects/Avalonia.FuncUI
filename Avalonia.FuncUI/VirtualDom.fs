@@ -4,6 +4,8 @@ open System.Collections.Generic
 open System.Linq
 open Avalonia
 open Avalonia.FuncUI.Core
+open Avalonia.Controls
+open System
 
 module VirtualDom =
 
@@ -46,16 +48,26 @@ module VirtualDom =
             |> Seq.map (fun pair -> pair.Value)
             |> Seq.toList
 
-        let diff (last: ViewElement) (next: ViewElement) =
+        let diff (last: ViewElement) (next: ViewElement) : ViewElement =
             ViewElement.create(next.ViewType, diffAttrInfos last.Attrs next.Attrs)
+
+    module Patcher =
+
+        let patchProperty (view: IControl) (attr: PropertyAttr) : unit =
+            view.SetValue(attr.Property, attr.Value)
+
+        let patch (view: IControl) (viewElement: ViewElement) : unit =
+            for attr in viewElement.Attrs do
+                match attr.Attr with 
+                | Property property -> patchProperty view property
+                | _ -> () // TODO: patch event
         
     module View =
-        open Avalonia.Controls
-        open System
-        open Avalonia
 
         let create (e: ViewElement) : IControl =
-            Activator.CreateInstance(e.ViewType) :?> IControl
+            let view = Activator.CreateInstance(e.ViewType) :?> IControl
+            Patcher.patch view e
+            view
 
         let update (view: IControl) (last: ViewElement option) (next: ViewElement) =
             ()
