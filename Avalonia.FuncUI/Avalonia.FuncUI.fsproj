@@ -8,6 +8,7 @@
     <Compile Include="Core.fs" />
     <Compile Include="VirtualDom.fs" />
     <Compile Include="Hosts.fs" />
+    <Compile Include="Helpers.fs" />
     <Compile Include="Builders.fs" />
   </ItemGroup>
 
