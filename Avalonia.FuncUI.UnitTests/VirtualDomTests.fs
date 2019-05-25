@@ -1,8 +1,10 @@
 ﻿namespace Avalonia.FuncUI.UnitTests
 
 open Xunit
-open Avalonia.FuncUI.Core
+open Avalonia.FuncUI.Core.Model
+open Avalonia.FuncUI.Core.VirtualDom
 open Avalonia.FuncUI
+open Avalonia.FuncUI.Core
 
 module VirtualDomTests =
 

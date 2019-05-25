@@ -1,6 +1,7 @@
 ﻿namespace Avalonia.FuncUI.Builders
 
 open Avalonia.Controls
+open Avalonia.FuncUI.Core.Model
 
 [<AutoOpen>]
 module Builders =
@@ -361,6 +362,12 @@ module Builders =
              let attr = Attr.createProperty (Panel.BackgroundProperty, value)
              let attrInfo = AttrInfo.create(typeof<'view>, attr)
              { view with Attrs = attrInfo :: view.Attrs }
+
+         [<CustomOperation("children")>]
+         member __.Children (view: ViewElement, value: ViewElement list) : ViewElement =
+             let attr = Attr.createContent ("Children", ViewContent.Multiple value)
+             let attrInfo = AttrInfo.create(typeof<'view>, attr)
+             { view with Attrs = attrInfo :: view.Attrs }
     
     type StackPanelBuilder<'view when 'view :> IControl>() =
         inherit PanelBuilder<'view>()
@@ -382,7 +389,7 @@ module Builders =
 
          [<CustomOperation("lastChildFill")>]
          member __.Spacing (view: ViewElement, value: bool) : ViewElement =
-             let attr = Attr.createProperty (StackPanel.SpacingProperty, value)
+             let attr = Attr.createProperty (DockPanel.LastChildFillProperty, value)
              let attrInfo = AttrInfo.create(typeof<'view>, attr)
              { view with Attrs = attrInfo :: view.Attrs }
 
@@ -418,6 +425,9 @@ module Builders =
             let attrInfo = AttrInfo.create(typeof<'view>, attr)
             { view with Attrs = attrInfo :: view.Attrs }
 
+
+    let stackpanel = StackPanelBuilder<DockPanel>()
+    let dockpanel = DockPanelBuilder<DockPanel>()
 
     let button = ButtonBuilder<Button>()
     let textblock = TextBlockBuilder<TextBlock>()

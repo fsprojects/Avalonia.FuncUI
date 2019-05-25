@@ -1,9 +1,9 @@
-﻿namespace Avalonia.FuncUI
+﻿namespace Avalonia.FuncUI.Core
 
 open System.Collections.Generic
 open System.Linq
 open Avalonia
-open Avalonia.FuncUI.Core
+open Avalonia.FuncUI.Core.Model
 open Avalonia.Controls
 open System
 
@@ -26,7 +26,7 @@ module VirtualDom =
             for last in lastAttrs do
                 if nextDict.ContainsKey(last.Attr.Id) then
                     let next = nextDict.[last.Attr.Id]
-                    if next.Equals(last) |> not then
+                    if next <> last then
                         merged.Add(next.Attr.Id, next)
                     else ()                    
                 else
@@ -34,6 +34,11 @@ module VirtualDom =
                         match last.Attr with
                         | Property property ->
                             Property { property with Value = AvaloniaProperty.UnsetValue }
+                        | Content content ->
+                            let emptyContent = match content.Content with
+                            | ViewContent.Single single -> ViewContent.Single None
+                            | ViewContent.Multiple mult -> ViewContent.Multiple []
+                            Content { content with Content = emptyContent }
                         | Event event ->
                             Event { event with Value = null }
 

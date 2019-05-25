@@ -2,16 +2,17 @@
 
 open Avalonia.FuncUI.Core
 open Avalonia.Controls
-open Avalonia.FuncUI.VirtualDom
+open Avalonia.FuncUI.Core.VirtualDom
+open Avalonia.FuncUI.Core.Model
 
 type IViewHost =
-    abstract member View: ViewElement -> unit
+    abstract member UpdateView: ViewElement -> unit
 
 type HostWindow() =
     inherit Window()
 
     interface IViewHost with
-        member this.View viewElement =
+        member this.UpdateView viewElement =
             match this.Content with
             | null ->
                 this.Content <- View.create viewElement

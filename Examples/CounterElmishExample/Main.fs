@@ -5,7 +5,7 @@ open Avalonia
 open Avalonia.FuncUI.Elmish
 open Elmish
 
-type MainWindow() as this =
+type MainWindow() =
     inherit HostWindow()
 
     do

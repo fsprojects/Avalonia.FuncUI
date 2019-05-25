@@ -3,7 +3,7 @@
 open Avalonia.FuncUI.Hosts
 open Avalonia
 
-type MainWindow() as this =
+type MainWindow() =
     inherit HostWindow()
 
     do

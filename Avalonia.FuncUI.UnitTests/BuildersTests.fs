@@ -1,6 +1,6 @@
 namespace Avalonia.FuncUI.UnitTests
 
-open Avalonia.FuncUI.VirtualDom
+open Avalonia.FuncUI.Core.VirtualDom
 
 module BuildersTests =
     open Avalonia.FuncUI.Core

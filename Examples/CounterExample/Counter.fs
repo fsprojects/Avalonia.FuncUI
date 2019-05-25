@@ -2,6 +2,7 @@
 
 open Avalonia.FuncUI.Core
 open Avalonia.FuncUI.Builders
+open Avalonia.FuncUI.Core.Model
 
 module Counter =
 

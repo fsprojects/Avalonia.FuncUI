@@ -2,6 +2,8 @@
 
 open Avalonia.FuncUI.Core
 open Avalonia.FuncUI.Builders
+open Avalonia.Controls
+open Avalonia.FuncUI.Core.Model
 
 module Counter =
 
@@ -23,6 +25,20 @@ module Counter =
         | Decrement -> { state with count =  state.count - 1 }
 
     let view (state: CounterState) (dispatch): ViewElement =
-        textblock {
-            text (sprintf "count %i" state.count)
+        dockpanel {
+            lastChildFill true
+            children [
+                textblock {
+                    text (sprintf "count %i" state.count)
+                    dockpanel_dock Dock.Top
+                };
+                button {
+                    contentView (textblock { text "Increment" })
+                    dockpanel_dock Dock.Top
+                };
+                button {
+                    contentView (textblock { text "Decrement" })
+                    dockpanel_dock Dock.Top
+                };
+            ]
         }
