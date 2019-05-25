@@ -1,4 +1,4 @@
-﻿namespace Avalonia.FuncUI.SmallSampleApp
+﻿namespace CounterSample
 
 [<AutoOpen>]
 module AvaloniaExtensions =

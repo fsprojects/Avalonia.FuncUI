@@ -7,11 +7,13 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI", "Avalonia
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.UnitTests", "Avalonia.FuncUI.UnitTests\Avalonia.FuncUI.UnitTests.fsproj", "{3D6BBB49-E127-4141-A296-BA504C597FA1}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.SmallSampleApp", "Avalonia.FuncUI.SmallSampleApp\Avalonia.FuncUI.SmallSampleApp.fsproj", "{22B099C2-D418-42F8-94F1-D2A0EFB4D86C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{E5F1B811-E995-4757-B8E9-C3EB4DA274EE}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.Elmish", "Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj", "{3D70F99C-BA11-41F2-ADB1-A4B5ABC12CBD}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CounterExample", "Examples\CounterExample\CounterExample.fsproj", "{107906F5-CBCF-4669-9C67-CDAC8640027A}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CounterElmishExample", "Examples\CounterElmishExample\CounterElmishExample.fsproj", "{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,20 +29,25 @@ Global
 		{3D6BBB49-E127-4141-A296-BA504C597FA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D6BBB49-E127-4141-A296-BA504C597FA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D6BBB49-E127-4141-A296-BA504C597FA1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22B099C2-D418-42F8-94F1-D2A0EFB4D86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22B099C2-D418-42F8-94F1-D2A0EFB4D86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22B099C2-D418-42F8-94F1-D2A0EFB4D86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22B099C2-D418-42F8-94F1-D2A0EFB4D86C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D70F99C-BA11-41F2-ADB1-A4B5ABC12CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D70F99C-BA11-41F2-ADB1-A4B5ABC12CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D70F99C-BA11-41F2-ADB1-A4B5ABC12CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D70F99C-BA11-41F2-ADB1-A4B5ABC12CBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{107906F5-CBCF-4669-9C67-CDAC8640027A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{107906F5-CBCF-4669-9C67-CDAC8640027A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{107906F5-CBCF-4669-9C67-CDAC8640027A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{107906F5-CBCF-4669-9C67-CDAC8640027A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{22B099C2-D418-42F8-94F1-D2A0EFB4D86C} = {E5F1B811-E995-4757-B8E9-C3EB4DA274EE}
+		{107906F5-CBCF-4669-9C67-CDAC8640027A} = {E5F1B811-E995-4757-B8E9-C3EB4DA274EE}
+		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA} = {E5F1B811-E995-4757-B8E9-C3EB4DA274EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}

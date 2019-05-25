@@ -1,18 +1,18 @@
-﻿namespace Avalonia.FuncUI.SmallSampleApp
+﻿namespace CounterElmishSample
 
 open Avalonia.FuncUI.Hosts
 open Avalonia
+open Avalonia.FuncUI.Elmish
+open Elmish
 
 type MainWindow() as this =
     inherit HostWindow()
 
     do
-        base.Title <- "FuncUI Sample"
+        base.Title <- "Counter Elmish"
         base.Height <- 800.0
         base.Width <- 1000.0    
-        
-        (this :> IViewHost).View(Views.Counter.view Views.Counter.init)
-       
+      
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         ()
@@ -23,7 +23,6 @@ type App() =
     override this.Initialize() =
         this.Styles.Load "resm:Avalonia.Themes.Default.DefaultTheme.xaml?assembly=Avalonia.Themes.Default"
         this.Styles.Load "resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default"
-        ()
 
 module Program =
     open Avalonia
@@ -40,7 +39,14 @@ module Program =
     // Your application's entry point.
     [<CompiledName "AppMain">]
     let appMain (app: Application) (args: string[]) =
-        app.Run(MainWindow())
+        let mainWindow = MainWindow()
+
+        Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
+        |> Program.withHost mainWindow
+        |> Program.withConsoleTrace
+        |> Program.run
+
+        app.Run(mainWindow)
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized

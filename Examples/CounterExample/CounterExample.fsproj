@@ -6,22 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Counter.fs" />
     <Compile Include="Lib.fs" />
-    <Compile Include="Views.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
-    <PackageReference Include="Elmish" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.6.2" />
+    <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
   </ItemGroup>
 
 </Project>
