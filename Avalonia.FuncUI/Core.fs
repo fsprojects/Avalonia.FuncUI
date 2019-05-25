@@ -15,6 +15,20 @@ module PropertyAttr =
     let create (property: AvaloniaProperty, value: obj) =
         { Property = property; Value = value }
 
+type ViewContent =
+| Single of ViewElement option
+| Multiple of ViewElement list
+
+type ContentAttr =
+    {
+        Property : AvaloniaProperty
+        Content : ViewContent
+    }
+
+module ContentAttr =
+    let create (property: AvaloniaProperty, content: ViewContent) =
+        { Property = property; Content = content }
+
 type EventAttr =
     {
         Event : RoutedEvent
@@ -28,12 +42,15 @@ module EventAttr =
 
 type Attr =
     | Property of PropertyAttr
+    | Content of ContentAttr
     | Event of EventAttr
 
     member this.Id =
         match this with
         | Property property ->
             "Property." + property.Property.Name
+        | Content property ->
+            "Content." + property.Property.Name
         | Event event ->
             "Event." + event.Event.Name
 

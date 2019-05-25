@@ -2,8 +2,6 @@
 
 open Avalonia.Controls
 
-
-
 [<AutoOpen>]
 module Builders =
     open Avalonia.FuncUI.Core
@@ -352,6 +350,47 @@ module Builders =
         [<CustomOperation("verticalContentAlignment")>]
         member __.VerticalContentAlignment (view: ViewElement, value: Avalonia.Layout.VerticalAlignment) : ViewElement =
             let attr = Attr.createProperty (ContentControl.VerticalContentAlignmentProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
+ 
+    type PanelBuilder<'view when 'view :> IControl>() =
+        inherit ControlBuilder<'view>()
+    
+         [<CustomOperation("background")>]
+         member __.Background (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
+             let attr = Attr.createProperty (Panel.BackgroundProperty, value)
+             let attrInfo = AttrInfo.create(typeof<'view>, attr)
+             { view with Attrs = attrInfo :: view.Attrs }
+    
+    type StackPanelBuilder<'view when 'view :> IControl>() =
+        inherit PanelBuilder<'view>()
+
+         [<CustomOperation("spacing")>]
+         member __.Spacing (view: ViewElement, value: double) : ViewElement =
+             let attr = Attr.createProperty (StackPanel.SpacingProperty, value)
+             let attrInfo = AttrInfo.create(typeof<'view>, attr)
+             { view with Attrs = attrInfo :: view.Attrs }
+
+        [<CustomOperation("orientation")>]
+        member __.Orientation (view: ViewElement, value: Orientation) : ViewElement =
+            let attr = Attr.createProperty (StackPanel.OrientationProperty, value)
+            let attrInfo = AttrInfo.create(typeof<'view>, attr)
+            { view with Attrs = attrInfo :: view.Attrs }
+
+    type DockPanelBuilder<'view when 'view :> IControl>() =
+        inherit PanelBuilder<'view>()
+
+         [<CustomOperation("lastChildFill")>]
+         member __.Spacing (view: ViewElement, value: bool) : ViewElement =
+             let attr = Attr.createProperty (StackPanel.SpacingProperty, value)
+             let attrInfo = AttrInfo.create(typeof<'view>, attr)
+             { view with Attrs = attrInfo :: view.Attrs }
+
+    type ControlBuilder<'view when 'view :> IControl> with
+
+        [<CustomOperation("dockpanel_dock")>]
+        member __.DockPanel_Dock (view: ViewElement, value: Dock) : ViewElement =
+            let attr = Attr.createProperty (DockPanel.DockProperty, value)
             let attrInfo = AttrInfo.create(typeof<'view>, attr)
             { view with Attrs = attrInfo :: view.Attrs }
 
