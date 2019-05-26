@@ -332,7 +332,7 @@ module Builders =
 
         [<CustomOperation("contentView")>]
         member __.ContentView (view: ViewElement, value: ViewElement) : ViewElement =
-            let attr = Attr.createProperty (ContentControl.ContentProperty, value)
+            let attr = Attr.createContent ("Content", value |> Some |> ViewContent.Single)
             
             { view with Attrs = attr :: view.Attrs }
 

@@ -7,7 +7,9 @@ open System
 module View =
     
     let create (viewElement: ViewElement) : IControl =
-        Activator.CreateInstance(viewElement.ViewType) :?> IControl
+        let control = VirtualDom.create viewElement
+        VirtualDom.Patcher.patch control viewElement
+        control
 
-    let update (view: IControl) (last: ViewElement option) (next: ViewElement) =
+    let update (view: IControl) (last: ViewElement) (next: ViewElement) =
         ()

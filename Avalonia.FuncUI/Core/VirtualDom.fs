@@ -4,13 +4,15 @@ open System.Collections.Generic
 open System.Linq
 open Avalonia
 open Avalonia.FuncUI.Core.Model
+open Avalonia.FuncUI.Core.Lib
 open Avalonia.Controls
 open System
+open System.Reflection
 
-module VirtualDom =
+module rec VirtualDom =
 
     (* compute the diff and new state without using the actual UI objects *)
-    module rec Diff = 
+    module Diff = 
 
         let diffAttrInfos (lastAttrs: Attr list) (nextAttrs: Attr list) : Attr list = 
             let nextDict = Dictionary<string, Attr>()
@@ -64,12 +66,71 @@ module VirtualDom =
     (* patch UI elements to match their model (after diffing) *)
     module Patcher =
 
-        let patchProperty (view: IControl) (attr: PropertyAttr) : unit =
-            view.SetValue(attr.Property, attr.Value)
+        module AttrPatcher =
+         
+            let patchProperty (view: IControl) (attr: PropertyAttr) : unit =
+                view.SetValue(attr.Property, attr.Value)
+
+            let patchContentSingle (view: IControl) (prop: PropertyInfo) (viewElement: ViewElement option) =
+                // TODO: handle all possible cases
+                // no setter / no getter
+                match viewElement with
+                | Some viewElement -> 
+                    let value = prop.GetValue(view)
+                    if value <> null then
+                        Patcher.patch (value :?> IControl) viewElement
+                    else
+                        let contentView = create viewElement
+                        Patcher.patch contentView viewElement
+                        prop.SetValue(view, contentView)
+                | None ->
+                    prop.SetValue(view, null)
+
+            let patchContentMultiple (view: IControl) (prop: PropertyInfo) (viewElementList: ViewElement list) =
+                let controls = prop.GetValue(view) :?> Controls
+
+                if List.isEmpty viewElementList then
+                    controls.Clear()
+                else
+                    let mutable index = 0
+                    for viewElement in viewElementList do  
+                        // try patch / reuse
+                        if index + 1 < controls.Count then
+                            let item = controls.[index]
+
+                            if item.GetType() = viewElement.ViewType then
+                                // patch
+                                patch item viewElement
+                            else
+                                // replace
+                                let newItem = create viewElement
+                                patch newItem viewElement
+                                controls.[index] <- newItem
+                        else
+                            // create
+                            let newItem = create viewElement
+                            patch newItem viewElement
+                            controls.Add(newItem)
+
+                        index <- index + 1
+
+                    // remove elements if list is to long
+                    if (index + 1) < controls.Count then
+                        controls.RemoveRange(index + 1, controls.Count - index + 1)
+
+            let patchContent (view: IControl) (attr: ContentAttr) : unit =
+                let prop = Reflection.findPropertyByName view attr.PropertyName
+                match attr.Content with
+                | ViewContent.Single single -> patchContentSingle view prop single
+                | ViewContent.Multiple multiple -> patchContentMultiple view prop multiple
 
         let patch (view: IControl) (viewElement: ViewElement) : unit =
             for attr in viewElement.Attrs do
                 match attr with 
-                | Property property -> patchProperty view property
+                | Property property -> AttrPatcher.patchProperty view property
+                | Content content -> AttrPatcher.patchContent view content
                 | _ -> () // TODO: patch event
+
+    let create (viewElement: ViewElement): IControl =
+         Activator.CreateInstance(viewElement.ViewType) :?> IControl
 

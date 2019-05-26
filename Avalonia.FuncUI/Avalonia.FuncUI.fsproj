@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Core\Lib.fs" />
     <Compile Include="Core\Model.fs" />
     <Compile Include="Core\VirtualDom.fs" />
     <Compile Include="Core\View.fs" />

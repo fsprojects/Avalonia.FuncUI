@@ -23,7 +23,15 @@ module Counter =
         match msg with
         | Increment -> { state with count =  state.count + 1 }
         | Decrement -> { state with count =  state.count - 1 }
+    (*
+    let view (state: CounterState) (dispatch): ViewElement =
+        button {
+            contentView (textblock {
+                text (sprintf "Count:  %i" state.count)
+            })
+        }*)
 
+    
     let view (state: CounterState) (dispatch): ViewElement =
         dockpanel {
             lastChildFill true

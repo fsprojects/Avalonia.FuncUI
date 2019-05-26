@@ -11,12 +11,14 @@ type IViewHost =
 type HostWindow() =
     inherit Window()
 
+    let mutable lastViewElement : ViewElement option = None
+
     interface IViewHost with
         member this.UpdateView viewElement =
-            match this.Content with
-            | null ->
+            match lastViewElement with
+            | Some last ->
+                View.update (this.Content :?> IControl) last viewElement
+            | None ->
                 this.Content <- View.create viewElement
-            | _ ->
-                View.update (this.Content :?> IControl) None viewElement
        
     
