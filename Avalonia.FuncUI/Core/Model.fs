@@ -19,8 +19,8 @@ module Model =
 
     [<RequireQualifiedAccess>]
     type ViewContent =
-    | Single of ViewElement option
-    | Multiple of ViewElement list
+    | Single of View: ViewElement option
+    | Multiple of Views: ViewElement list
 
     type ContentAttr =
         {
@@ -64,23 +64,12 @@ module Model =
         let createContent (property: string, content: ViewContent) =
             (property, content) |> ContentAttr.create |> Content
 
-    type AttrInfo =
-        {
-            ViewType : Type
-            Attr : Attr
-        }
-
-    module AttrInfo =
-        let create(viewType: Type, attr : Attr) =
-            { ViewType = viewType; Attr = attr }
-
-
     type ViewElement =
         {
             ViewType: Type
-            Attrs: AttrInfo list
+            Attrs: Attr list
         }  
 
     module ViewElement =
-        let create(viewType: Type, attrs: AttrInfo list) =
+        let create(viewType: Type, attrs: Attr list) =
             { ViewType = viewType; Attrs = attrs; }

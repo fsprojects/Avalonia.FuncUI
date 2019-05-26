@@ -15,23 +15,17 @@ module VirtualDomTests =
 
         [<Fact>]
         let ``Property - next and last have the same value`` () =
-            let last : AttrInfo list = [
-                {
-                    ViewType = typeof<Button>
-                    Attr = Property {
-                        Property = Button.BackgroundProperty :> AvaloniaProperty
-                        Value = SolidColorBrush(Colors.Red).ToImmutable()
-                    }
+            let last : Attr list = [
+                Property {
+                    Property = Button.BackgroundProperty :> AvaloniaProperty
+                    Value = SolidColorBrush(Colors.Red).ToImmutable()
                 }
             ]
 
-            let next : AttrInfo list = [
-                {
-                    ViewType = typeof<Button>
-                    Attr = Property {
-                        Property = Button.BackgroundProperty :> AvaloniaProperty
-                        Value = SolidColorBrush(Colors.Red).ToImmutable()
-                    }
+            let next : Attr list = [
+                Property {
+                    Property = Button.BackgroundProperty :> AvaloniaProperty
+                    Value = SolidColorBrush(Colors.Red).ToImmutable()
                 }
             ]
 
@@ -40,29 +34,24 @@ module VirtualDomTests =
 
         [<Fact>]
         let ``Property - next and last have a different value`` () =
-            let last : AttrInfo list = [
-                {
-                    ViewType = typeof<Button>
-                    Attr = Property {
-                        Property = Button.BackgroundProperty :> AvaloniaProperty
-                        Value = SolidColorBrush(Colors.Red).ToImmutable()
-                    }
+            let last : Attr list = [
+                Property {
+                    Property = Button.BackgroundProperty :> AvaloniaProperty
+                    Value = SolidColorBrush(Colors.Red).ToImmutable()
                 }
             ]
+                
 
-            let next : AttrInfo list = [
-                {
-                    ViewType = typeof<Button>
-                    Attr = Property {
-                        Property = Button.BackgroundProperty :> AvaloniaProperty
-                        Value = SolidColorBrush(Colors.Green).ToImmutable()
-                    }
+            let next : Attr list = [
+                Property {
+                    Property = Button.BackgroundProperty :> AvaloniaProperty
+                    Value = SolidColorBrush(Colors.Green).ToImmutable()
                 }
             ]
 
             let result = VirtualDom.Diff.diffAttrInfos last next
             Assert.True(result.Length = 1)
-            match result.Head.Attr with
+            match result.Head with
             | Property property -> 
                 Assert.True(property.Value = (SolidColorBrush(Colors.Green).ToImmutable() :> obj))
             | _ ->
@@ -70,20 +59,17 @@ module VirtualDomTests =
 
         [<Fact>]
         let ``Property - next does not provide new value for last property`` () =
-            let last : AttrInfo list = [
-                {
-                    ViewType = typeof<Button>
-                    Attr = Property {
-                        Property = Button.BackgroundProperty :> AvaloniaProperty
-                        Value = SolidColorBrush(Colors.Red).ToImmutable()
-                    }
+            let last : Attr list = [
+                Property {
+                    Property = Button.BackgroundProperty :> AvaloniaProperty
+                    Value = SolidColorBrush(Colors.Red).ToImmutable()
                 }
             ]
 
-            let next : AttrInfo list = []
+            let next : Attr list = []
 
             let result = VirtualDom.Diff.diffAttrInfos last next
-            match result.Head.Attr with
+            match result.Head with
             | Property property -> 
                 Assert.True(property.Value = AvaloniaProperty.UnsetValue)
             | _ ->
@@ -91,15 +77,12 @@ module VirtualDomTests =
 
         [<Fact>]
         let ``Property - last value is not present`` () =
-            let last : AttrInfo list = []
+            let last : Attr list = []
 
-            let next : AttrInfo list = [
-                {
-                    ViewType = typeof<Button>
-                    Attr = Property {
-                        Property = Button.BackgroundProperty :> AvaloniaProperty
-                        Value = SolidColorBrush(Colors.Red).ToImmutable()
-                    }
+            let next : Attr list = [
+                Property {
+                    Property = Button.BackgroundProperty :> AvaloniaProperty
+                    Value = SolidColorBrush(Colors.Red).ToImmutable()
                 }
             ]
 
