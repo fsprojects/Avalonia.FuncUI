@@ -24,8 +24,16 @@ module rec VirtualDom =
                     | None -> Some next
                 | None -> None
 
-            let diffContentMultiple (last: ViewElement list) (next: ViewElement list) : ViewElement list =
-                next
+            let diffContentMultiple (lastList: ViewElement list) (nextList: ViewElement list) : ViewElement list =
+                let merged =
+                    nextList
+                    |> List.mapi (fun index next -> 
+                        if index + 1 <= lastList.Length then
+                            Differ.diff lastList.[index] next
+                        else next
+                    )
+                merged
+                    
 
             let diffContent (last: ContentAttr) (next: ContentAttr) : Attr =
                 let viewContent : ViewContent =
@@ -75,9 +83,11 @@ module rec VirtualDom =
                         | Property property ->
                             Property { property with Value = AvaloniaProperty.UnsetValue }
                         | Content content ->
-                            let emptyContent = match content.Content with
-                            | ViewContent.Single single -> ViewContent.Single None
-                            | ViewContent.Multiple mult -> ViewContent.Multiple []
+                            let emptyContent =
+                                match content.Content with
+                                | ViewContent.Single single -> ViewContent.Single None
+                                | ViewContent.Multiple mult -> ViewContent.Multiple []
+
                             Content { content with Content = emptyContent }
                         | Event event ->
                             Event { event with Value = null }
@@ -128,7 +138,7 @@ module rec VirtualDom =
                     let mutable index = 0
                     for viewElement in viewElementList do  
                         // try patch / reuse
-                        if index + 1 < controls.Count then
+                        if index + 1 <= controls.Count then
                             let item = controls.[index]
 
                             if item.GetType() = viewElement.ViewType then

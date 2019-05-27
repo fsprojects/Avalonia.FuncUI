@@ -4,6 +4,7 @@ open Avalonia.FuncUI.Core
 open Avalonia.FuncUI.Builders
 open Avalonia.Controls
 open Avalonia.FuncUI.Core.Model
+open Avalonia.Media
 
 module Counter =
 
@@ -23,26 +24,28 @@ module Counter =
         match msg with
         | Increment -> { state with count =  state.count + 1 }
         | Decrement -> { state with count =  state.count - 1 }
-    (*
-    let view (state: CounterState) (dispatch): ViewElement =
-        button {
-            contentView (textblock {
-                text (sprintf "Count:  %i" state.count)
-            })
-        }*)
-
     
     let view (state: CounterState) (dispatch): ViewElement =
+
+        let backgroundColor = 
+            if state.count < 0 then
+                SolidColorBrush(Color.Parse("#e74c3c"))//.ToImmutable()
+            else if state.count > 0 then
+                SolidColorBrush(Color.Parse("#27ae60"))//.ToImmutable()
+            else
+                SolidColorBrush(Colors.Transparent)//.ToImmutable()
+
         dockpanel {
+            background backgroundColor
             lastChildFill true
             children [
                 button {
-                    contentView (textblock { text (sprintf "Increment to %i" (state.count + 1)) })
+                    contentView (textblock { text "Increment" })
                     command (Command.from (fun _ -> dispatch Msg.Increment))
                     dockpanel_dock Dock.Bottom
                 };
                 button {
-                    contentView (textblock { text (sprintf "Decrement to %i" (state.count - 1)) })
+                    contentView (textblock { text "Decrement" })
                     command (Command.from (fun _ -> dispatch Msg.Decrement))
                     dockpanel_dock Dock.Bottom
                 };

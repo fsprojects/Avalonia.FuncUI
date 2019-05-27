@@ -1,5 +1,7 @@
 ﻿namespace Avalonia.FuncUI.Builders
 
+open System
+
 module Command =
     open System.Windows.Input
 
@@ -30,6 +32,15 @@ module Command =
                 canExecuteChanged = new Event<_, _>()
             }
 
+        override this.GetHashCode () =
+            Tuple(this.canExecute, this.execute).GetHashCode()
+
+        override this.Equals (other: obj) =
+            this.GetHashCode() = other.GetHashCode()
+
+        interface IEquatable<FunCommand> with
+            member this.Equals (other: FunCommand) =
+                this.GetHashCode() = other.GetHashCode()
 
         interface ICommand with
 
