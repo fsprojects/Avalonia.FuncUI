@@ -36,16 +36,18 @@ module Counter =
         dockpanel {
             lastChildFill true
             children [
+                button {
+                    contentView (textblock { text (sprintf "Increment to %i" (state.count + 1)) })
+                    command (Command.from (fun _ -> dispatch Msg.Increment))
+                    dockpanel_dock Dock.Bottom
+                };
+                button {
+                    contentView (textblock { text (sprintf "Decrement to %i" (state.count - 1)) })
+                    command (Command.from (fun _ -> dispatch Msg.Decrement))
+                    dockpanel_dock Dock.Bottom
+                };
                 textblock {
                     text (sprintf "count %i" state.count)
-                    dockpanel_dock Dock.Top
-                };
-                button {
-                    contentView (textblock { text "Increment" })
-                    dockpanel_dock Dock.Top
-                };
-                button {
-                    contentView (textblock { text "Decrement" })
                     dockpanel_dock Dock.Top
                 };
             ]

@@ -12,9 +12,38 @@ open System.Reflection
 module rec VirtualDom =
 
     (* compute the diff and new state without using the actual UI objects *)
-    module Diff = 
+    module Differ = 
 
-        let diffAttrInfos (lastAttrs: Attr list) (nextAttrs: Attr list) : Attr list = 
+        module AttrDiffer =
+
+            let diffContentSingle (last: ViewElement option) (next: ViewElement option) : ViewElement option =
+                match next with
+                | Some next -> 
+                    match last with
+                    | Some last -> Some (Differ.diff last next)
+                    | None -> Some next
+                | None -> None
+
+            let diffContentMultiple (last: ViewElement list) (next: ViewElement list) : ViewElement list =
+                next
+
+            let diffContent (last: ContentAttr) (next: ContentAttr) : Attr =
+                let viewContent : ViewContent =
+                    match next.Content with
+                    | ViewContent.Single next -> 
+                        match last.Content with
+                        | ViewContent.Single last -> ViewContent.Single (diffContentSingle last next)
+                        | _ -> ViewContent.Single (diffContentSingle None next)
+                    | ViewContent.Multiple next -> 
+                        match last.Content with
+                        | ViewContent.Multiple last -> ViewContent.Multiple (diffContentMultiple last next)
+                        | _ -> ViewContent.Multiple (diffContentMultiple [] next)
+
+                Attr.createContent (next.PropertyName, viewContent)
+                
+                        
+
+        let diffAttrs (lastAttrs: Attr list) (nextAttrs: Attr list) : Attr list = 
             let nextDict = Dictionary<string, Attr>()
             let lastDict = Dictionary<string, Attr>()
 
@@ -32,7 +61,11 @@ module rec VirtualDom =
                     if next <> last then
                         match next with
                         | Content content -> 
-                            ()
+                            match last with
+                            | Content last -> 
+                                merged.Add(next.Id, AttrDiffer.diffContent last content)
+                            | _ -> 
+                                merged.Add(next.Id, next)
                         | _ -> 
                             merged.Add(next.Id, next)
                     else ()                    
@@ -61,7 +94,7 @@ module rec VirtualDom =
             |> Seq.toList
 
         let diff (last: ViewElement) (next: ViewElement) : ViewElement =
-            ViewElement.create(next.ViewType, diffAttrInfos last.Attrs next.Attrs)
+            ViewElement.create(next.ViewType, diffAttrs last.Attrs next.Attrs)
 
     (* patch UI elements to match their model (after diffing) *)
     module Patcher =

@@ -20,5 +20,7 @@ type HostWindow() =
                 View.update (this.Content :?> IControl) last viewElement
             | None ->
                 this.Content <- View.create viewElement
+
+            lastViewElement <- Some viewElement
        
     

@@ -12,4 +12,5 @@ module View =
         control
 
     let update (view: IControl) (last: ViewElement) (next: ViewElement) =
-        ()
+        let delta = VirtualDom.Differ.diff last next
+        VirtualDom.Patcher.patch view delta

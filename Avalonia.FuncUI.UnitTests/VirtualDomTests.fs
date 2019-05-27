@@ -29,7 +29,7 @@ module VirtualDomTests =
                 }
             ]
 
-            let result = VirtualDom.Diff.diffAttrInfos last next
+            let result = VirtualDom.Differ.diffAttrs last next
             Assert.True(result.IsEmpty)
 
         [<Fact>]
@@ -49,7 +49,7 @@ module VirtualDomTests =
                 }
             ]
 
-            let result = VirtualDom.Diff.diffAttrInfos last next
+            let result = VirtualDom.Differ.diffAttrs last next
             Assert.True(result.Length = 1)
             match result.Head with
             | Property property -> 
@@ -68,7 +68,7 @@ module VirtualDomTests =
 
             let next : Attr list = []
 
-            let result = VirtualDom.Diff.diffAttrInfos last next
+            let result = VirtualDom.Differ.diffAttrs last next
             match result.Head with
             | Property property -> 
                 Assert.True(property.Value = AvaloniaProperty.UnsetValue)
@@ -86,5 +86,110 @@ module VirtualDomTests =
                 }
             ]
 
-            let result = VirtualDom.Diff.diffAttrInfos last next
+            let result = VirtualDom.Differ.diffAttrs last next
             Assert.Equal(next.Head, result.Head)
+
+        [<Fact>]
+        let ``Content Single - next and last have the same value`` () =
+            let last : Attr list = [
+                Attr.createContent("Content", ViewContent.Single (Some {
+                    ViewType = typeof<TextBlock>
+                    Attrs = [
+                        Property {
+                            Property = TextBlock.TextProperty :> AvaloniaProperty
+                            Value = "Some Text"
+                        }
+                    ]                
+                }))
+            ]
+
+            let next : Attr list = [
+                Attr.createContent("Content", ViewContent.Single (Some {
+                    ViewType = typeof<TextBlock>
+                    Attrs = [
+                        Property {
+                            Property = TextBlock.TextProperty :> AvaloniaProperty
+                            Value = "Some Text"
+                        }
+                    ]                
+                }))
+            ]
+
+            let result = VirtualDom.Differ.diffAttrs last next
+            Assert.True(result.IsEmpty)
+
+        [<Fact>]
+        let ``Content Single - next and last have a different value`` () =
+            let last : Attr list = [
+                Attr.createContent("Content", ViewContent.Single (Some {
+                    ViewType = typeof<TextBlock>
+                    Attrs = [
+                        Property {
+                            Property = TextBlock.TextProperty :> AvaloniaProperty
+                            Value = "Some Text"
+                        }
+                    ]                
+                }))
+            ]
+
+            let next : Attr list = [
+                Attr.createContent("Content", ViewContent.Single (Some {
+                    ViewType = typeof<TextBlock>
+                    Attrs = [
+                        Property {
+                            Property = TextBlock.TextProperty :> AvaloniaProperty
+                            Value = "Some other Text"
+                        }
+                    ]                
+                }))
+            ]
+
+            let result = VirtualDom.Differ.diffAttrs last next
+            Assert.Equal(next.Head, result.Head)
+
+        [<Fact>]
+        let ``Content Single - next does not provide new value for last property`` () =
+            let last : Attr list = [
+                Attr.createContent("Content", ViewContent.Single (Some {
+                    ViewType = typeof<TextBlock>
+                    Attrs = [
+                        Property {
+                            Property = TextBlock.TextProperty :> AvaloniaProperty
+                            Value = "Some Text"
+                        }
+                    ]                
+                }))
+            ]
+
+            let next : Attr list = []
+
+            let result = VirtualDom.Differ.diffAttrs last next
+            match result.Head with
+            | Content content -> 
+                match content.Content with
+                | ViewContent.Single single -> 
+                    Assert.True(single.IsNone)
+                | _ ->
+                    Assert.True(false)
+            | _ ->
+                Assert.True(false)
+
+        [<Fact>]
+        let ``Content Single - last value is not present`` () =
+            let last : Attr list = []
+
+            let next : Attr list = [
+                Attr.createContent("Content", ViewContent.Single (Some {
+                    ViewType = typeof<TextBlock>
+                    Attrs = [
+                        Property {
+                            Property = TextBlock.TextProperty :> AvaloniaProperty
+                            Value = "Some Text"
+                        }
+                    ]                
+                }))
+            ]
+
+            let result = VirtualDom.Differ.diffAttrs last next
+            Assert.Equal(next.Head, result.Head)
+
