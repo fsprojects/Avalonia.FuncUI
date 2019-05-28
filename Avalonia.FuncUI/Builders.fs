@@ -426,7 +426,7 @@ module Builders =
             { view with Attrs = attr :: view.Attrs }
 
 
-    let stackpanel = StackPanelBuilder<DockPanel>()
+    let stackpanel = StackPanelBuilder<StackPanel>()
     let dockpanel = DockPanelBuilder<DockPanel>()
 
     let button = ButtonBuilder<Button>()
