@@ -124,7 +124,6 @@ module Todo =
                             })
                         }
                         textbox {
-                            font 20.0
                             pass
                         }
                     ]

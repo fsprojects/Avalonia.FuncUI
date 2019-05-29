@@ -10,8 +10,8 @@ type MainWindow() =
 
     do
         base.Title <- "Counter Elmish"
-        base.Height <- 800.0
-        base.Width <- 1000.0    
+        base.Height <- 400.0
+        base.Width <- 400.0    
       
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true

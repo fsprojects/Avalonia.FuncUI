@@ -519,6 +519,7 @@ module Builders =
     let stackpanel = StackPanelBuilder<StackPanel>()
     let dockpanel = DockPanelBuilder<DockPanel>()
 
+    let contentControl = ContentControlBuilder<ContentControl>()
     let button = ButtonBuilder<Button>()
     let textblock = TextBlockBuilder<TextBlock>()
     let textbox = TextBoxBuilder<TextBox>()

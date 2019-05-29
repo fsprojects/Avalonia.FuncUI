@@ -18,4 +18,8 @@
     <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.6.2" />
+  </ItemGroup>
+
 </Project>
