@@ -6,6 +6,7 @@ open Avalonia.Controls
 open Avalonia.FuncUI.Core.Model
 open Avalonia.Media
 open System
+open Avalonia
 
 [<RequireQualifiedAccess>]
 module TodoItem =
@@ -24,9 +25,11 @@ module TodoItem =
 
     let view (state: State) dispatch =
         dockpanel {
+            margin (Thickness(5.0))
             children [
                 textblock {
                     text state.Name
+                    fontSize 20.0
                 }
             ]
         }
@@ -70,6 +73,7 @@ module TodoItems =
 
     let view (state: State) dispatch =
         stackpanel {
+            margin (Thickness(5.0))
             dockpanel_dock Dock.Top
             orientation Orientation.Vertical
             children [
@@ -114,9 +118,14 @@ module Todo =
                     dockpanel_dock Dock.Bottom
                     children [
                         button {
+                            dockpanel_dock Dock.Right
                             contentView (textblock {
                                 text "Add"
                             })
+                        }
+                        textbox {
+                            font 20.0
+                            pass
                         }
                     ]
                 }

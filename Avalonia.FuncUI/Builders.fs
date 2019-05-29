@@ -12,6 +12,10 @@ module Builders =
         member __.Yield (item: 'a) =
             ViewElement.create (typeof<'view>, [])
 
+        [<CustomOperation("pass")>]
+        member __.Pass (view: ViewElement) : ViewElement =
+            view
+
     type AnimatableBuilder<'view when 'view :> IControl>() =
         inherit BaseBuilder<'view>()
 
@@ -282,43 +286,36 @@ module Builders =
         [<CustomOperation("fontFamily")>]
         member __.FontFamily (view: ViewElement, value: Avalonia.Media.FontFamily) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontFamilyProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("fontSize")>]
         member __.FontSize (view: ViewElement, value: double) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontSizeProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("fontStyle")>]
         member __.FontStyle (view: ViewElement, value: Avalonia.Media.FontStyle) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontStyleProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("fontWeight")>]
         member __.FontWeight (view: ViewElement, value: Avalonia.Media.FontWeight) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.FontWeightProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("foreground")>]
         member __.Foreground (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.ForegroundProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("padding")>]
         member __.Padding (view: ViewElement, value: Thickness) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.PaddingProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("template")>]
         member __.Template (view: ViewElement, value: Avalonia.Controls.Templates.IControlTemplate) : ViewElement =
             let attr = Attr.createProperty (Avalonia.Controls.Primitives.TemplatedControl.TemplateProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
     type ContentControlBuilder<'view when 'view :> IControl>() =
@@ -327,31 +324,26 @@ module Builders =
         [<CustomOperation("content")>]
         member __.Content (view: ViewElement, value: IControl) : ViewElement =
             let attr = Attr.createProperty (ContentControl.ContentProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("contentView")>]
         member __.ContentView (view: ViewElement, value: ViewElement) : ViewElement =
             let attr = Attr.createContent ("Content", value |> Some |> ViewContent.Single)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("contentTemplate")>]
         member __.ContentTemplate (view: ViewElement, value: Avalonia.Controls.Templates.IDataTemplate) : ViewElement =
             let attr = Attr.createProperty (ContentControl.ContentTemplateProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("horizontalContentAlignment")>]
         member __.HorizontalContentAlignment (view: ViewElement, value: Avalonia.Layout.HorizontalAlignment) : ViewElement =
             let attr = Attr.createProperty (ContentControl.HorizontalContentAlignmentProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("verticalContentAlignment")>]
         member __.VerticalContentAlignment (view: ViewElement, value: Avalonia.Layout.VerticalAlignment) : ViewElement =
             let attr = Attr.createProperty (ContentControl.VerticalContentAlignmentProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
  
     type PanelBuilder<'view when 'view :> IControl>() =
@@ -360,13 +352,11 @@ module Builders =
          [<CustomOperation("background")>]
          member __.Background (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
              let attr = Attr.createProperty (Panel.BackgroundProperty, value)
-             
              { view with Attrs = attr :: view.Attrs }
 
          [<CustomOperation("children")>]
          member __.Children (view: ViewElement, value: ViewElement list) : ViewElement =
              let attr = Attr.createContent ("Children", ViewContent.Multiple value)
-             
              { view with Attrs = attr :: view.Attrs }
     
     type StackPanelBuilder<'view when 'view :> IControl>() =
@@ -375,13 +365,11 @@ module Builders =
          [<CustomOperation("spacing")>]
          member __.Spacing (view: ViewElement, value: double) : ViewElement =
              let attr = Attr.createProperty (StackPanel.SpacingProperty, value)
-             
              { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("orientation")>]
         member __.Orientation (view: ViewElement, value: Orientation) : ViewElement =
             let attr = Attr.createProperty (StackPanel.OrientationProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
     type DockPanelBuilder<'view when 'view :> IControl>() =
@@ -390,7 +378,6 @@ module Builders =
          [<CustomOperation("lastChildFill")>]
          member __.Spacing (view: ViewElement, value: bool) : ViewElement =
              let attr = Attr.createProperty (DockPanel.LastChildFillProperty, value)
-             
              { view with Attrs = attr :: view.Attrs }
 
     type ControlBuilder<'view when 'view :> IControl> with
@@ -398,7 +385,6 @@ module Builders =
         [<CustomOperation("dockpanel_dock")>]
         member __.DockPanel_Dock (view: ViewElement, value: Dock) : ViewElement =
             let attr = Attr.createProperty (DockPanel.DockProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
     type ButtonBuilder<'view when 'view :> Button>() =
@@ -407,29 +393,134 @@ module Builders =
         [<CustomOperation("command")>]
         member __.Command (view: ViewElement, value: System.Windows.Input.ICommand) : ViewElement=
             let attr = Attr.createProperty (Button.CommandProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
         [<CustomOperation("commandParameter")>]
         member __.Click (view: ViewElement, value: obj) : ViewElement=
             let attr = Attr.createProperty (Button.CommandParameterProperty, value)
-            
             { view with Attrs = attr :: view.Attrs }
 
     type TextBlockBuilder<'view when 'view :> TextBlock>() =
         inherit ControlBuilder<TextBlock>()
-            
-        [<CustomOperation("text")>]
-        member __.Text (view: ViewElement, value: string) : ViewElement=
-            let attr = Attr.createProperty (TextBlock.TextProperty, value)
-            
+
+        [<CustomOperation("background")>]
+        member __.Background (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.BackgroundProperty, value)
             { view with Attrs = attr :: view.Attrs }
 
+        [<CustomOperation("fontFamily")>]
+        member __.FontFamily (view: ViewElement, value: Avalonia.Media.FontFamily) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.FontFamilyProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("fontSize")>]
+        member __.FontSize (view: ViewElement, value: double) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.FontSizeProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("fontStyle")>]
+        member __.FontStyle (view: ViewElement, value: Avalonia.Media.FontStyle) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.FontStyleProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("fontWeight")>]
+        member __.FontWeight (view: ViewElement, value: Avalonia.Media.FontWeight) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.FontWeightProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("foreground")>]
+        member __.Foreground (view: ViewElement, value: Avalonia.Media.IBrush) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.ForegroundProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("text")>]
+        member __.Text (view: ViewElement, value: string) : ViewElement=
+            let attr = Attr.createProperty (TextBlock.TextProperty, value)         
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("textAlignment")>]
+        member __.TextAlignment (view: ViewElement, value: Avalonia.Media.TextAlignment) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.TextAlignmentProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("textWrapping")>]
+        member __.TextWrapping (view: ViewElement, value: Avalonia.Media.TextWrapping) : ViewElement =
+            let attr = Attr.createProperty (TextBlock.TextWrappingProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+    
+    type TextBoxBuilder<'view when 'view :> TextBox>() =
+        inherit ControlBuilder<TextBox>()
+
+        [<CustomOperation("acceptsReturn")>]
+        member __.AcceptsReturn (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (TextBox.AcceptsReturnProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("acceptsTab")>]
+        member __.AcceptsTab (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (TextBox.AcceptsTabProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("caretIndex")>]
+        member __.CaretIndex (view: ViewElement, value: int) : ViewElement =
+            let attr = Attr.createProperty (TextBox.CaretIndexProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("isReadOnly")>]
+        member __.IsReadOnly (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (TextBox.IsReadOnlyProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("passwordChar")>]
+        member __.PasswordChar (view: ViewElement, value: char) : ViewElement =
+            let attr = Attr.createProperty (TextBox.PasswordCharProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("selectionStart")>]
+        member __.SelectionStart (view: ViewElement, value: int) : ViewElement =
+            let attr = Attr.createProperty (TextBox.SelectionStartProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("selectionEnd")>]
+        member __.SelectionEnd (view: ViewElement, value: int) : ViewElement =
+            let attr = Attr.createProperty (TextBox.SelectionEndProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("text")>]
+        member __.Text (view: ViewElement, value: string) : ViewElement=
+            let attr = Attr.createProperty (TextBox.TextProperty, value)         
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("textAlignment")>]
+        member __.TextAlignment (view: ViewElement, value: Avalonia.Media.TextAlignment) : ViewElement =
+            let attr = Attr.createProperty (TextBox.TextAlignmentProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("textWrapping")>]
+        member __.TextWrapping (view: ViewElement, value: Avalonia.Media.TextWrapping) : ViewElement =
+            let attr = Attr.createProperty (TextBox.TextWrappingProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("watermark")>]
+        member __.Watermark (view: ViewElement, value: string) : ViewElement =
+            let attr = Attr.createProperty (TextBox.WatermarkProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("useFloatingWatermark")>]
+        member __.UseFloatingWatermark (view: ViewElement, value: bool) : ViewElement =
+            let attr = Attr.createProperty (TextBox.UseFloatingWatermarkProperty, value)
+            { view with Attrs = attr :: view.Attrs }
+
+        [<CustomOperation("newLine")>]
+        member __.NewLine (view: ViewElement, value: string) : ViewElement =
+            let attr = Attr.createProperty (TextBox.NewLineProperty, value)
+            { view with Attrs = attr :: view.Attrs }
 
     let stackpanel = StackPanelBuilder<StackPanel>()
     let dockpanel = DockPanelBuilder<DockPanel>()
 
     let button = ButtonBuilder<Button>()
     let textblock = TextBlockBuilder<TextBlock>()
+    let textbox = TextBoxBuilder<TextBox>()
 
 
