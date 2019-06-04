@@ -18,7 +18,7 @@ type HostWindow() =
             match lastViewElement with
             | Some last ->
                 let view = this.Content :?> IControl
-                let delta = VirtualDom.Differ.diff(last, viewElement)
+                let delta = VirtualDom.Differ.diff(viewElement, last)
                 VirtualDom.Patcher.patch(view, delta)
             | None ->
                 this.Content <- VirtualDom.createView viewElement

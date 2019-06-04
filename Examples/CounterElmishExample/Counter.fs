@@ -45,6 +45,7 @@ module Counter =
                 button [
                     click (fun sender args ->
                         dispatch Increment
+                        args.Handled <- true
                     )
                     content (textblock [
                         text "click to increment"
@@ -53,6 +54,7 @@ module Counter =
                 button [
                     click (fun sender args ->
                         dispatch Decrement
+                        args.Handled <- true
                     )
                     content (textblock [
                         text "click to decrement"
