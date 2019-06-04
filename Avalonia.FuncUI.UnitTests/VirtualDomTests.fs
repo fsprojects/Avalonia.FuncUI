@@ -5,6 +5,10 @@ open Avalonia.FuncUI.Core.Model
 open Avalonia.FuncUI.Core.VirtualDom
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Core
+open System
+open Microsoft.FSharp.Quotations
+open System.Linq.Expressions
+open System
 
 module VirtualDomTests =
 
@@ -193,3 +197,31 @@ module VirtualDomTests =
             let result = VirtualDom.Differ.diffAttrs last next
             Assert.Equal(next.Head, result.Head)
 
+
+
+module FuncCompare = 
+
+    type Msg = Increment | Decrement
+
+    let dispatch (msg : Msg) = ()
+
+    [<Fact>]
+    let ``Comparing funcs`` () =
+
+        let getIL (func: 'a -> 'b) =
+            let t = func.GetType()
+            let m = t.GetMethod("Invoke")
+            let b = m.GetMethodBody()
+            b.GetILAsByteArray()
+
+        let compare (funcA: 'a -> 'b) (funcB: 'c -> 'd) : bool=
+            let bytesA = getIL funcA
+            let bytesB = getIL funcB
+            let spanA = ReadOnlySpan(bytesA)
+            let spanB = ReadOnlySpan(bytesB)
+            spanA.SequenceEqual(spanB)
+
+        let a = fun () -> dispatch Increment
+        let b = fun () -> dispatch Increment
+
+        Assert.True(compare a b)
