@@ -3,11 +3,13 @@
 open Avalonia.FuncUI.Core
 open Avalonia.Controls
 open Avalonia.Media
+open Avalonia.FuncUI
 
 module Counter =
     open Avalonia.Layout
-    open Avalonia.FuncUI.Core.View
-    open Avalonia.FuncUI.Core.Attr
+    open Avalonia.FuncUI.Core.Types
+    open Avalonia.FuncUI.View
+    open Avalonia.FuncUI.Attr
 
     type CounterState = {
         count : int
@@ -26,7 +28,7 @@ module Counter =
         | Increment -> { state with count =  state.count + 1 }
         | Decrement -> { state with count =  state.count - 1 }
     
-    let view (state: CounterState) (dispatch): ViewElement =
+    let view (state: CounterState) (dispatch): View =
 
         let foregroundColor = 
             if state.count < 0 then SolidColorBrush(Color.Parse("#e74c3c")).ToImmutable()
@@ -34,20 +36,24 @@ module Counter =
             else SolidColorBrush(Colors.White).ToImmutable()
 
         stackpanel [
-            background foregroundColor
+            //background foregroundColor
             orientation Orientation.Horizontal
             children [
                 textblock [
                     text (sprintf "the count is %i" state.count)
                 ]
                 button [
-                    click (fun args -> dispatch Increment)
+                    click (fun sender args ->
+                        dispatch Increment
+                    )
                     content (textblock [
                         text "click to increment"
                     ])
                 ]
                 button [
-                    click (fun args -> dispatch Decrement)
+                    click (fun sender args ->
+                        dispatch Decrement
+                    )
                     content (textblock [
                         text "click to decrement"
                     ])

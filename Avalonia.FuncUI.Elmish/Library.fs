@@ -2,11 +2,11 @@
 
 open Avalonia.FuncUI.Hosts
 open Elmish
-open Avalonia.FuncUI.Core
+open Avalonia.FuncUI.Core.Types
 
 module Program =
 
-    let withHost (host: IViewHost) (program: Program<'arg, 'model, 'msg, ViewElement>) =
+    let withHost (host: IViewHost) (program: Program<'arg, 'model, 'msg, View>) =
         let setState state dispatch =
             let view = ((Program.view program) state dispatch)
             host.UpdateView view

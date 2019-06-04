@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <Compile Include="Core\Lib.fs" />
-    <Compile Include="Core\View.fs" />
-    <Compile Include="Hosts.fs" />
+    <Compile Include="Core\Types.fs" />
+    <Compile Include="Core\VirtualDom.fs" />
     <Compile Include="Helpers.fs" />
+    <Compile Include="View.fs" />
+    <Compile Include="Hosts.fs" />
   </ItemGroup>
 
   <ItemGroup>
