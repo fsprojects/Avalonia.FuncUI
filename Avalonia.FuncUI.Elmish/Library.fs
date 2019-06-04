@@ -3,7 +3,6 @@
 open Avalonia.FuncUI.Hosts
 open Elmish
 open Avalonia.FuncUI.Core
-open Avalonia.FuncUI.Core.Model
 
 module Program =
 

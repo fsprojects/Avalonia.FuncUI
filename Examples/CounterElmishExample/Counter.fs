@@ -1,13 +1,13 @@
 ﻿namespace CounterElmishSample
 
 open Avalonia.FuncUI.Core
-open Avalonia.FuncUI.Builders
 open Avalonia.Controls
-open Avalonia.FuncUI.Core.Model
 open Avalonia.Media
 
 module Counter =
     open Avalonia.Layout
+    open Avalonia.FuncUI.Core.View
+    open Avalonia.FuncUI.Core.Attr
 
     type CounterState = {
         count : int
@@ -33,27 +33,24 @@ module Counter =
             else if state.count > 0 then SolidColorBrush(Color.Parse("#27ae60")).ToImmutable()
             else SolidColorBrush(Colors.White).ToImmutable()
 
-        dockpanel {
-            lastChildFill true
+        stackpanel [
+            background foregroundColor
+            orientation Orientation.Horizontal
             children [
-                button {
-                    dockpanel_dock Dock.Bottom
-                    contentView (textblock { text "Increment" })
-                    command (Command.from (fun _ -> dispatch Msg.Increment))
-                };
-                button {
-                    dockpanel_dock Dock.Bottom
-                    contentView (textblock { text "Decrement" })
-                    command (Command.from (fun _ -> dispatch Msg.Decrement))
-                };
-                textblock {
-                    dockpanel_dock Dock.Top
-                    text (sprintf "Count: %i" state.count)
-                    fontSize 20.0
-                    foreground foregroundColor
-                    verticalAlignment VerticalAlignment.Center
-                    horizontalAlignment HorizontalAlignment.Center
-                }
-                
+                textblock [
+                    text (sprintf "the count is %i" state.count)
+                ]
+                button [
+                    click (fun args -> dispatch Increment)
+                    content (textblock [
+                        text "click to increment"
+                    ])
+                ]
+                button [
+                    click (fun args -> dispatch Decrement)
+                    content (textblock [
+                        text "click to decrement"
+                    ])
+                ]
             ]
-        }
+        ]       
