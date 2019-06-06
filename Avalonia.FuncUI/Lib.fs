@@ -1,4 +1,4 @@
-﻿namespace Avalonia.FuncUI.Core.Lib
+﻿namespace Avalonia.FuncUI.Lib
 
 [<RequireQualifiedAccess>]
 module Func =

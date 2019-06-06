@@ -1,8 +1,9 @@
-﻿namespace Avalonia.FuncUI.Core
+﻿namespace Avalonia.FuncUI
 
 open System
 open System.Reflection
-open Avalonia.FuncUI.Core.Lib
+open Avalonia.FuncUI
+open Avalonia.FuncUI.Lib
 
 module internal rec VirtualDom =
     open Types
@@ -66,7 +67,6 @@ module internal rec VirtualDom =
                 | Event delta -> AttrDelta.EventDelta (EventAttrDelta.From delta)
                 | Content delta -> AttrDelta.ContentDelta (ContentAttrDelta.From delta)
                 
-
         type ViewDelta =
             {
                 ViewType : Type
@@ -77,7 +77,6 @@ module internal rec VirtualDom =
                     ViewType = view.ViewType
                     Attrs = view.Attrs |> List.map AttrDelta.From
                 }
-
 
     module Differ =
         open Delta

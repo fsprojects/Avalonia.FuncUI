@@ -1,13 +1,7 @@
 ﻿namespace Avalonia.FuncUI.UnitTests
 
 open Xunit
-open Avalonia.FuncUI
-open Avalonia.FuncUI.Core
 open System
-open Microsoft.FSharp.Quotations
-open System.Linq.Expressions
-open System
-open System.Reflection
 
 module FuncCompare = 
 

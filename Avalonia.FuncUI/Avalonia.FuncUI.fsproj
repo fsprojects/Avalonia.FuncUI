@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Core\Lib.fs" />
-    <Compile Include="Core\Types.fs" />
-    <Compile Include="Core\VirtualDom.fs" />
+    <Compile Include="Lib.fs" />
+    <Compile Include="Types.fs" />
+    <Compile Include="VirtualDom.fs" />
     <Compile Include="Helpers.fs" />
     <Compile Include="View.fs" />
     <Compile Include="Hosts.fs" />

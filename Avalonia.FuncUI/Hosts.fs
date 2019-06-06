@@ -1,9 +1,9 @@
 ﻿namespace rec Avalonia.FuncUI.Hosts
 
 open Avalonia.Controls
-open Avalonia.FuncUI.Core
-open Avalonia.FuncUI.Core.Types
-open Avalonia.FuncUI.Core.VirtualDom.Delta
+open Avalonia.FuncUI.Types
+open Avalonia.FuncUI
+open Avalonia.FuncUI.VirtualDom.Delta
 
 type IViewHost =
     abstract member UpdateView: View -> unit

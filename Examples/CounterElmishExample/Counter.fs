@@ -1,14 +1,12 @@
 ﻿namespace CounterElmishSample
 
-open Avalonia.FuncUI.Core
 open Avalonia.Controls
 open Avalonia.Media
-open Avalonia.FuncUI
 open Avalonia.FuncUI.View
 
 module Counter =
     open Avalonia.Layout
-    open Avalonia.FuncUI.Core.Types
+    open Avalonia.FuncUI.Types
 
     type CounterState = {
         count : int

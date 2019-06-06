@@ -2,7 +2,7 @@
 
 open Avalonia.FuncUI.Hosts
 open Elmish
-open Avalonia.FuncUI.Core.Types
+open Avalonia.FuncUI.Types
 
 module Program =
 

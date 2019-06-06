@@ -1,4 +1,4 @@
-﻿namespace Avalonia.FuncUI.Core
+﻿namespace Avalonia.FuncUI
 
 open System
 

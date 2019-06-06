@@ -1,10 +1,9 @@
 ﻿namespace rec Avalonia.FuncUI
 
-open Avalonia.FuncUI.Core
 open Avalonia.Controls
 open System
 open Types
-open Avalonia.FuncUI.Core.Lib
+open Avalonia.FuncUI.Lib
 
 type TypedAttr<'t> =
     | Property of PropertyAttr
