@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -9,7 +9,6 @@
 
   <ItemGroup>
     <Compile Include="VirtualDomTests.fs" />
-    <Compile Include="BuildersTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

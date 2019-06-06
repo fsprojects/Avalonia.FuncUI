@@ -26,10 +26,26 @@ module rec Types =
         | Single of View option
         | Multiple of View list
 
+    type Lifecycle = OnCreate | OnUpdate
+
+    [<CustomEquality; NoComparison>]
+    type LifecylceAttr =
+        {
+            Lifecylce : Lifecycle
+            Func : obj -> unit
+        }
+        with 
+            override this.GetHashCode() = 
+                this.Lifecylce.GetHashCode()
+
+            override this.Equals other =
+                this.GetHashCode() = other.GetHashCode()
+            
     type Attr =
         | Property of PropertyAttr
         | Event of EventAttr
         | Content of ContentAttr
+        | Lifecycle of LifecylceAttr
 
     type View =
         {

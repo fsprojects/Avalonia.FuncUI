@@ -299,11 +299,9 @@ module internal rec VirtualDom =
                 let eventInfo = view.GetType().GetEvent(attr.Name)
 
                 if (attr.OldValue <> null) then
-                    printfn "removing handler (before %i)" (attr.OldValue.GetInvocationList().Length)
                     eventInfo.RemoveEventHandler(view, attr.OldValue)
 
                 if (attr.NewValue <> null) then
-                    printfn "adding handler (before %i)" (attr.NewValue.GetInvocationList().Length)
                     eventInfo.AddEventHandler(view, attr.NewValue)
                     
             let patchContentSingle (view: Avalonia.Controls.IControl) (prop: PropertyInfo) (viewElement: ViewDelta option) =

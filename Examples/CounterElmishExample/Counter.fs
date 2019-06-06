@@ -4,12 +4,11 @@ open Avalonia.FuncUI.Core
 open Avalonia.Controls
 open Avalonia.Media
 open Avalonia.FuncUI
+open Avalonia.FuncUI.View
 
 module Counter =
     open Avalonia.Layout
     open Avalonia.FuncUI.Core.Types
-    open Avalonia.FuncUI.View
-    open Avalonia.FuncUI.Attr
 
     type CounterState = {
         count : int

@@ -4,44 +4,84 @@ open Avalonia.FuncUI.Core
 open Avalonia.Controls
 open System
 open Types
+open Avalonia.FuncUI.Core.Lib
 
 type TypedAttr<'t> =
     | Property of PropertyAttr
     | Event of EventAttr
     | Content of ContentAttr
+    | Lifecycle of LifecylceAttr
 
 module Attr =
     open Types
     open Avalonia.Media
     open Avalonia.Interactivity
-    
-    let inline background<'T when 'T : (member set_Background : IBrush -> unit)>(brush: IBrush) : TypedAttr<'T> =
-        TypedAttr<_>.Property { Name = "Background"; Value = brush }
 
-    let inline text<'T when 'T : (member set_Text : string -> unit)>(text: string) : TypedAttr<'T> =
-        TypedAttr<_>.Property { Name = "Text"; Value = text }
 
-    let inline orientation<'T when 'T : (member set_Orientation : Orientation -> unit)>(orientation: Orientation) : TypedAttr<'T> =
-        TypedAttr<_>.Property { Name = "Orientation"; Value = orientation }
-
-    let inline children<'T when 'T : (member get_Children : unit -> Controls)>(children: View list) : TypedAttr<'T> =
-        TypedAttr<_>.Content {
-            Name = "Children"
-            Content = (ViewContent.Multiple children)
-        }
-
-    let inline content<'T when 'T : (member set_Content : IControl -> unit)>(content: View) : TypedAttr<'T> =
-        TypedAttr<_>.Content {
-            Name = "Content"
-            Content = (ViewContent.Single (Some content))
-        }
-    
-    let inline click<'T when 'T : (member add_Click : EventHandler<RoutedEventArgs> -> unit)>(click: obj -> RoutedEventArgs -> unit) : TypedAttr<'T> =
-        TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<RoutedEventArgs>(click)}
 
 module View =
     open Types
 
+    [<AutoOpen>]
+    module Attr =
+    
+        module Lifecycle =
+    
+            (* Lifecycle on create *)
+            let viewOnCreate<'T>(func: obj -> unit) : TypedAttr<'T> =
+                TypedAttr<_>.Lifecycle {
+                    Lifecylce = Lifecycle.OnCreate
+                    Func = func
+                }
+    
+            (* Lifecycle on update *)
+            let viewOnUpdate<'T>(func: obj -> unit) : TypedAttr<'T> =
+                TypedAttr<_>.Lifecycle {
+                    Lifecylce = Lifecycle.OnUpdate
+                    Func = func
+                }
+
+        let inline background<'T when 'T : (member set_Background : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Background"; Value = brush }
+
+        let inline text<'T when 'T : (member set_Text : string -> unit)>(text: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Text"; Value = text }
+
+        let inline orientation<'T when 'T : (member set_Orientation : Orientation -> unit)>(orientation: Orientation) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Orientation"; Value = orientation }
+
+        let inline children<'T when 'T : (member get_Children : unit -> Controls)>(children: View list) : TypedAttr<'T> =
+            TypedAttr<_>.Content {
+                Name = "Children"
+                Content = (ViewContent.Multiple children)
+            }
+
+        let inline content<'T when 'T : (member set_Content : IControl -> unit)>(content: View) : TypedAttr<'T> =
+            TypedAttr<_>.Content {
+                Name = "Content"
+                Content = (ViewContent.Single (Some content))
+            }
+    
+        let inline click<'T when 'T : (member add_Click : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(click: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(click)}
+             
+    module Lazy =
+        // TODO: Check if using a mutable hash map makes a bug difference
+        let private cache = ref Map.empty
+
+        let viewLazy (state: 'state) (dispatch: 'dispatch) (func: 'state -> 'dispatch -> View) : View =
+            let hash (state: 'state, func: 'state -> 'dispatch -> View) : int =
+                Tuple(state, Func.hashMethodBody func).GetHashCode()
+
+            let key = hash(state, func)
+
+            match (!cache).TryFind key with
+            | Some cached -> cached
+            | None ->
+                let computedValue = func state dispatch
+                cache := (!cache).Add (key, computedValue)
+                computedValue
+                
     let private create<'t>(attrs: TypedAttr<'t> list) =
         let mappedAttrs =
             attrs |> List.map (fun attr ->
