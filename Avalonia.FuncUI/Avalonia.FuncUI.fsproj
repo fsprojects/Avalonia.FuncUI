@@ -5,12 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Lib.fs" />
-    <Compile Include="Types.fs" />
-    <Compile Include="VirtualDom.fs" />
-    <Compile Include="View.fs" />
+    <Compile Include="Core\Lib.fs" />
+    <Compile Include="Core\Types.fs" />
+    <Compile Include="Core\VirtualDom.fs" />
+    <Compile Include="DSL.base.fs" />
+    <Compile Include="DSL.views.fs" />
+    <Compile Include="DSL.attrs.fs" />
     <Compile Include="Hosts.fs" />
-    <Compile Include="Bindings.fs" />
   </ItemGroup>
 
   <ItemGroup>

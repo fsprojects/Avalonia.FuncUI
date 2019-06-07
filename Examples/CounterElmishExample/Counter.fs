@@ -3,8 +3,7 @@
 open Avalonia.Controls
 open Avalonia.Media
 open Avalonia.FuncUI.Types
-open Avalonia.FuncUI.Views
-open Avalonia.FuncUI.View.Lifecycle
+open Avalonia.FuncUI
 
 module Counter =
 
@@ -26,23 +25,27 @@ module Counter =
         | Decrement -> { state with count =  state.count - 1 }
     
     let view (state: CounterState) (dispatch): View =
-        stackpanel [
-            orientation Orientation.Horizontal
-            children [
-                textblock [
-                    text (sprintf "the count is %i" state.count)
+        Views.stackpanel [
+            Attrs.orientation Orientation.Horizontal
+            Attrs.children [
+                Views.textblock [
+                    Attrs.text (sprintf "the count is %i" state.count)
                 ]
-                button [
-                    click (fun sender args -> dispatch Increment)
-                    content (textblock [
-                        text "click to increment"
-                    ])
+                Views.button [
+                    Attrs.click (fun sender args -> dispatch Increment)
+                    Attrs.content (
+                        Views.textblock [
+                            Attrs.text "click to increment"
+                        ]
+                    )
                 ]
-                button [
-                    click (fun sender args -> dispatch Decrement)
-                    content (textblock [
-                        text "click to decrement"
-                    ])
+                Views.button [
+                    Attrs.click (fun sender args -> dispatch Decrement)
+                    Attrs.content (
+                        Views.textblock [
+                            Attrs.text "click to decrement"
+                        ]
+                    )
                 ]
             ]
         ]       
