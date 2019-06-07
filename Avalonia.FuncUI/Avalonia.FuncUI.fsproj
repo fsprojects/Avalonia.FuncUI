@@ -8,9 +8,9 @@
     <Compile Include="Lib.fs" />
     <Compile Include="Types.fs" />
     <Compile Include="VirtualDom.fs" />
-    <Compile Include="Helpers.fs" />
     <Compile Include="View.fs" />
     <Compile Include="Hosts.fs" />
+    <Compile Include="Bindings.fs" />
   </ItemGroup>
 
   <ItemGroup>
