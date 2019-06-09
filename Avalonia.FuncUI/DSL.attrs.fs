@@ -29,6 +29,12 @@ module DSL_Attrs =
                 Name = "Content"
                 Content = (ViewContent.Single (Some content))
             }
+
+        static member inline items<'a, 'T when 'T : (member set_Items : unit -> System.Collections.Generic.IEnumerable<'a>)>(items: 'a list) : TypedAttr<'T> =
+            TypedAttr<_>.Property {
+                Name = "Items"
+                Value = items
+            }
     
         static member inline click<'T when 'T : (member add_Click : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(click: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
                 TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(click)}
