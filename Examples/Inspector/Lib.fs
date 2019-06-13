@@ -34,10 +34,11 @@ module Analyzer =
         ValueType : Type
         HasGet : bool
         HasSet : bool
+        Parent : Type list
     }
 
     let findAllProperties (): Property list =
-        let set = System.Collections.Generic.HashSet<Property>()
+        let set = System.Collections.Concurrent.ConcurrentDictionary<(string * Type),Property>()
         let controls = findAllControls()
         
         for control in controls do
@@ -47,9 +48,20 @@ module Analyzer =
                     ValueType = propertyInfo.PropertyType
                     HasGet = propertyInfo.CanRead
                     HasSet = propertyInfo.CanWrite
+                    Parent = [ propertyInfo.DeclaringType ]
                 }
-                match not (set.Contains property) with
-                | true -> set.Add property |> ignore
-                | false -> ()
-                
-        List.ofSeq set
+
+                set.AddOrUpdate(
+                    (property.Name, property.ValueType),
+                    (fun key -> property),
+                    (fun key old ->
+                        if old.Parent |> List.contains propertyInfo.DeclaringType then
+                            old
+                        else
+                            { old with Parent = old.Parent @ property.Parent}
+                    )
+                ) |> ignore
+  
+        (set.ToArray())
+        |> List.ofArray
+        |> List.map (fun i -> i.Value)

@@ -10,7 +10,7 @@ module PropertyView =
 
     type State = {
         Name : string
-        ValueType : Type
+        PropertyValueType : Type
         HasGet : bool
         HasSet : bool
         Parent : Type list
@@ -23,12 +23,41 @@ module PropertyView =
                 // Name
                 Views.textblock [
                     Attrs.text state.Name
-                    Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
+                    Attrs.fontsize 14.0
+                    Attrs.foreground ((SolidColorBrush.Parse "#ecf0f1").ToImmutable())
+                ]
+                // Get, Set, Type
+                Views.stackpanel [
+                    Attrs.orientation Orientation.Horizontal
+                    Attrs.children [
+
+                        if state.HasGet then
+                            yield Views.textblock [
+                                Attrs.text "GET"
+                                Attrs.foreground ((SolidColorBrush.Parse "#27ae60").ToImmutable())
+                            ]
+
+                        if state.HasSet then
+                            yield Views.textblock [
+                                Attrs.text "SET"
+                                Attrs.foreground ((SolidColorBrush.Parse "#f39c12").ToImmutable())
+                            ]
+
+                        yield Views.textblock [
+                            Attrs.text state.PropertyValueType.Name
+                            Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
+                        ]              
+                    ]
                 ]
                 // Type
                 Views.textblock [
-                    Attrs.text state.Name
-                    Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
+                    Attrs.text 
+                        (
+                            let names = state.Parent |> List.map (fun i -> i.Name)
+                            String.Join ("; ", names)
+                        )
+
+                    Attrs.foreground ((SolidColorBrush.Parse "#bdc3c7").ToImmutable())
                 ]              
             ]
         ]
@@ -87,13 +116,16 @@ module InspectorView =
 
         let loadProperties() : PropertyView.State list =
             Analyzer.findAllProperties()
-            |> List.map (fun t -> {
-                Name = t.Name
-                ValueType = t.ValueType
-                HasGet = t.HasGet
-                HasSet = t.HasSet
-                Parent = []
-            })
+            |> List.map (fun t ->
+                {
+                    PropertyView.State.Name = t.Name;
+                    PropertyView.State.PropertyValueType = t.ValueType;
+                    PropertyView.State.HasGet = t.HasGet;
+                    PropertyView.State.HasSet = t.HasSet;
+                    PropertyView.State.Parent = t.Parent;
+                }
+            )
+            |> List.sortByDescending (fun t -> (t.Parent.Length, t.Name))
 
         match msg with
         | ShowControls ->

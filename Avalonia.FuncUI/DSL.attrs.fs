@@ -18,6 +18,9 @@ module DSL_Attrs =
         static member inline text<'T when 'T : (member set_Text : string -> unit)>(text: string) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Text"; Value = text }
 
+        static member inline fontsize<'T when 'T : (member set_FontSize : double -> unit)>(size: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FontSize"; Value = size }
+
         static member inline orientation<'T when 'T : (member set_Orientation : Orientation -> unit)>(orientation: Orientation) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Orientation"; Value = orientation }
 
