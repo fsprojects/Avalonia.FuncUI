@@ -5,6 +5,17 @@ open Avalonia.Media
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
 
+type CustomControl() =
+    inherit Control()
+
+    member val Background: IBrush = (SolidColorBrush.Parse("#440000") :> IBrush) with get, set
+
+[<AutoOpen>]
+module ViewExt =
+    type Views with
+        static member customControl (attrs: TypedAttr<CustomControl> list): View =
+            Views.create<CustomControl>(attrs)
+
 module Counter =
 
     type CounterState = {
@@ -28,6 +39,9 @@ module Counter =
         Views.stackpanel [
             Attrs.orientation Orientation.Horizontal
             Attrs.children [
+                Views.customControl [
+                    Attrs.background (SolidColorBrush.Parse("ff0000"))
+                ]
                 Views.textblock [
                     Attrs.text (sprintf "the count is %i" state.count)
                 ]
