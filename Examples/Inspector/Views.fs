@@ -10,7 +10,7 @@ module PropertyView =
 
     type State = {
         Name : string
-        Type : Type
+        ValueType : Type
         HasGet : bool
         HasSet : bool
         Parent : Type list
@@ -18,14 +18,17 @@ module PropertyView =
 
     let view (state: State) (dispatch): View =
         Views.stackpanel [
+            Attrs.background ((SolidColorBrush.Parse "#332980b9").ToImmutable())
             Attrs.children [
                 // Name
                 Views.textblock [
                     Attrs.text state.Name
+                    Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
                 ]
                 // Type
                 Views.textblock [
                     Attrs.text state.Name
+                    Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
                 ]              
             ]
         ]
@@ -40,14 +43,17 @@ module ControlView =
 
     let view (state: State) (dispatch): View =
         Views.stackpanel [
+            Attrs.background ((SolidColorBrush.Parse "#338e44ad").ToImmutable())
             Attrs.children [
                 // Name
                 Views.textblock [
                     Attrs.text state.Name
+                    Attrs.foreground ((SolidColorBrush.Parse "#8e44ad").ToImmutable())
                 ]
                 // Type
                 Views.textblock [
                     Attrs.text state.Name
+                    Attrs.foreground ((SolidColorBrush.Parse "#8e44ad").ToImmutable())
                 ]              
             ]
         ]
@@ -72,14 +78,36 @@ module InspectorView =
 
     type Msg =
     | ShowControls
+    | ShowProperties
 
     let update (msg: Msg) (state: InspectorState) : InspectorState =
         let loadControls() : ControlView.State list =
             Analyzer.findAllControls()
             |> List.map (fun t -> { Name = t.Name; Type = t })
 
+        let loadProperties() : PropertyView.State list =
+            Analyzer.findAllProperties()
+            |> List.map (fun t -> {
+                Name = t.Name
+                ValueType = t.ValueType
+                HasGet = t.HasGet
+                HasSet = t.HasSet
+                Parent = []
+            })
+
         match msg with
-        | ShowControls -> { state with Controls = loadControls() }
+        | ShowControls ->
+            {
+                state with
+                    Controls = loadControls();
+                    Perspective = Perspective.Controls
+            }
+        | ShowProperties ->
+            {
+                state with
+                    Properties = loadProperties();
+                    Perspective = Perspective.Properties
+            }
             
     
     let view (state: InspectorState) (dispatch): View =
@@ -94,12 +122,25 @@ module InspectorView =
                         ]
                     )
                 ]
+
+                Views.button [
+                    Attrs.click (fun sender args -> dispatch ShowProperties)
+                    Attrs.content (
+                        Views.textblock [
+                            Attrs.text "show properties"
+                        ]
+                    )
+                ]
+
                 Views.textblock [
-                    match state.Perspective with
-                    | Perspective.Controls ->
-                        yield Attrs.text (sprintf "%i Controls" state.Controls.Length)
+                    match state.Perspective with 
                     | Perspective.Properties ->
                         yield Attrs.text (sprintf "%i Properties" state.Properties.Length)
+                        yield Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
+                    | Perspective.Controls ->
+                        yield Attrs.text (sprintf "%i Controls" state.Controls.Length)
+                        yield Attrs.foreground ((SolidColorBrush.Parse "#8e44ad").ToImmutable())
+
                 ]
                 Views.scrollviewer [
                     Attrs.content (Views.stackpanel [

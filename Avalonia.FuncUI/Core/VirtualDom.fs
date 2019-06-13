@@ -214,7 +214,7 @@ module internal rec VirtualDom =
                     let merged =
                         nextList
                         |> List.mapi (fun index next -> 
-                            if index + 1 <= lastList.Length then
+                            if index + 1 < lastList.Length then
                                 Differ.diff(lastList.[index], next)
                             else
                                 ViewDelta.From next
@@ -348,7 +348,8 @@ module internal rec VirtualDom =
 
                     // remove elements if list is to long
                     if (index + 1) < controls.Count then
-                        controls.RemoveRange(index + 1, controls.Count - index + 1)
+                        let overLength = controls.Count - index
+                        controls.RemoveRange(index, overLength)
 
             let patchContent (view: Avalonia.Controls.IControl) (attr: ContentAttrDelta) : unit =
                 let prop = Reflection.findPropertyByName view attr.Name

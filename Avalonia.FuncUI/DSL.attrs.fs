@@ -12,6 +12,9 @@ module DSL_Attrs =
         static member inline background<'T when 'T : (member set_Background : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Background"; Value = brush }
 
+        static member inline foreground<'T when 'T : (member set_Foreground : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Foreground"; Value = brush }
+
         static member inline text<'T when 'T : (member set_Text : string -> unit)>(text: string) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Text"; Value = text }
 
