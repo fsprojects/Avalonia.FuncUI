@@ -23,3 +23,6 @@ module DSL_Views =
 
         static member dockpanel (attrs: TypedAttr<DockPanel> list): View =
             Views.create<DockPanel>(attrs)
+
+        static member scrollviewer (attrs: TypedAttr<ScrollViewer> list): View =
+            Views.create<ScrollViewer>(attrs)

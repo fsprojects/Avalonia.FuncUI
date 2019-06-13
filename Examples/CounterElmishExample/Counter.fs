@@ -8,7 +8,7 @@ open Avalonia.FuncUI
 type CustomControl() =
     inherit Control()
 
-    member val Background: IBrush = (SolidColorBrush.Parse("#440000") :> IBrush) with get, set
+    member val Text: string = "" with get, set
 
 [<AutoOpen>]
 module ViewExt =
@@ -36,11 +36,10 @@ module Counter =
         | Decrement -> { state with count =  state.count - 1 }
     
     let view (state: CounterState) (dispatch): View =
-        Views.stackpanel [
-            Attrs.orientation Orientation.Horizontal
+        Views.dockpanel [
             Attrs.children [
                 Views.customControl [
-                    Attrs.background (SolidColorBrush.Parse("ff0000"))
+                    Attrs.text "works"
                 ]
                 Views.textblock [
                     Attrs.text (sprintf "the count is %i" state.count)
