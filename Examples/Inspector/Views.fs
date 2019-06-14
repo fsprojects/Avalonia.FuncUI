@@ -5,6 +5,7 @@ open Avalonia.Media
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
 open System
+open System.Text
 
 module PropertyView =
 
@@ -44,7 +45,25 @@ module PropertyView =
                             ]
 
                         yield Views.textblock [
-                            Attrs.text state.PropertyValueType.Name
+                            Attrs.text
+                                (
+                                     let sb = StringBuilder()
+                                     sb.Append state.PropertyValueType.Name  |> ignore
+
+                                     if state.PropertyValueType.IsGenericType then
+                                         sb.Append "<" |> ignore
+                                         state.PropertyValueType.GenericTypeArguments |> Seq.iteri (fun index item -> 
+                                             if index = 0 then
+                                                 sb.Append item.Name |> ignore
+                                             else
+                                                 sb.Append ", "  |> ignore
+                                                 sb.Append item.Name  |> ignore
+                                             ()
+                                         ) 
+                                         sb.Append ">" |> ignore
+                                     
+                                     sb.ToString()
+                                )
                             Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
                         ]              
                     ]
@@ -53,7 +72,26 @@ module PropertyView =
                 Views.textblock [
                     Attrs.text 
                         (
-                            let names = state.Parent |> List.map (fun i -> i.Name)
+                            let names =
+                                state.Parent
+                                |> List.map (fun i ->
+                                    let sb = StringBuilder()
+                                    sb.Append i.Name  |> ignore
+
+                                    if i.IsGenericType then
+                                        sb.Append "<" |> ignore
+                                        i.GenericTypeArguments |> Seq.iteri (fun index item -> 
+                                            if index = 0 then
+                                                sb.Append item.Name |> ignore
+                                            else
+                                                sb.Append ", "  |> ignore
+                                                sb.Append item.Name  |> ignore
+                                            ()
+                                        ) 
+                                        sb.Append ">" |> ignore
+                                            
+                                    sb.ToString()
+                                )
                             String.Join ("; ", names)
                         )
 

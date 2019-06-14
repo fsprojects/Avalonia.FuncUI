@@ -75,6 +75,70 @@ module DSL_Attrs =
         static member inline contentTemplate<'T when 'T : (member set_ContentTemplate : Avalonia.Controls.Templates.IDataTemplate -> unit)>(template: Avalonia.Controls.Templates.IDataTemplate) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "ContentTemplate"; Value = template }
 
+        static member inline borderThickness<'T when 'T : (member set_BorderThickness : Avalonia.Thickness -> unit)>(value: Avalonia.Thickness) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "BorderThickness"; Value = value }
+
+        static member inline borderBrush<'T when 'T : (member set_BorderBrush : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "BorderBrush"; Value = brush }
+
+        static member inline viewportSize<'T when 'T : (member set_ViewportSize : double -> unit)>(size: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ViewportSize"; Value = size }
+
+        static member inline viewport<'T when 'T : (member set_Viewport : Avalonia.Size -> unit)>(size: Avalonia.Size) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Viewport"; Value = size }
+
+        static member inline useFloatingWatermark<'T when 'T : (member set_UseFloatingWatermark : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "UseFloatingWatermark"; Value = value }
+
+        static member inline topmost<'T when 'T : (member set_Topmost : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Topmost"; Value = value }
+
+        static member inline textWrapping<'T when 'T : (member set_TextWrapping : Avalonia.Media.TextWrapping -> unit)>(value: Avalonia.Media.TextWrapping) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "TextWrapping"; Value = value }
+
+        static member inline textAlignment<'T when 'T : (member set_TextAlignment : Avalonia.Media.TextAlignment -> unit)>(value: Avalonia.Media.TextAlignment) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "TextAlignment"; Value = value }
+
+        static member inline tabStripPlacement<'T when 'T : (member set_TabStripPlacement : Dock -> unit)>(value: Dock) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "TabStripPlacement"; Value = value }
+
+        static member inline showButtonSpinner<'T when 'T : (member set_ShowButtonSpinner : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ShowButtonSpinner"; Value = value }
+
+        static member inline selectionStart<'T when 'T : (member set_SelectionStart : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectionStart"; Value = value }
+
+        static member inline selectionMode<'T when 'T : (member set_SelectionMode : SelectionMode -> unit)>(mode: SelectionMode) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectionMode"; Value = mode }
+
+        static member inline selectionEnd<'T when 'T : (member set_SelectionEnd : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectionEnd"; Value = value }
+
+        static member inline selectedIndex<'T when 'T : (member set_SelectedIndex : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectedIndex"; Value = value }
+
+        static member inline selectedDate<'T when 'T : (member set_SelectedDate : Nullable<DateTime> -> unit)>(value: Nullable<DateTime>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectedDate"; Value = value }
+
+        static member inline selectedDate<'T when 'T : (member set_SelectedDate : Nullable<DateTime> -> unit)>(value: DateTime option) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectedDate"; Value = Option.toNullable value }
+
+        static member inline points<'T when 'T : (member set_Points : System.Collections.Generic.IList<Avalonia.Point> -> unit)>(value: System.Collections.Generic.IList<Avalonia.Point>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Points"; Value = value }
+
+        static member inline passwordChar<'T when 'T : (member set_PasswordChar : char -> unit)>(value: char) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "PasswordChar"; Value = value }
+
+        static member inline pageTransition<'T when 'T : (member set_PageTransition : Avalonia.Animation.IPageTransition -> unit)>(value: Avalonia.Animation.IPageTransition) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "PageTransition"; Value = value }
+
+        static member inline offset<'T when 'T : (member set_Offset : Avalonia.Vector -> unit)>(value: Avalonia.Vector) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Offset"; Value = value }
+
+        static member inline memberSelector<'T when 'T : (member set_MemberSelector : Avalonia.Controls.Templates.IMemberSelector -> unit)>(value: Avalonia.Controls.Templates.IMemberSelector) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MemberSelector"; Value = value }
+
+
 
 
 
