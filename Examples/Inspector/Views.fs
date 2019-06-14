@@ -24,7 +24,7 @@ module PropertyView =
                 // Name
                 Views.textblock [
                     Attrs.text state.Name
-                    Attrs.fontsize 14.0
+                    Attrs.fontSize 14.0
                     Attrs.foreground ((SolidColorBrush.Parse "#ecf0f1").ToImmutable())
                 ]
                 // Get, Set, Type
@@ -183,6 +183,9 @@ module InspectorView =
     let view (state: InspectorState) (dispatch): View =
         Views.dockpanel [
             Attrs.children [
+                Views.border [
+                     Attrs.cornerRadius (Avalonia.CornerRadius.Parse("1, 2, 3, 4"))               
+                ]
 
                 Views.button [
                     Attrs.click (fun sender args -> dispatch ShowControls)

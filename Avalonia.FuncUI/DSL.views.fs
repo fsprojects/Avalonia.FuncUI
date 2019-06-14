@@ -26,3 +26,6 @@ module DSL_Views =
 
         static member scrollviewer (attrs: TypedAttr<ScrollViewer> list): View =
             Views.create<ScrollViewer>(attrs)
+
+        static member border (attrs: TypedAttr<Border> list): View =
+            Views.create<Border>(attrs)

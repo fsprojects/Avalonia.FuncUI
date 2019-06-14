@@ -138,26 +138,326 @@ module DSL_Attrs =
         static member inline memberSelector<'T when 'T : (member set_MemberSelector : Avalonia.Controls.Templates.IMemberSelector -> unit)>(value: Avalonia.Controls.Templates.IMemberSelector) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "MemberSelector"; Value = value }
 
+        static member inline maxDropDownHeight<'T when 'T : (member set_MaxDropDownHeight : double -> unit)>(size: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MaxDropDownHeight"; Value = size }
 
+        static member inline itemsPanel<'T when 'T : (member set_ItemsPanel : ITemplate<IPanel> -> unit)>(size: ITemplate<IPanel>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ItemsPanel"; Value = size }
 
+        static member inline isVirtualized<'T when 'T : (member set_IsVirtualized : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsVirtualized"; Value = value }
 
+        static member inline isTodayHighlighted<'T when 'T : (member set_IsTodayHighlighted : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsTodayHighlighted"; Value = value }
+
+        static member inline isReadOnly<'T when 'T : (member set_IsReadOnly : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsReadOnly"; Value = value }
+
+        static member inline isOpen<'T when 'T : (member set_IsOpen : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsOpen"; Value = value }
+
+        static member inline isExpaneded<'T when 'T : (member set_IsExpaneded : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsExpaneded"; Value = value }
+
+        static member inline hotKey<'T when 'T : (member set_HotKey : Avalonia.Input.KeyGesture -> unit)>(value: Avalonia.Input.KeyGesture) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "HotKey"; Value = value }
+
+        static member inline headerBackground<'T when 'T : (member set_HeaderBackground : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "HeaderBackground"; Value = brush }
 
         static member inline foreground<'T when 'T : (member set_Foreground : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Foreground"; Value = brush }
 
-        static member inline fontsize<'T when 'T : (member set_FontSize : double -> unit)>(size: double) : TypedAttr<'T> =
+        static member inline fontWeight<'T when 'T : (member set_FontWeight : Avalonia.Media.FontWeight -> unit)>(weight: Avalonia.Media.FontWeight) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FontWeight"; Value = weight }
+
+        static member inline fontStyle<'T when 'T : (member set_FontStyle : Avalonia.Media.FontStyle -> unit)>(style: Avalonia.Media.FontStyle) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FontStyle"; Value = style }
+
+        static member inline fontSize<'T when 'T : (member set_FontSize : double -> unit)>(size: double) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "FontSize"; Value = size }
 
-        static member inline children<'T when 'T : (member get_Children : unit -> Controls)>(children: View list) : TypedAttr<'T> =
-            TypedAttr<_>.Content {
-                Name = "Children"
-                Content = (ViewContent.Multiple children)
-            }
+        static member inline fontFamily<'T when 'T : (member set_FontFamily : Avalonia.Media.FontFamily -> unit)>(value: Avalonia.Media.FontFamily) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FontFamily"; Value = value }
+
+        static member inline firstDayOfWeek<'T when 'T : (member set_FirstDayOfWeek : DayOfWeek -> unit)>(value: DayOfWeek) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FirstDayOfWeek"; Value = value }
+
+        static member inline extent<'T when 'T : (member set_Extent : Avalonia.Size -> unit)>(value: Avalonia.Size) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Extent"; Value = value }
+
+        static member inline displayDateStart<'T when 'T : (member set_DisplayDateStart : Nullable<DateTime> -> unit)>(value: Nullable<DateTime>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DisplayDateStart"; Value = value }
+
+        static member inline displayDateStart<'T when 'T : (member set_DisplayDateStart : Nullable<DateTime> -> unit)>(value: DateTime option) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DisplayDateStart"; Value = Option.toNullable value }
+
+        static member inline displayDateEnd<'T when 'T : (member set_DisplayDateEnd : Nullable<DateTime> -> unit)>(value: Nullable<DateTime>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DisplayDateEnd"; Value = value }
+
+        static member inline displayDateEnd<'T when 'T : (member set_DisplayDateEnd : Nullable<DateTime> -> unit)>(value: DateTime option) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DisplayDateEnd"; Value = Option.toNullable value }
+
+        static member inline displayDate<'T when 'T : (member set_DisplayDate : DateTime -> unit)>(value: DateTime) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DisplayDate"; Value = value }
+
+        // TODO: make more fsharp friendly
+        static member inline cornerRadius<'T when 'T : (member set_CornerRadius : Avalonia.CornerRadius -> unit)>(value: Avalonia.CornerRadius) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CornerRadius"; Value = value }
+
+        static member inline content<'T when 'T : (member set_Content : obj -> unit)>(content: obj) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Content"; Value = content }
+
+        static member inline content<'T when 'T : (member set_Content : string -> unit)>(content: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Content"; Value = content }
+
+        static member inline content<'T when 'T : (member set_Content : IControl -> unit)>(content: IControl) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Content"; Value = content }
 
         static member inline content<'T when 'T : (member set_Content : IControl -> unit)>(content: View) : TypedAttr<'T> =
             TypedAttr<_>.Content {
                 Name = "Content"
                 Content = (ViewContent.Single (Some content))
+            }
+
+        static member inline commandParameter<'T when 'T : (member set_CommandParameter : obj -> unit)>(value: obj) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CommandParameter"; Value = value }
+
+        static member inline command<'T when 'T : (member set_Command : System.Windows.Input.ICommand -> unit)>(value: System.Windows.Input.ICommand) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Command"; Value = value }
+
+        static member inline child<'T when 'T : (member set_Child : IControl -> unit)>(child: View) : TypedAttr<'T> =
+            TypedAttr<_>.Content {
+                Name = "Child"
+                Content = (ViewContent.Single (Some child))
+            }
+
+        static member inline child<'T when 'T : (member set_Child : IControl -> unit)>(child: IControl) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Child"; Value = child }
+
+        static member inline caretIndex<'T when 'T : (member set_CaretIndex : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CaretIndex"; Value = value }
+
+        static member inline buttonSpinnerLocation<'T when 'T : (member set_ButtonSpinnerLocation : Location -> unit)>(value: Location) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ButtonSpinnerLocation"; Value = value }
+
+        static member inline blackoutDates<'T when 'T : (member set_BlackoutDates : Avalonia.Controls.Primitives.CalendarBlackoutDatesCollection -> unit)>(value: Avalonia.Controls.Primitives.CalendarBlackoutDatesCollection) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "BlackoutDates"; Value = value }
+
+        static member inline autoScrollToSelectedItem<'T when 'T : (member set_AutoScrollToSelectedItem : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "AutoScrollToSelectedItem"; Value = value }
+
+        static member inline allowSpin<'T when 'T : (member set_AllowSpin : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "AllowSpin"; Value = value }
+
+        static member inline zIndex<'T when 'T : (member set_ZIndex : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ZIndex"; Value = value }
+
+        static member inline width<'T when 'T : (member set_Width : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Width"; Value = value }
+
+        static member inline height<'T when 'T : (member set_Height : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Height"; Value = value }
+
+        static member inline visibility<'T when 'T : (member set_Visibility : Avalonia.Controls.Primitives.ScrollBarVisibility -> unit)>(value: Avalonia.Controls.Primitives.ScrollBarVisibility) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Visibility"; Value = value }
+
+        static member inline verticalScrollBarVisibility<'T when 'T : (member set_VerticalScrollBarVisibility : Avalonia.Controls.Primitives.ScrollBarVisibility -> unit)>(value: Avalonia.Controls.Primitives.ScrollBarVisibility) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "VerticalScrollBarVisibility"; Value = value }
+
+        static member inline verticalOffset<'T when 'T : (member set_VerticalOffset : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "VerticalOffset"; Value = value }
+
+        static member inline verticalAlignment<'T when 'T : (member set_VerticalAlignment : Avalonia.Layout.VerticalAlignment -> unit)>(value: Avalonia.Layout.VerticalAlignment) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "VerticalAlignment"; Value = value }
+
+        static member inline valueMemberSelector<'T when 'T : (member set_ValueMemberSelector : Avalonia.Controls.Templates.IMemberSelector -> unit)>(value: Avalonia.Controls.Templates.IMemberSelector) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ValueMemberSelector"; Value = value }
+
+        static member inline valueMemberBinding<'T when 'T : (member set_ValueMemberBinding : Avalonia.Data.IBinding -> unit)>(value: Avalonia.Data.IBinding) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ValueMemberBinding"; Value = value }
+
+        static member inline valueBinding<'T when 'T : (member set_ValueBinding : Avalonia.Data.IBinding -> unit)>(value: Avalonia.Data.IBinding) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ValueBinding"; Value = value }
+
+        static member inline value<'T, 'value when 'T : (member set_Value : 'value -> unit)>(value: 'value) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Value"; Value = value }
+
+        static member inline validSpinDirection<'T when 'T : (member set_ValidSpinDirection : ValidSpinDirections -> unit)>(value: ValidSpinDirections) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ValidSpinDirection"; Value = value }
+
+        static member inline useLayoutRounding<'T when 'T : (member set_UseLayoutRounding : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "UseLayoutRounding"; Value = value }
+
+        static member inline transitions<'T when 'T : (member set_Transitions : Avalonia.Animation.Transitions -> unit)>(value: Avalonia.Animation.Transitions) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Transitions"; Value = value }
+
+        static member inline tickFrequency<'T when 'T : (member set_TickFrequency : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "TickFrequency"; Value = value }
+
+        static member inline thumb<'T when 'T : (member set_Thumb : Avalonia.Controls.Primitives.Thumb -> unit)>(value: Avalonia.Controls.Primitives.Thumb) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Thumb"; Value = value }
+
+        static member inline textFilter<'T when 'T : (member set_TextFilter : AutoCompleteFilterPredicate<string> -> unit)>(value: AutoCompleteFilterPredicate<string>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "TextFilter"; Value = value }
+
+        static member inline templatedParent<'T when 'T : (member set_TemplatedParent : Avalonia.Styling.ITemplatedControl -> unit)>(value: Avalonia.Styling.ITemplatedControl) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "TemplatedParent"; Value = value }
+
+        static member inline template<'T when 'T : (member set_Template : Avalonia.Controls.Templates.IControlTemplate -> unit)>(value: Avalonia.Controls.Templates.IControlTemplate) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Template"; Value = value }
+
+        static member inline tag<'T when 'T : (member set_Tag : obj -> unit)>(value: obj) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Tag"; Value = value }
+
+        static member inline styles<'T when 'T : (member set_Styles : Avalonia.Styling.Styles -> unit)>(value: Avalonia.Styling.Styles) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Styles"; Value = value }
+
+        static member inline strokeThickness<'T when 'T : (member set_StrokeThickness : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StrokeThickness"; Value = value }
+
+        static member inline strokeStartLineCap<'T when 'T : (member set_StrokeStartLineCap : Avalonia.Media.PenLineCap -> unit)>(value: Avalonia.Media.PenLineCap) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StrokeStartLineCap"; Value = value }
+
+        static member inline strokeJoin<'T when 'T : (member set_StrokeJoin : Avalonia.Media.PenLineJoin -> unit)>(value: Avalonia.Media.PenLineJoin) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StrokeJoin"; Value = value }
+
+        static member inline strokeEndLineCap<'T when 'T : (member set_StrokeEndLineCap : Avalonia.Media.PenLineCap -> unit)>(value: Avalonia.Media.PenLineCap) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StrokeEndLineCap"; Value = value }
+
+        static member inline strokeDashOffset<'T when 'T : (member set_StrokeDashOffset : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StrokeDashOffset"; Value = value }
+
+        static member inline strokeDashCap<'T when 'T : (member set_StrokeDashCap : Avalonia.Media.PenLineCap -> unit)>(value: Avalonia.Media.PenLineCap) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StrokeDashCap"; Value = value }
+
+        static member inline strokeDashArray<'T when 'T : (member set_StrokeDashArray : Avalonia.Collections.AvaloniaList<double> -> unit)>(value: Avalonia.Collections.AvaloniaList<double>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StrokeDashArray"; Value = value }
+
+        static member inline stroke<'T when 'T : (member set_Stroke : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Stroke"; Value = brush }
+
+        static member inline staysOpen<'T when 'T : (member set_StaysOpen : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StaysOpen"; Value = value }
+
+        static member inline startPoint<'T when 'T : (member set_StartPoint : Avalonia.Point -> unit)>(value: Avalonia.Point) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "StartPoint"; Value = value }
+
+        static member inline endPoint<'T when 'T : (member set_EndPoint : Avalonia.Point -> unit)>(value: Avalonia.Point) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "EndPoint"; Value = value }
+
+        static member inline spacing<'T when 'T : (member set_Spacing : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Spacing"; Value = value }
+
+        static member inline source<'T when 'T : (member set_Source : Avalonia.Media.Imaging.IBitmap -> unit)>(value: Avalonia.Media.Imaging.IBitmap) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Source"; Value = value }
+
+        static member inline smallChange<'T when 'T : (member set_SmallChange : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SmallChange"; Value = value }
+
+        static member inline showAccessKey<'T when 'T : (member set_ShowAccessKey : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ShowAccessKey"; Value = value }
+
+        static member inline selectionMode<'T when 'T : (member set_SelectionMode : CalendarSelectionMode -> unit)>(value: CalendarSelectionMode) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectionMode"; Value = value }
+
+        static member inline selectedDates<'T when 'T : (member set_SelectedDates : Avalonia.Controls.Primitives.SelectedDatesCollection -> unit)>(value: Avalonia.Controls.Primitives.SelectedDatesCollection) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectedDates"; Value = value }
+
+        static member inline selectedDateFormat<'T when 'T : (member set_SelectedDateFormat : DatePickerFormat -> unit)>(value: DatePickerFormat) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectedDateFormat"; Value = value }
+
+        static member inline selectedContentTemplate<'T when 'T : (member set_SelectedContentTemplate : Avalonia.Controls.Templates.IDataTemplate -> unit)>(value: Avalonia.Controls.Templates.IDataTemplate) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectedContentTemplate"; Value = value }
+
+        static member inline selectedContent<'T when 'T : (member set_SelectedContent : obj -> unit)>(value: obj) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SelectedContent"; Value = value }
+
+        static member inline searchText<'T when 'T : (member set_SearchText : string -> unit)>(value: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "SearchText"; Value = value }
+
+        static member inline scroll<'T when 'T : (member set_Scroll : Avalonia.Controls.Primitives.IScrollable -> unit)>(value: Avalonia.Controls.Primitives.IScrollable) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Scroll"; Value = value }
+
+        static member inline rows<'T when 'T : (member set_Rows : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Rows"; Value = value }
+
+        static member inline rowDefinitions<'T when 'T : (member set_RowDefinitions : RowDefinitions -> unit)>(value: RowDefinitions) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "RowDefinitions"; Value = value }
+
+        static member inline resources<'T when 'T : (member set_Resources : IResourceDictionary -> unit)>(value: IResourceDictionary) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Resources"; Value = value }
+
+        static member inline renderTransformOrigin<'T when 'T : (member set_RenderTransformOrigin : Avalonia.RelativePoint -> unit)>(value: Avalonia.RelativePoint) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "RenderTransformOrigin"; Value = value }
+
+        static member inline renderTransform<'T when 'T : (member set_RenderTransform : Avalonia.Media.Transform -> unit)>(value: Avalonia.Media.Transform) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "RenderTransform"; Value = value }
+
+        static member inline presenter<'T when 'T : (member set_Presenter : Avalonia.Controls.Presenters.IItemsPresenter -> unit)>(value: Avalonia.Controls.Presenters.IItemsPresenter) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Presenter"; Value = value }
+
+        static member inline placementTarget<'T when 'T : (member set_PlacementTarget : Control -> unit)>(value: Control) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "PlacementTarget"; Value = value }
+
+        static member inline placementMode<'T when 'T : (member set_PlacementMode : PlacementMode -> unit)>(value: PlacementMode) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "PlacementMode"; Value = value }
+
+        static member inline parsingNumberStyle<'T when 'T : (member set_ParsingNumberStyle : System.Globalization.NumberStyles -> unit)>(value: System.Globalization.NumberStyles) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ParsingNumberStyle"; Value = value }
+
+        static member inline owner<'T when 'T : (member set_Owner : Control -> unit)>(value: Control) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Owner"; Value = value }
+
+        static member inline opacityMask<'T when 'T : (member set_OpacityMask : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "OpacityMask"; Value = brush }
+
+        static member inline opacity<'T when 'T : (member set_Opacity : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Opacity"; Value = value }
+
+        static member inline obeyScreenEdges<'T when 'T : (member set_ObeyScreenEdges : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ObeyScreenEdges"; Value = value }
+      
+        static member inline newLine<'T when 'T : (member set_NewLine : string -> unit)>(value: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "NewLine"; Value = value }
+
+        static member inline name<'T when 'T : (member set_Name : string -> unit)>(value: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Name"; Value = value }
+
+        static member inline mode<'T when 'T : (member set_Mode : Avalonia.Controls.Remote.RemoteWidget.SizingMode -> unit)>(value: Avalonia.Controls.Remote.RemoteWidget.SizingMode) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Mode"; Value = value }
+
+        static member inline minimumPrefixLength<'T when 'T : (member set_MinimumPrefixLength : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MinimumPrefixLength"; Value = value }
+
+        static member inline minimumPopulateDelay<'T when 'T : (member set_MinimumPopulateDelay : TimeSpan -> unit)>(value: TimeSpan) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MinimumPopulateDelay"; Value = value }
+
+        static member inline minWidth<'T when 'T : (member set_MinWidth : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MinWidth"; Value = value }
+
+        static member inline minHeight<'T when 'T : (member set_MinHeight : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MinHeight"; Value = value }
+
+        static member inline maxWidth<'T when 'T : (member set_MaxWidth : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MaxWidth"; Value = value }
+
+        static member inline maxHeight<'T when 'T : (member set_MaxHeight : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "MaxHeight"; Value = value }
+
+        static member inline margin<'T when 'T : (member set_Margin : Avalonia.Thickness -> unit)>(value: Avalonia.Thickness) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Margin"; Value = value }
+
+        static member inline level<'T when 'T : (member set_Level : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Level"; Value = value }
+
+
+
+
+        static member inline children<'T when 'T : (member get_Children : unit -> Controls)>(children: View list) : TypedAttr<'T> =
+            TypedAttr<_>.Content {
+                Name = "Children"
+                Content = (ViewContent.Multiple children)
             }
 
         static member inline items<'a, 'T when 'T : (member set_Items : unit -> System.Collections.Generic.IEnumerable<'a>)>(items: 'a list) : TypedAttr<'T> =
