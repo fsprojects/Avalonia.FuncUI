@@ -1,8 +1,9 @@
 ﻿namespace Avalonia.FuncUI
 
 open Avalonia.Controls
-open System
 open Types
+open System
+open System.Threading
 
 [<AutoOpen>]
 module DSL_Attrs =
@@ -451,8 +452,159 @@ module DSL_Attrs =
         static member inline level<'T when 'T : (member set_Level : int -> unit)>(value: int) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Level"; Value = value }
 
+        static member inline layoutTransform<'T when 'T : (member set_LayoutTransform : Avalonia.Media.Transform -> unit)>(value: Avalonia.Media.Transform) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "LayoutTransform"; Value = value }
 
+        static member inline lastChildFill<'T when 'T : (member set_LastChildFill : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "LastChildFill"; Value = value }
 
+        static member inline largeChange<'T when 'T : (member set_LargeChange : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "LargeChange"; Value = value }
+
+        static member inline itemFilter<'T when 'T : (member set_ItemFilter : AutoCompleteFilterPredicate<obj> -> unit)>(value: AutoCompleteFilterPredicate<obj>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ItemFilter"; Value = value }
+
+        static member inline isVisible<'T when 'T : (member set_IsVisible : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsVisible"; Value = value }
+
+        static member inline isThreeState<'T when 'T : (member set_IsThreeState : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsThreeState"; Value = value }
+
+        static member inline isTextCompletionEnabled<'T when 'T : (member set_IsTextCompletionEnabled : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsTextCompletionEnabled"; Value = value }
+
+        static member inline isSubMenuOpen<'T when 'T : (member set_IsSubMenuOpen : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsSubMenuOpen"; Value = value }
+
+        static member inline isSnapToTickEnabled<'T when 'T : (member set_IsSnapToTickEnabled : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsSnapToTickEnabled"; Value = value }
+
+        static member inline isIntermediate<'T when 'T : (member set_IsIntermediate : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsIntermediate"; Value = value }
+
+        static member inline isHitTestVisible<'T when 'T : (member set_IsHitTestVisible : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsHitTestVisible"; Value = value }
+
+        static member inline isEnabled<'T when 'T : (member set_IsEnabled : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsEnabled"; Value = value }
+
+        static member inline isDefault<'T when 'T : (member set_IsDefault : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsDefault"; Value = value }
+
+        static member inline isChecked<'T when 'T : (member set_IsChecked : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsChecked"; Value = value }
+
+        static member inline interval<'T when 'T : (member set_Interval : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Interval"; Value = value }
+
+        static member inline increment<'T when 'T : (member set_Increment : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Increment"; Value = value }
+
+        // TODO: make less generic -> View, IControl, ... ?
+        static member inline icon<'T when 'T : (member set_Icon : obj -> unit)>(value: obj) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Icon"; Value = value }
+
+        static member inline horizontalScrollBarVisibility<'T when 'T : (member set_HorizontalScrollBarVisibility : Avalonia.Controls.Primitives.ScrollBarVisibility -> unit)>(value: Avalonia.Controls.Primitives.ScrollBarVisibility) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "HorizontalScrollBarVisibility"; Value = value }
+
+        static member inline horizontalOffset<'T when 'T : (member set_HorizontalOffset : double -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "HorizontalOffset"; Value = value }
+
+        static member inline horizontalAlignment<'T when 'T : (member set_HorizontalAlignment : Avalonia.Layout.HorizontalAlignment -> unit)>(value: Avalonia.Layout.HorizontalAlignment) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "HorizontalAlignment"; Value = value }
+
+        static member inline headerTemplate<'T when 'T : (member set_HeaderTemplate : Avalonia.Controls.Templates.IDataTemplate -> unit)>(value: Avalonia.Controls.Templates.IDataTemplate) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "HeaderTemplate"; Value = value }
+
+        static member inline groupName<'T when 'T : (member set_GroupName : string -> unit)>(value: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "GroupName"; Value = value }
+
+        static member inline formatString<'T when 'T : (member set_FormatString : string -> unit)>(value: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FormatString"; Value = value }
+
+        static member inline focusable<'T when 'T : (member set_Focusable : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Focusable"; Value = value }
+
+        static member inline focusAdorner<'T when 'T : (member set_FocusAdorner : ITemplate<IControl> -> unit)>(value: ITemplate<IControl>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FocusAdorner"; Value = value }
+
+        static member inline firstColumn<'T when 'T : (member set_FirstColumn : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FirstColumn"; Value = value }
+
+        static member inline filterMode<'T when 'T : (member set_FilterMode : AutoCompleteFilterMode -> unit)>(value: AutoCompleteFilterMode) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "FilterMode"; Value = value }
+
+        static member inline fill<'T when 'T : (member set_Fill : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Fill"; Value = brush }
+
+        static member inline expandDirection<'T when 'T : (member set_ExpandDirection : ExpandDirection -> unit)>(value: ExpandDirection) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ExpandDirection"; Value = value }
+
+        static member inline errorTemplate<'T when 'T : (member set_ErrorTemplate : Avalonia.Controls.Templates.IDataTemplate -> unit)>(value: Avalonia.Controls.Templates.IDataTemplate ) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ErrorTemplate"; Value = value }
+
+        static member inline drawing<'T when 'T : (member set_Drawing : Avalonia.Media.Drawing -> unit)>(value: Avalonia.Media.Drawing) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Drawing"; Value = value }
+
+        static member inline displayMode<'T when 'T : (member set_DisplayMode : CalendarMode -> unit)>(value: CalendarMode) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DisplayMode"; Value = value }
+
+        static member inline dependencyResolver<'T when 'T : (member set_DependencyResolver : Avalonia.IAvaloniaDependencyResolver -> unit)>(value: Avalonia.IAvaloniaDependencyResolver) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DependencyResolver"; Value = value }
+
+        static member inline delay<'T when 'T : (member set_Delay : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Delay"; Value = value }
+
+        static member inline dayTitleTemplate<'T when 'T : (member set_DayTitleTemplate : ITemplate<IControl> -> unit)>(value: ITemplate<IControl>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DayTitleTemplate"; Value = value }
+
+        static member inline dataContext<'T when 'T : (member set_DataContext : obj -> unit)>(value: obj) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "DataContext"; Value = value }
+
+        static member inline data<'T when 'T : (member set_Data : Avalonia.Media.Geometry -> unit)>(value: Avalonia.Media.Geometry) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Data"; Value = value }
+
+        static member inline customDateFormatString<'T when 'T : (member set_CustomDateFormatString : string -> unit)>(value: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CustomDateFormatString"; Value = value }
+
+        static member inline cursor<'T when 'T : (member set_Cursor : Avalonia.Input.Cursor -> unit)>(value: Avalonia.Input.Cursor) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Cursor"; Value = value }
+
+        static member inline cultureInfo<'T when 'T : (member set_CultureInfo : System.Globalization.CultureInfo -> unit)>(value: System.Globalization.CultureInfo) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CultureInfo"; Value = value }
+
+        static member inline contextMenu<'T when 'T : (member set_ContextMenu : ContextMenu -> unit)>(value: ContextMenu) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ContextMenu"; Value = value }
+
+        static member inline contentTransition<'T when 'T : (member set_ContentTransition : Avalonia.Animation.IPageTransition -> unit)>(value: Avalonia.Animation.IPageTransition) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ContentTransition"; Value = value }
+
+        static member inline columns<'T when 'T : (member set_Columns : int -> unit)>(value: int) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Columns"; Value = value }
+
+        static member inline columnDefinitions<'T when 'T : (member set_ColumnDefinitions : ColumnDefinitions -> unit)>(value: ColumnDefinitions) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ColumnDefinitions"; Value = value }
+
+        static member inline clock<'T when 'T : (member set_Clock : Avalonia.Animation.IClock -> unit)>(value: Avalonia.Animation.IClock) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Clock"; Value = value }
+
+        static member inline clipValueToMinMax<'T when 'T : (member set_ClipValueToMinMax : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ClipValueToMinMax"; Value = value }
+
+        static member inline clipToBounds<'T when 'T : (member set_ClipToBounds : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ClipToBounds"; Value = value }
+
+        static member inline clip<'T when 'T : (member set_Clip : Avalonia.Media.Geometry -> unit)>(value: Avalonia.Media.Geometry) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Clip"; Value = value }
+
+        static member inline clientSize<'T when 'T : (member set_ClientSize : Avalonia.Size -> unit)>(value: Avalonia.Size) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ClientSize"; Value = value }
+
+        static member inline clickMode<'T when 'T : (member set_ClickMode : ClickMode -> unit)>(value: ClickMode) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "ClickMode"; Value = value }
+
+        static member inline classes<'T when 'T : (member set_Classes : Classes -> unit)>(value: Classes) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Classes"; Value = value }
 
         static member inline children<'T when 'T : (member get_Children : unit -> Controls)>(children: View list) : TypedAttr<'T> =
             TypedAttr<_>.Content {
@@ -460,11 +612,28 @@ module DSL_Attrs =
                 Content = (ViewContent.Multiple children)
             }
 
-        static member inline items<'a, 'T when 'T : (member set_Items : unit -> System.Collections.Generic.IEnumerable<'a>)>(items: 'a list) : TypedAttr<'T> =
-            TypedAttr<_>.Property {
-                Name = "Items"
-                Value = items
-            }
+        static member inline canVerticallyScroll<'T when 'T : (member set_CanVerticallyScroll : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CanVerticallyScroll"; Value = value }
+
+        static member inline canHorizontallyScroll<'T when 'T : (member set_CanHorizontallyScroll : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CanHorizontallyScroll"; Value = value }
+
+        static member inline bounds<'T when 'T : (member set_Bounds : Avalonia.Rect -> unit)>(value: Avalonia.Rect) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Bounds"; Value = value }
+
+        static member inline asyncPopulator<'T when 'T : (member set_AsyncPopulator : Func<string, CancellationToken, System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<obj>>> -> unit)>(value: Func<string, CancellationToken, System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<obj>>>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "AsyncPopulator"; Value = value }
+            
+        static member inline accessKey<'T when 'T : (member set_AccessKey : char -> unit)>(value: char) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "AccessKey"; Value = value }
+
+        static member inline acceptsTab<'T when 'T : (member set_AcceptsTab : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "AcceptsTab"; Value = value }
+
+        static member inline acceptsReturn<'T when 'T : (member set_AcceptsReturn : bool -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "AcceptsReturn"; Value = value }
+
+
     
         static member inline click<'T when 'T : (member add_Click : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(click: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
-                TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(click)}
+            TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(click)}
