@@ -7,6 +7,93 @@ open Avalonia.FuncUI
 open System
 open System.Text
 
+module CustomViews =
+    
+    let typeView (t: Type) : View =
+        let sb = StringBuilder()
+        sb.Append t.Name |> ignore
+
+        if t.IsGenericType then
+            sb.Append "<" |> ignore
+            t.GenericTypeArguments |> Seq.iteri (fun index item -> 
+                if index = 0 then
+                    sb.Append item.Name |> ignore
+                else
+                    sb.Append ", "  |> ignore
+                    sb.Append item.Name  |> ignore
+                    ()
+            ) 
+            sb.Append ">" |> ignore
+
+        Views.textblock [
+            Attrs.text (sb.ToString())
+            Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
+        ]
+
+    let typeListView (t: Type list): View =
+        Views.stackpanel [
+            Attrs.orientation Orientation.Horizontal
+            Attrs.children [
+                for item in t do
+                    yield typeView item
+            ]
+        ]
+
+    let accessView (hasGet: bool, hasSet: bool) : View =
+        Views.stackpanel [
+            Attrs.orientation Orientation.Horizontal
+            Attrs.margin 2.0
+            Attrs.children [
+
+                if hasGet then
+                    yield Views.border [
+                        Attrs.margin 1.0
+                        Attrs.padding (2.0, 0.0)
+                        Attrs.cornerRadius 5.0
+                        Attrs.background "#27ae60"
+                        Attrs.child (
+                            Views.textblock [
+                                Attrs.text "GET"
+                            ]
+                        )
+                    ]
+
+                if hasSet then
+                    yield Views.border [
+                        Attrs.margin 1.0
+                        Attrs.padding (2.0, 0.0)
+                        Attrs.cornerRadius 5.0
+                        Attrs.background "#16a085"
+                        Attrs.child (
+                            Views.textblock [
+                                Attrs.text "SET"
+                            ]
+                        )
+                    ]
+            ]
+        ]
+
+    let containerView (title: string) (view: View) : View =
+        Views.border [
+            Attrs.background "#332980b9"
+            Attrs.margin 2.0
+            Attrs.padding 5.0
+            Attrs.cornerRadius 5.0
+            Attrs.child (
+                Views.stackpanel [
+                    Attrs.children [
+                        Views.textblock [
+                            Attrs.text title
+                            Attrs.fontSize 14.0
+                            Attrs.foreground "#ecf0f1"
+                        ]
+                        view
+                    ]
+                ]
+            )
+
+        ]
+
 module PropertyView =
 
     type State = {
@@ -18,131 +105,82 @@ module PropertyView =
     }
 
     let view (state: State) (dispatch): View =
-        Views.stackpanel [
-            Attrs.background ((SolidColorBrush.Parse "#332980b9").ToImmutable())
-            Attrs.children [
-                // Name
-                Views.textblock [
-                    Attrs.text state.Name
-                    Attrs.fontSize 14.0
-                    Attrs.foreground ((SolidColorBrush.Parse "#ecf0f1").ToImmutable())
-                ]
-                // Get, Set, Type
-                Views.stackpanel [
-                    Attrs.orientation Orientation.Horizontal
-                    Attrs.children [
-
-                        if state.HasGet then
-                            yield Views.textblock [
-                                Attrs.text "GET"
-                                Attrs.foreground ((SolidColorBrush.Parse "#27ae60").ToImmutable())
-                            ]
-
-                        if state.HasSet then
-                            yield Views.textblock [
-                                Attrs.text "SET"
-                                Attrs.foreground ((SolidColorBrush.Parse "#f39c12").ToImmutable())
-                            ]
-
-                        yield Views.textblock [
-                            Attrs.text
-                                (
-                                     let sb = StringBuilder()
-                                     sb.Append state.PropertyValueType.Name  |> ignore
-
-                                     if state.PropertyValueType.IsGenericType then
-                                         sb.Append "<" |> ignore
-                                         state.PropertyValueType.GenericTypeArguments |> Seq.iteri (fun index item -> 
-                                             if index = 0 then
-                                                 sb.Append item.Name |> ignore
-                                             else
-                                                 sb.Append ", "  |> ignore
-                                                 sb.Append item.Name  |> ignore
-                                             ()
-                                         ) 
-                                         sb.Append ">" |> ignore
-                                     
-                                     sb.ToString()
-                                )
-                            Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
-                        ]              
+        CustomViews.containerView state.Name (
+            Views.stackpanel [
+                Attrs.children [
+                    Views.stackpanel [
+                        Attrs.orientation Orientation.Horizontal
+                        Attrs.children [
+                            CustomViews.accessView (state.HasGet, state.HasSet)
+                            CustomViews.typeView state.PropertyValueType
+                        ]
                     ]
+                    CustomViews.typeListView state.Parent      
                 ]
-                // Type
-                Views.textblock [
-                    Attrs.text 
-                        (
-                            let names =
-                                state.Parent
-                                |> List.map (fun i ->
-                                    let sb = StringBuilder()
-                                    sb.Append i.Name  |> ignore
-
-                                    if i.IsGenericType then
-                                        sb.Append "<" |> ignore
-                                        i.GenericTypeArguments |> Seq.iteri (fun index item -> 
-                                            if index = 0 then
-                                                sb.Append item.Name |> ignore
-                                            else
-                                                sb.Append ", "  |> ignore
-                                                sb.Append item.Name  |> ignore
-                                            ()
-                                        ) 
-                                        sb.Append ">" |> ignore
-                                            
-                                    sb.ToString()
-                                )
-                            String.Join ("; ", names)
-                        )
-
-                    Attrs.foreground ((SolidColorBrush.Parse "#bdc3c7").ToImmutable())
-                ]              
             ]
-        ]
-
+        )
 
 module ControlView =
 
     type State = {
         Name : string
-        Type : Type
+        DefiningType : Type
     }
 
     let view (state: State) (dispatch): View =
-        Views.stackpanel [
-            Attrs.background ((SolidColorBrush.Parse "#338e44ad").ToImmutable())
-            Attrs.children [
-                // Name
-                Views.textblock [
-                    Attrs.text state.Name
-                    Attrs.foreground ((SolidColorBrush.Parse "#8e44ad").ToImmutable())
+        CustomViews.containerView state.Name (
+            Views.stackpanel [
+                Attrs.children [
+                    CustomViews.typeView state.DefiningType          
                 ]
-                // Type
-                Views.textblock [
-                    Attrs.text state.Name
-                    Attrs.foreground ((SolidColorBrush.Parse "#8e44ad").ToImmutable())
-                ]              
             ]
-        ]
+        )
 
+module ElementView =
+    
+    type State =
+    | Property of PropertyView.State
+    | Control of ControlView.State
+
+    let view (state: State) dispatch : View = 
+        match state with
+        | Property state -> PropertyView.view state dispatch
+        | Control state -> ControlView.view state dispatch
+
+module ElementsView =
+
+    type State = ElementView.State list
+
+    let view (state: State) dispatch : View =
+        Views.scrollviewer [
+            Attrs.content (
+                Views.stackpanel [
+                    Attrs.children [
+                        for element in state do
+                            yield ElementView.view element dispatch
+                    ]
+                ]
+            )
+        ]
 
 module InspectorView =
 
-    [<RequireQualifiedAccess>]
-    type Perspective = Controls | Properties
-
     type InspectorState = {
-        Properties: PropertyView.State list
-        Controls: ControlView.State list
-        Perspective: Perspective
+        Elements : ElementsView.State
     }
 
     let init () =
-        let loadControls() : ControlView.State list =
+        let controls : ElementView.State list =
             Analyzer.findAllControls()
-            |> List.map (fun t -> { Name = t.Name; Type = t })
+            |> List.map (fun t ->
+                {
+                    ControlView.State.Name = t.Name;
+                    ControlView.State.DefiningType = t
+                }
+            )
+            |> List.map (fun t -> ElementView.State.Control t)
 
-        let loadProperties() : PropertyView.State list =
+        let properties : ElementView.State list =
             Analyzer.findAllProperties()
             |> List.map (fun t ->
                 {
@@ -153,12 +191,10 @@ module InspectorView =
                     PropertyView.State.Parent = t.Parent;
                 }
             )
-            |> List.sortByDescending (fun t -> (t.Parent.Length, t.Name))
-    
+            |> List.map (fun t -> ElementView.State.Property t)
+
         {
-            Properties = loadProperties()
-            Controls = loadControls()
-            Perspective = Perspective.Controls
+            Elements = properties @ controls 
         }
 
     type Msg =
@@ -173,89 +209,15 @@ module InspectorView =
             Attrs.tabStripPlacement Dock.Left
             Attrs.items [
                 Views.tabItem [
-                    Attrs.header "Controls"
+                    Attrs.header "All"
                     Attrs.content (
-                        Views.stackpanel [
+                        Views.dockpanel [
                             Attrs.children [
-                                for control in state.Controls do
-                                    yield ControlView.view control dispatch                            
+                                ElementsView.view state.Elements dispatch
+                            
                             ]
                         ]
                     )
                 ]
-                Views.tabItem [
-                    Attrs.header "Properties"
-                    Attrs.content (
-                        Views.stackpanel [
-                            Attrs.children [
-                                for property in state.Properties do
-                                    yield PropertyView.view property dispatch                            
-                            ]
-                        ]
-                    )
-                ]
-                Views.tabItem [
-                    Attrs.header "Events"
-                    Attrs.content (
-                        Views.textblock [
-                            Attrs.text "Test 3"
-                        ]
-                    
-                    )
-                ]
-            ]
-        
+            ]      
         ]
-
-        (*
-        Views.dockpanel [
-            Attrs.children [
-                Views.border [
-                     Attrs.cornerRadius (Avalonia.CornerRadius.Parse("1, 2, 3, 4"))               
-                ]
-
-                Views.button [
-                    Attrs.click (fun sender args -> dispatch ShowControls)
-                    Attrs.content (
-                        Views.textblock [
-                            Attrs.text "show controls"
-                        ]
-                    )
-                ]
-
-                Views.button [
-                    Attrs.click (fun sender args -> dispatch ShowProperties)
-                    Attrs.content (
-                        Views.textblock [
-                            Attrs.text "show properties"
-                        ]
-                    )
-                ]
-
-                Views.textblock [
-                    match state.Perspective with 
-                    | Perspective.Properties ->
-                        yield Attrs.text (sprintf "%i Properties" state.Properties.Length)
-                        yield Attrs.foreground ((SolidColorBrush.Parse "#2980b9").ToImmutable())
-                    | Perspective.Controls ->
-                        yield Attrs.text (sprintf "%i Controls" state.Controls.Length)
-                        yield Attrs.foreground ((SolidColorBrush.Parse "#8e44ad").ToImmutable())
-
-                ]
-                Views.scrollviewer [
-                    Attrs.content (Views.stackpanel [
-                        Attrs.children [
-                            match state.Perspective with
-                            | Perspective.Controls -> 
-                                for control in state.Controls do
-                                    yield ControlView.view control dispatch
-
-                            | Perspective.Properties ->
-                                for control in state.Properties do
-                                    yield PropertyView.view control dispatch                       
-                        ]
-                    ])
-                ] 
-            ]
-        ]
-        *)

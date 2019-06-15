@@ -35,3 +35,9 @@ module DSL_Views =
 
         static member tabItem (attrs: TypedAttr<TabItem> list): View =
             Views.create<TabItem>(attrs)
+
+        static member textBox (attrs: TypedAttr<TextBox> list): View =
+            Views.create<TextBox>(attrs)
+
+        static member checkBox (attrs: TypedAttr<CheckBox> list): View =
+            Views.create<CheckBox>(attrs)

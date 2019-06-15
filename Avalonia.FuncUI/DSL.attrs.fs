@@ -19,6 +19,9 @@ module DSL_Attrs =
         static member inline background<'T when 'T : (member set_Background : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Background"; Value = brush }
 
+        static member inline background<'T when 'T : (member set_Background : Avalonia.Media.IBrush -> unit)>(brush: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Background"; Value = Avalonia.Media.SolidColorBrush.Parse(brush).ToImmutable() }
+
         static member inline watermark<'T when 'T : (member set_Watermark : string -> unit)>(text: string) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Watermark"; Value = text }
 
@@ -40,8 +43,14 @@ module DSL_Attrs =
         static member inline selectedItem<'T when 'T : (member set_SelectedItem : obj -> unit)>(item: obj) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "SelectedItem"; Value = item }
 
-        static member inline padding<'T when 'T : (member set_Padding : Avalonia.Thickness -> unit)>(padding: Avalonia.Thickness) : TypedAttr<'T> =
-            TypedAttr<_>.Property { Name = "Padding"; Value = padding }
+        static member inline padding<'T when 'T : (member set_Padding : Avalonia.Thickness -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Padding"; Value = Avalonia.Thickness(value) }
+
+        static member inline padding<'T when 'T : (member set_Padding : Avalonia.Thickness -> unit)>(horizontal: double, vertical: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Padding"; Value = Avalonia.Thickness(horizontal, vertical) }
+
+        static member inline padding<'T when 'T : (member set_Padding : Avalonia.Thickness -> unit)>(left: double, top: double, right: double, bottom: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Padding"; Value = Avalonia.Thickness(left, top, right, bottom) }
 
         static member inline minimum<'T when 'T : (member set_Minimum : double -> unit)>(minimum: double) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Minimum"; Value = minimum }
@@ -175,6 +184,9 @@ module DSL_Attrs =
         static member inline foreground<'T when 'T : (member set_Foreground : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Foreground"; Value = brush }
 
+        static member inline foreground<'T when 'T : (member set_Foreground : Avalonia.Media.IBrush -> unit)>(brush: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Foreground"; Value = Avalonia.Media.SolidColorBrush.Parse(brush).ToImmutable() }
+
         static member inline fontWeight<'T when 'T : (member set_FontWeight : Avalonia.Media.FontWeight -> unit)>(weight: Avalonia.Media.FontWeight) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "FontWeight"; Value = weight }
 
@@ -211,6 +223,15 @@ module DSL_Attrs =
         // TODO: make more fsharp friendly
         static member inline cornerRadius<'T when 'T : (member set_CornerRadius : Avalonia.CornerRadius -> unit)>(value: Avalonia.CornerRadius) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "CornerRadius"; Value = value }
+
+        static member inline cornerRadius<'T when 'T : (member set_CornerRadius : Avalonia.CornerRadius -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CornerRadius"; Value = Avalonia.CornerRadius(value) }
+
+        static member inline cornerRadius<'T when 'T : (member set_CornerRadius : Avalonia.CornerRadius -> unit)>(horizontal: double, vertical: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CornerRadius"; Value = Avalonia.CornerRadius(horizontal, vertical) }
+
+        static member inline cornerRadius<'T when 'T : (member set_CornerRadius : Avalonia.CornerRadius -> unit)>(left: double, top: double, right: double, bottom: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "CornerRadius"; Value = Avalonia.CornerRadius(left, top, right, bottom) }
 
         static member inline content<'T when 'T : (member set_Content : obj -> unit)>(content: obj) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Content"; Value = content }
@@ -454,6 +475,15 @@ module DSL_Attrs =
 
         static member inline margin<'T when 'T : (member set_Margin : Avalonia.Thickness -> unit)>(value: Avalonia.Thickness) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Margin"; Value = value }
+
+        static member inline margin<'T when 'T : (member set_Margin : Avalonia.Thickness -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Margin"; Value = Avalonia.Thickness(value) }
+
+        static member inline margin<'T when 'T : (member set_Margin : Avalonia.Thickness -> unit)>(horizontal: double, vertical: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Margin"; Value = Avalonia.Thickness(horizontal, vertical) }
+
+        static member inline margin<'T when 'T : (member set_Margin : Avalonia.Thickness -> unit)>(left: double, top: double, right: double, bottom: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Margin"; Value = Avalonia.Thickness(left, top, right, bottom) }
 
         static member inline level<'T when 'T : (member set_Level : int -> unit)>(value: int) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Level"; Value = value }
