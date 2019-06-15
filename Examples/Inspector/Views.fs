@@ -153,6 +153,7 @@ module ElementsView =
 
     let view (state: State) dispatch : View =
         Views.scrollviewer [
+            Attrs.padding 2.0
             Attrs.content (
                 Views.stackpanel [
                     Attrs.children [
@@ -205,19 +206,9 @@ module InspectorView =
         state
             
     let view (state: InspectorState) (dispatch): View =
-        Views.tabControl [
-            Attrs.tabStripPlacement Dock.Left
-            Attrs.items [
-                Views.tabItem [
-                    Attrs.header "All"
-                    Attrs.content (
-                        Views.dockpanel [
-                            Attrs.children [
-                                ElementsView.view state.Elements dispatch
-                            
-                            ]
-                        ]
-                    )
-                ]
-            ]      
+        Views.dockpanel [
+            Attrs.children [
+                ElementsView.view state.Elements dispatch
+            
+            ]
         ]

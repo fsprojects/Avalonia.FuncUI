@@ -40,6 +40,8 @@ module Program =
     [<CompiledName "AppMain">]
     let appMain (app: Application) (args: string[]) =
         let mainWindow = MainWindow()
+        mainWindow.Width <- 800.0
+        mainWindow.Height <- 600.0
 
         Elmish.Program.mkSimple InspectorView.init InspectorView.update InspectorView.view
         |> Program.withHost mainWindow
