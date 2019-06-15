@@ -10,6 +10,20 @@ module rec Types =
             Value : obj
         }
 
+    [<CustomEquality; NoComparison>]
+    type AttachedPropertyAttr =
+        {
+            Name : string
+            Value : obj
+            Handler : obj * (obj option) -> unit
+        }
+        with 
+            override this.GetHashCode() = 
+                (this.Name, this.Value).GetHashCode()
+
+            override this.Equals other =
+                this.GetHashCode() = other.GetHashCode()
+
     type EventAttr =
         {
             Name : string
@@ -43,6 +57,7 @@ module rec Types =
             
     type Attr =
         | Property of PropertyAttr
+        | AttachedProperty of AttachedPropertyAttr
         | Event of EventAttr
         | Content of ContentAttr
         | Lifecycle of LifecylceAttr

@@ -669,7 +669,17 @@ module DSL_Attrs =
         static member inline acceptsReturn<'T when 'T : (member set_AcceptsReturn : bool -> unit)>(value: bool) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "AcceptsReturn"; Value = value }
 
-
-    
         static member inline click<'T when 'T : (member add_Click : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(click: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
             TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(click)}
+
+        static member inline dockPanel_dock<'T when 'T :> Control>(value: Dock) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                    | Some some -> DockPanel.SetDock(view :?> Control, some :?> Dock)
+                    | None -> DockPanel.SetDock(view :?> Control, Dock.Left)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "AccessKey";
+                Value = value;
+                Handler = handler;
+            }

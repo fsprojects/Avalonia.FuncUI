@@ -23,6 +23,19 @@ module internal rec VirtualDom =
                     Value = Some property.Value
                 }
 
+        type AttachedPropertyAttrDelta =
+            {
+                Name : string
+                Value : obj option
+                Handler : obj * (obj option) -> unit
+            }
+            static member From (property: AttachedPropertyAttr) : AttachedPropertyAttrDelta =
+                {
+                    Name = property.Name
+                    Value = Some property.Value
+                    Handler = property.Handler
+                }
+
         type EventAttrDelta =
             {
                 Name : string
@@ -61,11 +74,13 @@ module internal rec VirtualDom =
 
         type AttrDelta =
             | PropertyDelta of PropertyAttrDelta
+            | AttachedPropertyDelta of AttachedPropertyAttrDelta
             | EventDelta of EventAttrDelta
             | ContentDelta of ContentAttrDelta
             static member From (attr: Attr) : AttrDelta =
                 match attr with
                 | Property delta -> AttrDelta.PropertyDelta (PropertyAttrDelta.From delta)
+                | AttachedProperty delta -> AttrDelta.AttachedPropertyDelta (AttachedPropertyAttrDelta.From delta)
                 | Event delta -> AttrDelta.EventDelta (EventAttrDelta.From delta)
                 | Content delta -> AttrDelta.ContentDelta (ContentAttrDelta.From delta)
                 
@@ -130,6 +145,55 @@ module internal rec VirtualDom =
                 for nextAttr in nextAttrs do
                     if contains(lastAttrs, nextAttr.Name) |> not then
                         delta.Add(AttrDelta.PropertyDelta (PropertyAttrDelta.From nextAttr))
+
+                List.ofSeq delta 
+
+            let attachedPropertyDiffer (last: Attr list, next: Attr list) =
+
+                (* filter for properties *)
+                let selectProperties (attrs: Attr list) =
+                    attrs
+                    |> List.map (fun attr ->
+                        match attr with
+                        | Attr.AttachedProperty property -> Some property
+                        | _ -> None
+                    )
+                    |> List.choose id
+
+                (* contains *)
+                let contains (attrs: AttachedPropertyAttr list, name: string) : bool =
+                    attrs |> List.exists (fun attr -> attr.Name = name)
+
+                (* find *)
+                let find (attrs: AttachedPropertyAttr list, name: string) : AttachedPropertyAttr =
+                    attrs |> List.find (fun attr -> attr.Name = name)
+
+                let lastAttrs = selectProperties last
+                let nextAttrs = selectProperties next
+                let delta = new System.Collections.Generic.List<AttrDelta>()
+
+                for lastAttr in lastAttrs do
+                    if contains(nextAttrs, lastAttr.Name) then
+                        let nextAttr = find(nextAttrs, lastAttr.Name)
+
+                        if nextAttr <> lastAttr then
+                            // update
+                            delta.Add(AttrDelta.AttachedPropertyDelta {
+                                Name = nextAttr.Name
+                                Value = Some nextAttr.Value
+                                Handler = nextAttr.Handler
+                            })
+
+                    else
+                        // reset
+                        delta.Add(AttrDelta.PropertyDelta {
+                            Name = lastAttr.Name
+                            Value = None
+                        })
+
+                for nextAttr in nextAttrs do
+                    if contains(lastAttrs, nextAttr.Name) |> not then
+                        delta.Add(AttrDelta.AttachedPropertyDelta (AttachedPropertyAttrDelta.From nextAttr))
 
                 List.ofSeq delta 
 
@@ -271,12 +335,13 @@ module internal rec VirtualDom =
 
         let diff (next: View, last: View) : ViewDelta =
             let propertyAttrs = AttrDiffer.propertyDiffer(next.Attrs, last.Attrs)
+            let attachedPropertyAttrs = AttrDiffer.attachedPropertyDiffer(next.Attrs, last.Attrs)
             let eventAttrs = AttrDiffer.eventDiffer(next.Attrs, last.Attrs)
             let contentAttrs = AttrDiffer.contentDiffer(next.Attrs, last.Attrs)
 
             {
                 ViewType = next.ViewType
-                Attrs = propertyAttrs @ eventAttrs @ contentAttrs
+                Attrs = propertyAttrs @ attachedPropertyAttrs @ eventAttrs @ contentAttrs
             }
 
     module Patcher =
@@ -295,6 +360,9 @@ module internal rec VirtualDom =
                         () // TODO: do we need to handle this ?
                                 
                 | None -> () // TODO: reset value
+
+            let patchAttachedProperty (view: Avalonia.Controls.IControl) (attr: AttachedPropertyAttrDelta) : unit =
+                attr.Handler(view :> obj, attr.Value)                
 
             let patchEvent (view: Avalonia.Controls.IControl) (attr: EventAttrDelta) : unit =
                 let eventInfo = view.GetType().GetEvent(attr.Name)
@@ -409,6 +477,7 @@ module internal rec VirtualDom =
             for attr in viewElement.Attrs do
                 match attr with 
                 | PropertyDelta property -> AttrPatcher.patchProperty view property
+                | AttachedPropertyDelta property -> AttrPatcher.patchAttachedProperty view property
                 | ContentDelta content -> AttrPatcher.patchContent view content
                 | EventDelta event -> AttrPatcher.patchEvent view event
 

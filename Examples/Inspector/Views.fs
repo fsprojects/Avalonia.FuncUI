@@ -153,6 +153,7 @@ module ElementsView =
 
     let view (state: State) dispatch : View =
         Views.scrollviewer [
+            Attrs.dockPanel_dock Dock.Bottom
             Attrs.padding 2.0
             Attrs.content (
                 Views.stackpanel [
@@ -164,10 +165,39 @@ module ElementsView =
             )
         ]
 
+module FilterView =
+
+    type State = {
+        IncludeProperties : bool
+    }
+
+    let init () = 
+        {
+            IncludeProperties = true
+        }
+
+    let view (state: State) dispatch : View =
+        Views.stackpanel [
+            Attrs.background "#2c3e50"
+            Attrs.dockPanel_dock Dock.Top
+            Attrs.children [
+                Views.checkBox [
+                    Attrs.content "Properties"
+                ]
+                Views.checkBox [
+                    Attrs.content "Events"
+                ]
+                Views.checkBox [
+                    Attrs.content "Controls"
+                ]
+            ]
+        ]
+
 module InspectorView =
 
     type InspectorState = {
         Elements : ElementsView.State
+        Filter : FilterView.State
     }
 
     let init () =
@@ -196,6 +226,7 @@ module InspectorView =
 
         {
             Elements = properties @ controls 
+            Filter = FilterView.init()
         }
 
     type Msg =
@@ -208,7 +239,9 @@ module InspectorView =
     let view (state: InspectorState) (dispatch): View =
         Views.dockpanel [
             Attrs.children [
+                
+                FilterView.view state.Filter dispatch
+                
                 ElementsView.view state.Elements dispatch
-            
             ]
         ]

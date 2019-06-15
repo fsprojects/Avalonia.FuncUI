@@ -8,6 +8,7 @@ open Types
 
 type TypedAttr<'t> =
     | Property of PropertyAttr
+    | AttachedProperty of AttachedPropertyAttr
     | Event of EventAttr
     | Content of ContentAttr
     | Lifecycle of LifecylceAttr
@@ -15,7 +16,7 @@ type TypedAttr<'t> =
 [<AbstractClass; Sealed>]
 type Views private () =
 
-    // TODO: Check if using a mutable hash map makes a bug difference
+    // TODO: Check if using a mutable hash map makes a big difference
     static let cache = ref Map.empty
 
     (* create view - intended for internal use *)
@@ -24,6 +25,7 @@ type Views private () =
             attrs |> List.map (fun attr ->
                 match attr with
                 | TypedAttr.Property property -> Attr.Property property
+                | TypedAttr.AttachedProperty property -> Attr.AttachedProperty property
                 | TypedAttr.Event event -> Attr.Event event
                 | TypedAttr.Content content -> Attr.Content content
             )
