@@ -52,6 +52,12 @@ module DSL_Attrs =
         static member inline items<'T when 'T : (member set_Items : System.Collections.IEnumerable -> unit)>(value: System.Collections.IEnumerable) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Items"; Value = value }
 
+        static member inline items<'T when 'T : (member get_Items : unit -> System.Collections.IEnumerable)>(children: View list) : TypedAttr<'T> =
+            TypedAttr<_>.Content {
+                Name = "Items"
+                Content = (ViewContent.Multiple children)
+            }
+
         static member inline itemTemplate<'T when 'T : (member set_ItemTemplate : Avalonia.Controls.Templates.IDataTemplate -> unit)>(template: Avalonia.Controls.Templates.IDataTemplate) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "ItemTemplate"; Value = template }
 

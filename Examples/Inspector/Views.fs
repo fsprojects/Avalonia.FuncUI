@@ -137,17 +137,7 @@ module InspectorView =
         Perspective: Perspective
     }
 
-    let init = {
-        Properties = []
-        Controls = []
-        Perspective = Perspective.Controls
-    }
-
-    type Msg =
-    | ShowControls
-    | ShowProperties
-
-    let update (msg: Msg) (state: InspectorState) : InspectorState =
+    let init () =
         let loadControls() : ControlView.State list =
             Analyzer.findAllControls()
             |> List.map (fun t -> { Name = t.Name; Type = t })
@@ -164,23 +154,60 @@ module InspectorView =
                 }
             )
             |> List.sortByDescending (fun t -> (t.Parent.Length, t.Name))
-
-        match msg with
-        | ShowControls ->
-            {
-                state with
-                    Controls = loadControls();
-                    Perspective = Perspective.Controls
-            }
-        | ShowProperties ->
-            {
-                state with
-                    Properties = loadProperties();
-                    Perspective = Perspective.Properties
-            }
-            
     
+        {
+            Properties = loadProperties()
+            Controls = loadControls()
+            Perspective = Perspective.Controls
+        }
+
+    type Msg =
+    | ShowControls
+    | ShowProperties
+
+    let update (msg: Msg) (state: InspectorState) : InspectorState =
+        state
+            
     let view (state: InspectorState) (dispatch): View =
+        Views.tabControl [
+            Attrs.tabStripPlacement Dock.Left
+            Attrs.items [
+                Views.tabItem [
+                    Attrs.header "Controls"
+                    Attrs.content (
+                        Views.stackpanel [
+                            Attrs.children [
+                                for control in state.Controls do
+                                    yield ControlView.view control dispatch                            
+                            ]
+                        ]
+                    )
+                ]
+                Views.tabItem [
+                    Attrs.header "Properties"
+                    Attrs.content (
+                        Views.stackpanel [
+                            Attrs.children [
+                                for property in state.Properties do
+                                    yield PropertyView.view property dispatch                            
+                            ]
+                        ]
+                    )
+                ]
+                Views.tabItem [
+                    Attrs.header "Events"
+                    Attrs.content (
+                        Views.textblock [
+                            Attrs.text "Test 3"
+                        ]
+                    
+                    )
+                ]
+            ]
+        
+        ]
+
+        (*
         Views.dockpanel [
             Attrs.children [
                 Views.border [
@@ -230,4 +257,5 @@ module InspectorView =
                     ])
                 ] 
             ]
-        ]       
+        ]
+        *)

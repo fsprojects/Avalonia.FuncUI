@@ -29,3 +29,9 @@ module DSL_Views =
 
         static member border (attrs: TypedAttr<Border> list): View =
             Views.create<Border>(attrs)
+
+        static member tabControl (attrs: TypedAttr<TabControl> list): View =
+            Views.create<TabControl>(attrs)
+
+        static member tabItem (attrs: TypedAttr<TabItem> list): View =
+            Views.create<TabItem>(attrs)

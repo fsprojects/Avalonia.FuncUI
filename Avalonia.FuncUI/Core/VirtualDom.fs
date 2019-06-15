@@ -4,6 +4,8 @@ open System
 open System.Reflection
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Lib
+open System.Collections
+open System.Linq
 
 module internal rec VirtualDom =
     open Types
@@ -318,38 +320,81 @@ module internal rec VirtualDom =
                 | None ->
                     prop.SetValue(view, null)
 
-            let patchContentMultiple (view: Avalonia.Controls.IControl) (prop: PropertyInfo) (viewElementList: ViewDelta list) =
-                let controls = prop.GetValue(view) :?> Avalonia.Controls.Controls
+            let patchContentMultiple (view: Avalonia.Controls.IControl) (prop: PropertyInfo) (delta: ViewDelta list) =
+                let propertyValue = prop.GetValue(view)
 
-                if List.isEmpty viewElementList then
-                    controls.Clear()
-                else
-                    let mutable index = 0
-                    for viewElement in viewElementList do  
-                        // try patch / reuse
-                        if index + 1 <= controls.Count then
-                            let item = controls.[index]
+                (* often lists only have a get accessor *)
+                let patch_IList (collection: IList) : unit =
+                    if List.isEmpty delta then
+                        collection.Clear()
+                    else
+                        let mutable index = 0
+                        for viewElement in delta do  
+                            // try patch / reuse
+                            if index + 1 <= collection.Count then
+                                let item = collection.[index]
 
-                            if item.GetType() = viewElement.ViewType then
-                                // patch
-                                patch(item, viewElement)
+                                if item.GetType() = viewElement.ViewType then
+                                    // patch
+                                    match item with
+                                    | :? Avalonia.Controls.IControl as control -> patch(control, viewElement)
+                                    | _ ->
+                                        // replace
+                                        let newItem = createView viewElement
+                                        patch(newItem, viewElement)
+                                        collection.[index] <- newItem
+                                else
+                                    // replace
+                                    let newItem = createView viewElement
+                                    patch(newItem, viewElement)
+                                    collection.[index] <- newItem
                             else
-                                // replace
+                                // create
                                 let newItem = createView viewElement
                                 patch(newItem, viewElement)
-                                controls.[index] <- newItem
-                        else
-                            // create
-                            let newItem = createView viewElement
-                            patch(newItem, viewElement)
-                            controls.Add(newItem)
+                                collection.Add(newItem) |> ignore
 
-                        index <- index + 1
+                            index <- index + 1
 
-                    // remove elements if list is to long
-                    if (index + 1) < controls.Count then
-                        let overLength = controls.Count - index
-                        controls.RemoveRange(index, overLength)
+                        // remove elements if list is to long
+                        if (index + 1) < collection.Count then
+                            while collection.Count <> index + 1 do
+                                collection.RemoveAt (collection.Count - 1)
+
+                (* read only, so there must be a get accessor *)
+                let patch_IEnumerable (collection: IEnumerable) : unit =
+                    let newList = System.Collections.Generic.List<obj>()
+
+                    if List.isEmpty delta then
+                        () // list is empty by default
+                    else
+                        let mutable index = 0
+                        for item in collection do  
+                            if index + 1 <= delta.Length then
+                                if item.GetType() = delta.[index].GetType() then
+                                    newList.Add delta.[index]
+                                else
+                                    let newItem = createView delta.[index]
+                                    patch(newItem, delta.[index])
+                                    newList.Add delta.[index]
+                            else ()
+
+                        if index + 1 < delta.Length then
+                            let _, remaining = delta |> List.splitAt index
+
+                            for item in remaining do
+                                let newItem = createView delta.[index]
+                                patch(newItem, delta.[index])
+                                newList.Add delta.[index]
+
+                    prop.SetValue(view, newList :> IEnumerable)
+
+                match propertyValue with
+                | :? IList as collection -> patch_IList collection
+                | :? IEnumerable as collection -> patch_IEnumerable collection
+                | _ -> raise (Exception("type does not implement EEnumerable or IList whci his required for diffing"))
+
+                
 
             let patchContent (view: Avalonia.Controls.IControl) (attr: ContentAttrDelta) : unit =
                 let prop = Reflection.findPropertyByName view attr.Name

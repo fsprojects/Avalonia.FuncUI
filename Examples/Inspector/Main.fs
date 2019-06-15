@@ -41,7 +41,7 @@ module Program =
     let appMain (app: Application) (args: string[]) =
         let mainWindow = MainWindow()
 
-        Elmish.Program.mkSimple (fun () -> InspectorView.init) InspectorView.update InspectorView.view
+        Elmish.Program.mkSimple InspectorView.init InspectorView.update InspectorView.view
         |> Program.withHost mainWindow
         |> Program.withConsoleTrace
         |> Program.run
