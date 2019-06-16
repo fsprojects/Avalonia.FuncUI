@@ -685,7 +685,7 @@ module DSL_Attrs =
                     | None -> DockPanel.SetDock(view :?> Control, Dock.Left)
 
             TypedAttr<_>.AttachedProperty {
-                Name = "AccessKey";
+                Name = "DockPanel.Dock";
                 Value = value;
                 Handler = handler;
             }

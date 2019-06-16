@@ -31,7 +31,7 @@ module CustomViews =
         ]
 
     let typeListView (t: Type list): View =
-        Views.stackpanel [
+        Views.stackPanel [
             Attrs.orientation Orientation.Horizontal
             Attrs.children [
                 for item in t do
@@ -40,7 +40,7 @@ module CustomViews =
         ]
 
     let accessView (hasGet: bool, hasSet: bool) : View =
-        Views.stackpanel [
+        Views.stackPanel [
             Attrs.orientation Orientation.Horizontal
             Attrs.margin 2.0
             Attrs.children [
@@ -80,7 +80,7 @@ module CustomViews =
             Attrs.padding 5.0
             Attrs.cornerRadius 5.0
             Attrs.child (
-                Views.stackpanel [
+                Views.stackPanel [
                     Attrs.children [
                         Views.textblock [
                             Attrs.text title
@@ -106,9 +106,9 @@ module PropertyView =
 
     let view (state: State) (dispatch): View =
         CustomViews.elementContainerView state.Name "#9b59b6" (
-            Views.stackpanel [
+            Views.stackPanel [
                 Attrs.children [
-                    Views.stackpanel [
+                    Views.stackPanel [
                         Attrs.orientation Orientation.Horizontal
                         Attrs.children [
                             CustomViews.accessView (state.HasGet, state.HasSet)
@@ -130,9 +130,9 @@ module EventView =
 
     let view (state: State) (dispatch): View =
         CustomViews.elementContainerView state.Name "#f1c40f" (
-            Views.stackpanel [
+            Views.stackPanel [
                 Attrs.children [
-                    Views.stackpanel [
+                    Views.stackPanel [
                         Attrs.orientation Orientation.Horizontal
                         Attrs.children [
                             CustomViews.typeView state.EventValueType
@@ -152,7 +152,7 @@ module ControlView =
 
     let view (state: State) (dispatch): View =
         CustomViews.elementContainerView state.Name "#ecf0f1" (
-            Views.stackpanel [
+            Views.stackPanel [
                 Attrs.children [
                     CustomViews.typeView state.DefiningType          
                 ]
@@ -234,7 +234,7 @@ module ElementsView =
             Attrs.dockPanel_dock Dock.Bottom
             Attrs.padding 2.0
             Attrs.content (
-                Views.stackpanel [
+                Views.stackPanel [
                     Attrs.children [
                         for element in state do
                             if filterElement filter element then
@@ -274,7 +274,7 @@ module FilterView =
             { state with IncludeControls = includeControls }
 
     let view (state: State) dispatch : View =
-        Views.stackpanel [
+        Views.stackPanel [
             Attrs.background "#2c3e50"
             Attrs.dockPanel_dock Dock.Top
             Attrs.children [
@@ -308,13 +308,13 @@ module FilterView =
 module InspectorView =
 
     type InspectorState = {
-        //Elements : ElementsView.State
+        Elements : ElementsView.State
         Filter : FilterView.State
     }
 
     let init () =
         {
-            //Elements = ElementsView.init()
+            Elements = ElementsView.init()
             Filter = FilterView.init()
         }
 
@@ -329,9 +329,7 @@ module InspectorView =
     let view (state: InspectorState) (dispatch): View =
         Views.dockpanel [
             Attrs.children [
-                 
                 FilterView.view state.Filter dispatch
-                Views.textBox []
-                //ElementsView.view state.Elements state.Filter dispatch   
+                ElementsView.view state.Elements state.Filter dispatch   
             ]
         ]

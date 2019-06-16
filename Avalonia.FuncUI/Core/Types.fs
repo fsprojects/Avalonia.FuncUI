@@ -24,11 +24,18 @@ module rec Types =
             override this.Equals other =
                 this.GetHashCode() = other.GetHashCode()
 
+    [<CustomEquality; NoComparison>]
     type EventAttr =
         {
             Name : string
             Value : Delegate
         }
+        with 
+            override this.GetHashCode() = 
+                this.Name.GetHashCode()
+
+            override this.Equals other =
+                this.GetHashCode() = other.GetHashCode()
 
     type ContentAttr =
         {

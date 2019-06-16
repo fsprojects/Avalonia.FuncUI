@@ -18,7 +18,7 @@ module DSL_Views =
         static member textblock (attrs: TypedAttr<TextBlock> list): View =
             Views.create<TextBlock>(attrs)
 
-        static member stackpanel (attrs: TypedAttr<StackPanel> list): View =
+        static member stackPanel (attrs: TypedAttr<StackPanel> list): View =
             Views.create<StackPanel>(attrs)
 
         static member dockpanel (attrs: TypedAttr<DockPanel> list): View =

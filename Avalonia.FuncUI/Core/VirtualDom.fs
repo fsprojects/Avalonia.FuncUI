@@ -7,7 +7,7 @@ open Avalonia.FuncUI.Lib
 open System.Collections
 open System.Linq
 
-module internal rec VirtualDom =
+module rec VirtualDom =
     open Types
 
     module Delta =
@@ -23,31 +23,47 @@ module internal rec VirtualDom =
                     Value = Some property.Value
                 }
 
+        [<CustomEquality; NoComparison>]
         type AttachedPropertyAttrDelta =
             {
                 Name : string
                 Value : obj option
                 Handler : obj * (obj option) -> unit
             }
-            static member From (property: AttachedPropertyAttr) : AttachedPropertyAttrDelta =
-                {
-                    Name = property.Name
-                    Value = Some property.Value
-                    Handler = property.Handler
-                }
+            with 
+                override this.GetHashCode() = 
+                    (this.Name, this.Value).GetHashCode()
 
+                override this.Equals other =
+                    this.GetHashCode() = other.GetHashCode()
+
+                static member From (property: AttachedPropertyAttr) : AttachedPropertyAttrDelta =
+                    {
+                        Name = property.Name
+                        Value = Some property.Value
+                        Handler = property.Handler
+                    }
+
+        [<CustomEquality; NoComparison>]
         type EventAttrDelta =
             {
                 Name : string
                 OldValue : Delegate
                 NewValue : Delegate
             }
-            static member From (event: EventAttr) : EventAttrDelta =
-                {
-                    Name = event.Name
-                    OldValue = null
-                    NewValue = event.Value
-                }
+            with 
+                override this.GetHashCode() = 
+                    this.Name.GetHashCode()
+
+                override this.Equals other =
+                    this.GetHashCode() = other.GetHashCode()
+
+                static member From (event: EventAttr) : EventAttrDelta =
+                    {
+                        Name = event.Name
+                        OldValue = null
+                        NewValue = event.Value
+                    }
 
         type ViewContentDelta =
             | Single of ViewDelta option
@@ -316,7 +332,7 @@ module internal rec VirtualDom =
 
                         if nextAttr <> lastAttr then
                             // update
-                            delta.Add(diffContent(nextAttr, lastAttr))
+                            delta.Add(diffContent(lastAttr, nextAttr))
 
                     else
                         // reset
@@ -334,7 +350,7 @@ module internal rec VirtualDom =
 
                 List.ofSeq delta 
 
-        let diff (next: View, last: View) : ViewDelta =
+        let diff (last: View, next: View) : ViewDelta =
             let propertyAttrs = AttrDiffer.propertyDiffer(last.Attrs, next.Attrs)
             let attachedPropertyAttrs = AttrDiffer.attachedPropertyDiffer(last.Attrs, next.Attrs)
             let eventAttrs = AttrDiffer.eventDiffer(last.Attrs, next.Attrs)
@@ -427,8 +443,8 @@ module internal rec VirtualDom =
                         )
 
                         // remove elements if list is to long
-                        if delta.Count() < collection.Count then
-                            while collection.Count >= delta.Count() + 1 do
+                        if delta.Count() > collection.Count then
+                            while collection.Count > delta.Count() do
                                 collection.RemoveAt (collection.Count - 1)
 
                 (* read only, so there must be a get accessor *)
