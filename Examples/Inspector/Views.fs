@@ -279,7 +279,7 @@ module FilterView =
             Attrs.dockPanel_dock Dock.Top
             Attrs.children [
                 Views.checkBox [
-                    Attrs.content "Properties"
+                    Attrs.content (sprintf "Properties [%b]" state.IncludeProperties)
                     Attrs.isChecked state.IncludeProperties
                     Attrs.click (fun obj args -> 
                         dispatch (InspectorView.FilterViewMsg (Msg.IncludeProperties (obj :?> CheckBox).IsChecked.Value))
@@ -287,7 +287,7 @@ module FilterView =
                     )
                 ]
                 Views.checkBox [
-                    Attrs.content "Events"
+                    Attrs.content (sprintf "Events [%b]" state.IncludeEvents)
                     Attrs.isChecked state.IncludeEvents
                     Attrs.click (fun obj args -> 
                         dispatch (InspectorView.FilterViewMsg (Msg.IncludeEvents (obj :?> CheckBox).IsChecked.Value))
@@ -295,7 +295,7 @@ module FilterView =
                     )
                 ]
                 Views.checkBox [
-                    Attrs.content "Controls"
+                    Attrs.content (sprintf "Controls [%b]" state.IncludeControls)
                     Attrs.isChecked state.IncludeControls
                     Attrs.click (fun obj args -> 
                         dispatch (InspectorView.FilterViewMsg (Msg.IncludeControls (obj :?> CheckBox).IsChecked.Value))
@@ -308,13 +308,13 @@ module FilterView =
 module InspectorView =
 
     type InspectorState = {
-        Elements : ElementsView.State
+        //Elements : ElementsView.State
         Filter : FilterView.State
     }
 
     let init () =
         {
-            Elements = ElementsView.init()
+            //Elements = ElementsView.init()
             Filter = FilterView.init()
         }
 
@@ -328,8 +328,10 @@ module InspectorView =
             
     let view (state: InspectorState) (dispatch): View =
         Views.dockpanel [
-            Attrs.children [        
+            Attrs.children [
+                 
                 FilterView.view state.Filter dispatch
-                ElementsView.view state.Elements state.Filter dispatch   
+                Views.textBox []
+                //ElementsView.view state.Elements state.Filter dispatch   
             ]
         ]

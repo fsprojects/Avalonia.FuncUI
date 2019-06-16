@@ -134,6 +134,7 @@ module internal rec VirtualDom =
                                 Name = nextAttr.Name
                                 Value = Some nextAttr.Value
                             })
+                        else ()
 
                     else
                         // reset
@@ -334,10 +335,10 @@ module internal rec VirtualDom =
                 List.ofSeq delta 
 
         let diff (next: View, last: View) : ViewDelta =
-            let propertyAttrs = AttrDiffer.propertyDiffer(next.Attrs, last.Attrs)
-            let attachedPropertyAttrs = AttrDiffer.attachedPropertyDiffer(next.Attrs, last.Attrs)
-            let eventAttrs = AttrDiffer.eventDiffer(next.Attrs, last.Attrs)
-            let contentAttrs = AttrDiffer.contentDiffer(next.Attrs, last.Attrs)
+            let propertyAttrs = AttrDiffer.propertyDiffer(last.Attrs, next.Attrs)
+            let attachedPropertyAttrs = AttrDiffer.attachedPropertyDiffer(last.Attrs, next.Attrs)
+            let eventAttrs = AttrDiffer.eventDiffer(last.Attrs, next.Attrs)
+            let contentAttrs = AttrDiffer.contentDiffer(last.Attrs, next.Attrs)
 
             {
                 ViewType = next.ViewType
@@ -373,7 +374,7 @@ module internal rec VirtualDom =
                 if (attr.NewValue <> null) then
                     eventInfo.AddEventHandler(view, attr.NewValue)
 
-                printf "Event handler count %i \n" (attr.NewValue.GetInvocationList().Length)
+                //printf "Event handler count %i \n" (attr.NewValue.GetInvocationList().Length)
                     
             let patchContentSingle (view: Avalonia.Controls.IControl) (prop: PropertyInfo) (viewElement: ViewDelta option) =
                 // TODO: handle all possible cases
@@ -398,8 +399,7 @@ module internal rec VirtualDom =
                     if List.isEmpty delta then
                         collection.Clear()
                     else
-                        let mutable index = 0
-                        for viewElement in delta do  
+                        delta |> Seq.iteri (fun index viewElement ->
                             // try patch / reuse
                             if index + 1 <= collection.Count then
                                 let item = collection.[index]
@@ -424,11 +424,11 @@ module internal rec VirtualDom =
                                 patch(newItem, viewElement)
                                 collection.Add(newItem) |> ignore
 
-                            index <- index + 1
+                        )
 
                         // remove elements if list is to long
-                        if (index + 1) < collection.Count then
-                            while collection.Count >= index + 1 do
+                        if delta.Count() < collection.Count then
+                            while collection.Count >= delta.Count() + 1 do
                                 collection.RemoveAt (collection.Count - 1)
 
                 (* read only, so there must be a get accessor *)

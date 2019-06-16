@@ -38,17 +38,17 @@ module Program =
 
     // Your application's entry point.
     [<CompiledName "AppMain">]
-    let appMain (app: Application) (args: string[]) =
+    let appMain (app: Application) (args: string[]) : unit =
         let mainWindow = MainWindow()
         mainWindow.Width <- 800.0
         mainWindow.Height <- 600.0
 
         Elmish.Program.mkSimple InspectorView.init InspectorView.update InspectorView.view
         |> Program.withHost mainWindow
-        //|> Program.withConsoleTrace
+        |> Program.withConsoleTrace
         |> Program.run
 
-        app.Run(mainWindow)
+        app.Run(mainWindow) |> ignore
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
