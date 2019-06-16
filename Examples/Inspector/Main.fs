@@ -45,7 +45,7 @@ module Program =
 
         Elmish.Program.mkSimple InspectorView.init InspectorView.update InspectorView.view
         |> Program.withHost mainWindow
-        |> Program.withConsoleTrace
+        //|> Program.withConsoleTrace
         |> Program.run
 
         app.Run(mainWindow)

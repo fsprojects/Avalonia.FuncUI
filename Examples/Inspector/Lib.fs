@@ -29,7 +29,7 @@ module Analyzer =
                                 yield _type
         ]
 
-    type Property = {
+    type AnalyzerProperty = {
         Name : string
         ValueType : Type
         HasGet : bool
@@ -37,8 +37,8 @@ module Analyzer =
         Parent : Type list
     }
 
-    let findAllProperties (): Property list =
-        let set = System.Collections.Concurrent.ConcurrentDictionary<(string * Type),Property>()
+    let findAllProperties (): AnalyzerProperty list =
+        let set = System.Collections.Concurrent.ConcurrentDictionary<(string * Type),AnalyzerProperty>()
         let controls = findAllControls()
         
         for control in controls do
@@ -59,6 +59,39 @@ module Analyzer =
                             old
                         else
                             { old with Parent = old.Parent @ property.Parent}
+                    )
+                ) |> ignore
+  
+        (set.ToArray())
+        |> List.ofArray
+        |> List.map (fun i -> i.Value)
+
+    type AnalyzerEvent = {
+        Name : string
+        ValueType : Type
+        Parent : Type list
+    }
+
+    let findAllEvents (): AnalyzerEvent list =
+        let set = System.Collections.Concurrent.ConcurrentDictionary<(string * Type), AnalyzerEvent>()
+        let controls = findAllControls()
+        
+        for control in controls do
+            for eventInfo in control.GetEvents() do
+                let event = {
+                    Name = eventInfo.Name
+                    ValueType = eventInfo.EventHandlerType
+                    Parent = [ eventInfo.DeclaringType ]
+                }
+
+                set.AddOrUpdate(
+                    (event.Name, event.ValueType),
+                    (fun key -> event),
+                    (fun key old ->
+                        if old.Parent |> List.contains eventInfo.DeclaringType then
+                            old
+                        else
+                            { old with Parent = old.Parent @ event.Parent}
                     )
                 ) |> ignore
   

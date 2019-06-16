@@ -527,8 +527,14 @@ module DSL_Attrs =
         static member inline isDefault<'T when 'T : (member set_IsDefault : bool -> unit)>(value: bool) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "IsDefault"; Value = value }
 
-        static member inline isChecked<'T when 'T : (member set_IsChecked : bool -> unit)>(value: bool) : TypedAttr<'T> =
-            TypedAttr<_>.Property { Name = "IsChecked"; Value = value }
+        //static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: Nullable<bool>) : TypedAttr<'T> =
+        //    TypedAttr<_>.Property { Name = "IsChecked"; Value = value }
+
+        //static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: bool option) : TypedAttr<'T> =
+        //    TypedAttr<_>.Property { Name = "IsChecked"; Value = Option.toNullable value }
+
+        static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: bool) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsChecked"; Value = Nullable(value) }
 
         static member inline interval<'T when 'T : (member set_Interval : int -> unit)>(value: int) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Interval"; Value = value }

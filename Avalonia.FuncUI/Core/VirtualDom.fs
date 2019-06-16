@@ -355,7 +355,7 @@ module internal rec VirtualDom =
                 match attr.Value with
                 | Some value ->
                     if prop.CanWrite then
-                        prop.SetValue(view, attr.Value.Value)
+                        prop.SetValue(view, value)
                     else
                         () // TODO: do we need to handle this ?
                                 
@@ -372,6 +372,8 @@ module internal rec VirtualDom =
 
                 if (attr.NewValue <> null) then
                     eventInfo.AddEventHandler(view, attr.NewValue)
+
+                printf "Event handler count %i \n" (attr.NewValue.GetInvocationList().Length)
                     
             let patchContentSingle (view: Avalonia.Controls.IControl) (prop: PropertyInfo) (viewElement: ViewDelta option) =
                 // TODO: handle all possible cases
@@ -426,7 +428,7 @@ module internal rec VirtualDom =
 
                         // remove elements if list is to long
                         if (index + 1) < collection.Count then
-                            while collection.Count <> index + 1 do
+                            while collection.Count >= index + 1 do
                                 collection.RemoveAt (collection.Count - 1)
 
                 (* read only, so there must be a get accessor *)
@@ -461,8 +463,6 @@ module internal rec VirtualDom =
                 | :? IList as collection -> patch_IList collection
                 | :? IEnumerable as collection -> patch_IEnumerable collection
                 | _ -> raise (Exception("type does not implement EEnumerable or IList whci his required for diffing"))
-
-                
 
             let patchContent (view: Avalonia.Controls.IControl) (attr: ContentAttrDelta) : unit =
                 let prop = Reflection.findPropertyByName view attr.Name

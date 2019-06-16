@@ -1,4 +1,4 @@
-﻿namespace Inspector
+﻿namespace rec Inspector
 
 open Avalonia.Controls
 open Avalonia.Media
@@ -73,9 +73,9 @@ module CustomViews =
             ]
         ]
 
-    let containerView (title: string) (view: View) : View =
+    let elementContainerView (title: string) (color: string) (view: View) : View =
         Views.border [
-            Attrs.background "#332980b9"
+            Attrs.background "#772c3e50"
             Attrs.margin 2.0
             Attrs.padding 5.0
             Attrs.cornerRadius 5.0
@@ -85,7 +85,7 @@ module CustomViews =
                         Views.textblock [
                             Attrs.text title
                             Attrs.fontSize 14.0
-                            Attrs.foreground "#ecf0f1"
+                            Attrs.foreground color
                         ]
                         view
                     ]
@@ -105,7 +105,7 @@ module PropertyView =
     }
 
     let view (state: State) (dispatch): View =
-        CustomViews.containerView state.Name (
+        CustomViews.elementContainerView state.Name "#9b59b6" (
             Views.stackpanel [
                 Attrs.children [
                     Views.stackpanel [
@@ -113,6 +113,29 @@ module PropertyView =
                         Attrs.children [
                             CustomViews.accessView (state.HasGet, state.HasSet)
                             CustomViews.typeView state.PropertyValueType
+                        ]
+                    ]
+                    CustomViews.typeListView state.Parent      
+                ]
+            ]
+        )
+
+module EventView =
+
+    type State = {
+        Name : string
+        EventValueType : Type
+        Parent : Type list
+    }
+
+    let view (state: State) (dispatch): View =
+        CustomViews.elementContainerView state.Name "#f1c40f" (
+            Views.stackpanel [
+                Attrs.children [
+                    Views.stackpanel [
+                        Attrs.orientation Orientation.Horizontal
+                        Attrs.children [
+                            CustomViews.typeView state.EventValueType
                         ]
                     ]
                     CustomViews.typeListView state.Parent      
@@ -128,7 +151,7 @@ module ControlView =
     }
 
     let view (state: State) (dispatch): View =
-        CustomViews.containerView state.Name (
+        CustomViews.elementContainerView state.Name "#ecf0f1" (
             Views.stackpanel [
                 Attrs.children [
                     CustomViews.typeView state.DefiningType          
@@ -140,67 +163,20 @@ module ElementView =
     
     type State =
     | Property of PropertyView.State
+    | Event of EventView.State
     | Control of ControlView.State
 
     let view (state: State) dispatch : View = 
         match state with
         | Property state -> PropertyView.view state dispatch
+        | Event state -> EventView.view state dispatch
         | Control state -> ControlView.view state dispatch
 
 module ElementsView =
 
     type State = ElementView.State list
 
-    let view (state: State) dispatch : View =
-        Views.scrollviewer [
-            Attrs.dockPanel_dock Dock.Bottom
-            Attrs.padding 2.0
-            Attrs.content (
-                Views.stackpanel [
-                    Attrs.children [
-                        for element in state do
-                            yield ElementView.view element dispatch
-                    ]
-                ]
-            )
-        ]
-
-module FilterView =
-
-    type State = {
-        IncludeProperties : bool
-    }
-
-    let init () = 
-        {
-            IncludeProperties = true
-        }
-
-    let view (state: State) dispatch : View =
-        Views.stackpanel [
-            Attrs.background "#2c3e50"
-            Attrs.dockPanel_dock Dock.Top
-            Attrs.children [
-                Views.checkBox [
-                    Attrs.content "Properties"
-                ]
-                Views.checkBox [
-                    Attrs.content "Events"
-                ]
-                Views.checkBox [
-                    Attrs.content "Controls"
-                ]
-            ]
-        ]
-
-module InspectorView =
-
-    type InspectorState = {
-        Elements : ElementsView.State
-        Filter : FilterView.State
-    }
-
-    let init () =
+    let init () : State =
         let controls : ElementView.State list =
             Analyzer.findAllControls()
             |> List.map (fun t ->
@@ -224,24 +200,136 @@ module InspectorView =
             )
             |> List.map (fun t -> ElementView.State.Property t)
 
+        let events : ElementView.State list =
+            Analyzer.findAllEvents()
+            |> List.map (fun t ->
+                {
+                    EventView.State.Name = t.Name;
+                    EventView.State.EventValueType = t.ValueType;
+                    EventView.State.Parent = t.Parent;
+                }
+            )
+            |> List.map (fun t -> ElementView.State.Event t)
+
+        properties @ events @ controls
+
+    let filterElement (filter: FilterView.State) (element: ElementView.State) : bool =
+        match element with
+        | ElementView.Property property ->
+            if filter.IncludeProperties then
+                true
+            else false
+        | ElementView.Event event -> 
+            if filter.IncludeEvents then
+                true
+            else false
+        | ElementView.Control control ->
+            if filter.IncludeControls then
+                true
+            else false
+
+
+    let view (state: State) (filter: FilterView.State) dispatch : View =
+        Views.scrollviewer [
+            Attrs.dockPanel_dock Dock.Bottom
+            Attrs.padding 2.0
+            Attrs.content (
+                Views.stackpanel [
+                    Attrs.children [
+                        for element in state do
+                            if filterElement filter element then
+                                yield ElementView.view element dispatch
+                    ]
+                ]
+            )
+        ]
+
+module FilterView =
+
+    type State = {
+        IncludeProperties : bool
+        IncludeEvents : bool
+        IncludeControls : bool
+    }
+
+    let init () = 
         {
-            Elements = properties @ controls 
+            IncludeProperties = true
+            IncludeEvents = true
+            IncludeControls = true
+        }
+
+    type Msg =
+        | IncludeProperties of bool
+        | IncludeEvents of bool
+        | IncludeControls of bool
+
+    let update (state: State) (msg: Msg) : State =
+        match msg with
+        | IncludeProperties includeProperties ->
+            { state with IncludeProperties = includeProperties }
+        | IncludeEvents includeEvents ->
+            { state with IncludeEvents = includeEvents }
+        | IncludeControls includeControls ->
+            { state with IncludeControls = includeControls }
+
+    let view (state: State) dispatch : View =
+        Views.stackpanel [
+            Attrs.background "#2c3e50"
+            Attrs.dockPanel_dock Dock.Top
+            Attrs.children [
+                Views.checkBox [
+                    Attrs.content "Properties"
+                    Attrs.isChecked state.IncludeProperties
+                    Attrs.click (fun obj args -> 
+                        dispatch (InspectorView.FilterViewMsg (Msg.IncludeProperties (obj :?> CheckBox).IsChecked.Value))
+                        args.Handled <- true
+                    )
+                ]
+                Views.checkBox [
+                    Attrs.content "Events"
+                    Attrs.isChecked state.IncludeEvents
+                    Attrs.click (fun obj args -> 
+                        dispatch (InspectorView.FilterViewMsg (Msg.IncludeEvents (obj :?> CheckBox).IsChecked.Value))
+                        args.Handled <- true
+                    )
+                ]
+                Views.checkBox [
+                    Attrs.content "Controls"
+                    Attrs.isChecked state.IncludeControls
+                    Attrs.click (fun obj args -> 
+                        dispatch (InspectorView.FilterViewMsg (Msg.IncludeControls (obj :?> CheckBox).IsChecked.Value))
+                        args.Handled <- true
+                    )
+                ]
+            ]
+        ]
+
+module InspectorView =
+
+    type InspectorState = {
+        Elements : ElementsView.State
+        Filter : FilterView.State
+    }
+
+    let init () =
+        {
+            Elements = ElementsView.init()
             Filter = FilterView.init()
         }
 
     type Msg =
-    | ShowControls
-    | ShowProperties
+    | FilterViewMsg of FilterView.Msg
 
     let update (msg: Msg) (state: InspectorState) : InspectorState =
-        state
+        match msg with
+        | FilterViewMsg filter ->
+            { state with Filter = FilterView.update state.Filter filter }
             
     let view (state: InspectorState) (dispatch): View =
         Views.dockpanel [
-            Attrs.children [
-                
+            Attrs.children [        
                 FilterView.view state.Filter dispatch
-                
-                ElementsView.view state.Elements dispatch
+                ElementsView.view state.Elements state.Filter dispatch   
             ]
         ]
