@@ -281,7 +281,7 @@ module internal rec VirtualDom =
                     let merged =
                         nextList
                         |> List.mapi (fun index next -> 
-                            if index + 1 < lastList.Length then
+                            if index + 1 <= lastList.Length then
                                 Differ.diff(lastList.[index], next)
                             else
                                 ViewDelta.From next
