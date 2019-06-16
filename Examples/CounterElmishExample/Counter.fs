@@ -1,13 +1,22 @@
 ﻿namespace CounterElmishSample
 
-open Avalonia.FuncUI.Core
-open Avalonia.FuncUI.Builders
 open Avalonia.Controls
-open Avalonia.FuncUI.Core.Model
 open Avalonia.Media
+open Avalonia.FuncUI.Types
+open Avalonia.FuncUI
+
+type CustomControl() =
+    inherit Control()
+
+    member val Text: string = "" with get, set
+
+[<AutoOpen>]
+module ViewExt =
+    type Views with
+        static member customControl (attrs: TypedAttr<CustomControl> list): View =
+            Views.create<CustomControl>(attrs)
 
 module Counter =
-    open Avalonia.Layout
 
     type CounterState = {
         count : int
@@ -26,34 +35,30 @@ module Counter =
         | Increment -> { state with count =  state.count + 1 }
         | Decrement -> { state with count =  state.count - 1 }
     
-    let view (state: CounterState) (dispatch): ViewElement =
-
-        let foregroundColor = 
-            if state.count < 0 then SolidColorBrush(Color.Parse("#e74c3c")).ToImmutable()
-            else if state.count > 0 then SolidColorBrush(Color.Parse("#27ae60")).ToImmutable()
-            else SolidColorBrush(Colors.White).ToImmutable()
-
-        dockpanel {
-            lastChildFill true
-            children [
-                button {
-                    dockpanel_dock Dock.Bottom
-                    contentView (textblock { text "Increment" })
-                    command (Command.from (fun _ -> dispatch Msg.Increment))
-                };
-                button {
-                    dockpanel_dock Dock.Bottom
-                    contentView (textblock { text "Decrement" })
-                    command (Command.from (fun _ -> dispatch Msg.Decrement))
-                };
-                textblock {
-                    dockpanel_dock Dock.Top
-                    text (sprintf "Count: %i" state.count)
-                    fontSize 20.0
-                    foreground foregroundColor
-                    verticalAlignment VerticalAlignment.Center
-                    horizontalAlignment HorizontalAlignment.Center
-                }
-                
+    let view (state: CounterState) (dispatch): View =
+        Views.dockpanel [
+            Attrs.children [
+                Views.customControl [
+                    Attrs.text "works"
+                ]
+                Views.textblock [
+                    Attrs.text (sprintf "the count is %i" state.count)
+                ]
+                Views.button [
+                    Attrs.click (fun sender args -> dispatch Increment)
+                    Attrs.content (
+                        Views.textblock [
+                            Attrs.text "click to increment"
+                        ]
+                    )
+                ]
+                Views.button [
+                    Attrs.click (fun sender args -> dispatch Decrement)
+                    Attrs.content (
+                        Views.textblock [
+                            Attrs.text "click to decrement"
+                        ]
+                    )
+                ]
             ]
-        }
+        ]       

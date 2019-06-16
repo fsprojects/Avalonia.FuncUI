@@ -1,4 +1,4 @@
-﻿namespace TodoElmishSample
+﻿namespace Inspector
 
 open Avalonia.FuncUI.Hosts
 open Avalonia
@@ -10,8 +10,8 @@ type MainWindow() =
 
     do
         base.Title <- "Counter Elmish"
-        base.Height <- 800.0
-        base.Width <- 1000.0    
+        base.Height <- 400.0
+        base.Width <- 400.0    
       
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
@@ -38,15 +38,17 @@ module Program =
 
     // Your application's entry point.
     [<CompiledName "AppMain">]
-    let appMain (app: Application) (args: string[]) =
+    let appMain (app: Application) (args: string[]) : unit =
         let mainWindow = MainWindow()
+        mainWindow.Width <- 800.0
+        mainWindow.Height <- 600.0
 
-        Elmish.Program.mkSimple (fun () -> Todo.init) Todo.update Todo.view
+        Elmish.Program.mkSimple InspectorView.init InspectorView.update InspectorView.view
         |> Program.withHost mainWindow
         |> Program.withConsoleTrace
         |> Program.run
 
-        app.Run(mainWindow)
+        app.Run(mainWindow) |> ignore
 
     // Initialization code. Don't use any Avalonia, third-party APIs or any
     // SynchronizationContext-reliant code before AppMain is called: things aren't initialized

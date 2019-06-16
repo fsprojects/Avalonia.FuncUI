@@ -6,16 +6,16 @@
 
   <ItemGroup>
     <Compile Include="Core\Lib.fs" />
-    <Compile Include="Core\Model.fs" />
+    <Compile Include="Core\Types.fs" />
     <Compile Include="Core\VirtualDom.fs" />
-    <Compile Include="Core\View.fs" />
+    <Compile Include="DSL.base.fs" />
+    <Compile Include="DSL.views.fs" />
+    <Compile Include="DSL.attrs.fs" />
     <Compile Include="Hosts.fs" />
-    <Compile Include="Helpers.fs" />
-    <Compile Include="Builders.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.1-cibuild0002928-beta" />
   </ItemGroup>
 
   <ItemGroup>

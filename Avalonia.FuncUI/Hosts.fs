@@ -1,25 +1,30 @@
 ﻿namespace rec Avalonia.FuncUI.Hosts
 
-open Avalonia.FuncUI.Core
 open Avalonia.Controls
-open Avalonia.FuncUI.Core.VirtualDom
-open Avalonia.FuncUI.Core.Model
+open Avalonia.FuncUI.Types
+open Avalonia.FuncUI
+open Avalonia.FuncUI.VirtualDom.Delta
 
 type IViewHost =
-    abstract member UpdateView: ViewElement -> unit
+    abstract member UpdateView: View -> unit
 
 type HostWindow() =
     inherit Window()
 
-    let mutable lastViewElement : ViewElement option = None
+    let mutable lastViewElement : View option = None
 
     interface IViewHost with
         member this.UpdateView viewElement =
             match lastViewElement with
             | Some last ->
-                View.update (this.Content :?> IControl) last viewElement
+                let view = this.Content :?> IControl
+                let delta = VirtualDom.Differ.diff(last, viewElement)
+                VirtualDom.Patcher.patch(view, delta)
             | None ->
-                this.Content <- View.create viewElement
+                this.Content <- VirtualDom.createView viewElement
+                let view = this.Content :?> IControl
+                let delta = ViewDelta.From viewElement
+                VirtualDom.Patcher.patch(view, delta)
 
             lastViewElement <- Some viewElement
        
