@@ -38,27 +38,17 @@ module Counter =
     let view (state: CounterState) (dispatch): View =
         Views.dockpanel [
             Attrs.children [
-                Views.customControl [
-                    Attrs.text "works"
-                ]
-                Views.textblock [
-                    Attrs.text (sprintf "the count is %i" state.count)
-                ]
                 Views.button [
                     Attrs.click (fun sender args -> dispatch Increment)
-                    Attrs.content (
-                        Views.textblock [
-                            Attrs.text "click to increment"
-                        ]
-                    )
+                    Attrs.content "click to increment"
                 ]
                 Views.button [
                     Attrs.click (fun sender args -> dispatch Decrement)
-                    Attrs.content (
-                        Views.textblock [
-                            Attrs.text "click to decrement"
-                        ]
-                    )
+                    Attrs.content "click to decrement"
+                ]
+                Views.textblock [
+                    Attrs.dockPanel_dock Dock.Top
+                    Attrs.text (sprintf "the count is %i" state.count)
                 ]
             ]
         ]       

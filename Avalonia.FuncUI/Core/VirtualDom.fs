@@ -442,10 +442,8 @@ module rec VirtualDom =
 
                         )
 
-                        // remove elements if list is to long
-                        if delta.Count() > collection.Count then
-                            while collection.Count > delta.Count() do
-                                collection.RemoveAt (collection.Count - 1)
+                        while delta.Count() < collection.Count do
+                            collection.RemoveAt (collection.Count - 1)
 
                 (* read only, so there must be a get accessor *)
                 let patch_IEnumerable (collection: IEnumerable) : unit =
