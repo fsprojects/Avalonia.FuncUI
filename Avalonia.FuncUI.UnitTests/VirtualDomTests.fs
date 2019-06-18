@@ -53,6 +53,36 @@ module VirtualDomTests =
             Assert.True(not (delta <> result))
 
         [<Fact>]
+        let ``Diff Properties (only if types match)`` () =
+            let last =
+                Views.stackPanel [
+                    Attrs.orientation Orientation.Horizontal
+                ]
+
+            let next =
+                Views.textblock [
+                    Attrs.text "some other text"
+                ]
+
+            let delta = 
+                {
+                    ViewType = typeof<TextBlock>
+                    Attrs = [
+                        AttrDelta.PropertyDelta {
+                            Name = "Text"
+                            Value = Some ("some other text" :> obj)
+                        };
+                    ]
+                }
+
+            let result = Differ.diff(last, next)
+        
+            Assert.Equal(delta, result)
+
+            // just to make sure the types are actually comparable
+            Assert.True(not (delta <> result))
+
+        [<Fact>]
         let ``Diff Content Single`` () =
                 let last =
                     Views.button [
