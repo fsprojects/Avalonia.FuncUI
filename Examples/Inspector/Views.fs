@@ -278,29 +278,40 @@ module FilterView =
             Attrs.background "#2c3e50"
             Attrs.dockPanel_dock Dock.Top
             Attrs.children [
-                Views.checkBox [
-                    Attrs.content (sprintf "Properties [%b]" state.IncludeProperties)
-                    Attrs.isChecked state.IncludeProperties
-                    Attrs.click (fun obj args -> 
-                        dispatch (InspectorView.FilterViewMsg (Msg.IncludeProperties (obj :?> CheckBox).IsChecked.Value))
-                        args.Handled <- true
-                    )
+                Views.stackPanel [
+                    Attrs.margin 5.0
+                    Attrs.dockPanel_dock Dock.Top
+                    Attrs.orientation Orientation.Horizontal
+                    Attrs.children [
+                        Views.checkBox [
+                            Attrs.content (sprintf "Properties [%b]" state.IncludeProperties)
+                            Attrs.isChecked state.IncludeProperties
+                            Attrs.click (fun obj args -> 
+                                dispatch (InspectorView.FilterViewMsg (Msg.IncludeProperties (obj :?> CheckBox).IsChecked.Value))
+                                args.Handled <- true
+                            )
+                        ]
+                        Views.checkBox [
+                            Attrs.content (sprintf "Events [%b]" state.IncludeEvents)
+                            Attrs.isChecked state.IncludeEvents
+                            Attrs.click (fun obj args -> 
+                                dispatch (InspectorView.FilterViewMsg (Msg.IncludeEvents (obj :?> CheckBox).IsChecked.Value))
+                                args.Handled <- true
+                            )
+                        ]
+                        Views.checkBox [
+                            Attrs.content (sprintf "Controls [%b]" state.IncludeControls)
+                            Attrs.isChecked state.IncludeControls
+                            Attrs.click (fun obj args -> 
+                                dispatch (InspectorView.FilterViewMsg (Msg.IncludeControls (obj :?> CheckBox).IsChecked.Value))
+                                args.Handled <- true
+                            )
+                        ]
+                    ]
                 ]
-                Views.checkBox [
-                    Attrs.content (sprintf "Events [%b]" state.IncludeEvents)
-                    Attrs.isChecked state.IncludeEvents
-                    Attrs.click (fun obj args -> 
-                        dispatch (InspectorView.FilterViewMsg (Msg.IncludeEvents (obj :?> CheckBox).IsChecked.Value))
-                        args.Handled <- true
-                    )
-                ]
-                Views.checkBox [
-                    Attrs.content (sprintf "Controls [%b]" state.IncludeControls)
-                    Attrs.isChecked state.IncludeControls
-                    Attrs.click (fun obj args -> 
-                        dispatch (InspectorView.FilterViewMsg (Msg.IncludeControls (obj :?> CheckBox).IsChecked.Value))
-                        args.Handled <- true
-                    )
+                Views.textBox [
+                    Attrs.margin 5.0
+                    Attrs.watermark "Search for Name..."
                 ]
             ]
         ]

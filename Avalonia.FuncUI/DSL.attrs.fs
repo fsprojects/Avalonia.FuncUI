@@ -675,8 +675,6 @@ module DSL_Attrs =
         static member inline acceptsReturn<'T when 'T : (member set_AcceptsReturn : bool -> unit)>(value: bool) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "AcceptsReturn"; Value = value }
 
-        static member inline click<'T when 'T : (member add_Click : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(click: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
-            TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(click)}
 
         static member inline dockPanel_dock<'T when 'T :> Control>(value: Dock) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
@@ -689,3 +687,42 @@ module DSL_Attrs =
                 Value = value;
                 Handler = handler;
             }
+
+        static member inline click<'T when 'T : (member add_Click : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline pointerWheelChanged<'T when 'T : (member add_PointerWheelChanged : EventHandler<Avalonia.Input.PointerWheelEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerWheelEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerWheelChanged"; Value = new EventHandler<Avalonia.Input.PointerWheelEventArgs>(handler)}
+
+        static member inline templateApplied<'T when 'T : (member add_TemplateApplied : EventHandler<Avalonia.Controls.Primitives.TemplateAppliedEventArgs> -> unit)>(handler: obj -> Avalonia.Controls.Primitives.TemplateAppliedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "TemplateApplied"; Value = new EventHandler<Avalonia.Controls.Primitives.TemplateAppliedEventArgs>(handler)}
+
+        static member inline layoutUpdated<'T when 'T : (member add_LayoutUpdated : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "LayoutUpdated"; Value = new EventHandler(handler)}
+
+        static member inline pointerPressed<'T when 'T : (member add_PointerPressed : EventHandler<Avalonia.Input.PointerPressedEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerPressedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerPressed"; Value = new EventHandler<Avalonia.Input.PointerPressedEventArgs>(handler)}
+
+        static member inline calendarDayButtonMouseDown<'T when 'T : (member add_CalendarDayButtonMouseDown : EventHandler<Avalonia.Input.PointerPressedEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerPressedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "CalendarDayButtonMouseDown"; Value = new EventHandler<Avalonia.Input.PointerPressedEventArgs>(handler)}
+
+        static member inline registered<'T when 'T : (member add_Registered : EventHandler<NameScopeEventArgs> -> unit)>(handler: obj -> NameScopeEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Registered"; Value = new EventHandler<NameScopeEventArgs>(handler)}
+
+        static member inline pointerLeave<'T when 'T : (member add_PointerLeave : EventHandler<Avalonia.Input.PointerEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerLeave"; Value = new EventHandler<Avalonia.Input.PointerEventArgs>(handler)}
+
+        static member inline calendarLeftMouseButtonDown<'T when 'T : (member add_CalendarLeftMouseButtonDown : EventHandler<Avalonia.Input.PointerPressedEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerPressedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "CalendarLeftMouseButtonDown"; Value = new EventHandler<Avalonia.Input.PointerPressedEventArgs>(handler)}
+
+        static member inline keyUp<'T when 'T : (member add_KeyUp : EventHandler<Avalonia.Input.KeyEventArgs> -> unit)>(handler: obj -> Avalonia.Input.KeyEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "KeyUp"; Value = new EventHandler<Avalonia.Input.KeyEventArgs>(handler)}
+
+        static member inline pointerReleased<'T when 'T : (member add_PointerReleased : EventHandler<Avalonia.Input.PointerReleasedEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerReleasedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerReleased"; Value = new EventHandler<Avalonia.Input.PointerReleasedEventArgs>(handler)}
+
+        static member inline calendarDayButtonMouseUp<'T when 'T : (member add_CalendarDayButtonMouseUp : EventHandler<Avalonia.Input.PointerReleasedEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerReleasedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "CalendarDayButtonMouseUp"; Value = new EventHandler<Avalonia.Input.PointerReleasedEventArgs>(handler)}
+
+        static member inline spinned<'T when 'T : (member add_Spinned : EventHandler<SpinEventArgs> -> unit)>(handler: obj -> SpinEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Spinned"; Value = new EventHandler<SpinEventArgs>(handler)}
