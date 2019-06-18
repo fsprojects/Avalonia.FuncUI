@@ -285,7 +285,7 @@ module rec VirtualDom =
                     attrs |> List.find (fun attr -> attr.Name = name)
 
                 
-                let diffContentSingle (last: View option) (next: View option) : ViewDelta option =
+                let diffContentSingle (last: View option, next: View option) : ViewDelta option =
                     match next with
                     | Some next -> 
                         match last with
@@ -293,12 +293,12 @@ module rec VirtualDom =
                         | None -> Some (ViewDelta.From next)
                     | None -> None
 
-                let diffContentMultiple (lastList: View list) (nextList: View list) : ViewDelta list =
+                let diffContentMultiple (lastList: View list, nextList: View list) : ViewDelta list =
                     let merged =
                         nextList
                         |> List.mapi (fun index next -> 
                             if index + 1 <= lastList.Length then
-                                Differ.diff(lastList.[index], next)
+                                Differ.diff(lastList.[index], nextList.[index])
                             else
                                 ViewDelta.From next
                         )
@@ -309,12 +309,12 @@ module rec VirtualDom =
                         match next.Content with
                         | ViewContent.Single next -> 
                             match last.Content with
-                            | ViewContent.Single last -> ViewContentDelta.Single (diffContentSingle last next)
+                            | ViewContent.Single last -> ViewContentDelta.Single (diffContentSingle(last, next))
                             | _ -> ViewContentDelta.Single None
                         | ViewContent.Multiple next -> 
                             match last.Content with
-                            | ViewContent.Multiple last -> ViewContentDelta.Multiple (diffContentMultiple last next)
-                            | _ -> ViewContentDelta.Multiple (diffContentMultiple [] next)
+                            | ViewContent.Multiple last -> ViewContentDelta.Multiple (diffContentMultiple(last, next))
+                            | _ -> ViewContentDelta.Multiple (diffContentMultiple([], next))
 
                     AttrDelta.ContentDelta {
                         Name = next.Name
@@ -351,15 +351,18 @@ module rec VirtualDom =
                 List.ofSeq delta 
 
         let diff (last: View, next: View) : ViewDelta =
-            let propertyAttrs = AttrDiffer.propertyDiffer(last.Attrs, next.Attrs)
-            let attachedPropertyAttrs = AttrDiffer.attachedPropertyDiffer(last.Attrs, next.Attrs)
-            let eventAttrs = AttrDiffer.eventDiffer(last.Attrs, next.Attrs)
-            let contentAttrs = AttrDiffer.contentDiffer(last.Attrs, next.Attrs)
+            if last.ViewType = next.ViewType then
+                let propertyAttrs = AttrDiffer.propertyDiffer(last.Attrs, next.Attrs)
+                let attachedPropertyAttrs = AttrDiffer.attachedPropertyDiffer(last.Attrs, next.Attrs)
+                let eventAttrs = AttrDiffer.eventDiffer(last.Attrs, next.Attrs)
+                let contentAttrs = AttrDiffer.contentDiffer(last.Attrs, next.Attrs)
 
-            {
-                ViewType = next.ViewType
-                Attrs = propertyAttrs @ attachedPropertyAttrs @ eventAttrs @ contentAttrs
-            }
+                {
+                    ViewType = next.ViewType
+                    Attrs = propertyAttrs @ attachedPropertyAttrs @ eventAttrs @ contentAttrs
+                }
+            else
+                ViewDelta.From next
 
     module Patcher =
         open Delta
