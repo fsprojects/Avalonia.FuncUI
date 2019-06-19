@@ -726,3 +726,153 @@ module DSL_Attrs =
 
         static member inline spinned<'T when 'T : (member add_Spinned : EventHandler<SpinEventArgs> -> unit)>(handler: obj -> SpinEventArgs -> unit) : TypedAttr<'T> =
             TypedAttr<_>.Event { Name = "Spinned"; Value = new EventHandler<SpinEventArgs>(handler)}
+
+        static member inline detachedFromLogicalTree<'T when 'T : (member add_DetachedFromLogicalTree : EventHandler<Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs> -> unit)>(handler: obj -> Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DetachedFromLogicalTree"; Value = new EventHandler<Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs>(handler)}
+
+        static member inline dragStarted<'T when 'T : (member add_DragStarted : EventHandler<Avalonia.Input.VectorEventArgs> -> unit)>(handler: obj -> Avalonia.Input.VectorEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DragStarted"; Value = new EventHandler<Avalonia.Input.VectorEventArgs>(handler)}
+
+        static member inline keyDown<'T when 'T : (member add_Down : EventHandler<Avalonia.Input.KeyEventArgs> -> unit)>(handler: obj -> Avalonia.Input.KeyEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "KeyDown"; Value = new EventHandler<Avalonia.Input.KeyEventArgs>(handler)}
+
+        static member inline resourcesChanged<'T when 'T : (member add_ResourcesChanged : EventHandler<ResourcesChangedEventArgs> -> unit)>(handler: obj -> ResourcesChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "ResourcesChanged"; Value = new EventHandler<ResourcesChangedEventArgs>(handler)}
+
+        static member inline notificationClosed<'T when 'T : (member add_NotificationClosed : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "NotificationClosed"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline detachedFromVisualTree<'T when 'T : (member add_DetachedFromVisualTree : EventHandler<Avalonia.VisualTreeAttachmentEventArgs> -> unit)>(handler: obj -> Avalonia.VisualTreeAttachmentEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DetachedFromVisualTree"; Value = new EventHandler<Avalonia.VisualTreeAttachmentEventArgs>(handler)}
+
+        static member inline dataContextChanged<'T when 'T : (member add_DataContextChanged : EventHandler<ResourcesChangedEventArgs> -> unit)>(handler: obj -> ResourcesChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DataContextChanged"; Value = new EventHandler<ResourcesChangedEventArgs>(handler)}
+
+        static member inline dragCompleted<'T when 'T : (member add_DragCompleted : EventHandler<Avalonia.Input.VectorEventArgs> -> unit)>(handler: obj -> Avalonia.Input.VectorEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DragCompleted"; Value = new EventHandler<Avalonia.Input.VectorEventArgs>(handler)}
+
+        static member inline dropDownOpened<'T when 'T : (member add_DropDownOpened : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DropDownOpened"; Value = new EventHandler(handler)}
+
+        static member inline scroll<'T when 'T : (member add_Scroll : EventHandler<Avalonia.Controls.Primitives.ScrollEventArgs> -> unit)>(handler: obj -> Avalonia.Controls.Primitives.ScrollEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Scroll"; Value = new EventHandler<Avalonia.Controls.Primitives.ScrollEventArgs>(handler)}
+
+        static member inline populated<'T when 'T : (member add_Populated : EventHandler<PopulatedEventArgs> -> unit)>(handler: obj -> PopulatedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Populated"; Value = new EventHandler<PopulatedEventArgs>(handler)}
+
+        static member inline pointerEnterItem<'T when 'T : (member add_PointerEnterItem : EventHandler<Avalonia.Input.PointerEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerEnterItem"; Value = new EventHandler<Avalonia.Input.PointerEventArgs>(handler)}
+
+        static member inline calendarOpened<'T when 'T : (member add_CalendarOpened : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "CalendarOpened"; Value = new EventHandler(handler)}
+
+        static member inline closed<'T when 'T : (member add_Closed : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Closed"; Value = new EventHandler(handler)}
+
+        static member inline dragDelta<'T when 'T : (member add_DragDelta : EventHandler<Avalonia.Input.VectorEventArgs> -> unit)>(handler: obj -> Avalonia.Input.VectorEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DragDelta"; Value = new EventHandler<Avalonia.Input.VectorEventArgs>(handler)}
+
+        static member inline opened<'T when 'T : (member add_Opened : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Opened"; Value = new EventHandler(handler)}
+
+        static member inline dropDownClosing<'T when 'T : (member add_DropDownClosing : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DropDownClosing"; Value = new EventHandler(handler)}
+
+        static member inline valueChanged<'T when 'T : (member add_ValueChanged : NumericUpDownValueChangedEventArgs -> unit)>(handler: obj -> NumericUpDownValueChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "ValueChanged"; Value = new EventHandler<NumericUpDownValueChangedEventArgs>(handler)}
+
+        static member inline pointerEnter<'T when 'T : (member add_PointerEnter : EventHandler<Avalonia.Input.PointerEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerEnter"; Value = new EventHandler<Avalonia.Input.PointerEventArgs>(handler)}
+
+        static member inline attachedToVisualTree<'T when 'T : (member add_AttachedToVisualTree : EventHandler<Avalonia.VisualTreeAttachmentEventArgs> -> unit)>(handler: obj -> Avalonia.VisualTreeAttachmentEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "AttachedToVisualTree"; Value = new EventHandler<Avalonia.VisualTreeAttachmentEventArgs>(handler)}
+
+        static member inline selectedDateChanged<'T when 'T : (member add_SelectedDateChanged : EventHandler<SelectionChangedEventArgs> -> unit)>(handler: obj -> SelectionChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "SelectedDateChanged"; Value = new EventHandler<SelectionChangedEventArgs>(handler)}
+
+        static member inline dropDownClosed<'T when 'T : (member add_DropDownClosed : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DropDownClosed"; Value = new EventHandler(handler)}
+
+        static member inline pointerCaptureLost<'T when 'T : (member add_PointerCaptureLost : EventHandler<Avalonia.Input.PointerCaptureLostEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerCaptureLostEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerCaptureLost"; Value = new EventHandler<Avalonia.Input.PointerCaptureLostEventArgs>(handler)}
+      
+        static member inline contextMenuOpening<'T when 'T : (member add_ContextMenuOpening : EventHandler<System.ComponentModel.CancelEventHandler> -> unit)>(handler: obj -> System.ComponentModel.CancelEventHandler -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "ContextMenuOpening"; Value = new EventHandler<System.ComponentModel.CancelEventHandler>(handler)}
+        
+        static member inline pointerMoved<'T when 'T : (member add_PointerMoved : EventHandler<Avalonia.Input.PointerEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerMoved"; Value = new EventHandler<Avalonia.Input.PointerEventArgs>(handler)}
+
+        static member inline displayDateChanged<'T when 'T : (member add_DisplayDateChanged : EventHandler<CalendarDateChangedEventArgs> -> unit)>(handler: obj -> CalendarDateChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DisplayDateChanged"; Value = new EventHandler<CalendarDateChangedEventArgs>(handler)}
+
+        static member inline propertyChanged<'T when 'T : (member add_PropertyChanged : EventHandler<Avalonia.AvaloniaPropertyChangedEventArgs> -> unit)>(handler: obj -> Avalonia.AvaloniaPropertyChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PropertyChanged"; Value = new EventHandler<Avalonia.AvaloniaPropertyChangedEventArgs>(handler)}
+
+        static member inline selectedDatesChanged<'T when 'T : (member add_SelectedDatesChanged : EventHandler<SelectionChangedEventArgs> -> unit)>(handler: obj -> SelectionChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "SelectedDatesChanged"; Value = new EventHandler<SelectionChangedEventArgs>(handler)}
+
+        static member inline calendarLeftMouseButtonUp<'T when 'T : (member add_CalendarLeftMouseButtonUp : EventHandler<Avalonia.Input.PointerReleasedEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerReleasedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "CalendarLeftMouseButtonUp"; Value = new EventHandler<Avalonia.Input.PointerReleasedEventArgs>(handler)}
+
+        static member inline textInput<'T when 'T : (member add_TextInput : EventHandler<Avalonia.Input.TextInputEventArgs> -> unit)>(handler: obj -> Avalonia.Input.TextInputEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "TextInput"; Value = new EventHandler<Avalonia.Input.TextInputEventArgs>(handler)}
+
+        static member inline menuOpened<'T when 'T : (member add_MenuOpened : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "MenuOpened"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline dateValidationError<'T when 'T : (member add_DateValidationErrord : EventHandler<DatePickerDateValidationErrorEventArgs> -> unit)>(handler: obj -> DatePickerDateValidationErrorEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DateValidationError"; Value = new EventHandler<DatePickerDateValidationErrorEventArgs>(handler)}
+
+        static member inline displayModeChanged<'T when 'T : (member add_DisplayModeChanged : EventHandler<CalendarModeChangedEventArgs> -> unit)>(handler: obj -> CalendarModeChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DisplayModeChanged"; Value = new EventHandler<CalendarModeChangedEventArgs>(handler)}
+
+        static member inline pointerLeaveItem<'T when 'T : (member add_PointerLeaveItem : EventHandler<Avalonia.Input.PointerEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PointerLeaveItem"; Value = new EventHandler<Avalonia.Input.PointerEventArgs>(handler)}
+
+        static member inline selectionChanged<'T when 'T : (member add_SelectionChanged : EventHandler<SelectionChangedEventArgs> -> unit)>(handler: obj -> SelectionChangedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "SelectionChanged"; Value = new EventHandler<SelectionChangedEventArgs>(handler)}
+
+        static member inline lostFocus<'T when 'T : (member add_LostFocus : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "LostFocus"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline popupRootCreated<'T when 'T : (member add_PopupRootCreated : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "PopupRootCreated"; Value = new EventHandler(handler)}
+
+        static member inline dropDownOpening<'T when 'T : (member add_DropDownOpening : EventHandler<System.ComponentModel.CancelEventArgs> -> unit)>(handler: obj -> System.ComponentModel.CancelEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DropDownOpening"; Value = new EventHandler<System.ComponentModel.CancelEventArgs>(handler)}
+   
+        static member inline initialized<'T when 'T : (member add_Initialized : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Initialized"; Value = new EventHandler(handler)}
+
+        static member inline populating<'T when 'T : (member add_Populating : EventHandler<PopulatingEventArgs> -> unit)>(handler: obj -> PopulatingEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Populating"; Value = new EventHandler<PopulatingEventArgs>(handler)}
+
+        static member inline gotFocus<'T when 'T : (member add_GotFocus : EventHandler<Avalonia.Input.GotFocusEventArgs> -> unit)>(handler: obj -> Avalonia.Input.GotFocusEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "GotFocus"; Value = new EventHandler<Avalonia.Input.GotFocusEventArgs>(handler)}
+
+        static member inline submenuOpened<'T when 'T : (member add_SubmenuOpened : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "SubmenuOpened"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline contextMenuClosing<'T when 'T : (member add_ContextMenuClosing : EventHandler<System.ComponentModel.CancelEventArgs> -> unit)>(handler: obj -> System.ComponentModel.CancelEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "ContextMenuClosing"; Value = new EventHandler<System.ComponentModel.CancelEventArgs>(handler)}
+
+        static member inline textChanged<'T when 'T : (member add_TextChanged : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "TextChanged"; Value = new EventHandler(handler)}
+
+        static member inline attachedToLogicalTree<'T when 'T : (member add_AttachedToLogicalTree : EventHandler<Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs> -> unit)>(handler: obj -> Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "AttachedToLogicalTree"; Value = new EventHandler<Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs>(handler)}
+
+        static member inline tapped<'T when 'T : (member add_Tapped : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Tapped"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline calendarClosed<'T when 'T : (member add_CalendarClosed : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "CalendarClosed"; Value = new EventHandler(handler)}
+
+        static member inline menuClosed<'T when 'T : (member add_MenuClosed : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "MenuClosed"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline doubleTapped<'T when 'T : (member add_DoubleTapped : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "DoubleTapped"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
+
+        static member inline spin<'T when 'T : (member add_Spin : EventHandler<SpinEventArgs> -> unit)>(handler: obj -> SpinEventArgs -> unit) : TypedAttr<'T> =
+            TypedAttr<_>.Event { Name = "Spin"; Value = new EventHandler<SpinEventArgs>(handler)}
