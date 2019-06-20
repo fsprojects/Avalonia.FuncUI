@@ -733,7 +733,7 @@ module DSL_Attrs =
         static member inline dragStarted<'T when 'T : (member add_DragStarted : EventHandler<Avalonia.Input.VectorEventArgs> -> unit)>(handler: obj -> Avalonia.Input.VectorEventArgs -> unit) : TypedAttr<'T> =
             TypedAttr<_>.Event { Name = "DragStarted"; Value = new EventHandler<Avalonia.Input.VectorEventArgs>(handler)}
 
-        static member inline keyDown<'T when 'T : (member add_Down : EventHandler<Avalonia.Input.KeyEventArgs> -> unit)>(handler: obj -> Avalonia.Input.KeyEventArgs -> unit) : TypedAttr<'T> =
+        static member inline keyDown<'T when 'T : (member add_KeyDown : EventHandler<Avalonia.Input.KeyEventArgs> -> unit)>(handler: obj -> Avalonia.Input.KeyEventArgs -> unit) : TypedAttr<'T> =
             TypedAttr<_>.Event { Name = "KeyDown"; Value = new EventHandler<Avalonia.Input.KeyEventArgs>(handler)}
 
         static member inline resourcesChanged<'T when 'T : (member add_ResourcesChanged : EventHandler<ResourcesChangedEventArgs> -> unit)>(handler: obj -> ResourcesChangedEventArgs -> unit) : TypedAttr<'T> =
