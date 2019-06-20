@@ -13,7 +13,7 @@ steps:
 # install .Net Core
 - task: DotNetCoreInstaller@0
   inputs:
-    version: '2.2.000'
+    version: '2.2.300'
 
 # restore
 - task: DotNetCoreCLI@2
