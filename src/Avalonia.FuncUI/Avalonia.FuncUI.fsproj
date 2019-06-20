@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.1.0</Version>
+    <Authors>JaggerJo</Authors>
+    <Product />
+    <PackageProjectUrl>https://github.com/JaggerJo/Avalonia.FuncUI</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JaggerJo/Avalonia.FuncUI</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Core\Lib.fs" />
+    <Compile Include="Core\Types.fs" />
+    <Compile Include="Core\VirtualDom.fs" />
+    <Compile Include="DSL.base.fs" />
+    <Compile Include="DSL.views.fs" />
+    <Compile Include="DSL.attrs.fs" />
+    <Compile Include="Hosts.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="4.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

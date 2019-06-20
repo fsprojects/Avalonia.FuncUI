@@ -1,0 +1,32 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+# install .Net Core
+- task: DotNetCoreInstaller@0
+  inputs:
+    version: '2.2.300'
+
+# restore
+- task: DotNetCoreCLI@2
+  inputs:
+    command: restore
+    projects: '**/*.fsproj'
+    feedsToUse: config
+    nugetConfigPath: src/NuGet.config
+
+# build
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.fsproj'
+    arguments: '--configuration Release'
