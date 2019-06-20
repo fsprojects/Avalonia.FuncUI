@@ -16,12 +16,7 @@ steps:
     version: '2.2.300'
 
 # restore
-- task: DotNetCoreCLI@2
-  inputs:
-    command: restore
-    projects: '**/*.fsproj'
-    feedsToUse: config
-    nugetConfigPath: src/NuGet.config
+- script: dotnet restore
 
 # build
 - task: DotNetCoreCLI@2
