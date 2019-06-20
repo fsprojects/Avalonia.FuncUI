@@ -19,7 +19,7 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: restore
-    projects: '**/*.csproj'
+    projects: '**/*.fsproj'
     feedsToUse: config
     nugetConfigPath: src/NuGet.config
 
@@ -28,5 +28,5 @@ steps:
   displayName: Build
   inputs:
     command: build
-    projects: '**/*.csproj'
+    projects: '**/*.fsproj'
     arguments: '--configuration Release'
