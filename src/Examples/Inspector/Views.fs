@@ -216,17 +216,17 @@ module ElementsView =
     let filterElement (filter: FilterView.State) (element: ElementView.State) : bool =
         match element with
         | ElementView.Property property ->
-            if filter.IncludeProperties then
-                true
-            else false
+            match filter.FilterText with
+            | Some some -> filter.IncludeProperties && property.Name.StartsWith some
+            | None -> filter.IncludeProperties
         | ElementView.Event event -> 
-            if filter.IncludeEvents then
-                true
-            else false
+            match filter.FilterText with
+            | Some some -> filter.IncludeEvents && event.Name.StartsWith some
+            | None -> filter.IncludeProperties
         | ElementView.Control control ->
-            if filter.IncludeControls then
-                true
-            else false
+            match filter.FilterText with
+            | Some some -> filter.IncludeControls && control.Name.StartsWith some
+            | None -> filter.IncludeProperties
 
 
     let view (state: State) (filter: FilterView.State) dispatch : View =
@@ -247,6 +247,7 @@ module ElementsView =
 module FilterView =
 
     type State = {
+        FilterText : string option
         IncludeProperties : bool
         IncludeEvents : bool
         IncludeControls : bool
@@ -254,6 +255,7 @@ module FilterView =
 
     let init () = 
         {
+            FilterText = None
             IncludeProperties = true
             IncludeEvents = true
             IncludeControls = true
@@ -263,6 +265,7 @@ module FilterView =
         | IncludeProperties of bool
         | IncludeEvents of bool
         | IncludeControls of bool
+        | FilterChanged of string option
 
     let update (state: State) (msg: Msg) : State =
         match msg with
@@ -272,6 +275,8 @@ module FilterView =
             { state with IncludeEvents = includeEvents }
         | IncludeControls includeControls ->
             { state with IncludeControls = includeControls }
+        | FilterChanged filterChanged ->
+            { state with FilterText = filterChanged }
 
     let view (state: State) dispatch : View =
         Views.stackPanel [
@@ -312,6 +317,24 @@ module FilterView =
                 Views.textBox [
                     Attrs.margin 5.0
                     Attrs.watermark "Search for Name..."
+                    Attrs.keyDown (fun obj args ->
+                        let textbox = obj :?> TextBox
+                        match textbox.Text with
+                        | null -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (None)))
+                        | "" -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (None)))
+                        | _ -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (Some textbox.Text)))
+                        
+                        args.Handled <- true
+                    )
+                    Attrs.keyUp (fun obj args ->
+                        let textbox = obj :?> TextBox
+                        match textbox.Text with
+                        | null -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (None)))
+                        | "" -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (None)))
+                        | _ -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (Some textbox.Text)))
+                    
+                        args.Handled <- true
+                    )
                 ]
             ]
         ]
