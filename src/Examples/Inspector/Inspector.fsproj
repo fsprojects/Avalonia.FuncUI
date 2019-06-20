@@ -7,12 +7,12 @@
 
   <ItemGroup>
     <Compile Include="Lib.fs" />
-    <Compile Include="Counter.fs" />
+    <Compile Include="Views.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.1-cibuild0002928-beta" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
     <PackageReference Include="Elmish" Version="3.0.0" />
   </ItemGroup>
 

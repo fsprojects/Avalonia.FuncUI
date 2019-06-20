@@ -792,9 +792,6 @@ module DSL_Attrs =
 
         static member inline dropDownClosed<'T when 'T : (member add_DropDownClosed : EventHandler -> unit)>(handler: obj -> EventArgs -> unit) : TypedAttr<'T> =
             TypedAttr<_>.Event { Name = "DropDownClosed"; Value = new EventHandler(handler)}
-
-        static member inline pointerCaptureLost<'T when 'T : (member add_PointerCaptureLost : EventHandler<Avalonia.Input.PointerCaptureLostEventArgs> -> unit)>(handler: obj -> Avalonia.Input.PointerCaptureLostEventArgs -> unit) : TypedAttr<'T> =
-            TypedAttr<_>.Event { Name = "PointerCaptureLost"; Value = new EventHandler<Avalonia.Input.PointerCaptureLostEventArgs>(handler)}
       
         static member inline contextMenuOpening<'T when 'T : (member add_ContextMenuOpening : EventHandler<System.ComponentModel.CancelEventHandler> -> unit)>(handler: obj -> System.ComponentModel.CancelEventHandler -> unit) : TypedAttr<'T> =
             TypedAttr<_>.Event { Name = "ContextMenuOpening"; Value = new EventHandler<System.ComponentModel.CancelEventHandler>(handler)}
