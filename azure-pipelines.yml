@@ -13,20 +13,15 @@ steps:
 # install .Net Core
 - task: DotNetCoreInstaller@0
   inputs:
-    version: '2.2.000'
+    version: '2.2.300'
 
 # restore
-- task: DotNetCoreCLI@2
-  inputs:
-    command: restore
-    projects: '**/*.csproj'
-    feedsToUse: config
-    nugetConfigPath: src/NuGet.config
+- script: dotnet restore
 
 # build
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     command: build
-    projects: '**/*.csproj'
+    projects: '**/*.fsproj'
     arguments: '--configuration Release'
