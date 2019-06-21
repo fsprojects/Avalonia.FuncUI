@@ -8,6 +8,10 @@
     <PackageProjectUrl>https://github.com/JaggerJo/Avalonia.FuncUI</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JaggerJo/Avalonia.FuncUI</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://github.com/JaggerJo/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
+    <Product>JaggerJo.Avalonia.FuncUI.Elmish</Product>
+    <PackageId>JaggerJo.Avalonia.FuncUI.Elmish</PackageId>
+    <RepositoryType></RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
