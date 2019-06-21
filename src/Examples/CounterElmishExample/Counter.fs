@@ -4,6 +4,7 @@ open Avalonia.Controls
 open Avalonia.Media
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
+open Avalonia.Layout
 
 type CustomControl() =
     inherit Control()
@@ -39,16 +40,21 @@ module Counter =
         Views.dockpanel [
             Attrs.children [
                 Views.button [
-                    Attrs.click (fun sender args -> dispatch Increment)
-                    Attrs.content "click to increment"
+                    Attrs.dockPanel_dock Dock.Bottom
+                    Attrs.click (fun sender args -> dispatch Decrement)
+                    Attrs.content "-"
                 ]
                 Views.button [
-                    Attrs.click (fun sender args -> dispatch Decrement)
-                    Attrs.content "click to decrement"
+                    Attrs.dockPanel_dock Dock.Bottom
+                    Attrs.click (fun sender args -> dispatch Increment)
+                    Attrs.content "+"
                 ]
                 Views.textBlock [
                     Attrs.dockPanel_dock Dock.Top
-                    Attrs.text (sprintf "the count is %i" state.count)
+                    Attrs.fontSize 48.0
+                    Attrs.verticalAlignment VerticalAlignment.Center
+                    Attrs.horizontalAlignment HorizontalAlignment.Center
+                    Attrs.text (string state.count)
                 ]
             ]
         ]       
