@@ -16,7 +16,17 @@ Should be usable, but expect bugs and some breaking changes. Basically wet paint
 Please contribute to this library through issue reports, pull requests, code reviews and discussion.
 
 ## Getting started
-I'm currently working on making this availiable on nuget.
+
+**Avalonia.FuncUI [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI/)**
+```
+Install-Package JaggerJo.Avalonia.FuncUI
+```
+
+**Avalonia.FuncUI.Elmish [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI.Elmish/)**
+```
+Install-Package JaggerJo.Avalonia.FuncUI.Elmish
+```
+
 Project templates will follow soon.
 
 For now check out the [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
