@@ -29,7 +29,7 @@ Install-Package JaggerJo.Avalonia.FuncUI.Elmish
 
 Project templates will follow soon.
 
-For now check out the [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
+For now check out the [Wiki](https://github.com/JaggerJo/Avalonia.FuncUI/wiki) (WIP) and [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
 
 ## Example
 Below is the code of a simple counter app (using the Avalonia.FuncUI.Elmish package).
