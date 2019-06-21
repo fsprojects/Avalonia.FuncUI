@@ -41,13 +41,15 @@ module Counter =
             Attrs.children [
                 Views.button [
                     Attrs.dockPanel_dock Dock.Bottom
-                    Attrs.click (fun sender args -> dispatch Decrement)
+                    Attrs.onClick (fun sender args -> dispatch Decrement)
                     Attrs.content "-"
                 ]
                 Views.button [
                     Attrs.dockPanel_dock Dock.Bottom
-                    Attrs.click (fun sender args -> dispatch Increment)
+                    Attrs.onClick (fun sender args -> dispatch Increment)
                     Attrs.content "+"
+                    Attrs.margin (horizontal = 5.0, vertical = 5.0)
+                    Attrs.padding 5.0
                 ]
                 Views.textBlock [
                     Attrs.dockPanel_dock Dock.Top

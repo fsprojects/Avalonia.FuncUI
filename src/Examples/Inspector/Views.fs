@@ -291,7 +291,7 @@ module FilterView =
                         Views.checkBox [
                             Attrs.content (sprintf "Properties [%b]" state.IncludeProperties)
                             Attrs.isChecked state.IncludeProperties
-                            Attrs.click (fun obj args -> 
+                            Attrs.onClick (fun obj args -> 
                                 dispatch (InspectorView.FilterViewMsg (Msg.IncludeProperties (obj :?> CheckBox).IsChecked.Value))
                                 args.Handled <- true
                             )
@@ -299,7 +299,7 @@ module FilterView =
                         Views.checkBox [
                             Attrs.content (sprintf "Events [%b]" state.IncludeEvents)
                             Attrs.isChecked state.IncludeEvents
-                            Attrs.click (fun obj args -> 
+                            Attrs.onClick (fun obj args -> 
                                 dispatch (InspectorView.FilterViewMsg (Msg.IncludeEvents (obj :?> CheckBox).IsChecked.Value))
                                 args.Handled <- true
                             )
@@ -307,7 +307,7 @@ module FilterView =
                         Views.checkBox [
                             Attrs.content (sprintf "Controls [%b]" state.IncludeControls)
                             Attrs.isChecked state.IncludeControls
-                            Attrs.click (fun obj args -> 
+                            Attrs.onClick (fun obj args -> 
                                 dispatch (InspectorView.FilterViewMsg (Msg.IncludeControls (obj :?> CheckBox).IsChecked.Value))
                                 args.Handled <- true
                             )
@@ -317,7 +317,7 @@ module FilterView =
                 Views.textBox [
                     Attrs.margin 5.0
                     Attrs.watermark "Search for Name..."
-                    Attrs.keyDown (fun obj args ->
+                    Attrs.onKeyDown (fun obj args ->
                         let textbox = obj :?> TextBox
                         match textbox.Text with
                         | null -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (None)))
@@ -326,7 +326,7 @@ module FilterView =
                         
                         args.Handled <- true
                     )
-                    Attrs.keyUp (fun obj args ->
+                    Attrs.onKeyUp (fun obj args ->
                         let textbox = obj :?> TextBox
                         match textbox.Text with
                         | null -> dispatch (InspectorView.FilterViewMsg (Msg.FilterChanged (None)))
