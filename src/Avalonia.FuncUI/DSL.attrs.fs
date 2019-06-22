@@ -6,7 +6,7 @@ open System
 open System.Threading
 
 [<AutoOpen>]
-module DSL_Attrs =
+module DSL_Property_Attrs =
 
     type Attrs with
 
@@ -220,7 +220,6 @@ module DSL_Attrs =
         static member inline displayDate<'T when 'T : (member set_DisplayDate : DateTime -> unit)>(value: DateTime) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "DisplayDate"; Value = value }
 
-        // TODO: make more fsharp friendly
         static member inline cornerRadius<'T when 'T : (member set_CornerRadius : Avalonia.CornerRadius -> unit)>(value: Avalonia.CornerRadius) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "CornerRadius"; Value = value }
 
@@ -527,11 +526,11 @@ module DSL_Attrs =
         static member inline isDefault<'T when 'T : (member set_IsDefault : bool -> unit)>(value: bool) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "IsDefault"; Value = value }
 
-        //static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: Nullable<bool>) : TypedAttr<'T> =
-        //    TypedAttr<_>.Property { Name = "IsChecked"; Value = value }
+        static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: Nullable<bool>) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsChecked"; Value = value }
 
-        //static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: bool option) : TypedAttr<'T> =
-        //    TypedAttr<_>.Property { Name = "IsChecked"; Value = Option.toNullable value }
+        static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: bool option) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "IsChecked"; Value = Option.toNullable value }
 
         static member inline isChecked<'T when 'T : (member set_IsChecked : Nullable<bool> -> unit)>(value: bool) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "IsChecked"; Value = Nullable(value) }
@@ -675,6 +674,10 @@ module DSL_Attrs =
         static member inline acceptsReturn<'T when 'T : (member set_AcceptsReturn : bool -> unit)>(value: bool) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "AcceptsReturn"; Value = value }
 
+[<AutoOpen>]
+module DSL_AttachedProperty_Attrs =
+
+    type Attrs with
 
         static member inline dockPanel_dock<'T when 'T :> Control>(value: Dock) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
@@ -687,6 +690,85 @@ module DSL_Attrs =
                 Value = value;
                 Handler = handler;
             }
+
+        static member inline grid_column<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                    | Some some -> Grid.SetColumn(view :?> Control, some :?> int)
+                    | None -> Grid.SetColumn(view :?> Control, 0)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Grid.Column";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline grid_columnSpan<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                    | Some some -> Grid.SetColumnSpan(view :?> Control, some :?> int)
+                    | None -> Grid.SetColumnSpan(view :?> Control, 1)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Grid.ColumnSpan";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline grid_row<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                    | Some some -> Grid.SetRow(view :?> Control, some :?> int)
+                    | None -> Grid.SetRow(view :?> Control, 0)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Grid.Row";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline grid_rowSpan<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                    | Some some -> Grid.SetRowSpan(view :?> Control, some :?> int)
+                    | None -> Grid.SetRowSpan(view :?> Control, 1)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Grid.RowSpan";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline scrollViewer_horizontalScrollBarVisibility<'T when 'T :> Control>(value: Avalonia.Controls.Primitives.ScrollBarVisibility) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                    | Some some -> ScrollViewer.SetHorizontalScrollBarVisibility(view :?> Control, some :?> Avalonia.Controls.Primitives.ScrollBarVisibility)
+                    | None -> ScrollViewer.SetHorizontalScrollBarVisibility(view :?> Control, Avalonia.Controls.Primitives.ScrollBarVisibility.Hidden)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ScrollViewer.HorizontalScrollBarVisibility";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline scrollViewer_verticalScrollBarVisibility<'T when 'T :> Control>(value: Avalonia.Controls.Primitives.ScrollBarVisibility) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                    | Some some -> ScrollViewer.SetVerticalScrollBarVisibility(view :?> Control, some :?> Avalonia.Controls.Primitives.ScrollBarVisibility)
+                    | None -> ScrollViewer.SetVerticalScrollBarVisibility(view :?> Control, Avalonia.Controls.Primitives.ScrollBarVisibility.Auto)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ScrollViewer.VerticalScrollBarVisibility";
+                Value = value;
+                Handler = handler;
+            }
+
+
+
+[<AutoOpen>]
+module DSL_Event_Attrs =
+
+    type Attrs with
 
         static member inline onClick<'T when 'T : (member add_Click : EventHandler<Avalonia.Interactivity.RoutedEventArgs> -> unit)>(handler: obj -> Avalonia.Interactivity.RoutedEventArgs -> unit) : TypedAttr<'T> =
             TypedAttr<_>.Event { Name = "Click"; Value = new EventHandler<Avalonia.Interactivity.RoutedEventArgs>(handler)}
