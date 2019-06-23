@@ -682,8 +682,8 @@ module DSL_AttachedProperty_Attrs =
         static member inline dockPanel_dock<'T when 'T :> Control>(value: Dock) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
                 match value with
-                    | Some some -> DockPanel.SetDock(view :?> Control, some :?> Dock)
-                    | None -> DockPanel.SetDock(view :?> Control, Dock.Left)
+                | Some some -> DockPanel.SetDock(view :?> Control, some :?> Dock)
+                | None -> DockPanel.SetDock(view :?> Control, Dock.Left)
 
             TypedAttr<_>.AttachedProperty {
                 Name = "DockPanel.Dock";
@@ -694,8 +694,8 @@ module DSL_AttachedProperty_Attrs =
         static member inline grid_column<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
                 match value with
-                    | Some some -> Grid.SetColumn(view :?> Control, some :?> int)
-                    | None -> Grid.SetColumn(view :?> Control, 0)
+                | Some some -> Grid.SetColumn(view :?> Control, some :?> int)
+                | None -> Grid.SetColumn(view :?> Control, 0)
 
             TypedAttr<_>.AttachedProperty {
                 Name = "Grid.Column";
@@ -706,8 +706,8 @@ module DSL_AttachedProperty_Attrs =
         static member inline grid_columnSpan<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
                 match value with
-                    | Some some -> Grid.SetColumnSpan(view :?> Control, some :?> int)
-                    | None -> Grid.SetColumnSpan(view :?> Control, 1)
+                | Some some -> Grid.SetColumnSpan(view :?> Control, some :?> int)
+                | None -> Grid.SetColumnSpan(view :?> Control, 1)
 
             TypedAttr<_>.AttachedProperty {
                 Name = "Grid.ColumnSpan";
@@ -718,8 +718,8 @@ module DSL_AttachedProperty_Attrs =
         static member inline grid_row<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
                 match value with
-                    | Some some -> Grid.SetRow(view :?> Control, some :?> int)
-                    | None -> Grid.SetRow(view :?> Control, 0)
+                | Some some -> Grid.SetRow(view :?> Control, some :?> int)
+                | None -> Grid.SetRow(view :?> Control, 0)
 
             TypedAttr<_>.AttachedProperty {
                 Name = "Grid.Row";
@@ -730,8 +730,8 @@ module DSL_AttachedProperty_Attrs =
         static member inline grid_rowSpan<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
                 match value with
-                    | Some some -> Grid.SetRowSpan(view :?> Control, some :?> int)
-                    | None -> Grid.SetRowSpan(view :?> Control, 1)
+                | Some some -> Grid.SetRowSpan(view :?> Control, some :?> int)
+                | None -> Grid.SetRowSpan(view :?> Control, 1)
 
             TypedAttr<_>.AttachedProperty {
                 Name = "Grid.RowSpan";
@@ -742,8 +742,8 @@ module DSL_AttachedProperty_Attrs =
         static member inline scrollViewer_horizontalScrollBarVisibility<'T when 'T :> Control>(value: Avalonia.Controls.Primitives.ScrollBarVisibility) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
                 match value with
-                    | Some some -> ScrollViewer.SetHorizontalScrollBarVisibility(view :?> Control, some :?> Avalonia.Controls.Primitives.ScrollBarVisibility)
-                    | None -> ScrollViewer.SetHorizontalScrollBarVisibility(view :?> Control, Avalonia.Controls.Primitives.ScrollBarVisibility.Hidden)
+                | Some some -> ScrollViewer.SetHorizontalScrollBarVisibility(view :?> Control, some :?> Avalonia.Controls.Primitives.ScrollBarVisibility)
+                | None -> ScrollViewer.SetHorizontalScrollBarVisibility(view :?> Control, Avalonia.Controls.Primitives.ScrollBarVisibility.Hidden)
 
             TypedAttr<_>.AttachedProperty {
                 Name = "ScrollViewer.HorizontalScrollBarVisibility";
@@ -754,8 +754,8 @@ module DSL_AttachedProperty_Attrs =
         static member inline scrollViewer_verticalScrollBarVisibility<'T when 'T :> Control>(value: Avalonia.Controls.Primitives.ScrollBarVisibility) : TypedAttr<'T> =
             let handler (view: obj, value: obj option) =
                 match value with
-                    | Some some -> ScrollViewer.SetVerticalScrollBarVisibility(view :?> Control, some :?> Avalonia.Controls.Primitives.ScrollBarVisibility)
-                    | None -> ScrollViewer.SetVerticalScrollBarVisibility(view :?> Control, Avalonia.Controls.Primitives.ScrollBarVisibility.Auto)
+                | Some some -> ScrollViewer.SetVerticalScrollBarVisibility(view :?> Control, some :?> Avalonia.Controls.Primitives.ScrollBarVisibility)
+                | None -> ScrollViewer.SetVerticalScrollBarVisibility(view :?> Control, Avalonia.Controls.Primitives.ScrollBarVisibility.Auto)
 
             TypedAttr<_>.AttachedProperty {
                 Name = "ScrollViewer.VerticalScrollBarVisibility";
@@ -763,7 +763,245 @@ module DSL_AttachedProperty_Attrs =
                 Handler = handler;
             }
 
+        static member inline textBlock_fontFamily<'T when 'T :> Control>(value: Avalonia.Media.FontFamily) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> TextBlock.SetFontFamily(view :?> Control, some :?> Avalonia.Media.FontFamily)
+                | None -> TextBlock.SetFontFamily(view :?> Control, Avalonia.Media.FontFamily.Default)
 
+            TypedAttr<_>.AttachedProperty {
+                Name = "TextBlock.FontFamily";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline textBlock_fontSize<'T when 'T :> Control>(value: double) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> TextBlock.SetFontSize(view :?> Control, some :?> double)
+                | None -> TextBlock.SetFontSize(view :?> Control, 12.0)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "TextBlock.FontSize";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline textBlock_fontStyle<'T when 'T :> Control>(value: Avalonia.Media.FontStyle) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> TextBlock.SetFontStyle(view :?> Control, some :?> Avalonia.Media.FontStyle)
+                | None -> TextBlock.SetFontStyle(view :?> Control, Avalonia.Media.FontStyle.Normal)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "TextBlock.FontStyle";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline textBlock_fontWeight<'T when 'T :> Control>(value: Avalonia.Media.FontWeight) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> TextBlock.SetFontWeight(view :?> Control, some :?> Avalonia.Media.FontWeight)
+                | None -> TextBlock.SetFontWeight(view :?> Control, Avalonia.Media.FontWeight.Normal)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "TextBlock.FontWeight";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline textBlock_foreground<'T when 'T :> Control>(value: Avalonia.Media.IBrush) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> TextBlock.SetForeground(view :?> Control, some :?> Avalonia.Media.IBrush)
+                | None -> TextBlock.SetForeground(view :?> Control, Avalonia.Media.Brushes.Black)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "TextBlock.Foreground";
+                Value = value;
+                Handler = handler;
+            }
+
+        static member inline textBlock_foreground<'T when 'T :> Control>(value: string) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> TextBlock.SetForeground(view :?> Control, some :?> Avalonia.Media.IBrush)
+                | None -> TextBlock.SetForeground(view :?> Control, Avalonia.Media.Brushes.Black)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "TextBlock.Foreground";
+                Value = Avalonia.Media.SolidColorBrush.Parse(value).ToImmutable();
+                Handler = handler;
+            }
+
+        static member inline canvas_top<'T when 'T :> Control>(value: double) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> Canvas.SetTop(view :?> Control, some :?> double)
+                | None -> Canvas.SetTop(view :?> Control, Double.NaN)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Canvas.Top";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline canvas_bottom<'T when 'T :> Control>(value: double) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> Canvas.SetBottom(view :?> Control, some :?> double)
+                | None -> Canvas.SetBottom(view :?> Control, Double.NaN)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Canvas.Bottom";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline canvas_right<'T when 'T :> Control>(value: double) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> Canvas.SetRight(view :?> Control, some :?> double)
+                | None -> Canvas.SetRight(view :?> Control, Double.NaN)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Canvas.Right";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline canvas_left<'T when 'T :> Control>(value: double) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> Canvas.SetLeft(view :?> Control, some :?> double)
+                | None -> Canvas.SetLeft(view :?> Control, Double.NaN)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "Canvas.Left";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline renderOptions_bitmapInterpolationMode<'T when 'T :> Avalonia.AvaloniaObject>(value: Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> Avalonia.Media.RenderOptions.SetBitmapInterpolationMode(view :?> Control, some :?> Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode)
+                | None -> Avalonia.Media.RenderOptions.SetBitmapInterpolationMode(view :?> Control, Avalonia.Visuals.Media.Imaging.BitmapInterpolationMode.Default)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "RenderOptions.BitmapInterpolationMode";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline nameScope_nameScope<'T when 'T :> Avalonia.StyledElement>(value: INameScope) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> NameScope.SetNameScope(view :?> Avalonia.StyledElement, some :?> INameScope)
+                | None -> NameScope.SetNameScope(view :?> Avalonia.StyledElement, NameScope.FindNameScope(view :?> Avalonia.StyledElement))
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "NameScope.NameScope";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline toolTip_tip<'T when 'T :> Control>(value: obj) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> ToolTip.SetTip(view :?> Control, some)
+                | None -> ToolTip.SetTip(view :?> Control, null)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ToolTip.Tip";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline toolTip_tip<'T when 'T :> Control>(value: string) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> ToolTip.SetTip(view :?> Control, some)
+                | None -> ToolTip.SetTip(view :?> Control, null)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ToolTip.Tip";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline toolTip_isOpen<'T when 'T :> Control>(value: bool) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> ToolTip.SetIsOpen(view :?> Control, some :?> bool)
+                | None -> ToolTip.SetIsOpen(view :?> Control, false)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ToolTip.IsOpen";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline toolTip_placement<'T when 'T :> Control>(value: PlacementMode) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> ToolTip.SetPlacement(view :?> Control, some :?> PlacementMode)
+                | None -> ToolTip.SetPlacement(view :?> Control, PlacementMode.Pointer)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ToolTip.Placement";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline toolTip_horizontalOffset<'T when 'T :> Control>(value: double) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> ToolTip.SetHorizontalOffset(view :?> Control, some :?> double)
+                | None -> ToolTip.SetHorizontalOffset(view :?> Control, Double.NaN)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ToolTip.HorizontalOffset";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline toolTip_verticalOffset<'T when 'T :> Control>(value: double) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> ToolTip.SetVerticalOffset(view :?> Control, some :?> double)
+                | None -> ToolTip.SetVerticalOffset(view :?> Control, 200.0)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ToolTip.VerticalOffset";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline toolTip_showDelay<'T when 'T :> Control>(value: int) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> ToolTip.SetShowDelay(view :?> Control, some :?> int)
+                | None -> ToolTip.SetShowDelay(view :?> Control, 400)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "ToolTip.ShowDelay";
+                Value = value
+                Handler = handler;
+            }
+
+        static member inline adornerLayer_adornedElement<'T when 'T :> Avalonia.Visual>(value: Avalonia.Visual) : TypedAttr<'T> =
+            let handler (view: obj, value: obj option) =
+                match value with
+                | Some some -> Avalonia.Controls.Primitives.AdornerLayer.SetAdornedElement(view :?> Avalonia.Visual, some :?> Avalonia.Visual)
+                | None -> Avalonia.Controls.Primitives.AdornerLayer.SetAdornedElement(view :?> Avalonia.Visual, null)
+
+            TypedAttr<_>.AttachedProperty {
+                Name = "AdornerLayer.AdornedElement";
+                Value = value
+                Handler = handler;
+            }
 
 [<AutoOpen>]
 module DSL_Event_Attrs =
