@@ -48,8 +48,6 @@ module Counter =
                     Attrs.dockPanel_dock Dock.Bottom
                     Attrs.onClick (fun sender args -> dispatch Increment)
                     Attrs.content "+"
-                    Attrs.margin (horizontal = 5.0, vertical = 5.0)
-                    Attrs.padding 5.0
                 ]
                 Views.textBlock [
                     Attrs.dockPanel_dock Dock.Top
