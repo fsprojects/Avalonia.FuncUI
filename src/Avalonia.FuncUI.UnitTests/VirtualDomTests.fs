@@ -6,13 +6,148 @@ open System
 
 
 module VirtualDomTests =
+    open Avalonia.FuncUI.VirtualDom
+    open Avalonia.FuncUI.VirtualDom.Delta
+    open Avalonia.FuncUI
+    open Avalonia.Controls
+    open Avalonia.Media
+
+    [<Fact>]
+    let ``integration test 1`` () =
+        let view = 
+            Views.stackPanel [
+                Attrs.children [
+                    Views.checkBox [
+                        Attrs.content "1"
+                        Attrs.isChecked true
+                    ]
+                    Views.checkBox [
+                        Attrs.content "2"
+                        Attrs.isChecked true
+                    ]
+                ]
+            ]
+
+        let view' = 
+            Views.stackPanel [
+                Attrs.children [
+                    Views.checkBox [
+                        Attrs.content "1"
+                        Attrs.isChecked false
+                    ]
+                    Views.checkBox [
+                        Attrs.content "2"
+                        Attrs.isChecked false
+                    ]
+                    Views.checkBox [
+                        Attrs.content "3"
+                        Attrs.isChecked true
+                    ]
+                ]
+            ]
+
+        let stackpanel = StackPanel()
+
+        VirtualDom.Patcher.patch(stackpanel, VirtualDom.Delta.ViewDelta.From view)
+        Assert.Equal(2, stackpanel.Children.Count)
+        Assert.Equal("1" :> obj, (stackpanel.Children.[0] :?> CheckBox).Content)
+        Assert.Equal(Nullable(true), (stackpanel.Children.[0] :?> CheckBox).IsChecked)
+        Assert.Equal("2" :> obj, (stackpanel.Children.[1] :?> CheckBox).Content)
+        Assert.Equal(Nullable(true), (stackpanel.Children.[1] :?> CheckBox).IsChecked)
+
+        VirtualDom.Patcher.patch(stackpanel, VirtualDom.Differ.diff(view, view'))
+        Assert.Equal(3, stackpanel.Children.Count)
+        Assert.Equal("1" :> obj, (stackpanel.Children.[0] :?> CheckBox).Content)
+        Assert.Equal(Nullable(false), (stackpanel.Children.[0] :?> CheckBox).IsChecked)
+        Assert.Equal("2" :> obj, (stackpanel.Children.[1] :?> CheckBox).Content)
+        Assert.Equal(Nullable(false), (stackpanel.Children.[1] :?> CheckBox).IsChecked)
+        Assert.Equal("3" :> obj, (stackpanel.Children.[2] :?> CheckBox).Content)
+        Assert.Equal(Nullable(true), (stackpanel.Children.[2] :?> CheckBox).IsChecked)
+        ()
+
+    [<Fact>]
+    let ``integration test 2`` () =
+        let view = 
+            Views.stackPanel [
+                Attrs.children [
+                    Views.checkBox [
+                        Attrs.content "1"
+                        Attrs.isChecked true
+                    ]
+                    Views.checkBox [
+                        Attrs.content "2"
+                        Attrs.isChecked true
+                    ]
+                ]
+            ]
+
+        let view' = 
+            Views.stackPanel [
+                Attrs.children [
+                    Views.checkBox [
+                        Attrs.content "new"
+                        Attrs.isChecked false
+                    ]
+                    Views.checkBox [
+                        Attrs.content "1"
+                        Attrs.isChecked false
+                    ]
+                    Views.checkBox [
+                        Attrs.content "2"
+                        Attrs.isChecked true
+                    ]
+
+                ]
+            ]
+
+        let view'' = 
+            Views.stackPanel [
+                Attrs.children [
+                    Views.checkBox [
+                        Attrs.content "new"
+                        Attrs.isChecked true
+                    ]
+                    Views.checkBox [
+                        Attrs.content "1"
+                        Attrs.isChecked false
+                    ]
+                    Views.checkBox [
+                        Attrs.content "2"
+                        Attrs.isChecked false
+                    ]
+
+                ]
+            ]
+
+        let stackpanel = StackPanel()
+
+        VirtualDom.Patcher.patch(stackpanel, VirtualDom.Delta.ViewDelta.From view)
+        Assert.Equal(2, stackpanel.Children.Count)
+        Assert.Equal("1" :> obj, (stackpanel.Children.[0] :?> CheckBox).Content)
+        Assert.Equal(Nullable(true), (stackpanel.Children.[0] :?> CheckBox).IsChecked)
+        Assert.Equal("2" :> obj, (stackpanel.Children.[1] :?> CheckBox).Content)
+        Assert.Equal(Nullable(true), (stackpanel.Children.[1] :?> CheckBox).IsChecked)
+
+        VirtualDom.Patcher.patch(stackpanel, VirtualDom.Differ.diff(view, view'))
+        Assert.Equal(3, stackpanel.Children.Count)
+        Assert.Equal("new" :> obj, (stackpanel.Children.[0] :?> CheckBox).Content)
+        Assert.Equal(Nullable(false), (stackpanel.Children.[0] :?> CheckBox).IsChecked)
+        Assert.Equal("1" :> obj, (stackpanel.Children.[1] :?> CheckBox).Content)
+        Assert.Equal(Nullable(false), (stackpanel.Children.[1] :?> CheckBox).IsChecked)
+        Assert.Equal("2" :> obj, (stackpanel.Children.[2] :?> CheckBox).Content)
+        Assert.Equal(Nullable(true), (stackpanel.Children.[2] :?> CheckBox).IsChecked)
+
+        VirtualDom.Patcher.patch(stackpanel, VirtualDom.Differ.diff(view', view''))
+        Assert.Equal(3, stackpanel.Children.Count)
+        Assert.Equal("new" :> obj, (stackpanel.Children.[0] :?> CheckBox).Content)
+        Assert.Equal(Nullable(true), (stackpanel.Children.[0] :?> CheckBox).IsChecked)
+        Assert.Equal("1" :> obj, (stackpanel.Children.[1] :?> CheckBox).Content)
+        Assert.Equal(Nullable(false), (stackpanel.Children.[1] :?> CheckBox).IsChecked)
+        Assert.Equal("2" :> obj, (stackpanel.Children.[2] :?> CheckBox).Content)
+        Assert.Equal(Nullable(false), (stackpanel.Children.[2] :?> CheckBox).IsChecked)
+        ()
 
     module DifferTests = 
-        open Avalonia.FuncUI.VirtualDom
-        open Avalonia.FuncUI.VirtualDom.Delta
-        open Avalonia.FuncUI
-        open Avalonia.Controls
-        open Avalonia.Media
 
         [<Fact>]
         let ``Diff Properties`` () =
@@ -217,12 +352,185 @@ module VirtualDomTests =
                 // just to make sure the types are actually comparable
                 Assert.True(not (delta <> result))
 
+        [<Fact>]
+        let ``Diff Content Multiple (insert iten into homogenous list - tail)`` () =
+                let last =
+                    Views.stackPanel [
+                        Attrs.orientation Orientation.Horizontal
+                        Attrs.children [
+                            Views.checkBox [
+                                Attrs.content "some text 1"
+                                Attrs.isChecked true
+                            ]
+                            Views.checkBox [
+                                Attrs.content "some text 2"
+                                Attrs.isChecked false
+                            ]
+                        ]
+                    ]
+
+                let next =
+                    Views.stackPanel [
+                        Attrs.orientation Orientation.Vertical
+                        Attrs.children [
+                            Views.checkBox [
+                                Attrs.content "some text [new]"
+                                Attrs.isChecked false
+                            ]
+                            Views.checkBox [
+                                Attrs.content "some text 1"
+                                Attrs.isChecked true
+                            ]
+                            Views.checkBox [
+                                Attrs.content "some text 2"
+                                Attrs.isChecked false
+                            ]
+                        ]
+                    ]
+
+                let delta = 
+                    {
+                        ViewType = typeof<StackPanel>
+                        Attrs = [
+                            AttrDelta.PropertyDelta {
+                                Name = "Orientation"
+                                Value = Some (Orientation.Vertical :> obj)
+                            };
+                            AttrDelta.ContentDelta {
+                                Name = "Children"
+                                Content = ViewContentDelta.Multiple [
+                                    {
+                                        ViewType = typeof<CheckBox>
+                                        Attrs = [
+                                            AttrDelta.PropertyDelta {
+                                                Name = "Content"
+                                                Value = Some ("some text [new]" :> obj)
+                                            };
+                                            AttrDelta.PropertyDelta {
+                                                Name = "IsChecked"
+                                                Value = Some (false :> obj)
+                                            };
+                                        ]
+                                    };
+                                    {
+                                        ViewType = typeof<CheckBox>
+                                        Attrs = [
+                                            AttrDelta.PropertyDelta {
+                                                Name = "Content"
+                                                Value = Some ("some text 1" :> obj)
+                                            };
+                                            AttrDelta.PropertyDelta {
+                                                Name = "IsChecked"
+                                                Value = Some (true :> obj)
+                                            };
+                                        ]
+                                    };
+                                    {
+                                        ViewType = typeof<CheckBox>
+                                        Attrs = [
+                                            AttrDelta.PropertyDelta {
+                                                Name = "Content"
+                                                Value = Some ("some text 2" :> obj)
+                                            };
+                                            AttrDelta.PropertyDelta {
+                                                Name = "IsChecked"
+                                                Value = Some (false :> obj)
+                                            };
+                                        ]
+                                    };
+                                ]
+                            };
+                        ]
+                    }
+
+                let result = Differ.diff(last, next)
+                
+                Assert.Equal(delta, result)
+
+                // just to make sure the types are actually comparable
+                Assert.True(not (delta <> result))
+
+        [<Fact>]
+        let ``Diff Content Multiple (insert iten into homogenous list - head)`` () =
+                let last =
+                    Views.stackPanel [
+                        Attrs.orientation Orientation.Horizontal
+                        Attrs.children [
+                            Views.checkBox [
+                                Attrs.content "some text 1"
+                                Attrs.isChecked true
+                            ]
+                            Views.checkBox [
+                                Attrs.content "some text 2"
+                                Attrs.isChecked false
+                            ]
+                        ]
+                    ]
+
+                let next =
+                    Views.stackPanel [
+                        Attrs.orientation Orientation.Vertical
+                        Attrs.children [
+                            Views.checkBox [
+                                Attrs.content "some text 1"
+                                Attrs.isChecked true
+                            ]
+                            Views.checkBox [
+                                Attrs.content "some text 2"
+                                Attrs.isChecked false
+                            ]
+                            Views.checkBox [
+                                Attrs.content "some text [new]"
+                                Attrs.isChecked true
+                            ]
+                        ]
+                    ]
+
+                let delta = 
+                    {
+                        ViewType = typeof<StackPanel>
+                        Attrs = [
+                            AttrDelta.PropertyDelta {
+                                Name = "Orientation"
+                                Value = Some (Orientation.Vertical :> obj)
+                            };
+                            AttrDelta.ContentDelta {
+                                Name = "Children"
+                                Content = ViewContentDelta.Multiple [
+                                    {
+                                        ViewType = typeof<CheckBox>
+                                        Attrs = []
+                                    };
+                                    {
+                                        ViewType = typeof<CheckBox>
+                                        Attrs = []
+                                    };
+                                    {
+                                        ViewType = typeof<CheckBox>
+                                        Attrs = [
+                                            AttrDelta.PropertyDelta {
+                                                Name = "Content"
+                                                Value = Some ("some text [new]" :> obj)
+                                            };
+                                            AttrDelta.PropertyDelta {
+                                                Name = "IsChecked"
+                                                Value = Some (true :> obj)
+                                            };
+                                        ]
+                                    };
+                                ]
+                            };
+                        ]
+                    }
+
+                let result = Differ.diff(last, next)
+                
+                Assert.Equal(delta, result)
+
+                // just to make sure the types are actually comparable
+                Assert.True(not (delta <> result))
+
     module PatcherTests = 
-        open Avalonia.FuncUI.VirtualDom
-        open Avalonia.FuncUI.VirtualDom.Delta
-        open Avalonia.FuncUI
-        open Avalonia.Controls
-        open Avalonia.Media
 
         [<Fact>]
         let ``Patch Properties`` () =

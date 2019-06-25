@@ -222,11 +222,11 @@ module ElementsView =
         | ElementView.Event event -> 
             match filter.FilterText with
             | Some some -> filter.IncludeEvents && event.Name.StartsWith some
-            | None -> filter.IncludeProperties
+            | None -> filter.IncludeEvents
         | ElementView.Control control ->
             match filter.FilterText with
             | Some some -> filter.IncludeControls && control.Name.StartsWith some
-            | None -> filter.IncludeProperties
+            | None -> filter.IncludeControls
 
 
     let view (state: State) (filter: FilterView.State) dispatch : View =

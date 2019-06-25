@@ -35,7 +35,8 @@ module rec Types =
                 this.Name.GetHashCode()
 
             override this.Equals other =
-                this.GetHashCode() = other.GetHashCode()
+                // TODO: find a better way to do this
+                false // always set event
 
     type ContentAttr =
         {
