@@ -14,7 +14,7 @@ type TypedAttr<'t> =
     | Lifecycle of LifecylceAttr
 
 [<AbstractClass; Sealed>]
-type Views private () =
+type Views () =
 
     // TODO: Check if using a mutable hash map makes a big difference
     static let cache = ref Map.empty
@@ -33,16 +33,21 @@ type Views private () =
         { ViewType = typeof<'t>; Attrs = mappedAttrs; }
 
     (* lazy views with caching *)
-    static member viewLazy (state: 'state) (dispatch: 'dispatch) (func: 'state -> 'dispatch -> View) : View =
-        let hash (state: 'state, func: 'state -> 'dispatch -> View) : int =
+    static member viewLazy (state: 'state) (args: 'args) (func: 'state * 'args -> View) : View =
+        let hash (state: 'state, func: 'state * 'args -> View) : int =
             Tuple(state, Func.hashMethodBody func).GetHashCode()
 
-        let key = hash(state, func)
+        let key =
+            if Func.isComparable func then
+                //printf "%s /n" (string (Func.hashMethodBody func))
+                hash(state, func)
+            else
+                state.GetHashCode()
 
         match (!cache).TryFind key with
         | Some cached -> cached
         | None ->
-            let computedValue = func state dispatch
+            let computedValue = func (state, args)
             cache := (!cache).Add (key, computedValue)
             computedValue
 

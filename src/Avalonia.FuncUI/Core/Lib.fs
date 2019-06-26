@@ -1,5 +1,8 @@
 ﻿namespace Avalonia.FuncUI.Lib
 
+open System.Reflection
+open System.Collections.Generic
+
 [<RequireQualifiedAccess>]
 module Func =
     open System
@@ -7,9 +10,13 @@ module Func =
     (* get IL of method body *)
     let private getIL (func: 'a -> 'b) =
         let t = func.GetType()
-        let m = t.GetMethod("Invoke")
-        let b = m.GetMethodBody()
-        b.GetILAsByteArray()
+        let mutable method = t.GetMethod("Invoke", BindingFlags.DeclaredOnly ||| BindingFlags.Instance ||| BindingFlags.Public)
+
+        if method = null then 
+            method <- t.GetMethod("Invoke", BindingFlags.Instance ||| BindingFlags.Public)
+
+        let methodBody = method.GetMethodBody()
+        methodBody.GetILAsByteArray()
 
     (* check if func is comparable *)
     let isComparable(func: 'a -> 'b) =
@@ -39,7 +46,7 @@ module Func =
     (* get hash of method body *)
     let hashMethodBody (func: 'a -> 'b) : int =
         let bytes = (getIL func) :> System.Collections.IStructuralEquatable
-        bytes.GetHashCode()
+        bytes.GetHashCode(EqualityComparer<byte>.Default)
 
 module Reflection =
     open System.Reflection
