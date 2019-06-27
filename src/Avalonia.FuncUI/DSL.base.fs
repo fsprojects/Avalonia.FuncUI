@@ -5,6 +5,7 @@ open System
 open Types
 open Avalonia.FuncUI.Lib
 open Types
+open System.Runtime.CompilerServices
 
 type TypedAttr<'t> =
     | Property of PropertyAttr
@@ -33,21 +34,24 @@ type Views () =
         { ViewType = typeof<'t>; Attrs = mappedAttrs; }
 
     (* lazy views with caching *)
-    static member viewLazy (state: 'state) (args: 'args) (func: 'state * 'args -> View) : View =
-        let hash (state: 'state, func: 'state * 'args -> View) : int =
-            Tuple(state, Func.hashMethodBody func).GetHashCode()
+    static member viewLazy
+        (
+            state: 'state,
+            args: 'args,
+            func: 'state -> 'args -> View,
+            [<CallerFilePath>] ?callerSourceFile : string,
+            [<CallerMemberName>] ?callerMemberName : string,
+            [<CallerLineNumber>] ?callerLineNumber : int
+        )
+        : View =
 
         let key =
-            if Func.isComparable func then
-                //printf "%s /n" (string (Func.hashMethodBody func))
-                hash(state, func)
-            else
-                state.GetHashCode()
+            Tuple(state, callerSourceFile.Value, callerMemberName.Value, callerLineNumber.Value).GetHashCode()
 
         match (!cache).TryFind key with
         | Some cached -> cached
         | None ->
-            let computedValue = func (state, args)
+            let computedValue = func state args
             cache := (!cache).Add (key, computedValue)
             computedValue
 
