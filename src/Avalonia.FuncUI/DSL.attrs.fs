@@ -268,7 +268,7 @@ module DSL_Property_Attrs =
         static member inline command<'T when 'T : (member set_Command : System.Windows.Input.ICommand -> unit)>(value: System.Windows.Input.ICommand) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Command"; Value = value }
 
-        static member inline child<'T when 'T : (member set_Child : IControl -> unit)>(child: View) : TypedAttr<'T> =
+        static member inline child<'T when 'T : (member set_Child : Control -> unit)>(child: View) : TypedAttr<'T> =
             TypedAttr<_>.Content {
                 Name = "Child"
                 Content = (ViewContent.Single (Some child))
