@@ -1,10 +1,8 @@
 ﻿namespace rec Avalonia.FuncUI
 
-open Avalonia.Controls
 open System
 open Types
 open Avalonia.FuncUI.Lib
-open Types
 
 type TypedAttr<'t> =
     | Property of PropertyAttr
@@ -14,10 +12,11 @@ type TypedAttr<'t> =
     | Lifecycle of LifecylceAttr
 
 [<AbstractClass; Sealed>]
-type Views private () =
+type Views () =
 
-    // TODO: Check if using a mutable hash map makes a big difference
-    static let cache = ref Map.empty
+    static let cache = CuncurrentDict<int, View>()
+
+    static member val CacheMaxLength : int = 1000 with get, set
 
     (* create view - intended for internal use *)
     static member create<'t>(attrs: TypedAttr<'t> list) : View =
@@ -33,18 +32,25 @@ type Views private () =
         { ViewType = typeof<'t>; Attrs = mappedAttrs; }
 
     (* lazy views with caching *)
-    static member viewLazy (state: 'state) (dispatch: 'dispatch) (func: 'state -> 'dispatch -> View) : View =
-        let hash (state: 'state, func: 'state -> 'dispatch -> View) : int =
-            Tuple(state, Func.hashMethodBody func).GetHashCode()
+    static member viewLazy (state: 'state, args: 'args, func: 'state -> 'args -> View) : View =
 
-        let key = hash(state, func)
+        let key = Tuple(state, func.GetType()).GetHashCode()
 
-        match (!cache).TryFind key with
-        | Some cached -> cached
-        | None ->
-            let computedValue = func state dispatch
-            cache := (!cache).Add (key, computedValue)
-            computedValue
+        if (cache.Count >= Views.CacheMaxLength) then
+            cache.Clear()
+
+        printfn "cache length is %i" cache.Count
+
+        let hasValue, value = cache.TryGetValue key
+
+        match hasValue with
+        | true -> value
+        | false ->
+            cache.AddOrUpdate(
+                key,
+                (fun _ -> func state args),
+                (fun _ _ -> func state args)
+            )
 
 
 [<AbstractClass; Sealed>]

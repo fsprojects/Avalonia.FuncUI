@@ -3,24 +3,20 @@
 open Xunit
 open System
 
-module LibTests =
-    module FuncTests = 
-        open Avalonia.FuncUI.Lib
+module Library =
 
-        type Msg = Increment | Decrement
+    [<Fact>]
+    let ``fun`` () =
+        
+        let view () =
+            let add = fun (count: int) -> count + 1
+            let sub = fun (count: int) -> count - 1
+            (add, sub)
 
-        type State = { count : int }
+        let (add', sub') = view ()
+        let (add'', sub'') = view ()
 
-        [<Fact>]
-        let ``Comparing funcs`` () =
-
-            let a = fun (state: State, dispatch: Msg -> unit) -> dispatch Increment
-            let b = fun (state: State, dispatch: Msg -> unit) -> dispatch Increment
-            let c = fun (state: State, dispatch: Msg -> unit) -> dispatch Decrement
-            let d = fun (state: State, dispatch: Msg -> unit) -> a(state, dispatch)
-
-            Assert.True(Func.compare a b)
-            Assert.False(Func.compare a c)
-            Assert.True(Func.isComparable a)
-            Assert.True(Func.isComparable b)
-            Assert.False(Func.isComparable d)
+        Assert.Equal(add'.GetType(), add''.GetType())
+        Assert.Equal(sub'.GetType(), sub''.GetType())
+        Assert.NotEqual(add'.GetType(), sub'.GetType())
+        Assert.NotEqual(add''.GetType(), sub''.GetType())
