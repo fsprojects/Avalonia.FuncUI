@@ -105,20 +105,23 @@ module PropertyView =
     }
 
     let view (state: State) (dispatch): View =
-        CustomViews.elementContainerView state.Name "#9b59b6" (
-            Views.stackPanel [
-                Attrs.children [
-                    Views.stackPanel [
-                        Attrs.orientation Orientation.Horizontal
-                        Attrs.children [
-                            CustomViews.accessView (state.HasGet, state.HasSet)
-                            CustomViews.typeView state.PropertyValueType
+        Views.viewLazy(state, dispatch, (fun state dispatch ->
+            CustomViews.elementContainerView state.Name "#9b59b6" (
+                Views.stackPanel [
+                    Attrs.children [
+                        Views.stackPanel [
+                            Attrs.orientation Orientation.Horizontal
+                            Attrs.children [
+                                CustomViews.accessView (state.HasGet, state.HasSet)
+                                CustomViews.typeView state.PropertyValueType
+                            ]
                         ]
+                        CustomViews.typeListView state.Parent      
                     ]
-                    CustomViews.typeListView state.Parent      
                 ]
-            ]
-        )
+            )        
+        ))
+
 
 module EventView =
 

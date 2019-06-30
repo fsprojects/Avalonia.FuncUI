@@ -32,7 +32,7 @@ type Views () =
         { ViewType = typeof<'t>; Attrs = mappedAttrs; }
 
     (* lazy views with caching *)
-    static member viewLazy (state: 'state, args: 'args, func: 'state -> 'args -> View) : View =
+    static member viewLazy (state: 'state) (args: 'args) (func: 'state -> 'args -> View) : View =
 
         let key = Tuple(state, func.GetType()).GetHashCode()
 
