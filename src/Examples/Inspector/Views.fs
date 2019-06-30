@@ -105,7 +105,7 @@ module PropertyView =
     }
 
     let view (state: State) (dispatch): View =
-        Views.viewLazy(state, dispatch, (fun state dispatch ->
+        Views.viewLazy state dispatch (fun state dispatch ->
             CustomViews.elementContainerView state.Name "#9b59b6" (
                 Views.stackPanel [
                     Attrs.children [
@@ -120,7 +120,7 @@ module PropertyView =
                     ]
                 ]
             )        
-        ))
+        )
 
 
 module EventView =
