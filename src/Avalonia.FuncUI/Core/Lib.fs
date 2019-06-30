@@ -1,7 +1,8 @@
 ﻿namespace Avalonia.FuncUI.Lib
 
-open System.Reflection
-open System.Collections.Generic
+type MutableList<'t> = System.Collections.Generic.List<'t>
+type MutableDict<'key, 'value> = System.Collections.Generic.Dictionary<'key, 'value>
+type CuncurrentDict<'key, 'value> = System.Collections.Concurrent.ConcurrentDictionary<'key, 'value>
 
 module Reflection =
     open System.Reflection

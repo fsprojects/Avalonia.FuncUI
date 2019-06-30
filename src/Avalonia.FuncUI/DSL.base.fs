@@ -1,11 +1,8 @@
 ﻿namespace rec Avalonia.FuncUI
 
-open Avalonia.Controls
 open System
 open Types
 open Avalonia.FuncUI.Lib
-open Types
-open System.Runtime.CompilerServices
 
 type TypedAttr<'t> =
     | Property of PropertyAttr
@@ -17,8 +14,9 @@ type TypedAttr<'t> =
 [<AbstractClass; Sealed>]
 type Views () =
 
-    // TODO: Check if using a mutable hash map makes a big difference
-    static let cache = ref Map.empty
+    static let cache = CuncurrentDict<int, View>()
+
+    static member val CacheMaxLength : int = 1000 with get, set
 
     (* create view - intended for internal use *)
     static member create<'t>(attrs: TypedAttr<'t> list) : View =
@@ -34,26 +32,25 @@ type Views () =
         { ViewType = typeof<'t>; Attrs = mappedAttrs; }
 
     (* lazy views with caching *)
-    static member viewLazy
-        (
-            state: 'state,
-            args: 'args,
-            func: 'state -> 'args -> View,
-            [<CallerFilePath>] ?callerSourceFile : string,
-            [<CallerMemberName>] ?callerMemberName : string,
-            [<CallerLineNumber>] ?callerLineNumber : int
-        )
-        : View =
+    static member viewLazy (state: 'state, args: 'args, func: 'state -> 'args -> View) : View =
 
-        let key =
-            Tuple(state, callerSourceFile.Value, callerMemberName.Value, callerLineNumber.Value).GetHashCode()
+        let key = Tuple(state, func.GetType()).GetHashCode()
 
-        match (!cache).TryFind key with
-        | Some cached -> cached
-        | None ->
-            let computedValue = func state args
-            cache := (!cache).Add (key, computedValue)
-            computedValue
+        if (cache.Count >= Views.CacheMaxLength) then
+            cache.Clear()
+
+        printfn "cache length is %i" cache.Count
+
+        let hasValue, value = cache.TryGetValue key
+
+        match hasValue with
+        | true -> value
+        | false ->
+            cache.AddOrUpdate(
+                key,
+                (fun _ -> func state args),
+                (fun _ _ -> func state args)
+            )
 
 
 [<AbstractClass; Sealed>]
