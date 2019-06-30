@@ -39,8 +39,6 @@ type Views () =
         if (cache.Count >= Views.CacheMaxLength) then
             cache.Clear()
 
-        printfn "cache length is %i" cache.Count
-
         let hasValue, value = cache.TryGetValue key
 
         match hasValue with

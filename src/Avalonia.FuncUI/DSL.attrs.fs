@@ -94,8 +94,20 @@ module DSL_Property_Attrs =
         static member inline borderThickness<'T when 'T : (member set_BorderThickness : Avalonia.Thickness -> unit)>(value: Avalonia.Thickness) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "BorderThickness"; Value = value }
 
+        static member inline borderThickness<'T when 'T : (member set_Padding : Avalonia.Thickness -> unit)>(value: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "BorderThickness"; Value = Avalonia.Thickness(value) }
+
+        static member inline borderThickness<'T when 'T : (member set_Padding : Avalonia.Thickness -> unit)>(horizontal: double, vertical: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "BorderThickness"; Value = Avalonia.Thickness(horizontal, vertical) }
+
+        static member inline borderThickness<'T when 'T : (member set_Padding : Avalonia.Thickness -> unit)>(left: double, top: double, right: double, bottom: double) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "BorderThickness"; Value = Avalonia.Thickness(left, top, right, bottom) }
+
         static member inline borderBrush<'T when 'T : (member set_BorderBrush : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "BorderBrush"; Value = brush }
+
+        static member inline borderBrush<'T when 'T : (member set_BorderBrush : Avalonia.Media.IBrush -> unit)>(brush: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "BorderBrush"; Value = Avalonia.Media.SolidColorBrush.Parse(brush).ToImmutable() }
 
         static member inline viewportSize<'T when 'T : (member set_ViewportSize : double -> unit)>(size: double) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "ViewportSize"; Value = size }
@@ -180,6 +192,9 @@ module DSL_Property_Attrs =
 
         static member inline headerBackground<'T when 'T : (member set_HeaderBackground : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "HeaderBackground"; Value = brush }
+
+        static member inline headerBackground<'T when 'T : (member set_HeaderBackground : Avalonia.Media.IBrush -> unit)>(brush: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "HeaderBackground"; Value = Avalonia.Media.SolidColorBrush.Parse(brush).ToImmutable() }
 
         static member inline foreground<'T when 'T : (member set_Foreground : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Foreground"; Value = brush }
@@ -363,6 +378,9 @@ module DSL_Property_Attrs =
 
         static member inline stroke<'T when 'T : (member set_Stroke : Avalonia.Media.IBrush -> unit)>(brush: Avalonia.Media.IBrush) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Stroke"; Value = brush }
+
+        static member inline stroke<'T when 'T : (member set_Stroke : Avalonia.Media.IBrush -> unit)>(brush: string) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Stroke"; Value = Avalonia.Media.SolidColorBrush.Parse(brush).ToImmutable() }
 
         static member inline staysOpen<'T when 'T : (member set_StaysOpen : bool -> unit)>(value: bool) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "StaysOpen"; Value = value }
@@ -646,6 +664,9 @@ module DSL_Property_Attrs =
 
         static member inline classes<'T when 'T : (member set_Classes : Classes -> unit)>(value: Classes) : TypedAttr<'T> =
             TypedAttr<_>.Property { Name = "Classes"; Value = value }
+
+        static member inline classes<'T when 'T : (member set_Classes : Classes -> unit)>(value: string list) : TypedAttr<'T> =
+            TypedAttr<_>.Property { Name = "Classes"; Value = Classes(value) }
 
         static member inline children<'T when 'T : (member get_Children : unit -> Controls)>(children: View list) : TypedAttr<'T> =
             TypedAttr<_>.Content {
