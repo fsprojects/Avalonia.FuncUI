@@ -11,3 +11,8 @@ module Reflection =
         obj
             .GetType()
             .GetProperty(propName)
+
+    let findStaticFieldByName (obj: 't) (propName: string): FieldInfo =
+        obj
+            .GetType()
+            .GetField(propName, BindingFlags.Public ||| BindingFlags.Static |||BindingFlags.FlattenHierarchy)

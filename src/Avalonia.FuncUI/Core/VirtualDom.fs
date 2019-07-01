@@ -369,17 +369,43 @@ module rec VirtualDom =
 
         module AttrPatcher =
  
-            let patchProperty (view: Avalonia.Controls.IControl) (attr: PropertyAttrDelta) : unit =
-                let prop = Reflection.findPropertyByName view attr.Name
+            let rec patchProperty (view: Avalonia.Controls.IControl) (attr: PropertyAttrDelta) : unit =
+                let setValue (value: obj) =
+                    let prop = Reflection.findPropertyByName view attr.Name
+
+                    match prop.CanWrite with
+                    | true -> prop.SetValue(view, value)
+                    | false -> () // TODO: do we need to handle this ?
+
+                let resetValue () =
+                    let field =  Reflection.findStaticFieldByName view (attr.Name + "Property")
+                    match field with
+
+                    (* Simple Property *)
+                    | null -> 
+                        let prop = Reflection.findPropertyByName view attr.Name
+
+                        match prop.CanWrite with
+                        | true ->
+                            let defaultValue =
+                                if prop.PropertyType.IsValueType
+                                then Activator.CreateInstance(prop.PropertyType)
+                                else null
+
+                            prop.SetValue(view, defaultValue)
+                        | false -> ()
+
+                    (* Avalonia Property *)
+                    | field -> 
+                        try
+                            let avaloniaProperty = field.GetValue() :?> Avalonia.AvaloniaProperty 
+                            (view :?> Avalonia.AvaloniaObject).ClearValue(avaloniaProperty)
+                        with
+                        | _ -> ()
 
                 match attr.Value with
-                | Some value ->
-                    if prop.CanWrite then
-                        prop.SetValue(view, value)
-                    else
-                        () // TODO: do we need to handle this ?
-                                
-                | None -> () // TODO: reset value
+                | Some value -> setValue value
+                | None -> resetValue ()
 
             let patchAttachedProperty (view: Avalonia.Controls.IControl) (attr: AttachedPropertyAttrDelta) : unit =
                 attr.Handler(view :> obj, attr.Value)                
@@ -389,7 +415,7 @@ module rec VirtualDom =
 
                 if (attr.OldValue <> null) then
                     eventInfo.RemoveEventHandler(view, attr.OldValue)
-
+                     
                 if (attr.NewValue <> null) then
                     eventInfo.AddEventHandler(view, attr.NewValue)
 
