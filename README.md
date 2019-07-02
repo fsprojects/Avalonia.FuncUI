@@ -14,7 +14,7 @@ Develop cross-plattform MVU GUI Applications using F# and Avalonia!
 This library allows you to write cross-plattform GUI Applications entirely in F# - No XAML, but a declarative elm like DSL. MVU (Model-View-Update) architecture support is built in, and bindings to use it with Elmish are also ready to use.
 
 ## Current State
-Should be usable, but expect bugs and some breaking changes. Basically wet paint.
+Should be usable, API is stable-ish (expect some minor changes).
 
 ## Contributing
 Please contribute to this library through issue reports, pull requests, code reviews and discussion.
