@@ -1,3 +1,5 @@
+
+
 <img src="github/img/icon.png" width="100"/>
 
 # Avalonia.FuncUI
@@ -5,6 +7,8 @@
 [![Build Status](https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_apis/build/status/JaggerJo.Avalonia.FuncUI?branchName=master)](https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_build/latest?definitionId=10&branchName=master)
 
 Develop cross-plattform MVU GUI Applications using F# and Avalonia!
+
+![](github/img/hero.png)
 
 ## About
 This library allows you to write cross-plattform GUI Applications entirely in F# - No XAML, but a declarative elm like DSL. MVU (Model-View-Update) architecture support is built in, and bindings to use it with Elmish are also ready to use.
