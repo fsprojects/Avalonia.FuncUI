@@ -15,6 +15,19 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CounterElmishExample", "Exa
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Inspector", "Examples\Inspector\Inspector.fsproj", "{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{AF5B0E92-D06F-4F91-B507-E9F7E2F80269}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avalonia.FuncUI.ElmishTemplate", "Avalonia.FuncUI.ElmishTemplate", "{67D8F0E8-936D-435A-B47D-746D2DE1C6AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "content", "content", "{10630273-B75A-4800-97FB-F5999BE4600A}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ElmishTemplate", "templates\Avalonia.FuncUI.ElmishTemplate\content\Avalonia.FuncUI.ElmishTemplate.fsproj", "{9072F613-19A6-4E36-A9D9-A16E96DDC5E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".template.config", ".template.config", "{01EBCC1B-12EA-46D1-8B58-DD8189C1DC84}"
+	ProjectSection(SolutionItems) = preProject
+		templates\Avalonia.FuncUI.ElmishTemplate\content\.template.config\template.json = templates\Avalonia.FuncUI.ElmishTemplate\content\.template.config\template.json
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +54,10 @@ Global
 		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9072F613-19A6-4E36-A9D9-A16E96DDC5E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9072F613-19A6-4E36-A9D9-A16E96DDC5E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9072F613-19A6-4E36-A9D9-A16E96DDC5E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9072F613-19A6-4E36-A9D9-A16E96DDC5E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +65,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA} = {E5F1B811-E995-4757-B8E9-C3EB4DA274EE}
 		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4} = {E5F1B811-E995-4757-B8E9-C3EB4DA274EE}
+		{67D8F0E8-936D-435A-B47D-746D2DE1C6AD} = {AF5B0E92-D06F-4F91-B507-E9F7E2F80269}
+		{10630273-B75A-4800-97FB-F5999BE4600A} = {67D8F0E8-936D-435A-B47D-746D2DE1C6AD}
+		{9072F613-19A6-4E36-A9D9-A16E96DDC5E3} = {10630273-B75A-4800-97FB-F5999BE4600A}
+		{01EBCC1B-12EA-46D1-8B58-DD8189C1DC84} = {10630273-B75A-4800-97FB-F5999BE4600A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}

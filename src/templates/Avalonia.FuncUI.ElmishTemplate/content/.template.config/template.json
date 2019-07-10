@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Josua Jäger, Kevin Schneider",
+  "classifications": [
+    "Console",
+    "UI",
+    "Elmish"
+  ],
+  "name": "Elmish Template for Avalonia.FuncUI v0.1.0",
+  "tags": {
+    "language": "F#",
+    "type": "project"
+  },
+  "identity": "Avalonia.FuncUI.ElmishTemplate",
+  "shortName": "avaloniaElmish",
+  "sourceName": "Avalonia.FuncUI.ElmishTemplate", // Will replace the string 'Avalonia.FuncUI.ElmishTemplate' when using dontet -n.
+  "preferNameDirectory": true
+}
