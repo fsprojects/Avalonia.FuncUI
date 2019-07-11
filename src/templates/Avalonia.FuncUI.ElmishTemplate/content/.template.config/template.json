@@ -3,16 +3,17 @@
   "author": "Josua Jäger, Kevin Schneider",
   "classifications": [
     "Console",
+    "Avalonia",
     "UI",
     "Elmish"
   ],
-  "name": "Elmish Template for Avalonia.FuncUI v0.1.0",
+  "name": "Avalonia.FuncUI cross-plattform MVU GUI App",
   "tags": {
     "language": "F#",
     "type": "project"
   },
-  "identity": "Avalonia.FuncUI.ElmishTemplate",
-  "shortName": "avaloniaElmish",
-  "sourceName": "Avalonia.FuncUI.ElmishTemplate", // Will replace the string 'Avalonia.FuncUI.ElmishTemplate' when using dontet -n.
+  "identity": "Avalonia.FuncUI.BasicTemplate",
+  "shortName": "avalonia-mvu",
+  "sourceName": "Avalonia.FuncUI.BasicTemplate", // Will replace the string 'Avalonia.FuncUI.Basic' when using dontet -n.
   "preferNameDirectory": true
 }
