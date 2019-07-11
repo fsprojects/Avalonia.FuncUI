@@ -6,16 +6,6 @@ open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
 open Avalonia.Layout
 
-type CustomControl() =
-    inherit Control()
-
-    member val Text: string = "" with get, set
-
-[<AutoOpen>]
-module ViewExt =
-    type Views with
-        static member customControl (attrs: TypedAttr<CustomControl> list): View =
-            Views.create<CustomControl>(attrs)
 
 module Counter =
 
