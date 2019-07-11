@@ -19,8 +19,6 @@ module Counter =
         count = 0
     }
 
-
-
     // The Msg type defines what events/actions can occur while the application is running
     // the state of the application changes *only* in reaction to these events
     type Msg =

@@ -38,7 +38,7 @@ module Program =
         let mainWindow = MainWindow()
 
         //Create an elmish MVU program using an initial model, update function and view
-        Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
+        Elmish.Program.mkSimple (fun () -> Counter.initialState) Counter.update Counter.view
         |> Program.withHost mainWindow
         |> Program.withConsoleTrace
         |> Program.run
