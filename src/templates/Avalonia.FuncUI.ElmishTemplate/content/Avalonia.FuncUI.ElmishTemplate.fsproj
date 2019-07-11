@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <Compile Include="Lib.fs" />
-    <Compile Include="Counter.fs" />
+    <Compile Include="AppView.fs" />
     <Compile Include="Main.fs" />
   </ItemGroup>
 

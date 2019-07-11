@@ -7,7 +7,7 @@ open Avalonia.FuncUI
 open Avalonia.Layout
 
 
-module Counter =
+module CounterView =
 
     // The model holds data that you want to keep track of while the application is running
     type CounterState = {
