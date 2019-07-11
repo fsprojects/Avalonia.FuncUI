@@ -5,6 +5,7 @@ open Avalonia
 open Avalonia.FuncUI.Elmish
 open Elmish
 
+//The main window of your application. You can style the window by changing properties of its base (As shown below with the window title).
 type MainWindow() =
     inherit HostWindow()
 
@@ -36,6 +37,7 @@ module Program =
     let appMain (app: Application) (args: string[]) =
         let mainWindow = MainWindow()
 
+        //Create an elmish MVU program using an initial model, update function and view
         Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
         |> Program.withHost mainWindow
         |> Program.withConsoleTrace
