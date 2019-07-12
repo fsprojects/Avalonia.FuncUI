@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Lib.fs" />
+    <Compile Include="AppView.fs" />
+    <Compile Include="Main.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JaggerJo.Avalonia.FuncUI" Version="0.1.3" />
+    <PackageReference Include="JaggerJo.Avalonia.FuncUI.Elmish" Version="0.1.0" />
+  </ItemGroup>
+
+</Project>
