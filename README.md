@@ -14,27 +14,38 @@ Develop cross-plattform MVU GUI Applications using F# and Avalonia!
 ## About
 This library allows you to write cross-plattform GUI Applications entirely in F# - No XAML, but a declarative elm like DSL. MVU (Model-View-Update) architecture support is built in, and bindings to use it with Elmish are also ready to use.
 
+## Getting started
+Check out the [Wiki](https://github.com/JaggerJo/Avalonia.FuncUI/wiki) (WIP) and [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
+
+### Templates
+
+**install the templates [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI.Templates/) / [fuget](https://www.fuget.org/packages/JaggerJo.Avalonia.FuncUI.Templates/)**
+```
+dotnet new -i JaggerJo.Avalonia.FuncUI.Templates
+```
+**create new app**
+```
+dotnet new avalonia-funcUI-basic -n NewApp
+```
+
+
+### Packages
+
+**Avalonia.FuncUI [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI/) / [fuget](https://www.fuget.org/packages/JaggerJo.Avalonia.FuncUI/)**
+```
+Install-Package JaggerJo.Avalonia.FuncUI
+```
+
+**Avalonia.FuncUI.Elmish [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI.Elmish/) /  [fuget](https://www.fuget.org/packages/JaggerJo.Avalonia.FuncUI.Elmish/)**
+```
+Install-Package JaggerJo.Avalonia.FuncUI.Elmish
+```
+
 ## Current State
 Should be usable, API is stable-ish (expect some minor changes).
 
 ## Contributing
 Please contribute to this library through issue reports, pull requests, code reviews and discussion.
-
-## Getting started
-
-**Avalonia.FuncUI [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI/)**
-```
-Install-Package JaggerJo.Avalonia.FuncUI
-```
-
-**Avalonia.FuncUI.Elmish [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI.Elmish/)**
-```
-Install-Package JaggerJo.Avalonia.FuncUI.Elmish
-```
-
-Project templates will follow soon.
-
-For now check out the [Wiki](https://github.com/JaggerJo/Avalonia.FuncUI/wiki) (WIP) and [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
 
 ## Example
 Below is the code of a simple counter app (using the Avalonia.FuncUI.Elmish package).
