@@ -13,7 +13,7 @@
     "type": "project"
   },
   "identity": "Avalonia.FuncUI.BasicTemplate",
-  "shortName": "avalonia-mvu",
-  "sourceName": "Avalonia.FuncUI.BasicTemplate", // Will replace the string 'Avalonia.FuncUI.Basic' when using dontet -n.
+  "shortName": "avalonia-funcUI-basic",
+  "sourceName": "BasicTemplate", // Will replace the string 'BasicTemplate' when using dontet -n.
   "preferNameDirectory": true
 }
