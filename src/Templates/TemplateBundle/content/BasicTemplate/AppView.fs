@@ -1,4 +1,4 @@
-﻿namespace CounterElmishSample
+﻿namespace BasicTemplate
 
 open Avalonia.Controls
 open Avalonia.Media

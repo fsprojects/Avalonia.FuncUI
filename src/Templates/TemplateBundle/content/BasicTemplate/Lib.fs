@@ -1,4 +1,4 @@
-﻿namespace CounterElmishSample
+﻿namespace BasicTemplate
 
 [<AutoOpen>]
 module AvaloniaExtensions =

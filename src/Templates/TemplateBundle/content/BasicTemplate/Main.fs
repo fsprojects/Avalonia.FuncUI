@@ -1,4 +1,4 @@
-﻿namespace CounterElmishSample
+﻿namespace BasicTemplate
 
 open Avalonia.FuncUI.Hosts
 open Avalonia
