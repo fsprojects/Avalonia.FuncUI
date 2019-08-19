@@ -14,13 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Core\Lib.fs" />
-    <Compile Include="Core\Types.fs" />
-    <Compile Include="Core\VirtualDom.fs" />
-    <Compile Include="DSL.base.fs" />
-    <Compile Include="DSL.views.fs" />
-    <Compile Include="DSL.attrs.fs" />
-    <Compile Include="Hosts.fs" />
+    <Compile Include="Core.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,6 +30,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+    <Compile Include="DSL.fs" />
   </ItemGroup>
 
 </Project>

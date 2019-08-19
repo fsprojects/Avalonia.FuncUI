@@ -1,7 +1,6 @@
 ﻿namespace CounterElmishSample
 
 open Avalonia.Controls
-open Avalonia.Media
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
 open Avalonia.Layout
@@ -13,12 +12,11 @@ type CustomControl() =
 
 [<AutoOpen>]
 module ViewExt =
-    type Views with
-        static member customControl (attrs: TypedAttr<CustomControl> list): View =
-            Views.create<CustomControl>(attrs)
+    ()
 
 module Counter =
-
+    open Avalonia.FuncUI.DSL
+    
     type CounterState = {
         count : int
     }
@@ -37,24 +35,27 @@ module Counter =
         | Decrement -> { state with count =  state.count - 1 }
     
     let view (state: CounterState) (dispatch): View =
-        Views.dockpanel [
-            Attrs.children [
-                Views.button [
+        DockPanel.create [
+            DockPanel.attrChildren [
+                Button.create [
                     Attrs.dockPanel_dock Dock.Bottom
                     Attrs.onClick (fun sender args -> dispatch Decrement)
-                    Attrs.content "-"
+                    Button.attrContent "-"
                 ]
-                Views.button [
+                Button.create [
                     Attrs.dockPanel_dock Dock.Bottom
                     Attrs.onClick (fun sender args -> dispatch Increment)
-                    Attrs.content "+"
+                    Button.attrContent "+"
                 ]
-                Views.textBlock [
+                TextBlock.create [
                     Attrs.dockPanel_dock Dock.Top
                     Attrs.fontSize 48.0
                     Attrs.verticalAlignment VerticalAlignment.Center
                     Attrs.horizontalAlignment HorizontalAlignment.Center
-                    Attrs.text (string state.count)
+                    TextBlock.attrText (string state.count)
+                ]
+                Views.checkBox [
+                    CheckBox.attrContent "Text"
                 ]
             ]
         ]       
