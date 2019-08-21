@@ -77,7 +77,21 @@ module Core =
             | Property of Property
             | Content of Content
             | Event
+            
+            interface IAttr with
+            
+                member this.Property =
+                    match this with
+                    | Property value -> Some value
+                    | _ -> None
+                    
+                member this.Content =
+                    match this with
+                    | Content value -> Some value
+                    | _ -> None
         
+            interface IAttr<'viewType>
+            
         module Attr =
             
             /// create property attr
