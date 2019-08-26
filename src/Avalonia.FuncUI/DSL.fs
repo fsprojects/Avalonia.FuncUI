@@ -1,8 +1,11 @@
 namespace Avalonia.FuncUI.DSL
+open System.Windows.Input
 open Avalonia
 open Avalonia.Controls
 open Avalonia.FuncUI.Core.Domain
 open Avalonia.FuncUI.Core.Domain
+open Avalonia.Layout
+open Avalonia.Layout
 open Avalonia.Media
 open Avalonia.Styling
 
@@ -12,7 +15,8 @@ module Extensions =
     open Avalonia.FuncUI
     
     open Avalonia    
-    open Avalonia.Controls
+    open Avalonia.Controls.Primitives
+    open Avalonia.Controls.Templates
     open Avalonia.Animation
     open Avalonia.Layout
     open Avalonia.Input
@@ -184,22 +188,193 @@ module Extensions =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
       
+    type Control with
+        static member focusAdorner<'t when 't :> Control>(value: #ITemplate<IControl>) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Control.FocusAdornerProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member tag<'t when 't :> Control>(value: obj) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Control.TagProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+
+        static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Control.ContextMenuProperty
+            let property = Property.createDirect(accessor, menu)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+      
+    type TemplatedControl with
+        static member background<'t when 't :> TemplatedControl>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.BackgroundProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member borderBrush<'t when 't :> TemplatedControl>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.BorderBrushProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+
+        static member fontFamily<'t when 't :> TemplatedControl>(value: FontFamily) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.FontFamilyProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member fontSize<'t when 't :> TemplatedControl>(value: double) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.FontSizeProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member fontWeight<'t when 't :> TemplatedControl>(value: FontWeight) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.FontWeightProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member foreground<'t when 't :> TemplatedControl>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.ForegroundProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member padding<'t when 't :> TemplatedControl>(value: Thickness) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.PaddingProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+
+        static member template<'t when 't :> TemplatedControl>(value: #IControlTemplate) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.TemplateProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>        
+        
+        static member isTemplateFocusTarget<'t when 't :> TemplatedControl>(value: bool) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TemplatedControl.IsTemplateFocusTargetProperty
+            let property = Property.createAttached(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+
+    type ContentControl with
+        static member content<'t when 't :> ContentControl>(text: string) : IAttr<'t> =
+            let accessor = Accessor.Avalonia ContentControl.ContentProperty
+            let property = Property.createDirect(accessor, text)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member content<'t when 't :> ContentControl>(value: IView) : IAttr<'t> =
+            let accessor = Accessor.Avalonia ContentControl.ContentProperty
+            let content = Content.createSingle(accessor, Some value)
+            let attr = Attr.createContent<'t> content
+            attr :> IAttr<'t>
+            
+        static member content<'t when 't :> ContentControl>(value: IView option) : IAttr<'t> =
+            let accessor = Accessor.Avalonia ContentControl.ContentProperty
+            let content = Content.createSingle(accessor, value)
+            let attr = Attr.createContent<'t> content
+            attr :> IAttr<'t>
+            
+        static member content<'t when 't :> ContentControl>(value: obj) : IAttr<'t> =
+            let accessor = Accessor.Avalonia ContentControl.BorderBrushProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member contentTemplate<'t when 't :> ContentControl>(value: #IDataTemplate) : IAttr<'t> =
+            let accessor = Accessor.Avalonia ContentControl.ContentTemplateProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+
+        static member horizontalAlignment<'t when 't :> ContentControl>(value: HorizontalAlignment) : IAttr<'t> =
+            let accessor = Accessor.Avalonia ContentControl.HorizontalAlignmentProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member verticalAlignment<'t when 't :> ContentControl>(value: VerticalAlignment) : IAttr<'t> =
+            let accessor = Accessor.Avalonia ContentControl.VerticalAlignmentProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+
+    type Panel with
+            
+        static member children<'t when 't :> Panel>(value: IView list) : IAttr<'t> =
+            let accessor = Accessor.Instance "Children"
+            let content = Content.createMultiple(accessor, value)
+            let attr = Attr.createContent<'t> content
+            attr :> IAttr<'t>
+            
+        static member children<'t when 't :> Panel>(value: obj) : IAttr<'t> =
+            let accessor = Accessor.Instance "Children"
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member background<'t when 't :> Panel>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Panel.BackgroundProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>    
+    
+    type Button with
+       static member create (attrs: IAttr<Button> list): IView<Button> =
+            View.create<Button>(attrs)
+
+       static member clickMode<'t when 't :> Button>(value: ClickMode) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Button.ClickModeProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+       static member command<'t when 't :> Button>(value: ICommand) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Button.CommandProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+       static member hotKey<'t when 't :> Button>(value: KeyGesture) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Button.HotKeyProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+       static member commandParameter<'t when 't :> Button>(value: #obj) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Button.CommandParameterProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+       static member isDefault<'t when 't :> Button>(value: bool) : IAttr<'t> =
+            let accessor = Accessor.Avalonia Button.IsDefaultProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
     type StackPanel with
         static member create (attrs: IAttr<StackPanel> list): IView<StackPanel> =
             View.create<StackPanel>(attrs)
-        
+            
+        static member spacing<'t when 't :> StackPanel>(value: double) : IAttr<'t> =
+            let accessor = Accessor.Avalonia StackPanel.SpacingProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
         static member orientation<'t when 't :> StackPanel>(orientation: Orientation) : IAttr<'t> =
             let accessor = Accessor.Avalonia StackPanel.OrientationProperty
             let property = Property.createDirect(accessor, orientation)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
-            
-        static member children<'t when 't :> StackPanel>(children: IView list) : IAttr<'t> =
-            let accessor = Accessor.Instance "Children"
-            let content = Content.createMultiple(accessor, children)
-            let attr = Attr.createContent<'t> content
-            attr :> IAttr<'t>
-            
+               
     type DockPanel with
        static member create (attrs: IAttr<DockPanel> list): IView<DockPanel> =
             View.create<DockPanel>(attrs)
@@ -210,37 +385,64 @@ module Extensions =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
                  
-       static member children<'t when 't :> DockPanel>(children: IView list) : IAttr<'t> =
-            let accessor = Accessor.Instance "Children"
-            let content = Content.createMultiple(accessor, children)
-            let attr = Attr.createContent<'t> content
+       static member dock<'t when 't :> DockPanel>(dock: Dock) : IAttr<'t> =
+            let accessor = Accessor.Avalonia DockPanel.DockProperty
+            let property = Property.createAttached(accessor, dock)
+            let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
     
     type TextBlock with
-       static member create (attrs: IAttr<TextBlock> list): IView<TextBlock> =
+        static member create (attrs: IAttr<TextBlock> list): IView<TextBlock> =
             View.create<TextBlock>(attrs)
+            
+        static member background<'t when 't :> TextBlock>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.BackgroundProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>    
         
-       static member text<'t when 't :> TextBlock>(text: string) : IAttr<'t> =
-            let accessor = Accessor.Avalonia TextBlock.TextProperty
-            let property = Property.createDirect(accessor, text)
+        static member fontFamily<'t when 't :> TextBlock>(value: FontFamily) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.FontFamilyProperty
+            let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
-    
-    type Button with
-       static member create (attrs: IAttr<Button> list): IView<Button> =
-            View.create<Button>(attrs)
-        
-       static member content<'t when 't :> Button>(text: string) : IAttr<'t> =
-            let accessor = Accessor.Avalonia Button.ContentProperty
-            let property = Property.createDirect(accessor, text)
+            
+        static member fontSize<'t when 't :> TextBlock>(value: double) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.FontSizeProperty
+            let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
-    
-       static member content<'t when 't :> Button>(content: IView) : IAttr<'t> =
-            let accessor = Accessor.Avalonia Button.ContentProperty
-            let property = Property.createDirect(accessor, content)
+            
+        static member fontStyle<'t when 't :> TextBlock>(value: FontStyle) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.FontStyleProperty
+            let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
+            
+        static member fontWeight<'t when 't :> TextBlock>(value: FontWeight) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.FontWeightProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member foreground<'t when 't :> TextBlock>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.ForegroundProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member textAlignment<'t when 't :> TextBlock>(alignment: TextAlignment) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.TextAlignmentProperty
+            let property = Property.createDirect(accessor, alignment)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member textWrapping<'t when 't :> TextBlock>(value: TextWrapping) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBlock.TextWrappingProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+
             
 module Playground =
      let view =
