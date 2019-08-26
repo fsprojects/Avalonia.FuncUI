@@ -1,6 +1,6 @@
 namespace Avalonia.FuncUI.VirtualDom
 
-module Patcher =
+module internal Patcher =
     
     ()
 

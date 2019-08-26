@@ -1,6 +1,6 @@
 namespace Avalonia.FuncUI.VirtualDom
 
-module Differ =
+module internal Differ =
     
     ()
 

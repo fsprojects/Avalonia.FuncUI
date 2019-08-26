@@ -27,11 +27,11 @@
       <PackagePath></PackagePath>
       <Link>LICENSE</Link>
     </None>
+    <Compile Include="Core.fs" />
     <Compile Include="VirtualDom\VirtualDom.Delta.fs" />
     <Compile Include="VirtualDom\VirtualDom.Differ.fs" />
     <Compile Include="VirtualDom\VirtualDom.Patcher.fs" />
     <Compile Include="VirtualDom\VirtualDom.fs" />
-    <Compile Include="Core.fs" />
     <Compile Include="DSL.fs" />
   </ItemGroup>
 

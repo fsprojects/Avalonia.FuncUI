@@ -101,7 +101,7 @@ module Core =
             // create content attr
             let createContent<'viewType>(content: Content) =
                 Attr<'viewType>.Content content
-     
+                
         type IView =
             abstract member ViewType: Type with get
             abstract member Attrs: IAttr list with get
@@ -141,3 +141,9 @@ module Core =
                     View.attrs = attrs
                 }
                 :> IView
+                
+        let (|Property'|_|) (attr: IAttr)  =
+            attr.Property
+            
+        let (|Content'|_|) (attr: IAttr)  =
+            attr.Content
