@@ -36,7 +36,7 @@ module Core =
             let createAttached (accessor: Accessor, value: #obj) =
                 {
                     Property.accessor = accessor;
-                    Property.propertyType = PropertyType.Direct;
+                    Property.propertyType = PropertyType.Attached;
                     Property.value = value
                 }
         

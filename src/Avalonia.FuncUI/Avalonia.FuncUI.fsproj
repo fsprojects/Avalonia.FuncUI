@@ -14,10 +14,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Core.fs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
   </ItemGroup>
 
@@ -29,7 +25,13 @@
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
+      <Link>LICENSE</Link>
     </None>
+    <Compile Include="VirtualDom\VirtualDom.Delta.fs" />
+    <Compile Include="VirtualDom\VirtualDom.Differ.fs" />
+    <Compile Include="VirtualDom\VirtualDom.Patcher.fs" />
+    <Compile Include="VirtualDom\VirtualDom.fs" />
+    <Compile Include="Core.fs" />
     <Compile Include="DSL.fs" />
   </ItemGroup>
 
