@@ -1,8 +1,9 @@
 namespace Avalonia.FuncUI.DSL
+open System
+open System.Threading
 open System.Windows.Input
 open Avalonia
 open Avalonia.Controls
-open Avalonia.FuncUI.Core.Domain
 open Avalonia.FuncUI.Core.Domain
 open Avalonia.Layout
 open Avalonia.Layout
@@ -12,13 +13,13 @@ open Avalonia.Styling
 [<AutoOpen>]
 module Extensions =
     open Avalonia.FuncUI
-    open Avalonia.FuncUI
     
     open Avalonia    
     open Avalonia.Controls.Primitives
     open Avalonia.Controls.Templates
     open Avalonia.Animation
     open Avalonia.Layout
+    open Avalonia.Interactivity
     open Avalonia.Input
 
     type Animatable with
@@ -359,6 +360,21 @@ module Extensions =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
+       // TODO:
+       // workout concept for efficiently handling events. This might include having a subscription
+       // and a IDisposable to minimize attaching and removing event handlers.
+       static member onClick<'t when 't :> Button>(func: obj -> RoutedEventArgs -> unit) =
+            let btn = new Button()
+            let handler = EventHandler<_>(func)
+            btn.Click.AddHandler(handler) 
+            btn.Click.Subscribe(fun i -> ())
+            
+       static member onClickModeChanged<'t when 't :> Button>(func: obj -> unit) =
+            let btn = new Button()
+            let token = new CancellationToken()
+            let handler = Action<_>(func)
+            btn.GetSubject(Button.ClickModeProperty).Subscribe(handler, token)
+            
     type StackPanel with
         static member create (attrs: IAttr<StackPanel> list): IView<StackPanel> =
             View.create<StackPanel>(attrs)
@@ -445,6 +461,9 @@ module Extensions =
 
             
 module Playground =
+     open Avalonia.Interactivity
+     open System
+     
      let view =
           StackPanel.create [
                StackPanel.orientation Orientation.Horizontal
@@ -454,3 +473,8 @@ module Playground =
                     ]
                ]
           ]
+          
+     
+     let subscribeToChanged (control: AvaloniaObject) (prop: #AvaloniaProperty) (handler): IDisposable =
+        control.GetSubject(prop).Subscribe(handler, )
+     

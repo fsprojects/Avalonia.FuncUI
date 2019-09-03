@@ -29,7 +29,7 @@ module internal rec Delta =
                     value = Some property.value
                 }
     
-    type ContentDelta =
+    type  ContentDelta =
         {
             accessor: Accessor
             content: ViewContentDelta
