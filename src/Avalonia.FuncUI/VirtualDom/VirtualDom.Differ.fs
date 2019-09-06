@@ -12,7 +12,6 @@ module internal rec Differ =
         | Property' property ->
             AttrDelta.Property {
                 accessor = property.accessor;
-                propertyType = property.propertyType;
                 value = Some property.value;
             }
         | Content' content ->
@@ -67,7 +66,7 @@ module internal rec Differ =
         let delta = new ResizeArray<AttrDelta>()
         
         for lastAttr in lastAttrs do
-            let nextAttr = nextAttrs |> List.tryFind (fun attr -> attr.Name = lastAttr.Name)
+            let nextAttr = nextAttrs |> List.tryFind (fun attr -> attr.UniqueName = lastAttr.UniqueName)
             
             match nextAttr with
             // update if changed
@@ -80,7 +79,7 @@ module internal rec Differ =
                 delta.Add(reset lastAttr)
         
         for nextAttr in nextAttrs do
-            let exists = lastAttrs |> List.exists (fun attr -> attr.Name = nextAttr.Name)
+            let exists = lastAttrs |> List.exists (fun attr -> attr.UniqueName = nextAttr.UniqueName)
             // add if not there
             if exists then
                 delta.Add (AttrDelta.From nextAttr)

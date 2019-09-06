@@ -360,20 +360,17 @@ module Extensions =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-       // TODO:
-       // workout concept for efficiently handling events. This might include having a subscription
-       // and a IDisposable to minimize attaching and removing event handlers.
-       static member onClick<'t when 't :> Button>(func: obj -> RoutedEventArgs -> unit) =
-            let btn = new Button()
-            let handler = EventHandler<_>(func)
-            btn.Click.AddHandler(handler) 
-            btn.Click.Subscribe(fun i -> i.())
+       static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
+            let accessor = Accessor.Instance "Click"
+            let subscription = Subscription.create(accessor, func)
+            let attr = Attr.createSubscription<'t>(subscription)
+            attr :> IAttr<'t>
             
        static member onClickModeChanged<'t when 't :> Button>(func: obj -> unit) =
-            let btn = new Button()
-            let token = new CancellationToken()
-            let handler = Action<_>(func)
-            btn.GetSubject(Button.ClickModeProperty).Subscribe(handler, token)
+            let accessor = Accessor.Avalonia Button.ClickModeProperty
+            let subscription = Subscription.create(accessor, func)
+            let attr = Attr.createSubscription<'t>(subscription)
+            attr :> IAttr<'t>
             
     type StackPanel with
         static member create (attrs: IAttr<StackPanel> list): IView<StackPanel> =

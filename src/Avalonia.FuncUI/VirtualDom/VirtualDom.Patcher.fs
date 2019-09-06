@@ -31,7 +31,7 @@ module internal rec Patcher =
                     then Activator.CreateInstance(propertyInfo.PropertyType)
                     else null
                                 
-                propertyInfo.SetValue(view, attr.propertyType)
+                propertyInfo.SetValue(view, defaultValue)
                 
     let private patchContent (view: IControl) (attr: ContentDelta) : unit =
         ()

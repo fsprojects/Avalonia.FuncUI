@@ -21,7 +21,7 @@ module Core =
         type Subscription =
             {
                 accessor: Accessor
-                handler: Delegate
+                handler: Delegate option
                 funcType: Type
             }
             
@@ -36,7 +36,7 @@ module Core =
             | Multiple of IView list
                                
         type IAttr =
-            abstract member Name : string
+            abstract member UniqueName : string
             abstract member Property : Property option
             abstract member Content : Content option
             abstract member Subscription : Subscription option
@@ -51,7 +51,7 @@ module Core =
             
             interface IAttr<'viewType> 
             interface IAttr with
-                member this.Name =
+                member this.UniqueName =
                     match this with
                     | Property property ->
                         match property.accessor with
@@ -120,7 +120,16 @@ module Core =
                         Property.accessor = accessor;
                         Property.value = value
                     }
-            
+                    
+            module Subscription =
+                /// create a subscription attr
+                let create (accessor: Accessor, func: 'arg -> unit) =
+                    {
+                        Subscription.accessor = accessor;
+                        Subscription.handler = Some (Action<_>(func) :> Delegate)
+                        Subscription.funcType = func.GetType()
+                    }
+                    
             module Content =
                 /// create single content attr
                 let createSingle (accessor: Accessor, content: IView option) =
@@ -145,6 +154,10 @@ module Core =
                 let createContent<'viewType>(content: Content) =
                     Attr<'viewType>.Content content
                     
+                // create subscription attr
+                let createSubscription<'viewType>(subscription: Subscription) =
+                    Attr<'viewType>.Subscription subscription
+                    
             module View =
                 /// create a new strongly typed View
                 let create<'viewType>(attrs: #IAttr<'viewType> list) : IView<'viewType> =
@@ -168,3 +181,6 @@ module Core =
             
         let (|Content'|_|) (attr: IAttr)  =
             attr.Content
+            
+        let (|Subscription'|_|) (attr: IAttr)  =
+            attr.Subscription
