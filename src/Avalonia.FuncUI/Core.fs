@@ -15,7 +15,6 @@ module Core =
         type Property =
             {
                 accessor: Accessor
-                propertyType: PropertyType
                 value: obj
             }
             
@@ -24,8 +23,6 @@ module Core =
                 accessor: Accessor
                 handler: Delegate
                 funcType: Type
-                
-                mutable cancellationToken: CancellationToken
             }
             
         type Content =
@@ -114,7 +111,6 @@ module Core =
                 let createDirect (accessor: Accessor, value: #obj) =
                     {
                         Property.accessor = accessor;
-                        Property.propertyType = PropertyType.Direct;
                         Property.value = value
                     }
                     
@@ -122,7 +118,6 @@ module Core =
                 let createAttached (accessor: Accessor, value: #obj) =
                     {
                         Property.accessor = accessor;
-                        Property.propertyType = PropertyType.Attached;
                         Property.value = value
                     }
             

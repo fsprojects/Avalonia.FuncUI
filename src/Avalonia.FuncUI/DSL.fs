@@ -367,7 +367,7 @@ module Extensions =
             let btn = new Button()
             let handler = EventHandler<_>(func)
             btn.Click.AddHandler(handler) 
-            btn.Click.Subscribe(fun i -> ())
+            btn.Click.Subscribe(fun i -> i.())
             
        static member onClickModeChanged<'t when 't :> Button>(func: obj -> unit) =
             let btn = new Button()
@@ -475,6 +475,6 @@ module Playground =
           ]
           
      
-     let subscribeToChanged (control: AvaloniaObject) (prop: #AvaloniaProperty) (handler): IDisposable =
-        control.GetSubject(prop).Subscribe(handler, )
+     //let subscribeToChanged (control: AvaloniaObject) (prop: #AvaloniaProperty) (handler): IDisposable =
+     //   control.GetSubject(prop).Subscribe(handler, )
      

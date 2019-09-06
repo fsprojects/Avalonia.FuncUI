@@ -28,6 +28,20 @@ module internal rec Delta =
                     propertyType = property.propertyType;
                     value = Some property.value
                 }
+                
+    type SubscriptionDelta =
+        {
+            accessor: Accessor
+            propertyType: PropertyType
+            value: obj option
+        }
+        with
+            static member From (property: Property) : PropertyDelta =
+                {
+                    accessor = property.accessor;
+                    propertyType = property.propertyType;
+                    value = Some property.value
+                }
     
     type  ContentDelta =
         {
