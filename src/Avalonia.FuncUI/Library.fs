@@ -1,3 +1,10 @@
 namespace Avalonia.FuncUI.Library
 
-type ResizeDictionary<'a,'b> = System.Collections.Generic.Dictionary<'a,'b>
+module internal Hashing =
+    open System
+    open MBrace.FsPickler
+    
+    let private binarySerializer = FsPickler.CreateBinarySerializer()
+    
+    let hash (value: 'value) : string =
+        binarySerializer.ComputeHash(value).Id

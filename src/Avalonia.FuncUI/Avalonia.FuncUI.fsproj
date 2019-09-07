@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
+    <PackageReference Include="FsPickler" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,10 +30,12 @@
     </None>
     <Compile Include="Library.fs" />
     <Compile Include="Core.fs" />
+    <Compile Include="VirtualDom\VirtualDom.Misc.fs" />
     <Compile Include="VirtualDom\VirtualDom.Delta.fs" />
     <Compile Include="VirtualDom\VirtualDom.Differ.fs" />
     <Compile Include="VirtualDom\VirtualDom.Patcher.fs" />
     <Compile Include="VirtualDom\VirtualDom.fs" />
+    <Compile Include="Hosts.fs" />
     <Compile Include="DSL.fs" />
   </ItemGroup>
 
