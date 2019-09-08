@@ -27,14 +27,14 @@ module internal rec Differ =
         match next with
         | Some next ->
             match last with
-            | Some last -> Some (Differ.diff last next)
+            | Some last -> Some (Differ.diff(last, next))
             | None -> Some (ViewDelta.From next)
         | None -> None
                 
     let private diffContentMultiple (lastList: IView list) (nextList: IView list) : ViewDelta list =
         nextList |> List.mapi (fun index next ->
             if index + 1 <= lastList.Length then
-                Differ.diff lastList.[index] nextList.[index]
+                Differ.diff(lastList.[index], nextList.[index])
             else
                 ViewDelta.From next
         )
@@ -86,7 +86,7 @@ module internal rec Differ =
                 
         List.ofSeq delta
     
-    let diff (last: IView) (next: IView) : ViewDelta =
+    let diff (last: IView, next: IView) : ViewDelta =
         {
             ViewDelta.viewType = next.ViewType
             ViewDelta.attrs = diffAttributes last.Attrs next.Attrs

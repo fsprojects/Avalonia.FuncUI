@@ -36,7 +36,7 @@ module internal rec Patcher =
     let private patchContent (view: IControl) (attr: ContentDelta) : unit =
         ()
     
-    let patch (view: IControl) (viewElement: ViewDelta) : unit =
+    let patch (view: IControl, viewElement: ViewDelta) : unit =
         for attr in viewElement.attrs do
             match attr with
             | AttrDelta.Property property -> patchProperty view property

@@ -28,6 +28,7 @@
       <PackagePath></PackagePath>
       <Link>LICENSE</Link>
     </None>
+    <Compile Include="Assembly.fs" />
     <Compile Include="Library.fs" />
     <Compile Include="Core.fs" />
     <Compile Include="VirtualDom\VirtualDom.Misc.fs" />
