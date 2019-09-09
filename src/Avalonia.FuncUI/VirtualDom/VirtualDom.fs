@@ -3,7 +3,16 @@ namespace Avalonia.FuncUI.VirtualDom
 open Avalonia.Controls
 
 open Avalonia.FuncUI.Core.Domain
+open Delta
+
 module rec VirtualDom =
 
-    let update (host: IControl, last: IView option, next: IView option) =
-        ()
+    let create (view: IView) : IControl =
+        let root = Patcher.create view.ViewType
+        let delta = ViewDelta.From view
+        Patcher.patch(root, delta)
+        root
+    
+    let update (root: IControl, last: IView, next: IView) : unit =
+        let delta = Differ.diff(last, next)
+        Patcher.patch(root, delta)

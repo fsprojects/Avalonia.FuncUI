@@ -1,7 +1,7 @@
 ﻿namespace CounterElmishSample
 
 open Avalonia.Controls
-open Avalonia.FuncUI.Types
+open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI
 open Avalonia.Layout
 
@@ -34,28 +34,28 @@ module Counter =
         | Increment -> { state with count =  state.count + 1 }
         | Decrement -> { state with count =  state.count - 1 }
     
-    let view (state: CounterState) (dispatch): View =
+    let view (state: CounterState) (dispatch) =
         DockPanel.create [
-            DockPanel.attrChildren [
+            DockPanel.children [
                 Button.create [
-                    Attrs.dockPanel_dock Dock.Bottom
-                    Attrs.onClick (fun sender args -> dispatch Decrement)
-                    Button.attrContent "-"
+                    //Attrs.dockPanel_dock Dock.Bottom
+                    //Button.onClick (fun args -> dispatch Decrement)
+                    Button.content "-"
                 ]
                 Button.create [
-                    Attrs.dockPanel_dock Dock.Bottom
-                    Attrs.onClick (fun sender args -> dispatch Increment)
-                    Button.attrContent "+"
+                    //Attrs.dockPanel_dock Dock.Bottom
+                    //Button.onClick (fun args -> dispatch Increment)
+                    Button.content "+"
                 ]
                 TextBlock.create [
-                    Attrs.dockPanel_dock Dock.Top
-                    Attrs.fontSize 48.0
-                    Attrs.verticalAlignment VerticalAlignment.Center
-                    Attrs.horizontalAlignment HorizontalAlignment.Center
-                    TextBlock.attrText (string state.count)
+                    //Attrs.dockPanel_dock Dock.Top
+                    TextBlock.fontSize 48.0
+                    TextBlock.verticalAlignment VerticalAlignment.Center
+                    TextBlock.horizontalAlignment HorizontalAlignment.Center
+                    TextBlock.text (string state.count)
                 ]
-                Views.checkBox [
-                    CheckBox.attrContent "Text"
+                CheckBox.create [
+                    CheckBox.content "Text"
                 ]
             ]
         ]       

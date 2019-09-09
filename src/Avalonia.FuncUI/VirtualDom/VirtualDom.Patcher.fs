@@ -9,11 +9,6 @@ module internal rec Patcher =
 
     open Avalonia.FuncUI.VirtualDom.Delta
     open Avalonia.FuncUI.Core.Domain    
-    
-    let private create (viewType: Type) : IControl =
-        let control = Activator.CreateInstance(viewType) :?> IControl
-        control.SetValue(Tagging.ViewTag.ViewIdProperty, Guid.NewGuid())
-        control
         
     let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
         match attr.accessor with
@@ -177,3 +172,8 @@ module internal rec Patcher =
             match attr with
             | AttrDelta.Property property -> patchProperty view property
             | AttrDelta.Content content -> patchContent view content
+            
+    let create (viewType: Type) : IControl =
+        let control = Activator.CreateInstance(viewType) :?> IControl
+        control.SetValue(Tagging.ViewTag.ViewIdProperty, Guid.NewGuid())
+        control
