@@ -21,7 +21,22 @@ module internal rec Differ =
             }
     
     let private reset (last: IAttr) : AttrDelta =
-        AttrDelta.From last
+        match last with
+        | Property' property ->
+            AttrDelta.Property {
+                accessor = property.accessor;
+                value = None;
+            }
+        | Content' content ->
+            let empty =
+                match content.content with
+                | ViewContent.Single _ -> ViewContentDelta.Single None
+                | ViewContent.Multiple _ -> ViewContentDelta.Multiple []
+            
+            AttrDelta.Content {
+                accessor = content.accessor;
+                content = empty
+            }
         
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
         match next with
@@ -73,7 +88,8 @@ module internal rec Differ =
             | Some nextAttr ->
                 if not (nextAttr.Equals lastAttr) then
                     delta.Add(update lastAttr nextAttr)
-            
+                else
+                    ()
             // reset  
             | None ->
                 delta.Add(reset lastAttr)
@@ -81,14 +97,18 @@ module internal rec Differ =
         for nextAttr in nextAttrs do
             let exists = lastAttrs |> List.exists (fun attr -> attr.UniqueName = nextAttr.UniqueName)
             // add if not there
-            if exists then
+            if not exists then
                 delta.Add (AttrDelta.From nextAttr)
                 
         List.ofSeq delta
     
     let diff (last: IView, next: IView) : ViewDelta =
-        {
-            ViewDelta.viewType = next.ViewType
-            ViewDelta.attrs = diffAttributes last.Attrs next.Attrs
-        }
+        // only diff attributes if viewType matches
+        if last.ViewType = next.ViewType then
+            {
+                ViewDelta.viewType = next.ViewType
+                ViewDelta.attrs = diffAttributes last.Attrs next.Attrs
+            }
+        else
+            ViewDelta.From next
 

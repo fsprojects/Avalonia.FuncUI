@@ -319,12 +319,6 @@ module Extensions =
             let attr = Attr.createContent<'t> content
             attr :> IAttr<'t>
             
-        static member children<'t when 't :> Panel>(value: obj) : IAttr<'t> =
-            let accessor = Accessor.Instance "Children"
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-            
         static member background<'t when 't :> Panel>(value: #IBrush) : IAttr<'t> =
             let accessor = Accessor.Avalonia Panel.BackgroundProperty
             let property = Property.createDirect(accessor, value)
