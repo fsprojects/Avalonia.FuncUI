@@ -277,67 +277,67 @@ module VirtualDomTests =
 
                 // just to make sure the types are actually comparable
                 Assert.True(not (delta <> result))
-(*
+                
         [<Fact>]
         let ``Diff Content Multiple`` () =
                 let last =
                     StackPanel.create [
-                        Attrs.orientation Orientation.Horizontal
+                        StackPanel.orientation Orientation.Horizontal
                         StackPanel.children [
-                            Views.textBlock [
-                                Attrs.text "some text"
-                                Attrs.fontSize 14.0
+                            TextBlock.create [
+                                TextBlock.text "some text"
+                                TextBlock.fontSize 14.0
                             ]
-                            Views.button [
-                                Attrs.background "green"
+                            Button.create [
+                                Button.background "green"
                             ]
                         ]
                     ]
 
                 let next =
                     StackPanel.create [
-                        Attrs.orientation Orientation.Vertical
+                        StackPanel.orientation Orientation.Vertical
                         StackPanel.children [
-                            Views.textBlock [
-                                Attrs.text "some other text"
-                                Attrs.fontSize 15.0
+                            TextBlock.create [
+                                TextBlock.text "some other text"
+                                TextBlock.fontSize 15.0
                             ]
-                            Views.button [
-                                Attrs.background "red"
+                            Button.create [
+                                Button.background "red"
                             ]
                         ]
                     ]
 
-                let delta = 
+                let delta : Delta.ViewDelta = 
                     {
-                        ViewType = typeof<StackPanel>
-                        Attrs = [
-                            AttrDelta.PropertyDelta {
-                                Name = "Orientation"
-                                Value = Some (Orientation.Vertical :> obj)
+                        viewType = typeof<StackPanel>
+                        attrs = [
+                            Delta.AttrDelta.Property {
+                                accessor =  Accessor.Avalonia StackPanel.OrientationProperty
+                                value = Some (Orientation.Vertical :> obj)
                             };
-                            AttrDelta.ContentDelta {
-                                Name = "Children"
-                                Content = ViewContentDelta.Multiple [
+                            Delta.AttrDelta.Content {
+                                accessor = Accessor.Instance "Children"
+                                content = Delta.ViewContentDelta.Multiple [
                                     {
-                                        ViewType = typeof<TextBlock>
-                                        Attrs = [
-                                            AttrDelta.PropertyDelta {
-                                                Name = "Text"
-                                                Value = Some ("some other text" :> obj)
+                                        viewType = typeof<TextBlock>
+                                        attrs = [
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia TextBlock.TextProperty
+                                                value = Some ("some other text" :> obj)
                                             };
-                                            AttrDelta.PropertyDelta {
-                                                Name = "FontSize"
-                                                Value = Some (15.0 :> obj)
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia TextBlock.FontSizeProperty
+                                                value = Some (15.0 :> obj)
                                             };
                                         ]
                                     };
                                     {
-                                        ViewType = typeof<Button>
-                                        Attrs = [
-                                            AttrDelta.PropertyDelta {
-                                                Name = "Background"
-                                                Value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
+                                        viewType = typeof<Button>
+                                        attrs = [
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia Button.BackgroundProperty
+                                                value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
                                             };
                                         ]
                                     };
@@ -353,6 +353,7 @@ module VirtualDomTests =
                 // just to make sure the types are actually comparable
                 Assert.True(not (delta <> result))
 
+        (*
         [<Fact>]
         let ``Diff Content Multiple (insert iten into homogenous list - tail)`` () =
                 let last =

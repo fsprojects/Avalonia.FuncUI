@@ -38,24 +38,25 @@ module Counter =
         DockPanel.create [
             DockPanel.children [
                 Button.create [
-                    //Attrs.dockPanel_dock Dock.Bottom
+                    Button.dock Dock.Bottom
                     //Button.onClick (fun args -> dispatch Decrement)
                     Button.content "-"
                 ]
                 Button.create [
-                    //Attrs.dockPanel_dock Dock.Bottom
+                    Button.dock Dock.Bottom
                     //Button.onClick (fun args -> dispatch Increment)
                     Button.content "+"
                 ]
+                CheckBox.create [
+                    CheckBox.dock Dock.Bottom
+                    CheckBox.content "Text"
+                ]                
                 TextBlock.create [
-                    //Attrs.dockPanel_dock Dock.Top
+                    TextBlock.dock Dock.Top
                     TextBlock.fontSize 48.0
                     TextBlock.verticalAlignment VerticalAlignment.Center
                     TextBlock.horizontalAlignment HorizontalAlignment.Center
                     TextBlock.text (string state.count)
-                ]
-                CheckBox.create [
-                    CheckBox.content "Text"
                 ]
             ]
         ]       

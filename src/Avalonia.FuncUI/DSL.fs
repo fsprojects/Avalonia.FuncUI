@@ -206,6 +206,12 @@ module Extensions =
             let property = Property.createDirect(accessor, menu)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
+            
+        static member dock<'t when 't :> Control>(dock: Dock) : IAttr<'t> =
+            let accessor = Accessor.Avalonia DockPanel.DockProperty
+            let property = Property.createAttached(accessor, dock)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
       
     type TemplatedControl with
         static member background<'t when 't :> TemplatedControl>(value: #IBrush) : IAttr<'t> =
@@ -346,13 +352,7 @@ module Extensions =
             let property = Property.createDirect(accessor, fill)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
-                 
-       static member dock<'t when 't :> DockPanel>(dock: Dock) : IAttr<'t> =
-            let accessor = Accessor.Avalonia DockPanel.DockProperty
-            let property = Property.createAttached(accessor, dock)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-    
+
     type TextBlock with
             
         static member text<'t when 't :> TextBlock>(value: string) : IAttr<'t> =
