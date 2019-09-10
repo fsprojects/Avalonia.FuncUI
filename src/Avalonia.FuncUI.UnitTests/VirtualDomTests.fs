@@ -10,6 +10,8 @@ module VirtualDomTests =
     open Avalonia.FuncUI.VirtualDom
     open Avalonia.FuncUI.DSL
     open Avalonia.FuncUI
+    
+    open Avalonia.Layout
     open Avalonia.Controls
     open Avalonia.Media
 

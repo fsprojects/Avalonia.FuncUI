@@ -507,6 +507,7 @@ module Extensions =
 module Playground =
      open Avalonia.Interactivity
      open System
+     open Avalonia.Layout
      
      let view =
           StackPanel.create [

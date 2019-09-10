@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.999-cibuild0003941-beta" />
     <PackageReference Include="FsPickler" Version="5.2.2" />
   </ItemGroup>
 

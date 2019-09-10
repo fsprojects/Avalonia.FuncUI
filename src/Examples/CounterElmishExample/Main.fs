@@ -4,6 +4,7 @@ open Avalonia.FuncUI.Hosts
 open Avalonia
 open Avalonia.FuncUI.Elmish
 open Elmish
+open Avalonia.Controls.ApplicationLifetimes
 
 type MainWindow() =
     inherit HostWindow()
@@ -16,7 +17,7 @@ type MainWindow() =
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         ()
-
+        
 type App() =
     inherit Application()
 
@@ -24,36 +25,28 @@ type App() =
         this.Styles.Load "resm:Avalonia.Themes.Default.DefaultTheme.xaml?assembly=Avalonia.Themes.Default"
         this.Styles.Load "resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default"
 
+    override this.OnFrameworkInitializationCompleted() =
+        match this.ApplicationLifetime with
+        | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
+            let mainWindow = MainWindow()
+            desktopLifetime.MainWindow <- mainWindow
+            
+            Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
+            |> Program.withHost mainWindow
+            |> Program.withConsoleTrace
+            |> Program.run
+        | _ -> ()
+
 module Program =
     open Avalonia
     open Avalonia.Logging.Serilog
 
-    // Avalonia configuration, don't remove; also used by visual designer.
-    [<CompiledName "BuildAvaloniaApp">]
-    let buildAvaloniaApp() =
-        AppBuilder
-            .Configure<App>()
-            .UsePlatformDetect()
-            .LogToDebug()
-
-    // Your application's entry point.
-    [<CompiledName "AppMain">]
-    let appMain (app: Application) (args: string[]) =
-        let mainWindow = MainWindow()
-
-        Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
-        |> Program.withHost mainWindow
-        |> Program.withConsoleTrace
-        |> Program.run
-
-        app.Run(mainWindow)
-        |> ignore
-
-    // Initialization code. Don't use any Avalonia, third-party APIs or any
-    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
-    // yet and stuff might break.
     [<EntryPoint>]
     [<CompiledName "Main">]
     let main(args: string[]) =
-        buildAvaloniaApp().Start(appMain, args)
-        0
+        AppBuilder
+            .Configure<App>()
+            .UsePlatformDetect()
+            .UseSkia()
+            .LogToDebug()
+            .StartWithClassicDesktopLifetime(args)
