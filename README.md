@@ -8,7 +8,7 @@
 
 Develop cross-plattform MVU GUI Applications using F# and Avalonia!
 
-> A new major version is currently in development. Most problems that are inherited from the current architecture will be addressed. There might be some breaking changes but most of them are just changing namespaces and mostly names.
+> A new major version is currently in development. Most problems that are inherited from the current architecture will be addressed. There will be breaking changes. It is basically a rewrite to get things right from the ground up. This also means there will be new features such as 📣 subscribable properties, a better discoverable DSL, even more strongly typed views and more to come.
 
 ![](github/img/hero.png)
 *(Application was created using Avalonia.FuncUI!)*
