@@ -1,6 +1,8 @@
 ﻿namespace Avalonia.FuncUI.UnitTests
 
+open Avalonia.Controls
 open Avalonia.FuncUI.Core.Domain
+open Avalonia.FuncUI.DSL.Extensions
 open Xunit
 open System
 
@@ -13,6 +15,7 @@ module VirtualDomTests =
     
     open Avalonia.Layout
     open Avalonia.Controls
+    open Avalonia.Controls.Primitives
     open Avalonia.Media
 
     [<Fact>]
@@ -355,90 +358,90 @@ module VirtualDomTests =
                 // just to make sure the types are actually comparable
                 Assert.True(not (delta <> result))
 
-        (*
+        
         [<Fact>]
         let ``Diff Content Multiple (insert iten into homogenous list - tail)`` () =
                 let last =
                     StackPanel.create [
-                        Attrs.orientation Orientation.Horizontal
+                        StackPanel.orientation Orientation.Horizontal
                         StackPanel.children [
                             CheckBox.create [
-                                Attrs.content "some text 1"
-                                Attrs.isChecked true
+                                CheckBox.content "some text 1"
+                                CheckBox.isChecked true
                             ]
                             CheckBox.create [
-                                Attrs.content "some text 2"
-                                Attrs.isChecked false
+                                CheckBox.content "some text 2"
+                                CheckBox.isChecked false
                             ]
                         ]
                     ]
 
                 let next =
                     StackPanel.create [
-                        Attrs.orientation Orientation.Vertical
+                        StackPanel.orientation Orientation.Vertical
                         StackPanel.children [
                             CheckBox.create [
-                                Attrs.content "some text [new]"
-                                Attrs.isChecked false
+                                CheckBox.content "some text [new]"
+                                CheckBox.isChecked false
                             ]
                             CheckBox.create [
-                                Attrs.content "some text 1"
-                                Attrs.isChecked true
+                                CheckBox.content "some text 1"
+                                CheckBox.isChecked true
                             ]
                             CheckBox.create [
-                                Attrs.content "some text 2"
-                                Attrs.isChecked false
+                                CheckBox.content "some text 2"
+                                CheckBox.isChecked false
                             ]
                         ]
                     ]
 
-                let delta = 
+                let delta : Delta.ViewDelta = 
                     {
-                        ViewType = typeof<StackPanel>
-                        Attrs = [
-                            AttrDelta.PropertyDelta {
-                                Name = "Orientation"
-                                Value = Some (Orientation.Vertical :> obj)
+                        viewType = typeof<StackPanel>
+                        attrs = [
+                            Delta.AttrDelta.Property {
+                                accessor = Accessor.Avalonia StackPanel.OrientationProperty
+                                value = Some (Orientation.Vertical :> obj)
                             };
-                            AttrDelta.ContentDelta {
-                                Name = "Children"
-                                Content = ViewContentDelta.Multiple [
+                            Delta.AttrDelta.Content {
+                                accessor = Accessor.Instance "Children"
+                                content = Delta.ViewContentDelta.Multiple [
                                     {
-                                        ViewType = typeof<CheckBox>
-                                        Attrs = [
-                                            AttrDelta.PropertyDelta {
-                                                Name = "Content"
-                                                Value = Some ("some text [new]" :> obj)
+                                        viewType = typeof<CheckBox>
+                                        attrs = [
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia CheckBox.ContentProperty
+                                                value = Some ("some text [new]" :> obj)
                                             };
-                                            AttrDelta.PropertyDelta {
-                                                Name = "IsChecked"
-                                                Value = Some (false :> obj)
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia CheckBox.IsCheckedProperty
+                                                value = Some (false :> obj)
                                             };
                                         ]
                                     };
                                     {
-                                        ViewType = typeof<CheckBox>
-                                        Attrs = [
-                                            AttrDelta.PropertyDelta {
-                                                Name = "Content"
-                                                Value = Some ("some text 1" :> obj)
+                                        viewType = typeof<CheckBox>
+                                        attrs = [
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia CheckBox.ContentProperty
+                                                value = Some ("some text 1" :> obj)
                                             };
-                                            AttrDelta.PropertyDelta {
-                                                Name = "IsChecked"
-                                                Value = Some (true :> obj)
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia CheckBox.IsCheckedProperty
+                                                value = Some (true :> obj)
                                             };
                                         ]
                                     };
                                     {
-                                        ViewType = typeof<CheckBox>
-                                        Attrs = [
-                                            AttrDelta.PropertyDelta {
-                                                Name = "Content"
-                                                Value = Some ("some text 2" :> obj)
+                                        viewType = typeof<CheckBox>
+                                        attrs = [
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia CheckBox.ContentProperty
+                                                value = Some ("some text 2" :> obj)
                                             };
-                                            AttrDelta.PropertyDelta {
-                                                Name = "IsChecked"
-                                                Value = Some (false :> obj)
+                                            Delta.AttrDelta.Property {
+                                                accessor = Accessor.Avalonia CheckBox.IsCheckedProperty
+                                                value = Some (false :> obj)
                                             };
                                         ]
                                     };
@@ -454,6 +457,7 @@ module VirtualDomTests =
                 // just to make sure the types are actually comparable
                 Assert.True(not (delta <> result))
 
+        (*
         [<Fact>]
         let ``Diff Content Multiple (insert iten into homogenous list - head)`` () =
                 let last =

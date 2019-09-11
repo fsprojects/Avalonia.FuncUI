@@ -508,6 +508,7 @@ module Playground =
      open Avalonia.Interactivity
      open System
      open Avalonia.Layout
+     open Avalonia.Controls.Primitives
      
      let view =
           StackPanel.create [
@@ -515,6 +516,9 @@ module Playground =
                StackPanel.children [
                     CheckBox.create [
                          CheckBox.content "click me"
+                    ]
+                    ToggleButton.create [
+                        ToggleButton.isChecked true
                     ]
                ]
           ]
