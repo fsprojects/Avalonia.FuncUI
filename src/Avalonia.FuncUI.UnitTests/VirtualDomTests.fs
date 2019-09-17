@@ -360,7 +360,7 @@ module VirtualDomTests =
 
         
         [<Fact>]
-        let ``Diff Content Multiple (insert iten into homogenous list - tail)`` () =
+        let ``Diff Content Multiple (insert item into homogenous list - tail)`` () =
                 let last =
                     StackPanel.create [
                         StackPanel.orientation Orientation.Horizontal

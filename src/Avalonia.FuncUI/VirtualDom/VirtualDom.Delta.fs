@@ -9,11 +9,14 @@ module internal rec Delta =
     type AttrDelta =
         | Property of PropertyDelta
         | Content of ContentDelta
+        | Subscription of SubscriptionDelta   
         with
             static member From (attr: IAttr) : AttrDelta =
                 match attr with
                 | Property' property -> Property (PropertyDelta.From property)
                 | Content' content -> Content (ContentDelta.From content)
+                | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
+                | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
            
     type PropertyDelta =
         {
@@ -40,6 +43,11 @@ module internal rec Delta =
                     handler = subscription.handler;
                     funcType = subscription.funcType;
                 }
+            member this.UniqueName =
+                match this.accessor with
+                | Avalonia avalonia -> String.Concat(avalonia.Name, ".Subscription")
+                | Instance name -> name
+                | Event routedEvent -> routedEvent.Name
     
     type  ContentDelta =
         {

@@ -1,16 +1,12 @@
 namespace Avalonia.FuncUI.DSL
 
-open Avalonia.Controls
-open Avalonia.Controls
-open Avalonia.Media.Immutable
-open System
-
-
 [<AutoOpen>]
-module Extensions =
+module Extensions =  
+    open Avalonia.Controls
+    open Avalonia.Media.Immutable
+    open System    
     open System.Windows.Input
     open Avalonia
-    open Avalonia.Controls
     open Avalonia.FuncUI.Core.Domain
     open Avalonia.Media
     open Avalonia.Styling
@@ -415,6 +411,74 @@ module Extensions =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
 
+    type TextBox with
+            
+        static member text<'t when 't :> TextBox>(value: string) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.TextProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member onTextChanged<'t when 't :> TextBox>(func: string -> unit) =
+            let accessor = Accessor.Avalonia TextBox.TextProperty
+            let subscription = Subscription.create(accessor, func)
+            let attr = Attr.createSubscription<'t>(subscription)
+            attr :> IAttr<'t>
+            
+        static member background<'t when 't :> TextBox>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.BackgroundProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member background<'t when 't :> TextBox>(color: string) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.BackgroundProperty
+            let property = Property.createDirect(accessor, ImmutableSolidColorBrush(Color.Parse(color)))
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>    
+        
+        static member fontFamily<'t when 't :> TextBox>(value: FontFamily) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.FontFamilyProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member fontSize<'t when 't :> TextBox>(value: double) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.FontSizeProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member fontStyle<'t when 't :> TextBox>(value: FontStyle) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.FontStyleProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member fontWeight<'t when 't :> TextBox>(value: FontWeight) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.FontWeightProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member foreground<'t when 't :> TextBox>(value: #IBrush) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.ForegroundProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member textAlignment<'t when 't :> TextBox>(alignment: TextAlignment) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.TextAlignmentProperty
+            let property = Property.createDirect(accessor, alignment)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+            
+        static member textWrapping<'t when 't :> TextBox>(value: TextWrapping) : IAttr<'t> =
+            let accessor = Accessor.Avalonia TextBox.TextWrappingProperty
+            let property = Property.createDirect(accessor, value)
+            let attr = Attr.createProperty<'t> property
+            attr :> IAttr<'t>
+    
     type Button with
 
        static member clickMode<'t when 't :> Button>(value: ClickMode) : IAttr<'t> =
@@ -448,7 +512,7 @@ module Extensions =
             attr :> IAttr<'t>
             
        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
-            let accessor = Accessor.Instance "Click"
+            let accessor = Accessor.Event Button.ClickEvent
             let subscription = Subscription.create(accessor, func)
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
@@ -478,8 +542,7 @@ module Extensions =
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
          
-         
-         
+               
     module StackPanel =
         let create (attrs: IAttr<StackPanel> list): IView<StackPanel> =
             View.create<StackPanel>(attrs)
@@ -491,6 +554,10 @@ module Extensions =
     module TextBlock =
         let create (attrs: IAttr<TextBlock> list): IView<TextBlock> =
             View.create<TextBlock>(attrs)
+            
+    module TextBox =
+        let create (attrs: IAttr<TextBox> list): IView<TextBox> =
+            View.create<TextBox>(attrs)        
             
     module Button =
         let create (attrs: IAttr<Button> list): IView<Button> =
@@ -505,21 +572,29 @@ module Extensions =
             View.create<CheckBox>(attrs)
             
 module Playground =
-     open Avalonia.Interactivity
      open System
+     open Avalonia.Interactivity
      open Avalonia.Layout
      open Avalonia.Controls.Primitives
+     open Avalonia.Controls
+     open Avalonia
      
-     let view =
-          StackPanel.create [
-               StackPanel.orientation Orientation.Horizontal
-               StackPanel.children [
-                    CheckBox.create [
-                         CheckBox.content "click me"
-                    ]
-                    ToggleButton.create [
-                        ToggleButton.isChecked true
-                    ]
-               ]
-          ]
+     let d =
+         let button = new Button()
+         // this seems to work fine
+         let r = button.GetObservable(Button.ClickEvent)
+         ()
+     
+     let view =      
+         StackPanel.create [
+             StackPanel.orientation Orientation.Horizontal
+             StackPanel.children [
+                 CheckBox.create [
+                     CheckBox.content "click me"
+                 ]
+                 ToggleButton.create [
+                     ToggleButton.isChecked true
+                 ]
+             ]
+         ]
      

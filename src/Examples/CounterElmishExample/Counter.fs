@@ -39,12 +39,14 @@ module Counter =
             DockPanel.children [
                 Button.create [
                     Button.dock Dock.Bottom
-                    //Button.onClick (fun args -> dispatch Decrement)
+                    Button.onClick (fun args -> dispatch Decrement)
                     Button.content "-"
                 ]
                 Button.create [
                     Button.dock Dock.Bottom
-                    //Button.onClick (fun args -> dispatch Increment)
+                    Button.onClick (fun args ->
+                        dispatch Increment
+                        )
                     Button.content "+"
                 ]
                 CheckBox.create [

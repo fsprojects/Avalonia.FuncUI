@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.999-cibuild0003941-beta" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.8.999-cibuild0004025-beta" />
     <PackageReference Include="Elmish" Version="3.0.0" />
   </ItemGroup>
 

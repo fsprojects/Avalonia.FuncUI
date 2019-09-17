@@ -1,6 +1,7 @@
 namespace Avalonia.FuncUI.VirtualDom
-
-
+open System.Collections.Concurrent
+open System.Threading
+ 
 module Caching =
     open System.Collections.Concurrent
     open Avalonia.FuncUI.Library
@@ -66,21 +67,6 @@ module CustomEquality =
         member __.HasCustomImplementation (type': Type) : Func<obj * obj, bool> option =
             hasCustomImplementation type'
                 
-module SubscriptionHandling =
-    open System
-    open System.Threading
-    open System.Collections.Concurrent
-    open Avalonia.FuncUI.Library
-    open Avalonia.FuncUI.Core.Domain
-
-    type SubscriptionHandles() =
-        
-        let subscriptions = ConcurrentDictionary<Guid, ConcurrentDictionary<string, CancellationTokenSource>>()
-        
-        let addOrUpdate (id: Guid, attrIdentifier: string, token: CancellationTokenSource) : unit =
-            // TODO: implement
-            ()
-                
 module Tagging =
     open System
     open Avalonia
@@ -91,13 +77,24 @@ module Tagging =
         inherit AvaloniaObject()
    
         static let viewId = AvaloniaProperty.RegisterAttached<ViewTag, IControl, Guid>("ViewId")
+            
+        static let viewSubscriptions = AvaloniaProperty.RegisterAttached<ViewTag, IControl, ConcurrentDictionary<string, CancellationTokenSource>>("ViewSubscriptions")        
+        
         static member ViewIdProperty = viewId
+        
+        static member ViewSubscriptionsProperty = viewSubscriptions
         
         static member GetViewId(control: IControl) =
             control.GetValue(ViewTag.ViewIdProperty)
             
         static member SetViewId(control: IControl, value: Guid) =
             control.SetValue(ViewTag.ViewIdProperty, value)
+            
+        static member GetViewSubscriptions(control: IControl) =
+            control.GetValue(ViewTag.ViewSubscriptionsProperty)
+            
+        static member SetViewSubscriptions(control: IControl, value) =
+            control.SetValue(ViewTag.ViewSubscriptionsProperty, value)
             
 type VirtualDomEnv= {
     viewCache : Caching.LazyViewCache

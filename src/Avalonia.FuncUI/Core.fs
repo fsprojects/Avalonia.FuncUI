@@ -1,7 +1,6 @@
 ﻿namespace Avalonia.FuncUI
 
 open System
-open System.Threading
 
 module Core =
    
@@ -9,6 +8,7 @@ module Core =
         type Accessor =
             | Instance of string
             | Avalonia of Avalonia.AvaloniaProperty
+            | Event of Avalonia.Interactivity.RoutedEvent
                 
         type PropertyType = Direct | Attached
         

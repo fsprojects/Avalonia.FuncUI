@@ -1,15 +1,52 @@
 namespace Avalonia.FuncUI.VirtualDom
+open System.Collections.Concurrent
+open System.Reactive.Disposables
+open System.Threading
+open Tagging
 
 module internal rec Patcher =
     open System
     open System.Collections
-    
+    open Avalonia.Interactivity
     open Avalonia.Controls
     open Avalonia
-
+    open System.Reactive.Linq
+    open Avalonia.FuncUI.Library
     open Avalonia.FuncUI.VirtualDom.Delta
-    open Avalonia.FuncUI.Core.Domain    
+    open Avalonia.FuncUI.Core.Domain
+
+    let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
+        let subscriptions =
+            match ViewTag.GetViewSubscriptions(view) with
+            | null ->
+                let dict = new ConcurrentDictionary<_, _>()
+                ViewTag.SetViewSubscriptions(view, dict)
+                dict
+            | value -> value          
         
+        let cts = new CancellationTokenSource()
+        
+        let observable =
+            match attr.accessor with
+            | Accessor.Avalonia avaloniaProperty ->
+                view.GetObservable(avaloniaProperty)
+            | Accessor.Event routedEvent ->
+                view
+                    .GetObservable(routedEvent)
+                    .Select(fun s -> s :> obj)
+                   
+        observable.Subscribe(attr.handler.Value, cts.Token)
+                   
+        let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
+        
+        let updateFactory = Func<string, CancellationTokenSource, CancellationTokenSource>(fun key old_cts ->
+            old_cts.Cancel()
+            cts
+        )
+                
+        subscriptions.AddOrUpdate(attr.UniqueName, addFactory, updateFactory) |> ignore
+            
+    
     let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
         match attr.accessor with
         | Accessor.Avalonia avaloniaProperty ->
@@ -172,6 +209,7 @@ module internal rec Patcher =
             match attr with
             | AttrDelta.Property property -> patchProperty view property
             | AttrDelta.Content content -> patchContent view content
+            | AttrDelta.Subscription subscription -> patchSubscription view subscription
             
     let create (viewType: Type) : IControl =
         let control = Activator.CreateInstance(viewType) :?> IControl

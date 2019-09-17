@@ -4,6 +4,7 @@ open Avalonia.FuncUI.Library
 open Avalonia.FuncUI.Core.Domain
 open Delta
 open Delta
+open Delta
 
 module internal rec Differ =
  
@@ -19,6 +20,8 @@ module internal rec Differ =
                 accessor = content.accessor;
                 content = Differ.diffContent last next
             }
+        | Subscription' subscription ->
+            AttrDelta.Subscription (SubscriptionDelta.From subscription)
     
     let private reset (last: IAttr) : AttrDelta =
         match last with
@@ -36,6 +39,13 @@ module internal rec Differ =
             AttrDelta.Content {
                 accessor = content.accessor;
                 content = empty
+            }
+            
+        | Subscription' subscription ->
+            AttrDelta.Subscription {
+                accessor = subscription.accessor
+                funcType = subscription.funcType                
+                handler = None
             }
         
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
