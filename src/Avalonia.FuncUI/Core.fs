@@ -65,6 +65,7 @@ module Core =
                         match content.accessor with
                         | Avalonia avalonia -> String.Concat(avalonia.Name, ".Subscription")
                         | Instance name -> name
+                        | Event routedEvent -> routedEvent.Name
                 
                 member this.Property =
                     match this with

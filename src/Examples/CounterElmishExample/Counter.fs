@@ -31,8 +31,8 @@ module Counter =
 
     let update (msg: Msg) (state: CounterState) : CounterState =
         match msg with
-        | Increment -> { state with count =  state.count + 1 }
-        | Decrement -> { state with count =  state.count - 1 }
+        | Increment -> { state with count = state.count + 1 }
+        | Decrement -> { state with count = state.count - 1 }
     
     let view (state: CounterState) (dispatch) =
         DockPanel.create [
@@ -49,9 +49,12 @@ module Counter =
                         )
                     Button.content "+"
                 ]
-                CheckBox.create [
-                    CheckBox.dock Dock.Bottom
-                    CheckBox.content "Text"
+                TextBox.create [
+                    TextBox.dock Dock.Bottom
+                    TextBox.text (sprintf "%i" state.count)
+                    TextBox.onTextChanged (fun text ->
+                        printfn "new Text: %s" text
+                     )
                 ]                
                 TextBlock.create [
                     TextBlock.dock Dock.Top

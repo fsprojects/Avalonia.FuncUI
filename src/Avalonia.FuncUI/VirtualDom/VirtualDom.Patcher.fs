@@ -26,16 +26,21 @@ module internal rec Patcher =
         
         let cts = new CancellationTokenSource()
         
-        let observable =
-            match attr.accessor with
-            | Accessor.Avalonia avaloniaProperty ->
-                view.GetObservable(avaloniaProperty)
-            | Accessor.Event routedEvent ->
-                view
-                    .GetObservable(routedEvent)
-                    .Select(fun s -> s :> obj)
-                   
-        observable.Subscribe(attr.handler.Value, cts.Token)
+        match attr.accessor with
+        | Accessor.Avalonia avaloniaProperty ->
+            let observable = view.GetObservable(avaloniaProperty)
+            
+            // wrapping is required but this is slow i guess
+            let objHandler = Action<obj>(fun object ->
+                attr.handler.Value.DynamicInvoke(object) |> ignore 
+            )
+ 
+            observable.Subscribe(objHandler, cts.Token)
+            ()
+        | Accessor.Event routedEvent ->
+            let observable = view.GetObservable(routedEvent)
+            observable.Subscribe(attr.handler.Value :?> Action<RoutedEventArgs>, cts.Token)
+            ()
                    
         let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
         
