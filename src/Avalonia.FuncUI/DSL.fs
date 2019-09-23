@@ -420,8 +420,8 @@ module Extensions =
             attr :> IAttr<'t>
             
         static member onTextChanged<'t when 't :> TextBox>(func: string -> unit) =
-            let accessor = Accessor.Avalonia TextBox.TextProperty
-            let subscription = Subscription.create(accessor, func)
+            let target = SubscriptionTarget.AvaloniaProperty TextBox.TextProperty
+            let subscription = Subscription.create(target, func)
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
             
@@ -481,68 +481,75 @@ module Extensions =
     
     type Button with
 
-       static member clickMode<'t when 't :> Button>(value: ClickMode) : IAttr<'t> =
+        static member clickMode<'t when 't :> Button>(value: ClickMode) : IAttr<'t> =
             let accessor = Accessor.Avalonia Button.ClickModeProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-       static member command<'t when 't :> Button>(value: ICommand) : IAttr<'t> =
+        static member command<'t when 't :> Button>(value: ICommand) : IAttr<'t> =
             let accessor = Accessor.Avalonia Button.CommandProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-       static member hotKey<'t when 't :> Button>(value: KeyGesture) : IAttr<'t> =
+        static member hotKey<'t when 't :> Button>(value: KeyGesture) : IAttr<'t> =
             let accessor = Accessor.Avalonia Button.HotKeyProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-       static member commandParameter<'t when 't :> Button>(value: #obj) : IAttr<'t> =
+        static member commandParameter<'t when 't :> Button>(value: #obj) : IAttr<'t> =
             let accessor = Accessor.Avalonia Button.CommandParameterProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-       static member isDefault<'t when 't :> Button>(value: bool) : IAttr<'t> =
+        static member isDefault<'t when 't :> Button>(value: bool) : IAttr<'t> =
             let accessor = Accessor.Avalonia Button.IsDefaultProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-       static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
-            let accessor = Accessor.Event Button.ClickEvent
+        static member onClickRouted<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
+            let target = SubscriptionTarget.RoutedEvent Button.ClickEvent
+            let subscription = Subscription.create(target, func)
+            let attr = Attr.createSubscription<'t>(subscription)
+            attr :> IAttr<'t>
+            
+        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
+            let accessor = SubscriptionTarget.Event {|
+                name = "Click"
+                build = new Func<IControl, Action<Delegate> * Action<Delegate>>(fun control ->
+                    let add = new Action<Delegate>(fun handler ->
+                        (control :?> Button).Click.AddHandler(handler :?> EventHandler<RoutedEventArgs>)
+                    )
+                    
+                    let remove = new Action<Delegate>(fun handler ->
+                        (control :?> Button).Click.RemoveHandler(handler :?> EventHandler<RoutedEventArgs>)
+                    )
+                    
+                    (add, remove)
+                )
+            |}
             let subscription = Subscription.create(accessor, func)
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
             
-       static member onClickModeChanged<'t when 't :> Button>(func: obj -> unit) =
-            let accessor = Accessor.Avalonia Button.ClickModeProperty
-            let subscription = Subscription.create(accessor, func)
-            let attr = Attr.createSubscription<'t>(subscription)
-            attr :> IAttr<'t>
       
     type ToggleButton with
-       static member isThreeState<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
+        static member isThreeState<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
             let accessor = Accessor.Avalonia ToggleButton.IsThreeStateProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-       static member isChecked<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
+        static member isChecked<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
             let accessor = Accessor.Avalonia ToggleButton.IsCheckedProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
-            
-       static member isCheckedChanged<'t when 't :> ToggleButton>(func: Nullable<bool> -> unit) =
-            let accessor = Accessor.Avalonia ToggleButton.IsCheckedProperty
-            let subscription = Subscription.create(accessor, func)
-            let attr = Attr.createSubscription<'t>(subscription)
-            attr :> IAttr<'t>
-         
-               
+                      
     module StackPanel =
         let create (attrs: IAttr<StackPanel> list): IView<StackPanel> =
             View.create<StackPanel>(attrs)

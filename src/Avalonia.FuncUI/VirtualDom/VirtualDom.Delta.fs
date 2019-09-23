@@ -32,22 +32,22 @@ module internal rec Delta =
                 
     type SubscriptionDelta =
         {
-            accessor: Accessor
+            target: SubscriptionTarget
             handler: Delegate option
             funcType: Type
         }
         with
             static member From (subscription: Subscription) : SubscriptionDelta =
                 {
-                    accessor = subscription.accessor;
+                    target = subscription.target;
                     handler = subscription.handler;
                     funcType = subscription.funcType;
                 }
             member this.UniqueName =
-                match this.accessor with
-                | Avalonia avalonia -> String.Concat(avalonia.Name, ".Subscription")
-                | Instance name -> name
-                | Event routedEvent -> routedEvent.Name
+                match this.target with
+                | SubscriptionTarget.AvaloniaProperty avalonia -> String.Concat(avalonia.Name, ".Subscription")
+                | SubscriptionTarget.RoutedEvent routedEvent -> routedEvent.Name
+                | SubscriptionTarget.Event event -> event.name
     
     type  ContentDelta =
         {

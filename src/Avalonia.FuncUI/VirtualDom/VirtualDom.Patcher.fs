@@ -1,4 +1,5 @@
 namespace Avalonia.FuncUI.VirtualDom
+open MBrace.FsPickler.Combinators
 open System.Collections.Concurrent
 open System.Reactive.Disposables
 open System.Threading
@@ -26,21 +27,32 @@ module internal rec Patcher =
         
         let cts = new CancellationTokenSource()
         
-        match attr.accessor with
-        | Accessor.Avalonia avaloniaProperty ->
+        match attr.target with
+        | SubscriptionTarget.AvaloniaProperty avaloniaProperty ->
             let observable = view.GetObservable(avaloniaProperty)
             
-            // wrapping is required but this is slow i guess
+            // wrapping is required but this is slow
             let objHandler = Action<obj>(fun object ->
                 attr.handler.Value.DynamicInvoke(object) |> ignore 
             )
  
             observable.Subscribe(objHandler, cts.Token)
-            ()
-        | Accessor.Event routedEvent ->
+             
+        | SubscriptionTarget.RoutedEvent routedEvent ->
             let observable = view.GetObservable(routedEvent)
             observable.Subscribe(attr.handler.Value :?> Action<RoutedEventArgs>, cts.Token)
-            ()
+        
+        | SubscriptionTarget.Event event ->
+            let add, remove = event.build.Invoke view
+            let observable = Observable.FromEvent(add, remove)
+            
+            // wrapping is required but this is slow
+            let conversion = Action<Reactive.EventPattern<EventArgs>>(fun object ->
+                attr.handler.Value.DynamicInvoke(object.EventArgs) |> ignore
+                
+            )
+            
+            observable.Subscribe(conversion, cts.Token)
                    
         let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
         
@@ -156,13 +168,13 @@ module internal rec Patcher =
             | _ -> raise (Exception("type does not implement IEnumerable or IList. This is required for view patching"))
         
         match accessor with
-        | Instance propertyName ->
+        | Accessor.Instance propertyName ->
             let propertyInfo = view.GetType().GetProperty(propertyName)
             let getter = fun () -> propertyInfo.GetValue(view)
             let setter = fun obj -> propertyInfo.SetValue(view, obj)
             patch (getter, setter)
             
-        | Avalonia property ->
+        | Accessor.Avalonia property ->
             let getter = fun () -> view.GetValue(property)
             let setter = fun obj -> view.SetValue(property, obj)
             patch (getter, setter)
@@ -199,8 +211,8 @@ module internal rec Patcher =
                 propertyInfo.SetValue(view, null)        
         
         match accessor with
-        | Instance propertyName -> patch_instance propertyName
-        | Avalonia property -> patch_avalonia property
+        | Accessor.Instance propertyName -> patch_instance propertyName
+        | Accessor.Avalonia property -> patch_avalonia property
 
     let private patchContent (view: IControl) (attr: ContentDelta) : unit =
         match attr.content with

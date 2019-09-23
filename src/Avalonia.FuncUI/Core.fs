@@ -1,28 +1,21 @@
 ﻿namespace Avalonia.FuncUI
 
+open Avalonia.Controls
 open System
 
 module Core =
    
     module rec Domain =
+        
+        [<RequireQualifiedAccess>]
         type Accessor =
             | Instance of string
-            | Avalonia of Avalonia.AvaloniaProperty
-            | Event of Avalonia.Interactivity.RoutedEvent
+            | Avalonia of Avalonia.AvaloniaProperty        
                 
-        type PropertyType = Direct | Attached
-        
         type Property =
             {
                 accessor: Accessor
                 value: obj
-            }
-            
-        type Subscription =
-            {
-                accessor: Accessor
-                handler: Delegate option
-                funcType: Type
             }
             
         type Content =
@@ -30,11 +23,25 @@ module Core =
                 accessor: Accessor
                 content: ViewContent
             }
-            
+             
         type ViewContent =
             | Single of IView option
             | Multiple of IView list
-                               
+             
+             
+        [<RequireQualifiedAccess>]
+        type SubscriptionTarget =
+            | AvaloniaProperty of Avalonia.AvaloniaProperty
+            | RoutedEvent of Avalonia.Interactivity.RoutedEvent
+            | Event of {| name: string; build: Func<IControl, Action<Delegate> * Action<Delegate>> |}
+                 
+        type Subscription =
+            {
+                target: SubscriptionTarget
+                handler: Delegate option
+                funcType: Type
+            }
+                                   
         type IAttr =
             abstract member UniqueName : string
             abstract member Property : Property option
@@ -55,17 +62,17 @@ module Core =
                     match this with
                     | Property property ->
                         match property.accessor with
-                        | Avalonia avalonia -> avalonia.Name
-                        | Instance name -> name
+                        | Accessor.Avalonia avalonia -> avalonia.Name
+                        | Accessor.Instance name -> name
                     | Content content ->
                         match content.accessor with
-                        | Avalonia avalonia -> avalonia.Name
-                        | Instance name -> name
+                        | Accessor.Avalonia avalonia -> avalonia.Name
+                        | Accessor.Instance name -> name
                     | Subscription content ->
-                        match content.accessor with
-                        | Avalonia avalonia -> String.Concat(avalonia.Name, ".Subscription")
-                        | Instance name -> name
-                        | Event routedEvent -> routedEvent.Name
+                        match content.target with
+                        | SubscriptionTarget.AvaloniaProperty avalonia -> String.Concat(avalonia.Name, ".Subscription")
+                        | SubscriptionTarget.RoutedEvent routedEvent -> routedEvent.Name
+                        | SubscriptionTarget.Event event -> event.name
                 
                 member this.Property =
                     match this with
@@ -124,9 +131,9 @@ module Core =
                     
             module Subscription =
                 /// create a subscription attr
-                let create (accessor: Accessor, func: 'arg -> unit) =
+                let create (target: SubscriptionTarget, func: 'arg -> unit) =
                     {
-                        Subscription.accessor = accessor;
+                        Subscription.target = target;
                         Subscription.handler = Some (Action<_>(func) :> Delegate)
                         Subscription.funcType = func.GetType()
                     }

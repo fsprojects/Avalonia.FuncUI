@@ -43,7 +43,7 @@ module internal rec Differ =
             
         | Subscription' subscription ->
             AttrDelta.Subscription {
-                accessor = subscription.accessor
+                target = subscription.target
                 funcType = subscription.funcType                
                 handler = None
             }
