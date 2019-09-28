@@ -20,6 +20,5 @@
     <Content Include="content\**\*" Exclude="content\**\bin\**;content\**\obj\;**\.template.config" />
     <Compile Remove="**\*" />
   </ItemGroup>
- 
-
+  
 </Project>

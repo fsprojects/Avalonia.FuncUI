@@ -37,7 +37,23 @@
     <Compile Include="VirtualDom\VirtualDom.Patcher.fs" />
     <Compile Include="VirtualDom\VirtualDom.fs" />
     <Compile Include="Hosts.fs" />
-    <Compile Include="DSL.fs" />
+    <Compile Include="DSL\Animatable.fs" />
+    <Compile Include="DSL\StyledElement.fs" />
+    <Compile Include="DSL\Visual.fs" />
+    <Compile Include="DSL\Layoutable.fs" />
+    <Compile Include="DSL\InputElement.fs" />
+    <Compile Include="DSL\Control.fs" />
+    <Compile Include="DSL\TemplatedControl.fs" />
+    <Compile Include="DSL\ContentControl.fs" />
+    <Compile Include="DSL\Panel.fs" />
+    <Compile Include="DSL\StackPanel.fs" />
+    <Compile Include="DSL\DockPanel.fs" />
+    <Compile Include="DSL\TextBlock.fs" />
+    <Compile Include="DSL\TextBox.fs" />
+    <Compile Include="DSL\Button.fs" />
+    <Compile Include="DSL\ToggleButton.fs" />
+    <Compile Include="DSL\CheckBox.fs" />
+    <Compile Include="DSL\DSL.fs" />
   </ItemGroup>
 
 </Project>
