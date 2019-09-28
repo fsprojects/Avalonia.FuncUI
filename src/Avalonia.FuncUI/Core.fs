@@ -1,7 +1,10 @@
 ﻿namespace Avalonia.FuncUI
 
+open Avalonia
 open Avalonia.Controls
+open Avalonia.Interactivity
 open System
+open System.Threading
 
 module Core =
    
@@ -28,19 +31,24 @@ module Core =
             | Single of IView option
             | Multiple of IView list
              
-             
-        [<RequireQualifiedAccess>]
-        type SubscriptionTarget =
-            | AvaloniaProperty of Avalonia.AvaloniaProperty
-            | RoutedEvent of Avalonia.Interactivity.RoutedEvent
-            | Event of {| name: string; build: Func<IControl, Action<Delegate> * Action<Delegate>> |}
-                 
+        [<CustomEquality; NoComparison>]
         type Subscription =
             {
-                target: SubscriptionTarget
-                handler: Delegate option
+                name: string
+                subscribe:  IControl * Delegate -> CancellationTokenSource
+                func: Delegate
                 funcType: Type
             }
+            with
+                override this.Equals (other: obj) : bool =
+                    match other with
+                    | :? Subscription as other -> 
+                        this.name = other.name &&
+                        this.funcType = other.funcType
+                    | _ -> false
+                    
+                override this.GetHashCode () =
+                    (this.name, this.funcType).GetHashCode()
                                    
         type IAttr =
             abstract member UniqueName : string
@@ -68,11 +76,7 @@ module Core =
                         match content.accessor with
                         | Accessor.Avalonia avalonia -> avalonia.Name
                         | Accessor.Instance name -> name
-                    | Subscription content ->
-                        match content.target with
-                        | SubscriptionTarget.AvaloniaProperty avalonia -> String.Concat(avalonia.Name, ".Subscription")
-                        | SubscriptionTarget.RoutedEvent routedEvent -> routedEvent.Name
-                        | SubscriptionTarget.Event event -> event.name
+                    | Subscription subscription -> subscription.name
                 
                 member this.Property =
                     match this with
@@ -130,12 +134,57 @@ module Core =
                     }
                     
             module Subscription =
-                /// create a subscription attr
-                let create (target: SubscriptionTarget, func: 'arg -> unit) =
+
+                // create a subscription attr
+                let createFromProperty (property: AvaloniaProperty<'arg>, func: 'arg -> unit) =
+                    
+                    // subscribe to avalonia property
+                    let subscribeFunc (control: IControl, handler: 'h) =
+                        let cts = new CancellationTokenSource()
+                        control
+                            .GetObservable(property)
+                            .Subscribe(func, cts.Token)
+                        cts
+                        
                     {
-                        Subscription.target = target;
-                        Subscription.handler = Some (Action<_>(func) :> Delegate)
+                        Subscription.name = property.Name + ".PropertySub"
+                        Subscription.subscribe = subscribeFunc
                         Subscription.funcType = func.GetType()
+                        Subscription.func = Action<_>(func)
+                    }
+                    
+                // create a subscription attr
+                let createFromRoutedEvent (property: RoutedEvent<'arg>, func: 'arg -> unit) =
+                    
+                    // subscribe to avalonia property
+                    let subscribeFunc (control: IControl, handler: 'h) =
+                        let cts = new CancellationTokenSource()
+                        control
+                            .GetObservable(property)
+                            .Subscribe(func, cts.Token)
+                        cts
+                        
+                    {
+                        Subscription.name = property.Name + ".RoutedEventSub"
+                        Subscription.subscribe = subscribeFunc
+                        Subscription.funcType = func.GetType()
+                        Subscription.func = Action<_>(func)
+                    }
+                    
+                // create a subscription attr
+                let createFromEvent (name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit) =
+                    
+                    // subscribe to event
+                    let subscribeFunc (control: IControl, handler: 'h) =
+                        let cts = new CancellationTokenSource()
+                        factory(control, func, cts.Token)
+                        cts
+                    
+                    {
+                        Subscription.name = name + ".EventSub"
+                        Subscription.subscribe = subscribeFunc
+                        Subscription.funcType = func.GetType()
+                        Subscription.func = Action<_>(func)
                     }
                     
             module Content =
@@ -182,7 +231,6 @@ module Core =
                         View.attrs = attrs
                     }
                     :> IView            
-            
                 
         let (|Property'|_|) (attr: IAttr)  =
             attr.Property

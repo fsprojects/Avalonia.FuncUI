@@ -43,9 +43,10 @@ module internal rec Differ =
             
         | Subscription' subscription ->
             AttrDelta.Subscription {
-                target = subscription.target
-                funcType = subscription.funcType                
-                handler = None
+                name = subscription.name
+                subscribe = subscription.subscribe
+                funcType = subscription.funcType
+                func = None
             }
         
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =

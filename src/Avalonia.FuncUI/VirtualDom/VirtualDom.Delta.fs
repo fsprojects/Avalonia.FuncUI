@@ -1,6 +1,8 @@
 namespace Avalonia.FuncUI.VirtualDom
 
 open System
+open System.Threading
+
 open Avalonia.FuncUI.Core
 open Avalonia.FuncUI.Core.Domain
 
@@ -30,24 +32,33 @@ module internal rec Delta =
                     value = Some property.value
                 }
                 
+    [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
         {
-            target: SubscriptionTarget
-            handler: Delegate option
+            name: string
+            subscribe:  Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
             funcType: Type
+            func: Delegate option
         }
         with
+            override this.Equals (other: obj) : bool =
+                match other with
+                | :? Subscription as other -> 
+                    this.name = other.name &&
+                    this.funcType = other.funcType
+                | _ -> false
+                    
+            override this.GetHashCode () =
+                (this.name, this.funcType).GetHashCode()
+                
             static member From (subscription: Subscription) : SubscriptionDelta =
                 {
-                    target = subscription.target;
-                    handler = subscription.handler;
+                    name = subscription.name;
+                    subscribe = subscription.subscribe;
                     funcType = subscription.funcType;
+                    func = Some subscription.func
                 }
-            member this.UniqueName =
-                match this.target with
-                | SubscriptionTarget.AvaloniaProperty avalonia -> String.Concat(avalonia.Name, ".Subscription")
-                | SubscriptionTarget.RoutedEvent routedEvent -> routedEvent.Name
-                | SubscriptionTarget.Event event -> event.name
+            member this.UniqueName = this.name
     
     type  ContentDelta =
         {

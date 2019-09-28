@@ -25,43 +25,26 @@ module internal rec Patcher =
                 dict
             | value -> value          
         
-        let cts = new CancellationTokenSource()
-        
-        match attr.target with
-        | SubscriptionTarget.AvaloniaProperty avaloniaProperty ->
-            let observable = view.GetObservable(avaloniaProperty)
+        match attr.func with
+        // add or update
+        | Some handler ->
+            let cts = attr.subscribe(view, attr.func.Value)
+
+            let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
             
-            // wrapping is required but this is slow
-            let objHandler = Action<obj>(fun object ->
-                attr.handler.Value.DynamicInvoke(object) |> ignore 
+            let updateFactory = Func<string, CancellationTokenSource, CancellationTokenSource>(fun key old_cts ->
+                old_cts.Cancel()
+                cts
             )
- 
-            observable.Subscribe(objHandler, cts.Token)
-             
-        | SubscriptionTarget.RoutedEvent routedEvent ->
-            let observable = view.GetObservable(routedEvent)
-            observable.Subscribe(attr.handler.Value :?> Action<RoutedEventArgs>, cts.Token)
+                    
+            subscriptions.AddOrUpdate(attr.UniqueName, addFactory, updateFactory) |> ignore
         
-        | SubscriptionTarget.Event event ->
-            let add, remove = event.build.Invoke view
-            let observable = Observable.FromEvent(add, remove)
-            
-            // wrapping is required but this is slow
-            let conversion = Action<Reactive.EventPattern<EventArgs>>(fun object ->
-                attr.handler.Value.DynamicInvoke(object.EventArgs) |> ignore
-                
-            )
-            
-            observable.Subscribe(conversion, cts.Token)
-                   
-        let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
-        
-        let updateFactory = Func<string, CancellationTokenSource, CancellationTokenSource>(fun key old_cts ->
-            old_cts.Cancel()
-            cts
-        )
-                
-        subscriptions.AddOrUpdate(attr.UniqueName, addFactory, updateFactory) |> ignore
+        // remove
+        | None ->
+            let hasValue, value = subscriptions.TryGetValue(attr.UniqueName)
+            if hasValue then
+                value.Cancel()
+                subscriptions.TryRemove(attr.UniqueName) |> ignore
             
     
     let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =

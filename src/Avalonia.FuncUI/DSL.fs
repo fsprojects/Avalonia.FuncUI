@@ -1,4 +1,8 @@
 namespace Avalonia.FuncUI.DSL
+open System.Threading
+
+type IView = Avalonia.FuncUI.Core.Domain.IView
+
 
 [<AutoOpen>]
 module Extensions =  
@@ -420,8 +424,7 @@ module Extensions =
             attr :> IAttr<'t>
             
         static member onTextChanged<'t when 't :> TextBox>(func: string -> unit) =
-            let target = SubscriptionTarget.AvaloniaProperty TextBox.TextProperty
-            let subscription = Subscription.create(target, func)
+            let subscription = Subscription.createFromProperty(TextBox.TextProperty, func)
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
             
@@ -512,27 +515,15 @@ module Extensions =
             attr :> IAttr<'t>
             
         static member onClickRouted<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
-            let target = SubscriptionTarget.RoutedEvent Button.ClickEvent
-            let subscription = Subscription.create(target, func)
+            let subscription = Subscription.createFromRoutedEvent (Button.ClickEvent, func)
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
             
         static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
-            let accessor = SubscriptionTarget.Event {|
-                name = "Click"
-                build = new Func<IControl, Action<Delegate> * Action<Delegate>>(fun control ->
-                    let add = new Action<Delegate>(fun handler ->
-                        (control :?> Button).Click.AddHandler(handler :?> EventHandler<RoutedEventArgs>)
-                    )
-                    
-                    let remove = new Action<Delegate>(fun handler ->
-                        (control :?> Button).Click.RemoveHandler(handler :?> EventHandler<RoutedEventArgs>)
-                    )
-                    
-                    (add, remove)
-                )
-            |}
-            let subscription = Subscription.create(accessor, func)
+            let factory (control: IControl, func: RoutedEventArgs -> unit, token: CancellationToken) =
+                (control :?> Button).Click.Subscribe(func, token)
+            
+            let subscription = Subscription.createFromEvent ("Click", factory, func)
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
             

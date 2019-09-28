@@ -2,7 +2,6 @@
 
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI
 open Avalonia.Layout
 
 type CustomControl() =
@@ -44,9 +43,7 @@ module Counter =
                 ]
                 Button.create [
                     Button.dock Dock.Bottom
-                    Button.onClick (fun args ->
-                        dispatch Increment
-                        )
+                    Button.onClickRouted (fun args -> dispatch Increment)
                     Button.content "+"
                 ]
                 TextBox.create [
