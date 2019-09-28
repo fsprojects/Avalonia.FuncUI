@@ -18,31 +18,31 @@ module Button =
     type Button with
 
         static member clickMode<'t when 't :> Button>(value: ClickMode) : IAttr<'t> =
-            let accessor = Accessor.Avalonia Button.ClickModeProperty
+            let accessor = Accessor.AvaloniaProperty Button.ClickModeProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
         static member command<'t when 't :> Button>(value: ICommand) : IAttr<'t> =
-            let accessor = Accessor.Avalonia Button.CommandProperty
+            let accessor = Accessor.AvaloniaProperty Button.CommandProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
         static member hotKey<'t when 't :> Button>(value: KeyGesture) : IAttr<'t> =
-            let accessor = Accessor.Avalonia Button.HotKeyProperty
+            let accessor = Accessor.AvaloniaProperty Button.HotKeyProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
         static member commandParameter<'t when 't :> Button>(value: #obj) : IAttr<'t> =
-            let accessor = Accessor.Avalonia Button.CommandParameterProperty
+            let accessor = Accessor.AvaloniaProperty Button.CommandParameterProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
         static member isDefault<'t when 't :> Button>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.Avalonia Button.IsDefaultProperty
+            let accessor = Accessor.AvaloniaProperty Button.IsDefaultProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>

@@ -38,6 +38,7 @@
     <Compile Include="VirtualDom\VirtualDom.fs" />
     <Compile Include="Hosts.fs" />
     <Compile Include="DSL\Animatable.fs" />
+    <Compile Include="DSL\AutoCompleteBox.fs" />
     <Compile Include="DSL\StyledElement.fs" />
     <Compile Include="DSL\Visual.fs" />
     <Compile Include="DSL\Layoutable.fs" />

@@ -18,13 +18,13 @@ module ToggleButton =
      
     type ToggleButton with
         static member isThreeState<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.Avalonia ToggleButton.IsThreeStateProperty
+            let accessor = Accessor.AvaloniaProperty ToggleButton.IsThreeStateProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
         static member isChecked<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.Avalonia ToggleButton.IsCheckedProperty
+            let accessor = Accessor.AvaloniaProperty ToggleButton.IsCheckedProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>

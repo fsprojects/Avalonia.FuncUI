@@ -176,11 +176,11 @@ module VirtualDomTests =
                     viewType = typeof<TextBlock>
                     attrs = [
                         Delta.AttrDelta.Property {
-                            accessor = Accessor.Avalonia TextBlock.TextProperty
+                            accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                             value = Some ("some other text" :> obj)
                         };
                         Delta.AttrDelta.Property {
-                            accessor = Accessor.Avalonia TextBlock.FontStyleProperty
+                            accessor = Accessor.AvaloniaProperty TextBlock.FontStyleProperty
                             value = None
                         };                       
                     ]
@@ -210,7 +210,7 @@ module VirtualDomTests =
                     viewType = typeof<TextBlock>
                     attrs = [
                         Delta.AttrDelta.Property {
-                            accessor = Accessor.Avalonia TextBlock.TextProperty
+                            accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                             value = Some ("some other text" :> obj)
                         };
                     ]
@@ -252,21 +252,21 @@ module VirtualDomTests =
                         viewType = typeof<Button>
                         attrs = [
                             Delta.AttrDelta.Property {
-                                accessor = Accessor.Avalonia Button.BackgroundProperty
+                                accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
                                 value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
                             };
                             Delta.AttrDelta.Content {
-                                accessor = Accessor.Avalonia Button.ContentProperty
+                                accessor = Accessor.AvaloniaProperty Button.ContentProperty
                                 content = Delta.ViewContentDelta.Single
                                     ( Some {
                                         viewType = typeof<TextBlock>
                                         attrs = [
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia TextBlock.TextProperty
+                                                accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                                                 value = Some ("some other text" :> obj)
                                             };
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia TextBlock.FontSizeProperty
+                                                accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
                                                 value = Some (15.0 :> obj)
                                             };
                                         ]
@@ -318,21 +318,21 @@ module VirtualDomTests =
                         viewType = typeof<StackPanel>
                         attrs = [
                             Delta.AttrDelta.Property {
-                                accessor =  Accessor.Avalonia StackPanel.OrientationProperty
+                                accessor =  Accessor.AvaloniaProperty StackPanel.OrientationProperty
                                 value = Some (Orientation.Vertical :> obj)
                             };
                             Delta.AttrDelta.Content {
-                                accessor = Accessor.Instance "Children"
+                                accessor = Accessor.InstanceProperty "Children"
                                 content = Delta.ViewContentDelta.Multiple [
                                     {
                                         viewType = typeof<TextBlock>
                                         attrs = [
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia TextBlock.TextProperty
+                                                accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                                                 value = Some ("some other text" :> obj)
                                             };
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia TextBlock.FontSizeProperty
+                                                accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
                                                 value = Some (15.0 :> obj)
                                             };
                                         ]
@@ -341,7 +341,7 @@ module VirtualDomTests =
                                         viewType = typeof<Button>
                                         attrs = [
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia Button.BackgroundProperty
+                                                accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
                                                 value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
                                             };
                                         ]
@@ -400,21 +400,21 @@ module VirtualDomTests =
                         viewType = typeof<StackPanel>
                         attrs = [
                             Delta.AttrDelta.Property {
-                                accessor = Accessor.Avalonia StackPanel.OrientationProperty
+                                accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
                                 value = Some (Orientation.Vertical :> obj)
                             };
                             Delta.AttrDelta.Content {
-                                accessor = Accessor.Instance "Children"
+                                accessor = Accessor.InstanceProperty "Children"
                                 content = Delta.ViewContentDelta.Multiple [
                                     {
                                         viewType = typeof<CheckBox>
                                         attrs = [
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia CheckBox.ContentProperty
+                                                accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
                                                 value = Some ("some text [new]" :> obj)
                                             };
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia CheckBox.IsCheckedProperty
+                                                accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
                                                 value = Some (false :> obj)
                                             };
                                         ]
@@ -423,11 +423,11 @@ module VirtualDomTests =
                                         viewType = typeof<CheckBox>
                                         attrs = [
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia CheckBox.ContentProperty
+                                                accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
                                                 value = Some ("some text 1" :> obj)
                                             };
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia CheckBox.IsCheckedProperty
+                                                accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
                                                 value = Some (true :> obj)
                                             };
                                         ]
@@ -436,11 +436,11 @@ module VirtualDomTests =
                                         viewType = typeof<CheckBox>
                                         attrs = [
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia CheckBox.ContentProperty
+                                                accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
                                                 value = Some ("some text 2" :> obj)
                                             };
                                             Delta.AttrDelta.Property {
-                                                accessor = Accessor.Avalonia CheckBox.IsCheckedProperty
+                                                accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
                                                 value = Some (false :> obj)
                                             };
                                         ]

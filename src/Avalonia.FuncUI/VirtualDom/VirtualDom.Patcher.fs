@@ -49,15 +49,15 @@ module internal rec Patcher =
     
     let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
         match attr.accessor with
-        | Accessor.Avalonia avaloniaProperty ->
+        | Accessor.AvaloniaProperty avaloniaProperty ->
             match attr.value with
             | Some value -> view.SetValue(avaloniaProperty, value);
             | None ->
                 // TODO: create PR - include 'ClearValue' in interface 'IAvaloniaObject'
                 (view :?> AvaloniaObject).ClearValue(avaloniaProperty);
                 
-        | Accessor.Instance propertyName ->
-            let propertyInfo = view.GetType().GetProperty(propertyName);
+        | Accessor.InstanceProperty instanceProperty ->
+            let propertyInfo = view.GetType().GetProperty(instanceProperty.name);
             
             match attr.value with
             | Some value ->
@@ -138,28 +138,40 @@ module internal rec Patcher =
             (newList :> IEnumerable)
         
         
-        let patch (getValue: unit -> obj, setValue: obj -> unit) =
-            let value = getValue()
+        let patch (getValue: (unit -> obj) option, setValue: (obj -> unit) option) =
+            let value =
+                match getValue with
+                | Some get -> get()
+                | _ -> failwith "accessor must have a getter"
             
             match value with
             | :? IList as collection ->
                 patch_IList collection
                 
             | :? IEnumerable as enumerable ->
-                setValue (patch_IEnumerable enumerable)
+                match setValue with
+                | Some set -> set (patch_IEnumerable enumerable)
+                | _ -> failwith "accessor must have a setter"
                 
             | _ -> raise (Exception("type does not implement IEnumerable or IList. This is required for view patching"))
         
         match accessor with
-        | Accessor.Instance propertyName ->
-            let propertyInfo = view.GetType().GetProperty(propertyName)
-            let getter = fun () -> propertyInfo.GetValue(view)
-            let setter = fun obj -> propertyInfo.SetValue(view, obj)
-            patch (getter, setter)
+        | Accessor.InstanceProperty instanceProperty ->
+            let getter =
+                match instanceProperty.getter with
+                | Some getter -> Some (fun () -> getter(view))
+                | None -> None
+                
+            let setter =
+                match instanceProperty.setter with
+                | Some setter -> Some (fun value -> setter(view, value))
+                | None -> None
+                
+            patch (getter ,setter)
             
-        | Accessor.Avalonia property ->
-            let getter = fun () -> view.GetValue(property)
-            let setter = fun obj -> view.SetValue(property, obj)
+        | Accessor.AvaloniaProperty property ->
+            let getter = Some (fun () -> view.GetValue(property))
+            let setter = Some (fun obj -> view.SetValue(property, obj))
             patch (getter, setter)
                 
     let private patchContentSingle (view: IControl) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
@@ -178,24 +190,31 @@ module internal rec Patcher =
             | None ->
                 (view :?> AvaloniaObject).ClearValue(property)
                 
-        let patch_instance (propertyName: string) =
-            let propertyInfo = view.GetType().GetProperty(propertyName);
+        let patch_instance (property: PropertyAccessor) =
             match viewElement with
             | Some viewElement ->
-                let value = propertyInfo.GetValue(view)
+                let value =
+                    match property.getter with
+                    | Some getter -> getter(view)
+                    | _ -> failwith "Property Accessor needs a getter"
                 
                 if value <> null && value.GetType() = viewElement.viewType then
                     Patcher.patch(value :?> IControl, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement.viewType)
                     Patcher.patch(createdControl, viewElement)
-                    propertyInfo.SetValue(view, createdControl)
+                    
+                    match property.setter with
+                    | Some setter -> setter(view, createdControl)
+                    | _ -> failwith "Property Accessor needs a setter"
             | None ->
-                propertyInfo.SetValue(view, null)        
+                match property.setter with
+                | Some setter -> setter(view, null)
+                | _ -> failwith "Property Accessor needs a setter"    
         
         match accessor with
-        | Accessor.Instance propertyName -> patch_instance propertyName
-        | Accessor.Avalonia property -> patch_avalonia property
+        | Accessor.InstanceProperty instanceProperty -> patch_instance instanceProperty
+        | Accessor.AvaloniaProperty property -> patch_avalonia property
 
     let private patchContent (view: IControl) (attr: ContentDelta) : unit =
         match attr.content with

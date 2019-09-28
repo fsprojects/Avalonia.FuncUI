@@ -10,10 +10,15 @@ module Core =
    
     module rec Domain =
         
-        [<RequireQualifiedAccess>]
+        type PropertyAccessor = {
+            name: string
+            getter: (IControl -> obj) option
+            setter: (IControl * obj -> unit) option
+        }
+        
         type Accessor =
-            | Instance of string
-            | Avalonia of Avalonia.AvaloniaProperty        
+            | InstanceProperty of PropertyAccessor
+            | AvaloniaProperty of Avalonia.AvaloniaProperty        
                 
         type Property =
             {
@@ -70,12 +75,12 @@ module Core =
                     match this with
                     | Property property ->
                         match property.accessor with
-                        | Accessor.Avalonia avalonia -> avalonia.Name
-                        | Accessor.Instance name -> name
+                        | Accessor.AvaloniaProperty p -> p.Name
+                        | Accessor.InstanceProperty p -> p.name
                     | Content content ->
                         match content.accessor with
-                        | Accessor.Avalonia avalonia -> avalonia.Name
-                        | Accessor.Instance name -> name
+                        | Accessor.AvaloniaProperty p -> p.Name
+                        | Accessor.InstanceProperty p -> p.name
                     | Subscription subscription -> subscription.name
                 
                 member this.Property =
@@ -117,6 +122,14 @@ module Core =
                             
         [<AutoOpen>]
         module DomainFunctions =
+            
+            module Accessor =
+                let create(name: string, getter, setter) =
+                    {
+                        name = name
+                        getter = getter
+                        setter = setter
+                    }
             
             module Property =
                 /// create a direct property attr
