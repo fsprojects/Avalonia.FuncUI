@@ -30,13 +30,13 @@
     </None>
     <Compile Include="Assembly.fs" />
     <Compile Include="Library.fs" />
-    <Compile Include="Core.fs" />
+    <Compile Include="Types.fs" />
     <Compile Include="VirtualDom\VirtualDom.Misc.fs" />
     <Compile Include="VirtualDom\VirtualDom.Delta.fs" />
     <Compile Include="VirtualDom\VirtualDom.Differ.fs" />
     <Compile Include="VirtualDom\VirtualDom.Patcher.fs" />
     <Compile Include="VirtualDom\VirtualDom.fs" />
-    <Compile Include="Hosts.fs" />
+    <Compile Include="Components\Hosts.fs" />
     <Compile Include="DSL\Base\Layoutable.fs" />
     <Compile Include="DSL\Base\TemplatedControl.fs" />
     <Compile Include="DSL\Base\Animatable.fs" />

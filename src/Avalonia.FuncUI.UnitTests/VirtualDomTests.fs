@@ -1,8 +1,7 @@
 ﻿namespace Avalonia.FuncUI.UnitTests
 
 open Avalonia.Controls
-open Avalonia.FuncUI.Core.Domain
-open Avalonia.FuncUI.Core.Domain.DomainFunctions
+open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.DSL
 open Xunit
 open System

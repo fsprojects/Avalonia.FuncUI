@@ -6,7 +6,7 @@ module TextBox =
     open Avalonia.Media.Immutable
     open Avalonia.Media
     
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<TextBox> list): IView<TextBox> =
         View.create<TextBox>(attrs)

@@ -2,20 +2,12 @@ namespace Avalonia.FuncUI.DSL
 
 [<AutoOpen>]
 module TemplatedControl =  
-    open Avalonia.Controls
     open Avalonia.Media.Immutable
-    open System    
-    open System.Windows.Input
     open Avalonia
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
     open Avalonia.Media
-    open Avalonia.Styling
     open Avalonia.Controls.Primitives
     open Avalonia.Controls.Templates
-    open Avalonia.Animation
-    open Avalonia.Layout
-    open Avalonia.Interactivity
-    open Avalonia.Input
       
     type TemplatedControl with
         static member background<'t when 't :> TemplatedControl>(value: IBrush) : IAttr<'t> =

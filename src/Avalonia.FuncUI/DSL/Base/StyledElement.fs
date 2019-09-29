@@ -3,7 +3,7 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module StyledElement =  
     open Avalonia
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
     open Avalonia.Styling
             
     type StyledElement with

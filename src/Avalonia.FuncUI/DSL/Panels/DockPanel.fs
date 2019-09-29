@@ -3,8 +3,7 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module DockPanel =  
     open Avalonia.Controls
-
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<DockPanel> list): IView<DockPanel> =
         View.create<DockPanel>(attrs)

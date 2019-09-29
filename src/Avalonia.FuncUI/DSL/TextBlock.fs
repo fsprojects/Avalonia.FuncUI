@@ -6,7 +6,7 @@ module TextBlock =
     open Avalonia.Media.Immutable
     open Avalonia.Media    
 
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
 
     let create (attrs: IAttr<TextBlock> list): IView<TextBlock> =
         View.create<TextBlock>(attrs)

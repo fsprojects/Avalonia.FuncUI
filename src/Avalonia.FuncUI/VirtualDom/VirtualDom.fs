@@ -2,7 +2,7 @@ namespace Avalonia.FuncUI.VirtualDom
 
 open Avalonia.Controls
 
-open Avalonia.FuncUI.Core.Domain
+open Avalonia.FuncUI.Types
 open Delta
 
 module rec VirtualDom =

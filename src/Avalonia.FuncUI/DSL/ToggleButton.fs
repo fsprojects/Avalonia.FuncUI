@@ -11,7 +11,7 @@ module ToggleButton =
     open Avalonia.Interactivity
     open Avalonia.Input
     
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<ToggleButton> list): IView<ToggleButton> =
         View.create<ToggleButton>(attrs)

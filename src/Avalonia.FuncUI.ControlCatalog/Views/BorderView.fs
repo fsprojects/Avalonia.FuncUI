@@ -4,7 +4,7 @@ open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.Layout
 
-module MainView =
+module BorderView =
     
     type CounterState = {
         count : int

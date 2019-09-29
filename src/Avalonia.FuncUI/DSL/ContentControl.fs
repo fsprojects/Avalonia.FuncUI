@@ -3,19 +3,9 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module ContentControl =  
     open Avalonia.Controls
-    open Avalonia.Media.Immutable
-    open System    
-    open System.Windows.Input
-    open Avalonia
-    open Avalonia.FuncUI.Core.Domain
-    open Avalonia.Media
-    open Avalonia.Styling
-    open Avalonia.Controls.Primitives
+    open Avalonia.FuncUI.Types
     open Avalonia.Controls.Templates
-    open Avalonia.Animation
     open Avalonia.Layout
-    open Avalonia.Interactivity
-    open Avalonia.Input
      
     type ContentControl with
         static member content<'t when 't :> ContentControl>(text: string) : IAttr<'t> =

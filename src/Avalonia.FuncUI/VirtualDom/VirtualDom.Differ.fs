@@ -1,9 +1,7 @@
 namespace Avalonia.FuncUI.VirtualDom
 
 open Avalonia.FuncUI.Library
-open Avalonia.FuncUI.Core.Domain
-open Delta
-open Delta
+open Avalonia.FuncUI.Types
 open Delta
 
 module internal rec Differ =

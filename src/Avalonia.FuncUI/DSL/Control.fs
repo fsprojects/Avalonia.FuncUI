@@ -4,10 +4,8 @@ open Avalonia.Visuals.Media.Imaging
 
 [<AutoOpen>]
 module Control =  
-    open Avalonia
     open Avalonia.Controls
-    open Avalonia.FuncUI.Core.Domain
-    open Avalonia.Styling
+    open Avalonia.FuncUI.Types
     
     type Control with
         static member focusAdorner<'t when 't :> Control>(value: #ITemplate<IControl>) : IAttr<'t> =

@@ -1,20 +1,10 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia
-open Avalonia.Controls.Templates
 
 [<AutoOpen>]
 module Border =
-    open System
-    open System.Threading
-    open System.Collections
-    
-    open FSharp.Data.UnitSystems.SI.UnitNames
-    
-    open Avalonia.Animation
+    open Avalonia
     open Avalonia.Controls
-    open Avalonia.FuncUI.Core.Domain
-    open Avalonia.Interactivity
-    open Avalonia.Styling
+    open Avalonia.FuncUI.Types
     open Avalonia.Media
     open Avalonia.Media.Immutable
     

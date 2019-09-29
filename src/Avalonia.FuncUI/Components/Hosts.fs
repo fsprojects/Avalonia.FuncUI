@@ -1,11 +1,8 @@
-namespace Avalonia.FuncUI.Hosts
+﻿namespace Avalonia.FuncUI.Hosts
 
 open Avalonia.Controls
 
-open Avalonia.FuncUI.Core.Domain
-open Avalonia.FuncUI.VirtualDom
-open Avalonia.FuncUI.VirtualDom
-open Avalonia.FuncUI.VirtualDom
+open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom
 
 type IViewHost =

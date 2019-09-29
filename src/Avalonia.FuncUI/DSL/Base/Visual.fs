@@ -3,11 +3,8 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module Visual =  
     open Avalonia
-    open Avalonia.Controls
-    open Avalonia.Controls.Primitives
     open Avalonia.Media
-    open Avalonia.FuncUI.Core.Domain
-    open Avalonia.Styling
+    open Avalonia.FuncUI.Types
             
     type Visual with
         static member clipToBounds<'t when 't :> Visual>(value: bool) : IAttr<'t> =

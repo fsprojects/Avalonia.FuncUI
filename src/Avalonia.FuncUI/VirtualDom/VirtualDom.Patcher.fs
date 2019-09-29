@@ -1,20 +1,15 @@
 namespace Avalonia.FuncUI.VirtualDom
-open MBrace.FsPickler.Combinators
-open System.Collections.Concurrent
-open System.Reactive.Disposables
-open System.Threading
-open Tagging
 
 module internal rec Patcher =
     open System
     open System.Collections
-    open Avalonia.Interactivity
+    open System.Collections.Concurrent
     open Avalonia.Controls
     open Avalonia
-    open System.Reactive.Linq
-    open Avalonia.FuncUI.Library
     open Avalonia.FuncUI.VirtualDom.Delta
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
+    open System.Threading
+    open Tagging
 
     let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
         let subscriptions =

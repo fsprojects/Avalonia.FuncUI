@@ -9,11 +9,8 @@ module AutoCompleteBox =
     
     open FSharp.Data.UnitSystems.SI.UnitNames
     
-    open Avalonia.Animation
     open Avalonia.Controls
-    open Avalonia.FuncUI.Core.Domain
-    open Avalonia.Interactivity
-    open Avalonia.Styling
+    open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<AutoCompleteBox> list): IView<AutoCompleteBox> =
         View.create<AutoCompleteBox>(attrs)

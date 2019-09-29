@@ -3,7 +3,7 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module Layoutable =  
     open Avalonia
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
     open Avalonia.Layout
               
     type Layoutable with

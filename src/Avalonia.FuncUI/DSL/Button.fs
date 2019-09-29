@@ -10,7 +10,7 @@ module Button =
     open Avalonia.Interactivity
     open Avalonia.Input
     
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<Button> list): IView<Button> =
         View.create<Button>(attrs)

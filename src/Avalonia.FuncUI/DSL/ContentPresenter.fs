@@ -7,17 +7,9 @@ open Avalonia.Layout
 
 [<AutoOpen>]
 module ContentPresenter =
-    open System
-    open System.Threading
-    open System.Collections
-    
-    open FSharp.Data.UnitSystems.SI.UnitNames
-    
     open Avalonia.Controls
     open Avalonia.Controls.Presenters
-    open Avalonia.FuncUI.Core.Domain
-    open Avalonia.Interactivity
-    open Avalonia.Styling
+    open Avalonia.FuncUI.Types
     open Avalonia.Media
     open Avalonia.Media.Immutable
     

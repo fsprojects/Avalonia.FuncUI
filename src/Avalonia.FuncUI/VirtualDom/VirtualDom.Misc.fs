@@ -1,11 +1,12 @@
 namespace Avalonia.FuncUI.VirtualDom
+
 open System.Collections.Concurrent
 open System.Threading
  
 module Caching =
     open System.Collections.Concurrent
     open Avalonia.FuncUI.Library
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
 
     type LazyViewCache() =
         
@@ -41,7 +42,7 @@ module CustomEquality =
     open System
     open System.Collections.Concurrent
     open Avalonia.FuncUI.Library
-    open Avalonia.FuncUI.Core.Domain
+    open Avalonia.FuncUI.Types
 
     type CustomEqualityImplementations() =
               

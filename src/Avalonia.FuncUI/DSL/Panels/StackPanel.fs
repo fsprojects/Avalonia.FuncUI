@@ -1,12 +1,11 @@
 namespace Avalonia.FuncUI.DSL
 
 [<AutoOpen>]
-module StackPanel =  
+module StackPanel =
     open Avalonia.Controls
     open Avalonia.Layout
+    open Avalonia.FuncUI.Types
     
-    open Avalonia.FuncUI.Core.Domain
-
         let create (attrs: IAttr<StackPanel> list): IView<StackPanel> =
             View.create<StackPanel>(attrs)
     
