@@ -10,11 +10,23 @@ module Core =
    
     module rec Domain =
         
-        type PropertyAccessor = {
-            name: string
-            getter: (IControl -> obj) option
-            setter: (IControl * obj -> unit) option
-        }
+        [<CustomEquality; NoComparison>]
+        type PropertyAccessor =
+            {
+                name: string
+                getter: (IControl -> obj) option
+                setter: (IControl * obj -> unit) option
+            }
+            with
+                override this.Equals (other: obj) : bool =
+                    match other with
+                    | :? PropertyAccessor as other ->
+                        // getter and setter does not matter
+                        this.name = other.name
+                    | _ -> false
+                    
+                override this.GetHashCode () =
+                    this.name.GetHashCode()
         
         type Accessor =
             | InstanceProperty of PropertyAccessor

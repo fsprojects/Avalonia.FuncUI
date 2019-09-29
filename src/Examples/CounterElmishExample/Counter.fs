@@ -2,6 +2,7 @@
 
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.DSL
 open Avalonia.Layout
 
 type CustomControl() =
@@ -27,11 +28,13 @@ module Counter =
     type Msg =
     | Increment
     | Decrement
+    | Specific of int
 
     let update (msg: Msg) (state: CounterState) : CounterState =
         match msg with
         | Increment -> { state with count = state.count + 1 }
         | Decrement -> { state with count = state.count - 1 }
+        | Specific number -> { state with count = number }
     
     let view (state: CounterState) (dispatch) =
         DockPanel.create [

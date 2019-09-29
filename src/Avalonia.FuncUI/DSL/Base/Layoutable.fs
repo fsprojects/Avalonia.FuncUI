@@ -48,6 +48,15 @@ module Layoutable =
             let property = Property.createDirect(accessor, margin)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
+            
+        static member margin<'t when 't :> Layoutable>(margin: float) : IAttr<'t> =
+            Thickness(margin) |> Layoutable.margin
+            
+        static member margin<'t when 't :> Layoutable>(horizontal: float, vertical: float) : IAttr<'t> =
+            Thickness(horizontal, vertical) |> Layoutable.margin
+            
+        static member margin<'t when 't :> Layoutable>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
+            Thickness(left, top, right, bottom) |> Layoutable.margin
     
         static member horizontalAlignment<'t when 't :> Layoutable>(value: HorizontalAlignment) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Layoutable.HorizontalAlignmentProperty

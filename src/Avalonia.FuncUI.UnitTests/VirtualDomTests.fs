@@ -2,7 +2,8 @@
 
 open Avalonia.Controls
 open Avalonia.FuncUI.Core.Domain
-open Avalonia.FuncUI.DSL.Extensions
+open Avalonia.FuncUI.Core.Domain.DomainFunctions
+open Avalonia.FuncUI.DSL
 open Xunit
 open System
 
@@ -322,7 +323,7 @@ module VirtualDomTests =
                                 value = Some (Orientation.Vertical :> obj)
                             };
                             Delta.AttrDelta.Content {
-                                accessor = Accessor.InstanceProperty "Children"
+                                accessor = Accessor.InstanceProperty { name = "Children"; setter = None; getter = None }
                                 content = Delta.ViewContentDelta.Multiple [
                                     {
                                         viewType = typeof<TextBlock>
@@ -404,7 +405,7 @@ module VirtualDomTests =
                                 value = Some (Orientation.Vertical :> obj)
                             };
                             Delta.AttrDelta.Content {
-                                accessor = Accessor.InstanceProperty "Children"
+                                accessor = Accessor.InstanceProperty { name = "Children"; setter = None; getter = None }
                                 content = Delta.ViewContentDelta.Multiple [
                                     {
                                         viewType = typeof<CheckBox>

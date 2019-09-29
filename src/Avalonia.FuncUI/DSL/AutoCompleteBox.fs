@@ -127,7 +127,7 @@ module AutoCompleteBox =
             attr :> IAttr<'t>
             
         static member items<'t when 't :> AutoCompleteBox>(items: #IEnumerable) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty AutoCompleteBox.TextFilterProperty
+            let accessor = Accessor.AvaloniaProperty AutoCompleteBox.ItemsProperty
             let property = Property.createDirect(accessor, items)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>

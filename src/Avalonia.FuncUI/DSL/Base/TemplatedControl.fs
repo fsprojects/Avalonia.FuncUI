@@ -18,23 +18,23 @@ module TemplatedControl =
     open Avalonia.Input
       
     type TemplatedControl with
-        static member background<'t when 't :> TemplatedControl>(value: #IBrush) : IAttr<'t> =
+        static member background<'t when 't :> TemplatedControl>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TemplatedControl.BackgroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
         static member background<'t when 't :> TemplatedControl>(color: string) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TemplatedControl.BackgroundProperty
-            let property = Property.createDirect(accessor, ImmutableSolidColorBrush(Color.Parse(color)))
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-            
-        static member borderBrush<'t when 't :> TemplatedControl>(value: #IBrush) : IAttr<'t> =
+            Color.Parse(color) |> ImmutableSolidColorBrush |> TemplatedControl.background
+
+        static member borderBrush<'t when 't :> TemplatedControl>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TemplatedControl.BorderBrushProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
+            
+        static member borderBrush<'t when 't :> TemplatedControl>(color: string) : IAttr<'t> =
+            Color.Parse(color) |> ImmutableSolidColorBrush |> TemplatedControl.borderBrush
 
         static member fontFamily<'t when 't :> TemplatedControl>(value: FontFamily) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TemplatedControl.FontFamilyProperty
@@ -65,6 +65,15 @@ module TemplatedControl =
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
+            
+        static member padding<'t when 't :> TemplatedControl>(value: float) : IAttr<'t> =
+            Thickness(value) |> TemplatedControl.padding
+            
+        static member padding<'t when 't :> TemplatedControl>(horizontal: float, vertical: float) : IAttr<'t> =
+            Thickness(horizontal, vertical) |> TemplatedControl.padding
+            
+        static member padding<'t when 't :> TemplatedControl>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
+            Thickness(left, top, right, bottom) |> TemplatedControl.padding 
 
         static member template<'t when 't :> TemplatedControl>(value: #IControlTemplate) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TemplatedControl.TemplateProperty
