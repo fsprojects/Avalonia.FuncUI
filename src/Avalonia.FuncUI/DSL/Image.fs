@@ -1,10 +1,10 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia
-open Avalonia.Controls.Templates
 
 [<AutoOpen>]
 module Image =
+    open Avalonia
     open Avalonia.Controls
+    open Avalonia.Controls.Templates
     open Avalonia.FuncUI.Types
     open Avalonia.Media
     open Avalonia.Media.Imaging

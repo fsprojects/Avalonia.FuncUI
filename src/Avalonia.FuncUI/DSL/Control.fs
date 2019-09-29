@@ -1,10 +1,10 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia.Media
-open Avalonia.Visuals.Media.Imaging
 
 [<AutoOpen>]
 module Control =  
     open Avalonia.Controls
+    open Avalonia.Media
+    open Avalonia.Visuals.Media.Imaging
     open Avalonia.FuncUI.Types
     
     type Control with

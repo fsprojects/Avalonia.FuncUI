@@ -1,7 +1,7 @@
 ﻿namespace Avalonia.FuncUI.Elmish
 
 open Elmish
-open Avalonia.FuncUI.Hosts
+open Avalonia.FuncUI.Components.Hosts
 open Avalonia.FuncUI.Types
 
 module Program =

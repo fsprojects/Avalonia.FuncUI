@@ -1,5 +1,4 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia.Controls.Templates
 
 [<AutoOpen>]
 module AutoCompleteBox =
@@ -9,6 +8,7 @@ module AutoCompleteBox =
     
     open FSharp.Data.UnitSystems.SI.UnitNames
     
+    open Avalonia.Controls.Templates    
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     

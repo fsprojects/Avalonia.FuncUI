@@ -1,6 +1,6 @@
 ﻿namespace CounterElmishSample
 
-open Avalonia.FuncUI.Hosts
+open Avalonia.FuncUI.Components.Hosts
 open Avalonia
 open Avalonia.FuncUI.Elmish
 open Elmish

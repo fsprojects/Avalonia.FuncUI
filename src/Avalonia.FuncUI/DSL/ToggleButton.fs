@@ -1,16 +1,8 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia.Controls.Primitives
 
 [<AutoOpen>]
 module ToggleButton =
-    open System
-    open System.Threading
-    open System.Windows.Input 
-    
-    open Avalonia.Controls
-    open Avalonia.Interactivity
-    open Avalonia.Input
-    
+    open Avalonia.Controls.Primitives
     open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<ToggleButton> list): IView<ToggleButton> =
