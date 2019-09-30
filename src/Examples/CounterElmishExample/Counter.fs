@@ -2,7 +2,9 @@
 
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.Components
+open Avalonia.FuncUI.Components
+open Avalonia.FuncUI.Types
 open Avalonia.Layout
 
 type CustomControl() =
@@ -55,13 +57,20 @@ module Counter =
                     TextBox.onTextChanged (fun text ->
                         printfn "new Text: %s" text
                      )
-                ]                
-                TextBlock.create [
-                    TextBlock.dock Dock.Top
-                    TextBlock.fontSize 48.0
-                    TextBlock.verticalAlignment VerticalAlignment.Center
-                    TextBlock.horizontalAlignment HorizontalAlignment.Center
-                    TextBlock.text (string state.count)
+                ]
+                LazyView.create [
+                    LazyView.args dispatch
+                    LazyView.state state.count
+                    LazyView.viewFunc (fun state dispatch ->
+                        TextBlock.create [
+                            TextBlock.dock Dock.Top
+                            TextBlock.fontSize 48.0
+                            TextBlock.verticalAlignment VerticalAlignment.Center
+                            TextBlock.horizontalAlignment HorizontalAlignment.Center
+                            TextBlock.text (string state)
+                        ]
+                        |> fun a -> a :> IView
+                    )
                 ]
             ]
         ]       

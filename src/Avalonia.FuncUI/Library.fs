@@ -15,21 +15,7 @@ module internal Extensions =
     open Avalonia.Interactivity
     open System
     open System.Reactive.Linq
-    
-(*            public static IObservable<TEventArgs> GetObservable<TEventArgs>(
-            this IInteractive o,
-            RoutedEvent<TEventArgs> routedEvent,
-            RoutingStrategies routes = RoutingStrategies.Direct | RoutingStrategies.Bubble,
-            bool handledEventsToo = false)
-                where TEventArgs : RoutedEventArgs
-        {
-            return Observable.Create<TEventArgs>(x => o.AddHandler(
-                routedEvent, 
-                (_, e) => x.OnNext(e), 
-                routes,
-                handledEventsToo));
-        }*)
-    
+
     type IInteractive with
         member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent) =
             
