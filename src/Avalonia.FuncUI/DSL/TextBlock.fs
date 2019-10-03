@@ -55,11 +55,14 @@ module TextBlock =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-        static member foreground<'t when 't :> TextBlock>(value: #IBrush) : IAttr<'t> =
+        static member foreground<'t when 't :> TextBlock>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TextBlock.ForegroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
+            
+        static member foreground<'t when 't :> TextBlock>(color: string) : IAttr<'t> =
+            Color.Parse(color) |> ImmutableSolidColorBrush |> TextBlock.foreground
             
         static member textAlignment<'t when 't :> TextBlock>(alignment: TextAlignment) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TextBlock.TextAlignmentProperty

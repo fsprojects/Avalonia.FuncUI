@@ -9,12 +9,12 @@ open Avalonia.FuncUI.VirtualDom
 open Avalonia.FuncUI.Components.Hosts
 
 
-type LazyView<'state, 'args>() as this =
+type LazyView<'state, 'args>() =
     inherit HostControl()
     
     let mutable subscription : IDisposable = null
     let mutable _state : 'state = Unchecked.defaultof<'state>
-    let mutable _args : 'attr = Unchecked.defaultof<'attr>
+    let mutable _args : 'args = Unchecked.defaultof<'args>
     let mutable _viewFunc : option<('state -> 'args -> IView)> = None
     
     static let stateProperty =
@@ -26,7 +26,7 @@ type LazyView<'state, 'args>() as this =
         
     static let argsProperty =
         AvaloniaProperty.RegisterDirect<LazyView<'state, 'args>, 'args>(
-            "args",
+            "Args",
             new Func<LazyView<'state, 'args>, 'args>(fun control -> control.Args),
             new Action<LazyView<'state, 'args>, 'args>(fun control value -> control.Args <- value)
         )
@@ -61,25 +61,23 @@ type LazyView<'state, 'args>() as this =
                 | None -> None
                 
             (this :> IViewHost).Update nextView
+            
+        let onError (error: exn) =
+            error
+            ()
         
         subscription <-
             this
                 .GetObservable(LazyView<'state, 'args>.StateProperty)
-                .Subscribe(onNext)
-        
-        
+                .Subscribe(onNext, onError)
+                
+    override this.OnDetachedFromLogicalTree args =
+        if subscription <> null then
+            subscription.Dispose()
+            subscription <- null
         
     static member StateProperty = stateProperty
     
     static member ArgsProperty = argsProperty
     
     static member ViewFuncProperty = viewFuncProperty
-
-    // TODO
-    // 1. implement (direct) avalonia properties for
-    // - state (currently displayed state)
-    // - view (the current view - needed to diff)
-    // [ - cache configuration options ]
-    
-    // 2. Subscribe to state property changes -> (Observable.next) no diffing needed
-    // 3. Update view using the virtual dom differ

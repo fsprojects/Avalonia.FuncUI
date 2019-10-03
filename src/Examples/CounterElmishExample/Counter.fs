@@ -58,18 +58,29 @@ module Counter =
                         printfn "new Text: %s" text
                      )
                 ]
+                TextBlock.create [
+                    TextBlock.dock Dock.Top
+                    TextBlock.fontSize 48.0
+                    TextBlock.foreground "blue"
+                    TextBlock.verticalAlignment VerticalAlignment.Center
+                    TextBlock.horizontalAlignment HorizontalAlignment.Center
+                    TextBlock.text (string state.count)
+                ]
                 LazyView.create [
                     LazyView.args dispatch
                     LazyView.state state.count
                     LazyView.viewFunc (fun state dispatch ->
-                        TextBlock.create [
-                            TextBlock.dock Dock.Top
-                            TextBlock.fontSize 48.0
-                            TextBlock.verticalAlignment VerticalAlignment.Center
-                            TextBlock.horizontalAlignment HorizontalAlignment.Center
-                            TextBlock.text (string state)
-                        ]
-                        |> fun a -> a :> IView
+                        let view = 
+                            TextBlock.create [
+                                TextBlock.dock Dock.Top
+                                TextBlock.fontSize 48.0
+                                TextBlock.foreground "green"
+                                TextBlock.verticalAlignment VerticalAlignment.Center
+                                TextBlock.horizontalAlignment HorizontalAlignment.Center
+                                TextBlock.text (string state)
+                            ]
+                            
+                        view |> fun a -> a :> IView
                     )
                 ]
             ]

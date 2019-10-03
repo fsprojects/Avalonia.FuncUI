@@ -4,6 +4,7 @@ open Avalonia.Controls
 open Avalonia.Controls.Presenters
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom
+open Avalonia.Styling
 
 type IViewHost =
     abstract member Update: IView option -> unit 
@@ -49,6 +50,9 @@ type HostControl() as this =
             lastViewElement <- nextViewElement
         | None ->
             this.Content <- null
+                
+    interface IStyleable with
+        member this.StyleKey = typeof<ContentPresenter>
                 
     interface IViewHost with
         member this.Update next =
