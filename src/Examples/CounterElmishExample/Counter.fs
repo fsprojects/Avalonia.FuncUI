@@ -1,6 +1,7 @@
 ﻿namespace CounterElmishSample
 
 open Avalonia.Controls
+open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Components
