@@ -1,12 +1,14 @@
 
+<p align="center"><img src="github/img/logo/FuncUI.png" width="400px" alt="Avalonia FuncUI"></p>
+<h1 align="center">Avalonia FuncUI</h1>
+<p align="center">Develop cross-plattform MVU GUI Applications using F# and Avalonia!</p>
+<p align="center">
+<a href="https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_build/latest?definitionId=10&branchName=master"><img src="https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_apis/build/status/JaggerJo.Avalonia.FuncUI?branchName=master"></a>
+<img src="https://img.shields.io/github/languages/top/JaggerJo/Avalonia.FuncUI" alt="GitHub top language">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/JaggerJo/Avalonia.FuncUI">
+<img src="https://img.shields.io/github/license/JaggerJo/Avalonia.FuncUI">
+</p><br>
 
-<img src="github/img/icon.png" width="100"/>
-
-# Avalonia.FuncUI
-
-[![Build Status](https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_apis/build/status/JaggerJo.Avalonia.FuncUI?branchName=master)](https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_build/latest?definitionId=10&branchName=master)
-
-Develop cross-plattform MVU GUI Applications using F# and Avalonia!
 
 > A new major version is currently in development. Most problems that are inherited from the current architecture will be addressed. There will be breaking changes. It is basically a rewrite to get things right from the ground up. This also means there will be new features such as 📣 subscribable properties, a better discoverable DSL, even more strongly typed views and more to come.
 
