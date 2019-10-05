@@ -57,6 +57,9 @@
     <Compile Include="DSL\TextBlock.fs" />
     <Compile Include="DSL\TextBox.fs" />
     <Compile Include="DSL\Button.fs" />
+    <Compile Include="DSL\SelectingItemsControl.fs" />
+    <Compile Include="DSL\ItemsControl.fs" />
+    <Compile Include="DSL\ListBox.fs" />
     <Compile Include="DSL\ToggleButton.fs" />
     <Compile Include="DSL\CheckBox.fs" />
     <Compile Include="DSL\DSL.fs" />

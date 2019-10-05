@@ -58,10 +58,18 @@ module Button =
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
             
-        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
+        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit, ?capturesState: bool) =
             let factory (control: IControl, func: RoutedEventArgs -> unit, token: CancellationToken) =
                 (control :?> Button).Click.Subscribe(func, token)
+                
+            let subscription = Subscription.createFromEvent ("Click", factory, func)
+            let attr = Attr.createSubscription<'t>(subscription)
+            attr :> IAttr<'t>
             
+        static member onClick'<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
+            let factory (control: IControl, func: RoutedEventArgs -> unit, token: CancellationToken) =
+                (control :?> Button).Click.Subscribe(func, token)
+                
             let subscription = Subscription.createFromEvent ("Click", factory, func)
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>

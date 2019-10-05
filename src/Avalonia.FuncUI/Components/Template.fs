@@ -12,10 +12,10 @@ open Avalonia.FuncUI.Components.Hosts
 // ITemplate<TParam, TControl>
 // IDataTemplate
 
-type TemplateView<'state, 'view when 'view :> IControl> =
+type TemplateView =
     {
-        viewFunc: 'state -> IView<'view>
-        matchFunc: 'state -> bool
+        viewFunc: obj -> IView
+        matchFunc: obj -> bool
         supportsRecycling: bool
     }
     
@@ -32,19 +32,23 @@ type TemplateView<'state, 'view when 'view :> IControl> =
         member this.Build (data: obj) : IControl =
             let host = HostControl()
 
-            let update (data: 'state) : unit =
-                let view = Some ((this.viewFunc data) :> IView)
-                (host :> IViewHost).Update view
+            let update (data: obj) : unit =
+                match data with
+                | null -> (host :> IViewHost).Update None
+                | data ->
+                    printfn "updating template %A" data
+                    let view = Some (this.viewFunc data)
+                    (host :> IViewHost).Update view
             
             host
-                .GetObservable(HostControl.DataContextProperty)
-                .Add(fun data -> update (data :?> 'state))
+                .GetObservable(Control.DataContextProperty)
+                .Subscribe(fun data -> update data)
                 
             host :> IControl
 
 module TemplateView =
     
-    let create<'state>(viewFunc: 'state -> IView<'view>) : TemplateView<'state, 'view> =
+    let create(viewFunc: obj -> IView) : TemplateView =
         {
             viewFunc = viewFunc;
             supportsRecycling = true;
