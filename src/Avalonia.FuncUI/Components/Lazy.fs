@@ -8,7 +8,7 @@ open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom
 open Avalonia.FuncUI.Components.Hosts
 
-
+[<Sealed>]
 type LazyView<'state, 'args>() =
     inherit HostControl()
     
@@ -61,15 +61,11 @@ type LazyView<'state, 'args>() =
                 | None -> None
                 
             (this :> IViewHost).Update nextView
-            
-        let onError (error: exn) =
-            error
-            ()
         
         subscription <-
             this
                 .GetObservable(LazyView<'state, 'args>.StateProperty)
-                .Subscribe(onNext, onError)
+                .Subscribe(onNext)
                 
     override this.OnDetachedFromLogicalTree args =
         if subscription <> null then
