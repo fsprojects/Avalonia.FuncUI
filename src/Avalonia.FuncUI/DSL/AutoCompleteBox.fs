@@ -49,7 +49,7 @@ module AutoCompleteBox =
             attr :> IAttr<'t>
             
         static member maxDropDownHeight<'t when 't :> AutoCompleteBox>(height: float) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty AutoCompleteBox.MinimumPopulateDelayProperty
+            let accessor = Accessor.AvaloniaProperty AutoCompleteBox.MaxDropDownHeightProperty
             let property = Property.createDirect(accessor, height)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>

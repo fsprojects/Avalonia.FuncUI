@@ -25,12 +25,7 @@ module Control =
             let property = Property.createDirect(accessor, menu)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
-            
-        static member dock<'t when 't :> Control>(dock: Dock) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty DockPanel.DockProperty
-            let property = Property.createAttached(accessor, dock)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+           
             
         static member bitmapInterpolationMode<'t when 't :> Control>(mode: BitmapInterpolationMode) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty RenderOptions.BitmapInterpolationModeProperty

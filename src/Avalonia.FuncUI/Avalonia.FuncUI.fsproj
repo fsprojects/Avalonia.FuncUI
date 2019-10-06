@@ -48,7 +48,12 @@
     <Compile Include="DSL\Base\Panel.fs" />
     <Compile Include="DSL\Panels\DockPanel.fs" />
     <Compile Include="DSL\Panels\StackPanel.fs" />
+    <Compile Include="DSL\Panels\Canvas.fs" />
     <Compile Include="DSL\AutoCompleteBox.fs" />
+    <Compile Include="DSL\ComboBox.fs" />
+    <Compile Include="DSL\ComboBoxItem.fs" />
+    <Compile Include="DSL\ListBox.fs" />
+    <Compile Include="DSL\ListBoxItem.fs" />
     <Compile Include="DSL\Border.fs" />
     <Compile Include="DSL\ContentPresenter.fs" />
     <Compile Include="DSL\Image.fs" />
@@ -59,7 +64,7 @@
     <Compile Include="DSL\Button.fs" />
     <Compile Include="DSL\SelectingItemsControl.fs" />
     <Compile Include="DSL\ItemsControl.fs" />
-    <Compile Include="DSL\ListBox.fs" />
+    <Compile Include="DSL\Carousel.fs" />
     <Compile Include="DSL\ToggleButton.fs" />
     <Compile Include="DSL\CheckBox.fs" />
     <Compile Include="DSL\DSL.fs" />
