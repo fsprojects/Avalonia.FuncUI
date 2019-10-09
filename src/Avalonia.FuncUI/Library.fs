@@ -15,7 +15,7 @@ module internal Extensions =
     open Avalonia.Interactivity
     open System
     open System.Reactive.Linq
-
+        
     type IInteractive with
         member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent) =
             
