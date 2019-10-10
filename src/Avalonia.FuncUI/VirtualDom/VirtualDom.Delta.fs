@@ -37,6 +37,7 @@ module internal rec Delta =
         {
             name: string
             subscribe:  Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
+            funcCapturesState: bool
             funcType: Type
             func: Delegate option
         }
@@ -56,6 +57,7 @@ module internal rec Delta =
                     name = subscription.name;
                     subscribe = subscription.subscribe;
                     funcType = subscription.funcType;
+                    funcCapturesState = subscription.funcCapturesState
                     func = Some subscription.func
                 }
             member this.UniqueName = this.name

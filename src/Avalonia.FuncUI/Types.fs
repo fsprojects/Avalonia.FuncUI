@@ -3,6 +3,7 @@
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Interactivity
+open Avalonia.FuncUI.Library
 open System
 open System.Threading
 
@@ -52,6 +53,7 @@ module Types =
             name: string
             subscribe:  IControl * Delegate -> CancellationTokenSource
             func: Delegate
+            funcCapturesState: bool
             funcType: Type
         }
         with
@@ -67,6 +69,7 @@ module Types =
                                
     type IAttr =
         abstract member UniqueName : string
+        abstract member ForcePatch : bool
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
@@ -92,6 +95,11 @@ module Types =
                     | Accessor.AvaloniaProperty p -> p.Name
                     | Accessor.InstanceProperty p -> p.name
                 | Subscription subscription -> subscription.name
+                
+            member this.ForcePatch =
+                match this with
+                | Subscription subscription -> subscription.funcCapturesState
+                | _ -> false
             
             member this.Property =
                 match this with
@@ -173,6 +181,7 @@ module Types =
                     Subscription.name = property.Name + ".PropertySub"
                     Subscription.subscribe = subscribeFunc
                     Subscription.funcType = func.GetType()
+                    Subscription.funcCapturesState = FunctionAnalysis.capturesState func
                     Subscription.func = Action<_>(func)
                 }
                 
@@ -191,6 +200,7 @@ module Types =
                     Subscription.name = property.Name + ".RoutedEventSub"
                     Subscription.subscribe = subscribeFunc
                     Subscription.funcType = func.GetType()
+                    Subscription.funcCapturesState = FunctionAnalysis.capturesState func
                     Subscription.func = Action<_>(func)
                 }
                 
@@ -207,6 +217,7 @@ module Types =
                     Subscription.name = name + ".EventSub"
                     Subscription.subscribe = subscribeFunc
                     Subscription.funcType = func.GetType()
+                    Subscription.funcCapturesState = FunctionAnalysis.capturesState func
                     Subscription.func = Action<_>(func)
                 }
                 

@@ -44,6 +44,7 @@ module internal rec Differ =
                 name = subscription.name
                 subscribe = subscription.subscribe
                 funcType = subscription.funcType
+                funcCapturesState = subscription.funcCapturesState
                 func = None
             }
         
@@ -95,7 +96,7 @@ module internal rec Differ =
             match nextAttr with
             // update if changed
             | Some nextAttr ->
-                if not (nextAttr.Equals lastAttr) then
+                if not (nextAttr.Equals lastAttr) || nextAttr.ForcePatch then
                     delta.Add(update lastAttr nextAttr)
                 else
                     ()

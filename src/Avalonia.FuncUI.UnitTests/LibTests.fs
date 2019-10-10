@@ -1,6 +1,6 @@
 ﻿namespace Avalonia.FuncUI.UnitTests
 
-open Avalonia.FuncUI.VirtualDom
+open Avalonia.FuncUI.Library
 open Xunit
 open System
 
