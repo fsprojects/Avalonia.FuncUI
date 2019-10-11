@@ -24,7 +24,7 @@ module TextBox =
             let attr = Attr.createSubscription<'t>(subscription)
             attr :> IAttr<'t>
             
-        static member background<'t when 't :> TextBox>(value: #IBrush) : IAttr<'t> =
+        static member background<'t when 't :> TextBox>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TextBox.BackgroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
@@ -60,7 +60,7 @@ module TextBox =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-        static member foreground<'t when 't :> TextBox>(value: #IBrush) : IAttr<'t> =
+        static member foreground<'t when 't :> TextBox>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TextBox.ForegroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

@@ -9,14 +9,13 @@ module internal rec Patcher =
     open Avalonia.FuncUI.VirtualDom.Delta
     open Avalonia.FuncUI.Types
     open System.Threading
-    open Tagging
 
     let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
         let subscriptions =
-            match ViewTag.GetViewSubscriptions(view) with
+            match ViewMetaData.GetViewSubscriptions(view) with
             | null ->
                 let dict = new ConcurrentDictionary<_, _>()
-                ViewTag.SetViewSubscriptions(view, dict)
+                ViewMetaData.SetViewSubscriptions(view, dict)
                 dict
             | value -> value          
         
@@ -227,5 +226,5 @@ module internal rec Patcher =
             
     let create (viewType: Type) : IControl =
         let control = Activator.CreateInstance(viewType) :?> IControl
-        control.SetValue(Tagging.ViewTag.ViewIdProperty, Guid.NewGuid())
+        control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid())
         control

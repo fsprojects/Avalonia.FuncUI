@@ -1,4 +1,5 @@
 namespace Avalonia.FuncUI.DSL
+
 open Avalonia.FuncUI.Types
 open System.Threading
 
@@ -6,8 +7,6 @@ open System.Threading
 module Helpers =
     let generalize (view: IView<'t>) : IView =
         view :> IView
-    
-
             
 module Playground =
      open System

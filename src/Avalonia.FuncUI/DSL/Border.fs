@@ -12,7 +12,7 @@ module Border =
         View.create<Border>(attrs)
     
     type Border with
-        static member background<'t when 't :> Border>(value: #IBrush) : IAttr<'t> =
+        static member background<'t when 't :> Border>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Border.BackgroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
@@ -24,7 +24,7 @@ module Border =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-        static member borderBrush<'t when 't :> Border>(value: #IBrush) : IAttr<'t> =
+        static member borderBrush<'t when 't :> Border>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Border.BorderBrushProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

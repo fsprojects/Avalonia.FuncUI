@@ -8,7 +8,7 @@ module Control =
     open Avalonia.FuncUI.Types
     
     type Control with
-        static member focusAdorner<'t when 't :> Control>(value: #ITemplate<IControl>) : IAttr<'t> =
+        static member focusAdorner<'t when 't :> Control>(value: ITemplate<IControl>) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Control.FocusAdornerProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

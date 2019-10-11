@@ -17,7 +17,7 @@ module Panel =
             let attr = Attr.createContent<'t> content
             attr :> IAttr<'t>
             
-        static member background<'t when 't :> Panel>(value: #IBrush) : IAttr<'t> =
+        static member background<'t when 't :> Panel>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Panel.BackgroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

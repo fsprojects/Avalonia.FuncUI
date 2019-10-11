@@ -13,7 +13,7 @@ module Image =
         View.create<Image>(attrs)
     
     type Image with
-        static member source<'t when 't :> Image>(value: #IBitmap) : IAttr<'t> =
+        static member source<'t when 't :> Image>(value: IBitmap) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Image.SourceProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

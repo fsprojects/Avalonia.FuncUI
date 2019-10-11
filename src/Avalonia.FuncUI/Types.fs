@@ -251,7 +251,7 @@ module Types =
                 
         module View =
             /// create a new strongly typed View
-            let create<'viewType>(attrs: #IAttr<'viewType> list) : IView<'viewType> =
+            let create<'viewType>(attrs: IAttr<'viewType> list) : IView<'viewType> =
                 {
                     View.viewType = typeof<'viewType>
                     View.attrs = attrs
@@ -259,7 +259,7 @@ module Types =
                 :> IView<'viewType>
                 
             /// create a new loosely typed View
-            let create'<'viewType>(attrs: #IAttr<'viewType> list) : IView =
+            let create'<'viewType>(attrs: IAttr<'viewType> list) : IView =
                 {
                     View.viewType = typeof<'viewType>
                     View.attrs = attrs

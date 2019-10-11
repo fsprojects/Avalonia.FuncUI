@@ -19,7 +19,7 @@ module StyledElement =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-        static member templatedParent<'t when 't :> StyledElement>(template: #ITemplatedControl) : IAttr<'t> =
+        static member templatedParent<'t when 't :> StyledElement>(template: ITemplatedControl) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty StyledElement.TemplatedParentProperty
             let property = Property.createDirect(accessor, template)
             let attr = Attr.createProperty<'t> property

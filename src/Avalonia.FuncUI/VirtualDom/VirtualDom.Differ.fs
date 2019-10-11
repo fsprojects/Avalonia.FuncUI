@@ -20,6 +20,7 @@ module internal rec Differ =
             }
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
+        | _ -> failwithf "no update operation is defined for '%A' next" next
     
     let private reset (last: IAttr) : AttrDelta =
         match last with
@@ -38,6 +39,7 @@ module internal rec Differ =
                 accessor = content.accessor;
                 content = empty
             }
+        | _ -> failwithf "can't reset attribute '%A'. There is no reset operation implemented." last
             
         | Subscription' subscription ->
             AttrDelta.Subscription {
@@ -86,6 +88,10 @@ module internal rec Differ =
                             ViewContentDelta.Multiple (diffContentMultiple lastMultipleContent nextMultipleContent)
                         | _ ->
                             ViewContentDelta.Multiple (diffContentMultiple [] nextMultipleContent)
+                            
+                | _ -> invalidOp "'last' must be of type content"
+                
+            | _ -> invalidOp "'next' must be of type content"
     
     let private diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
         let delta = new ResizeArray<AttrDelta>()

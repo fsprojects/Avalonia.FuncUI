@@ -32,7 +32,7 @@ module ContentControl =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-        static member contentTemplate<'t when 't :> ContentControl>(value: #IDataTemplate) : IAttr<'t> =
+        static member contentTemplate<'t when 't :> ContentControl>(value: IDataTemplate) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty ContentControl.ContentTemplateProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

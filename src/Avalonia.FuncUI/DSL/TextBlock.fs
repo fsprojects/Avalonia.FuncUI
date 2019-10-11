@@ -19,7 +19,7 @@ module TextBlock =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>    
             
-        static member background<'t when 't :> TextBlock>(value: #IBrush) : IAttr<'t> =
+        static member background<'t when 't :> TextBlock>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TextBlock.BackgroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

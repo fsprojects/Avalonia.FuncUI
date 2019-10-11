@@ -31,7 +31,7 @@ module Visual =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
       
-        static member opacityMask<'t when 't :> Visual>(value: #IBrush) : IAttr<'t> =
+        static member opacityMask<'t when 't :> Visual>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Visual.OpacityMaskProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

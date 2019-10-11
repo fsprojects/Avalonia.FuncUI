@@ -15,7 +15,7 @@ module ContentPresenter =
         View.create<ContentPresenter>(attrs)
     
     type ContentPresenter with
-        static member background<'t when 't :> ContentPresenter>(value: #IBrush) : IAttr<'t> =
+        static member background<'t when 't :> ContentPresenter>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty ContentPresenter.BackgroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
@@ -24,7 +24,7 @@ module ContentPresenter =
         static member background<'t when 't :> ContentPresenter>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> ContentPresenter.background
 
-        static member borderBrush<'t when 't :> ContentPresenter>(value: #IBrush) : IAttr<'t> =
+        static member borderBrush<'t when 't :> ContentPresenter>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty ContentPresenter.BorderBrushProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

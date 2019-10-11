@@ -35,7 +35,7 @@ module Button =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-        static member commandParameter<'t when 't :> Button>(value: #obj) : IAttr<'t> =
+        static member commandParameter<'t when 't :> Button>(value: obj) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty Button.CommandParameterProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property

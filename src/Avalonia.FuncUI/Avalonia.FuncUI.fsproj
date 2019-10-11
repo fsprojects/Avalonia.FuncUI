@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.8.999-cibuild0004025-beta" />
-    <PackageReference Include="FsPickler" Version="5.2.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,6 +48,7 @@
     <Compile Include="DSL\Panels\DockPanel.fs" />
     <Compile Include="DSL\Panels\StackPanel.fs" />
     <Compile Include="DSL\Panels\Canvas.fs" />
+    <Compile Include="DSL\Components\LazyView.fs" />
     <Compile Include="DSL\AutoCompleteBox.fs" />
     <Compile Include="DSL\ComboBox.fs" />
     <Compile Include="DSL\ComboBoxItem.fs" />
@@ -71,7 +71,7 @@
     <Compile Include="DSL\ToggleButton.fs" />
     <Compile Include="DSL\CheckBox.fs" />
     <Compile Include="DSL\DSL.fs" />
-    <Compile Include="DSL\Components\LazyView.fs" />
+    <Compile Include="Configuration.fs" />
   </ItemGroup>
 
 </Project>

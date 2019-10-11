@@ -46,7 +46,7 @@ module TemplatedControl =
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             
-        static member foreground<'t when 't :> TemplatedControl>(value: #IBrush) : IAttr<'t> =
+        static member foreground<'t when 't :> TemplatedControl>(value: IBrush) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TemplatedControl.ForegroundProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
@@ -67,7 +67,7 @@ module TemplatedControl =
         static member padding<'t when 't :> TemplatedControl>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
             Thickness(left, top, right, bottom) |> TemplatedControl.padding 
 
-        static member template<'t when 't :> TemplatedControl>(value: #IControlTemplate) : IAttr<'t> =
+        static member template<'t when 't :> TemplatedControl>(value: IControlTemplate) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty TemplatedControl.TemplateProperty
             let property = Property.createDirect(accessor, value)
             let attr = Attr.createProperty<'t> property
