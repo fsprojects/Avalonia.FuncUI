@@ -9,7 +9,7 @@ type TypedAttr<'t> =
     | AttachedProperty of AttachedPropertyAttr
     | Event of EventAttr
     | Content of ContentAttr
-    | Lifecycle of LifecylceAttr
+    | Lifecycle of LifecycleAttr
 
 [<AbstractClass; Sealed>]
 type Views () =

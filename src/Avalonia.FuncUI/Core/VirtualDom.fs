@@ -30,19 +30,18 @@ module rec VirtualDom =
                 Value : obj option
                 Handler : obj * (obj option) -> unit
             }
-            with 
-                override this.GetHashCode() = 
-                    (this.Name, this.Value).GetHashCode()
+            override this.GetHashCode() = 
+                (this.Name, this.Value).GetHashCode()
 
-                override this.Equals other =
-                    this.GetHashCode() = other.GetHashCode()
+            override this.Equals other =
+                this.GetHashCode() = other.GetHashCode()
 
-                static member From (property: AttachedPropertyAttr) : AttachedPropertyAttrDelta =
-                    {
-                        Name = property.Name
-                        Value = Some property.Value
-                        Handler = property.Handler
-                    }
+            static member From (property: AttachedPropertyAttr) : AttachedPropertyAttrDelta =
+                {
+                    Name = property.Name
+                    Value = Some property.Value
+                    Handler = property.Handler
+                }
 
         [<CustomEquality; NoComparison>]
         type EventAttrDelta =
@@ -51,23 +50,23 @@ module rec VirtualDom =
                 OldValue : Delegate
                 NewValue : Delegate
             }
-            with 
-                override this.GetHashCode() = 
-                    this.Name.GetHashCode()
+            override this.GetHashCode() = 
+                this.Name.GetHashCode()
 
-                override this.Equals other =
-                    this.GetHashCode() = other.GetHashCode()
+            override this.Equals other =
+                this.GetHashCode() = other.GetHashCode()
 
-                static member From (event: EventAttr) : EventAttrDelta =
-                    {
-                        Name = event.Name
-                        OldValue = null
-                        NewValue = event.Value
-                    }
+            static member From (event: EventAttr) : EventAttrDelta =
+                {
+                    Name = event.Name
+                    OldValue = null
+                    NewValue = event.Value
+                }
 
         type ViewContentDelta =
             | Single of ViewDelta option
             | Multiple of ViewDelta list
+
             static member From (viewContent: ViewContent) : ViewContentDelta =
                 match viewContent with
                 | ViewContent.Single single -> 
@@ -93,12 +92,15 @@ module rec VirtualDom =
             | AttachedPropertyDelta of AttachedPropertyAttrDelta
             | EventDelta of EventAttrDelta
             | ContentDelta of ContentAttrDelta
+            | LifecycleDelta 
+
             static member From (attr: Attr) : AttrDelta =
                 match attr with
                 | Property delta -> AttrDelta.PropertyDelta (PropertyAttrDelta.From delta)
                 | AttachedProperty delta -> AttrDelta.AttachedPropertyDelta (AttachedPropertyAttrDelta.From delta)
                 | Event delta -> AttrDelta.EventDelta (EventAttrDelta.From delta)
                 | Content delta -> AttrDelta.ContentDelta (ContentAttrDelta.From delta)
+                | Lifecycle delta -> AttrDelta.LifecycleDelta
                 
         type ViewDelta =
             {
@@ -364,6 +366,38 @@ module rec VirtualDom =
             else
                 ViewDelta.From next
 
+    module ViewDelta = 
+        open Delta
+        let monoid = { FSharp.Data.Traceable.mempty = { ViewDelta.ViewType = null; ViewDelta.Attrs = [] } 
+                       FSharp.Data.Traceable.misEmpty =  (fun x -> isNull x.ViewType) 
+                       FSharp.Data.Traceable.Monoid.mappend = (fun a b -> failwith "no append") }
+    module Reader =
+        open Delta
+        open Differ
+        open FSharp.Data.Adaptive
+        open FSharp.Data.Traceable
+
+        type ViewReader(view: AdaptiveView) =
+            inherit AbstractReader<ViewDelta>(ViewDelta.monoid)
+
+            let reader = view.Attrs.GetReader()
+            let mutable lastAttrs = []
+            override x.Compute(tok) = 
+                let nextType = view.ViewType.GetValue(tok)
+                //TODO: use reader for incremental diff
+                let nextAttrs = view.Attrs.Content.GetValue(tok).AsList 
+                let l = lastAttrs
+                lastAttrs <- nextAttrs
+                // TODO: use PropertyReader to incrementally get diff
+                let propertyAttrs = AttrDiffer.propertyDiffer(lastAttrs, nextAttrs)
+                //let attachedPropertyAttrs = AttrDiffer.attachedPropertyDiffer(last.Attrs, next.Attrs)
+                //let eventAttrs = AttrDiffer.eventDiffer(last.Attrs, next.Attrs)
+                //let contentAttrs = AttrDiffer.contentDiffer(last.Attrs, next.Attrs)
+                {
+                    ViewType = nextType
+                    Attrs = propertyAttrs //@ attachedPropertyAttrs @ eventAttrs @ contentAttrs
+                }
+
     module Patcher =
         open Delta
 
@@ -526,3 +560,11 @@ module rec VirtualDom =
 
     let createView (view: View) : Avalonia.Controls.IControl =
         Activator.CreateInstance(view.ViewType) :?> Avalonia.Controls.IControl
+
+
+    let adaptivePatch (view: Avalonia.Controls.IControl, viewElement: AdaptiveView) : (unit -> unit) =
+        let reader = Reader.ViewReader(viewElement)
+        fun () -> 
+           let delta = reader.GetChanges(FSharp.Data.Adaptive.AdaptiveToken.Top)
+           Patcher.patch(view, delta)
+
