@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Version>0.1.3</Version>
     <Authors>JaggerJo</Authors>
     <Product>JaggerJo.Avalonia.FuncUI</Product>
@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.999-cibuild0004025-beta" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview1" />
   </ItemGroup>
 
   <ItemGroup>

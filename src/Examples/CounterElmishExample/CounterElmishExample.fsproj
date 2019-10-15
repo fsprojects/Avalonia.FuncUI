@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Desktop" Version="0.8.999-cibuild0004025-beta" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview1" />
     <PackageReference Include="Elmish" Version="3.0.0" />
   </ItemGroup>
 
