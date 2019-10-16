@@ -18,10 +18,16 @@ module ItemsControl =
         View.create<ItemsControl>(attrs)
      
     type ItemsControl with
-
-        static member items<'t when 't :> ItemsControl>(value: IEnumerable) : IAttr<'t> =
+  
+        static member viewItems<'t when 't :> ItemsControl>(views: IView list) : IAttr<'t> =
             let accessor = Accessor.AvaloniaProperty ItemsControl.ItemsProperty
-            let property = Property.createDirect(accessor, value)
+            let content = Content.createMultiple(accessor, views)
+            let attr = Attr.createContent<'t> content
+            attr :> IAttr<'t>
+            
+        static member dataItems<'t when 't :> ItemsControl>(data: IEnumerable) : IAttr<'t> =
+            let accessor = Accessor.AvaloniaProperty ItemsControl.ItemsProperty
+            let property = Property.createDirect(accessor, data)
             let attr = Attr.createProperty<'t> property
             attr :> IAttr<'t>
             

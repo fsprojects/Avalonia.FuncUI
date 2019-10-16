@@ -9,13 +9,14 @@ open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom
 open Avalonia.FuncUI.Components.Hosts
 
-// ITemplate<TParam, TControl>
-// IDataTemplate
 
-type TemplateView =
+// TODO: Split into different implementations so this can be used for styles/control templates too. 
+// - ITemplate
+// - IDataTemplate
+
+type DataTemplateView<'T> =
     {
-        viewFunc: obj -> IView
-        matchFunc: obj -> bool
+        viewFunc: 'T -> IView
         supportsRecycling: bool
     }
     
@@ -25,32 +26,32 @@ type TemplateView =
             
         member this.Match (data: obj) : bool =
             match data with
-            | :? 'state as data ->
-                this.matchFunc data
+            | :? 'T as data -> true
             | _ -> false
             
         member this.Build (data: obj) : IControl =
             let host = HostControl()
 
-            let update (data: obj) : unit =
-                match data with
-                | null -> (host :> IViewHost).Update None
-                | data ->
-                    printfn "updating template %A" data
-                    let view = Some (this.viewFunc data)
-                    (host :> IViewHost).Update view
+            let update (data: 'T) : unit =
+                //printfn "updating template %A" data
+                let view = Some (this.viewFunc data)
+                (host :> IViewHost).Update view
             
-            host
-                .GetObservable(Control.DataContextProperty)
-                .Subscribe(fun data -> update data)
+            let disposable =
+                host
+                    .GetObservable(Control.DataContextProperty)
+                    .Subscribe(fun data ->
+                        match data with
+                            | :? 'T as t -> update t
+                            | _ -> ()
+                        )
                 
             host :> IControl
 
-module TemplateView =
+module DataTemplateView =
     
-    let create(viewFunc: obj -> IView) : TemplateView =
+    let create(viewFunc: 'T -> IView<'view>) : DataTemplateView<'T> =
         {
-            viewFunc = viewFunc;
+            viewFunc = (fun a -> (viewFunc a) :> IView);
             supportsRecycling = true;
-            matchFunc = (fun data -> true)
         }

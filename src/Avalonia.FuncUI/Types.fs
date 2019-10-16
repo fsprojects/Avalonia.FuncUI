@@ -229,7 +229,7 @@ module Types =
                     Content.content = ViewContent.Single content;
                 }
                 
-            /// create single content attr
+            /// create multiple content attr
             let createMultiple (accessor: Accessor, content: IView list) =
                 {
                     Content.accessor = accessor;

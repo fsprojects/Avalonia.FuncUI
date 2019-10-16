@@ -64,27 +64,11 @@ module Counter =
                 ListBox.create [
                     ListBox.items state.numbers
                     ListBox.itemTemplate (
-                        TemplateView.create(fun data ->
-                            let data = data :?> int 
-                            DockPanel.create [
-                                DockPanel.children [
-                                    Button.create [
-                                        Button.content "delete"
-                                        Button.dock Dock.Right
-                                        Button.width 50.0
-                                        Button.tag data
-                                        Button.onClick (fun args ->
-                                            let number = (args.Source :?> Button).Tag :?> int
-                                            dispatch (Msg.RemoveNumber number)
-                                        )
-                                    ]                                    
-                                    TextBlock.create [
-                                        TextBlock.text (sprintf "%A" data)
-                                        TextBlock.width 100.0
-                                    ]                                    
-                                ]
-                            ]
-                            |> generalize 
+                        DataTemplateView.create(fun data ->
+                            Button.create [
+                                Button.content (sprintf "%i" data)
+                                Button.onClick (fun args -> dispatch (Msg.RemoveNumber data))
+                            ]                                                                   
                         )                  
                     )
                 ]

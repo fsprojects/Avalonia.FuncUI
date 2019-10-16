@@ -1,15 +1,14 @@
 namespace Avalonia.FuncUI
 open System.Collections.Generic
+open System.Collections
 open System.Linq
 open Avalonia.Controls
+open Avalonia.FuncUI.VirtualDom
 
 module Configuration =
-    open Avalonia.FuncUI.VirtualDom
-    
-    let defaultConfiguration =
-        let provided = new ProvidedEquality()
+    do
        
-        provided.ProvideFor (typeof<RowDefinitions>, (fun (a, b) -> 
+        ProvidedEquality.provideFor (typeof<RowDefinitions>, (fun (a, b) -> 
             let a = a :?> RowDefinitions
             let b = b :?> RowDefinitions
                 
@@ -28,7 +27,7 @@ module Configuration =
             Enumerable.SequenceEqual(a, b, comparer);
         ))
         
-        provided.ProvideFor (typeof<ColumnDefinitions>, (fun (a, b) -> 
+        ProvidedEquality.provideFor (typeof<ColumnDefinitions>, (fun (a, b) -> 
             let a = a :?> ColumnDefinitions
             let b = b :?> ColumnDefinitions
                 
@@ -47,4 +46,10 @@ module Configuration =
             Enumerable.SequenceEqual(a, b, comparer);
         ))
         
-        { providedEquality = provided }
+        ProvidedEquality.provideFor (typeof<IEnumerable>, (fun (a, b) -> 
+            let a = a :?> IEnumerable
+            let b = b :?> IEnumerable
+            
+            // I guess this is super slow. There needs to be a better way of doing this.
+            Enumerable.SequenceEqual(a.Cast<obj>(), b.Cast<obj>(), EqualityComparer.Default);
+        ))

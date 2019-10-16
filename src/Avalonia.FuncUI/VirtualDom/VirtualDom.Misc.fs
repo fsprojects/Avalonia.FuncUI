@@ -6,18 +6,18 @@ open Avalonia
 open Avalonia.Controls
 open System.Collections.Concurrent
 
-type ProvidedEquality() =
-    let cache = ConcurrentDictionary<Type, Func<obj * obj, bool>>()
+module ProvidedEquality =
+    let private cache = ConcurrentDictionary<Type, Func<obj * obj, bool>>()
                
-    member __.ProvideFor (type': Type, func: obj * obj -> bool) : unit =
+    let provideFor (type': Type, func: obj * obj -> bool) : unit =
         cache.AddOrUpdate(type', func, fun _ _ -> Func<obj * obj, bool>(func)) |> ignore
         
-    member __.Remove (type': Type) : bool =
+    let remove (type': Type) : bool =
         match cache.TryRemove(type') with
         | (true, _) -> true
         | (false, _) -> false
         
-    member __.TryGet (type': Type) : Func<obj * obj, bool> option =
+    let tryGet (type': Type) : Func<obj * obj, bool> option =
         match cache.TryGetValue(type') with
         | (true, impl) -> Some impl
         | (false, _) -> None
@@ -44,11 +44,6 @@ type ViewMetaData() =
         
     static member SetViewSubscriptions(control: IControl, value) =
         control.SetValue(ViewMetaData.ViewSubscriptionsProperty, value)
-
-type VirtualDomConfig =
-    {
-        providedEquality: ProvidedEquality
-    }
     
     
     
