@@ -16,6 +16,9 @@ module ItemsControl =
     
     let create (attrs: IAttr<ItemsControl> list): IView<ItemsControl> =
         View.create<ItemsControl>(attrs)
+        
+    let internal listComparer (a: obj, b: obj) : bool =
+        true
      
     type ItemsControl with
   

@@ -102,7 +102,8 @@ module internal rec Differ =
             match nextAttr with
             // update if changed
             | Some nextAttr ->
-                if not (nextAttr.Equals lastAttr) || nextAttr.ForcePatch then
+                let eq = nextAttr.Equals lastAttr
+                if not eq || nextAttr.ForcePatch then
                     delta.Add(update lastAttr nextAttr)
                 else
                     ()

@@ -62,7 +62,7 @@ module DataTemplateDemo =
                     DockPanel.children [
                         match state.Selected with
                         | Some product ->
-                            Border.create [
+                            yield Border.create [
                                 Border.width 16.0
                                 Border.height 16.0
                                 Border.cornerRadius 8.0
@@ -82,7 +82,12 @@ module DataTemplateDemo =
                     //    | None -> null                                             
                     //)
                     ListBox.onSelectedItemChanged (fun obj ->
-                        printfn "%A" obj
+                        printfn "selection changed"
+                        match obj with
+                        | :? Product as p ->
+                            p |> Some |> Select |> dispatch
+                        | _ ->
+                            None |> Select |> dispatch
                     )
                     ListBox.dataItems state.Products
                     ListBox.itemTemplate (

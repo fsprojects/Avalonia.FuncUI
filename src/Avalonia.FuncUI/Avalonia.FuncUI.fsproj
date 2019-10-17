@@ -71,7 +71,6 @@
     <Compile Include="DSL\ToggleButton.fs" />
     <Compile Include="DSL\CheckBox.fs" />
     <Compile Include="DSL\DSL.fs" />
-    <Compile Include="Configuration.fs" />
   </ItemGroup>
 
 </Project>

@@ -31,11 +31,28 @@ module Types =
         | InstanceProperty of PropertyAccessor
         | AvaloniaProperty of Avalonia.AvaloniaProperty        
             
+    [<CustomEquality; NoComparison>]
     type Property =
         {
             accessor: Accessor
             value: obj
+            customComparer: (obj * obj -> bool) option
         }
+        with
+            override this.Equals (other: obj) : bool =
+                match other with
+                | :? Property as other ->
+                    let valueIsEqual =
+                       match this.customComparer with
+                       | Some comparer -> comparer(this.value, other.value)
+                       | None -> this.value = other.value
+                    
+                    //this.accessor = other.accessor &&
+                    valueIsEqual
+                | _ -> false
+                
+            override this.GetHashCode () =
+                (this.accessor, this.value).GetHashCode()
         
     type Content =
         {
@@ -150,11 +167,24 @@ module Types =
                 }
         
         module Property =
+            // TODO: maybe use extension methods instead ?
+            // overloading and optional arguments could be really
+            // helpful in the future. Or maybe just make a easier
+            // to use "all in one" version of this for the DSL to use
+            
             /// create a direct property attr
             let createDirect (accessor: Accessor, value: #obj) =
                 {
                     Property.accessor = accessor;
                     Property.value = value
+                    customComparer = None
+                }
+                
+            let createDirect' (accessor: Accessor, value: #obj, comparer) =
+                {
+                    Property.accessor = accessor;
+                    Property.value = value
+                    customComparer = Some comparer
                 }
                 
             /// create an attached property attr
@@ -162,6 +192,7 @@ module Types =
                 {
                     Property.accessor = accessor;
                     Property.value = value
+                    customComparer = None
                 }
                 
         module Subscription =

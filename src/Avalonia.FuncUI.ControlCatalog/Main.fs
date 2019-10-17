@@ -7,7 +7,7 @@ open Elmish
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI.ControlCatalog.Views
 
-type MainWindow() =
+type MainWindow() as this =
     inherit HostWindow()
 
     do
@@ -15,7 +15,7 @@ type MainWindow() =
         base.Height <- 600.0
         base.Width <- 800.0
       
-        //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
+        this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         ()
         
