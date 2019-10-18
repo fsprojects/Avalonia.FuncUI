@@ -5,9 +5,11 @@ open Avalonia
 open Avalonia.FuncUI.Elmish
 open Elmish
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.Controls
 
 type MainWindow() as this =
-    inherit HostWindow()
+    inherit Window()
+    //inherit HostWindow()
 
     do
         base.Title <- "Counter Elmish"
@@ -30,11 +32,7 @@ type App() =
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
             let mainWindow = MainWindow()
             desktopLifetime.MainWindow <- mainWindow
-            
-            Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
-            |> Program.withHost mainWindow
-            |> Program.withConsoleTrace
-            |> Program.run
+           
         | _ -> ()
 
 module Program =

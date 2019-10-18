@@ -62,7 +62,7 @@ module Counter =
                 ]
                 *)
                 ListBox.create [
-                    ListBox.items state.numbers
+                    ListBox.dataItems state.numbers
                     ListBox.itemTemplate (
                         DataTemplateView.create(fun data ->
                             Button.create [

@@ -2,11 +2,16 @@
 
 open System
 open Avalonia.Controls
+open Avalonia.Controls
+open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.DSL
 open Avalonia.Layout
+open Avalonia.Media
 
 module DataTemplateDemo =
 
@@ -16,6 +21,7 @@ module DataTemplateDemo =
             Name : string
             Price : string
             FavoriteColor : string
+            Description : string
         }
         
     module Person =
@@ -26,6 +32,7 @@ module DataTemplateDemo =
                 Product.Name = faker.Commerce.Product()
                 Product.Price = faker.Commerce.Price(0.99m, 1000.0m, 2, "€")
                 Product.FavoriteColor = faker.Random.Hexadecimal(6, "#")
+                Product.Description = faker.Lorem.Sentences(Nullable(3))
             }
 
     type State = {
@@ -54,72 +61,123 @@ module DataTemplateDemo =
         | Select product ->
             { state with Selected = product }
     
-    let view (state: State) (dispatch) =
+    let productDetailsView (state: Product option) (dispatch) =
         DockPanel.create [
+            DockPanel.dock Dock.Right
+            DockPanel.isVisible state.IsSome  
+            DockPanel.width 250.0
             DockPanel.children [
-                // Detail view
-                DockPanel.create [
-                    DockPanel.children [
-                        match state.Selected with
-                        | Some product ->
-                            yield Border.create [
+                match state with
+                | Some product ->
+                    // Product Color
+                    yield Border.create [
+                        Border.dock Dock.Top
+                        Border.horizontalAlignment HorizontalAlignment.Center
+                        Border.width 64.0
+                        Border.height 64.0
+                        Border.cornerRadius 34.0
+                        Border.margin 5.0
+                        Border.background product.FavoriteColor
+                    ]
+                    
+                    // Product Name and Price
+                    yield DockPanel.create [
+                        DockPanel.dock Dock.Top
+                        DockPanel.margin 10.0
+                        DockPanel.children [
+                            TextBlock.create [
+                                Border.dock Dock.Left
+                                TextBlock.text product.Name
+                                TextBlock.fontSize 24.0
+                                TextBlock.margin 5.0
+                            ]
+                            TextBlock.create [
+                                Border.dock Dock.Right
+                                TextBlock.text product.Price
+                                TextBlock.foreground "#3498db"
+                                TextBlock.fontSize 24.0
+                                TextBlock.margin 5.0
+                            ]                                    
+                        ]
+                    ]
+                    
+                    // Product Details
+                    yield StackPanel.create [
+                        StackPanel.dock Dock.Top
+                        StackPanel.orientation Orientation.Vertical
+                        StackPanel.margin 10.0
+                        StackPanel.children [
+                            TextBlock.create [
+                                Border.dock Dock.Top
+                                TextBlock.text "Description"
+                                TextBlock.fontWeight FontWeight.Bold
+                                TextBlock.margin 5.0
+                            ]                               
+                            TextBlock.create [
+                                Border.dock Dock.Top
+                                TextBlock.text product.Description
+                                TextBlock.margin 5.0
+                            ]
+                                 
+                        ]
+                    ]
+                | None -> ()
+            ]
+        ]    
+    
+    let productListView (state: State) (dispatch) =
+        ListBox.create [
+            ListBox.dock Dock.Left
+            ListBox.onSelectedItemChanged (fun obj ->
+                match obj with
+                | :? Product as p -> p |> Some |> Select |> dispatch
+                | _ -> None |> Select |> dispatch
+            )
+            ListBox.dataItems state.Products
+            ListBox.itemTemplate (
+                DataTemplateView.create (fun (data : Product) ->
+                    DockPanel.create [
+                        DockPanel.lastChildFill false
+                        DockPanel.children [
+                            Border.create [
                                 Border.width 16.0
                                 Border.height 16.0
                                 Border.cornerRadius 8.0
                                 Border.margin 5.0
-                                Border.background product.FavoriteColor
+                                Border.background data.FavoriteColor
                             ]
-                        | None -> ()
-                    ]
-                ]
+                            TextBlock.create [
+                                TextBlock.width 100.0
+                                TextBlock.text data.Name
+                                TextBlock.margin 5.0
+                            ]
+                            TextBlock.create [
+                                TextBlock.width 100.0
+                                TextBlock.text data.Price
+                                TextBlock.margin 5.0
+                            ]
+                            Button.create [
+                                Button.dock Dock.Right
+                                Button.content "remove"
+                                Button.onClick (fun args -> data.Id |> Msg.Remove |> dispatch)
+                            ]                                         
+                        ]
+                    ]                                  
+                )                  
+            )
+        ]
+        
+    let view (state: State) (dispatch) =
+        DockPanel.create [
+            DockPanel.children [
+                TextBlock.create [
+                    TextBlock.dock Dock.Top
+                    TextBlock.margin 5.0
+                    TextBlock.text (sprintf "Total Products: %i" state.Products.Length)
+                ]    
                 
-                // List of Products
-                ListBox.create [
-                    ListBox.dock Dock.Left
-                    //ListBox.selectedItem (
-                    //    match state.Selected with
-                    //    | Some s -> (s :> obj)
-                    //    | None -> null                                             
-                    //)
-                    ListBox.onSelectedItemChanged (fun obj ->
-                        printfn "selection changed"
-                        match obj with
-                        | :? Product as p ->
-                            p |> Some |> Select |> dispatch
-                        | _ ->
-                            None |> Select |> dispatch
-                    )
-                    ListBox.dataItems state.Products
-                    ListBox.itemTemplate (
-                        DataTemplateView.create (fun (data : Product) ->
-                            DockPanel.create [
-                                DockPanel.lastChildFill false
-                                DockPanel.children [
-                                    Border.create [
-                                        Border.width 16.0
-                                        Border.height 16.0
-                                        Border.cornerRadius 8.0
-                                        Border.margin 5.0
-                                        Border.background data.FavoriteColor
-                                    ]
-                                    TextBlock.create [
-                                        TextBlock.text data.Name
-                                        TextBlock.margin 5.0
-                                    ]
-                                    TextBlock.create [
-                                        TextBlock.text data.Price
-                                        TextBlock.margin 5.0
-                                    ]
-                                    Button.create [
-                                        Button.dock Dock.Right
-                                        Button.content "remove"
-                                        Button.onClick (fun args -> data.Id |> Msg.Remove |> dispatch)
-                                    ]                                         
-                                ]
-                            ]                                  
-                        )                  
-                    )
-                ]
+                productDetailsView state.Selected dispatch
+                productListView state dispatch
             ]
         ]
         
