@@ -10,13 +10,11 @@ open Avalonia.Media
 module DataTemplateDemo =
 
     type Product =
-        {
-            Id : Guid
-            Name : string
-            Price : string
-            FavoriteColor : string
-            Description : string
-        }
+        { Id : Guid
+          Name : string
+          Price : string
+          FavoriteColor : string
+          Description : string }
         
     module Person =
         let random () =
