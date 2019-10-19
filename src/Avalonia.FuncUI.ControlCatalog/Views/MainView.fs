@@ -2,6 +2,7 @@
 
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.Types
 open Avalonia.Layout
 
 module MainView =
@@ -15,7 +16,7 @@ module MainView =
     }
 
     type Msg =
-    | DataTemplateDemoMsg of DataTemplateDemo.Msg
+    | DataTemplateDemoMsg of DataTemplateDemo.Msg 
 
     let update (msg: Msg) (state: CounterState) : CounterState =
         match msg with
@@ -29,6 +30,10 @@ module MainView =
                        TabItem.create [
                            TabItem.header "Data Template Demo"
                            TabItem.content (DataTemplateDemo.view state.dataTemplateState (DataTemplateDemoMsg >> dispatch))
+                       ]
+                       TabItem.create [
+                           TabItem.header "Grid Demo"
+                           TabItem.content (View.create<GridDemo.Host>([]))
                        ]
                    ]
                ]

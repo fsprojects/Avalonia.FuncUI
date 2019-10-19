@@ -10,24 +10,19 @@ open Avalonia.Media
 module DataTemplateDemo =
 
     type Product =
-        {
-            Id : Guid
-            Name : string
-            Price : string
-            FavoriteColor : string
-            Description : string
-        }
-        
-    module Person =
-        let random () =
-            let faker = new Bogus.Faker("de")
-            {
-                Product.Id = Guid.NewGuid();
-                Product.Name = faker.Commerce.Product()
-                Product.Price = faker.Commerce.Price(0.99m, 1000.0m, 2, "€")
-                Product.FavoriteColor = faker.Random.Hexadecimal(6, "#")
-                Product.Description = faker.Lorem.Sentences(Nullable(3))
-            }
+        { Id : Guid
+          Name : string
+          Price : string
+          FavoriteColor : string
+          Description : string }
+        with
+            static member Random () : Product =
+                let faker = new Bogus.Faker(locale = "de")
+                { Id = Guid.NewGuid();
+                  Name = faker.Commerce.Product()
+                  Price = faker.Commerce.Price(0.99m, 1000.0m, 2)
+                  FavoriteColor = faker.Random.Hexadecimal(6, "#")
+                  Description = faker.Lorem.Sentences(Nullable(3)) }
 
     type State = {
         Products : Product list
@@ -35,7 +30,7 @@ module DataTemplateDemo =
     }
 
     let init = {
-        Products = [ 0 .. 500 ] |> List.map (fun _ -> Person.random())
+        Products = [ 0 .. 500 ] |> List.map (fun _ -> Product.Random())
         Selected = None
     }
 
