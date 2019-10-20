@@ -38,41 +38,7 @@
     <Compile Include="Components\Hosts.fs" />
     <Compile Include="Components\Lazy.fs" />
     <Compile Include="Components\DataTemplateView.fs" />
-    <Compile Include="DSL\Builder.fs" />
-    <Compile Include="DSL\Base\Layoutable.fs" />
-    <Compile Include="DSL\Base\TemplatedControl.fs" />
-    <Compile Include="DSL\Base\Animatable.fs" />
-    <Compile Include="DSL\Base\StyledElement.fs" />
-    <Compile Include="DSL\Base\Visual.fs" />
-    <Compile Include="DSL\Base\InputElement.fs" />
-    <Compile Include="DSL\Base\Panel.fs" />
-    <Compile Include="DSL\Panels\Canvas.fs" />
-    <Compile Include="DSL\Panels\StackPanel.fs" />
-    <Compile Include="DSL\Panels\DockPanel.fs" />
-    <Compile Include="DSL\Panels\Grid.fs" />
-    <Compile Include="DSL\Components\LazyView.fs" />
-    <Compile Include="DSL\AutoCompleteBox.fs" />
-    <Compile Include="DSL\ComboBox.fs" />
-    <Compile Include="DSL\ComboBoxItem.fs" />
-    <Compile Include="DSL\ListBox.fs" />
-    <Compile Include="DSL\ListBoxItem.fs" />
-    <Compile Include="DSL\Border.fs" />
-    <Compile Include="DSL\ContentPresenter.fs" />
-    <Compile Include="DSL\Image.fs" />
-    <Compile Include="DSL\Control.fs" />
-    <Compile Include="DSL\ContentControl.fs" />
-    <Compile Include="DSL\HeaderedContentControl.fs" />
-    <Compile Include="DSL\TextBlock.fs" />
-    <Compile Include="DSL\TextBox.fs" />
-    <Compile Include="DSL\Button.fs" />
-    <Compile Include="DSL\SelectingItemsControl.fs" />
-    <Compile Include="DSL\ItemsControl.fs" />
-    <Compile Include="DSL\Carousel.fs" />
-    <Compile Include="DSL\TabControl.fs" />
-    <Compile Include="DSL\TabItem.fs" />
-    <Compile Include="DSL\ToggleButton.fs" />
-    <Compile Include="DSL\CheckBox.fs" />
-    <Compile Include="DSL\DSL.fs" />
+    <Compile Include="Builder.fs" />
   </ItemGroup>
 
 </Project>

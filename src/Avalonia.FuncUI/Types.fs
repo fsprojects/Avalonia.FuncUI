@@ -156,6 +156,7 @@ module Types =
             member this.Attrs = this.attrs
                         
     [<AutoOpen>]
+    [<System.Obsolete("Do not use. Use AttrBuilder instead.")>]
     module DomainFunctions =
         
         module Accessor =
@@ -167,10 +168,6 @@ module Types =
                 }
         
         module Property =
-            // TODO: maybe use extension methods instead ?
-            // overloading and optional arguments could be really
-            // helpful in the future. Or maybe just make a easier
-            // to use "all in one" version of this for the DSL to use
             
             /// create a direct property attr
             let createDirect (accessor: Accessor, value: #obj) =
