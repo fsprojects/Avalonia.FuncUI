@@ -322,7 +322,7 @@ module VirtualDomTests =
                                 value = Some (Orientation.Vertical :> obj)
                             };
                             Delta.AttrDelta.Content {
-                                accessor = Accessor.InstanceProperty { name = "Children"; setter = None; getter = None }
+                                accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
                                 content = Delta.ViewContentDelta.Multiple [
                                     {
                                         viewType = typeof<TextBlock>
@@ -404,7 +404,7 @@ module VirtualDomTests =
                                 value = Some (Orientation.Vertical :> obj)
                             };
                             Delta.AttrDelta.Content {
-                                accessor = Accessor.InstanceProperty { name = "Children"; setter = None; getter = None }
+                                accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
                                 content = Delta.ViewContentDelta.Multiple [
                                     {
                                         viewType = typeof<CheckBox>
