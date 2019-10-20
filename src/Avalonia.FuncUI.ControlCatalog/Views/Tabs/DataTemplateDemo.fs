@@ -124,7 +124,7 @@ module DataTemplateDemo =
             )
             ListBox.dataItems state.Products
             ListBox.itemTemplate (
-                DataTemplateView.create (fun (data : Product) ->
+                DataTemplateView<Product>.create (fun data ->
                     DockPanel.create [
                         DockPanel.lastChildFill false
                         DockPanel.children [
