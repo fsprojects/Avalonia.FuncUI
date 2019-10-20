@@ -153,13 +153,13 @@ module internal rec Patcher =
         | Accessor.InstanceProperty instanceProperty ->
             let getter =
                 match instanceProperty.getter with
-                | Some getter -> Some (fun () -> getter(view))
-                | None -> None
+                | ValueSome getter -> Some (fun () -> getter(view))
+                | ValueNone -> None
                 
             let setter =
                 match instanceProperty.setter with
-                | Some setter -> Some (fun value -> setter(view, value))
-                | None -> None
+                | ValueSome setter -> Some (fun value -> setter(view, value))
+                | ValueNone -> None
                 
             patch (getter ,setter)
             
@@ -189,7 +189,7 @@ module internal rec Patcher =
             | Some viewElement ->
                 let value =
                     match property.getter with
-                    | Some getter -> getter(view)
+                    | ValueSome getter -> getter(view)
                     | _ -> failwith "Property Accessor needs a getter"
                 
                 if value <> null && value.GetType() = viewElement.viewType then
@@ -199,11 +199,11 @@ module internal rec Patcher =
                     Patcher.patch(createdControl, viewElement)
                     
                     match property.setter with
-                    | Some setter -> setter(view, createdControl)
+                    | ValueSome setter -> setter(view, createdControl)
                     | _ -> failwith "Property Accessor needs a setter"
             | None ->
                 match property.setter with
-                | Some setter -> setter(view, null)
+                | ValueSome setter -> setter(view, null)
                 | _ -> failwith "Property Accessor needs a setter"    
         
         match accessor with

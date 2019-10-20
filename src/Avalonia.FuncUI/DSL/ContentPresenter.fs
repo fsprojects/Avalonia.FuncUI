@@ -64,8 +64,8 @@ module ContentPresenter =
             CornerRadius(left, right, top, bottom) |> ContentPresenter.cornerRadius
             
         static member child<'t when 't :> ContentPresenter>(value: IView option) : IAttr<'t> =
-            let getter : (IControl -> obj) option = Some (fun control -> (control :?> ContentPresenter).Child :> obj)
-            let setter : (IControl * obj -> unit) option = None
+            let getter : (IControl -> obj) voption = ValueSome (fun control -> (control :?> ContentPresenter).Child :> obj)
+            let setter : (IControl * obj -> unit) voption = ValueNone
             
             let accessor = Accessor.create("Child", getter, setter)
             let content = Content.createSingle(Accessor.InstanceProperty accessor, value)

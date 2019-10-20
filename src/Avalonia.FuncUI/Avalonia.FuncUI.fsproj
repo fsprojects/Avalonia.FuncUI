@@ -38,6 +38,7 @@
     <Compile Include="Components\Hosts.fs" />
     <Compile Include="Components\Lazy.fs" />
     <Compile Include="Components\DataTemplateView.fs" />
+    <Compile Include="DSL\Builder.fs" />
     <Compile Include="DSL\Base\Layoutable.fs" />
     <Compile Include="DSL\Base\TemplatedControl.fs" />
     <Compile Include="DSL\Base\Animatable.fs" />

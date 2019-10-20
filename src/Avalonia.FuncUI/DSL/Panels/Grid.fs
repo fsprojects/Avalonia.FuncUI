@@ -68,8 +68,8 @@ module Grid =
         static member columnDefinitions<'t when 't :> Grid>(value: ColumnDefinitions) : IAttr<'t> =
             let accessor = Accessor.create(
                 "ColumnDefinitions",
-                Some (fun c -> (c :?> Grid).ColumnDefinitions :> obj),
-                Some (fun (c, v) -> (c :?> Grid).ColumnDefinitions <- (v :?> ColumnDefinitions)))
+                ValueSome (fun c -> (c :?> Grid).ColumnDefinitions :> obj),
+                ValueSome (fun (c, v) -> (c :?> Grid).ColumnDefinitions <- (v :?> ColumnDefinitions)))
             
             let property = Property.createDirect'(Accessor.InstanceProperty accessor, value, Internals.compareColumnDefinitions)
             let attr = Attr.createProperty<'t> property
@@ -81,8 +81,8 @@ module Grid =
         static member rowDefinitions<'t when 't :> Grid>(value: RowDefinitions) : IAttr<'t> =
             let accessor = Accessor.create(
                 "RowDefinitions",
-                Some (fun c -> (c :?> Grid).RowDefinitions :> obj),
-                Some (fun (c, v) -> (c :?> Grid).RowDefinitions <- (v :?> RowDefinitions)))
+                ValueSome (fun c -> (c :?> Grid).RowDefinitions :> obj),
+                ValueSome (fun (c, v) -> (c :?> Grid).RowDefinitions <- (v :?> RowDefinitions)))
             
             let property = Property.createDirect'(Accessor.InstanceProperty accessor, value, Internals.compareRowDefinitions)
             let attr = Attr.createProperty<'t> property

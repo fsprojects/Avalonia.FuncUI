@@ -9,8 +9,8 @@ module Panel =
     type Panel with
             
         static member children<'t when 't :> Panel>(value: IView list) : IAttr<'t> =
-            let getter : (IControl -> obj) option = Some (fun control -> (control :?> Panel).Children :> obj)
-            let setter : (IControl * obj -> unit) option = None
+            let getter : (IControl -> obj) voption = ValueSome (fun control -> (control :?> Panel).Children :> obj)
+            let setter : (IControl * obj -> unit) voption = ValueNone
             
             let accessor = Accessor.create("Children", getter, setter)
             let content = Content.createMultiple(Accessor.InstanceProperty accessor, value)

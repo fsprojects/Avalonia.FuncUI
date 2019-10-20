@@ -85,8 +85,8 @@ module Border =
             attr :> IAttr<'t>
             
         static member child<'t when 't :> Border>(value: IView) : IAttr<'t> =
-            let getter : (IControl -> obj) option = Some (fun control -> (control :?> Border).Child :> obj)
-            let setter : (IControl * obj -> unit) option = None
+            let getter : (IControl -> obj) voption = ValueSome (fun control -> (control :?> Border).Child :> obj)
+            let setter : (IControl * obj -> unit) voption = ValueNone
             
             let accessor = Accessor.create("Child", getter, setter)
             let content = Content.createSingle(Accessor.InstanceProperty accessor, Some value)
@@ -94,8 +94,8 @@ module Border =
             attr :> IAttr<'t>
             
         static member child<'t when 't :> Border>(value: IView option) : IAttr<'t> =
-            let getter : (IControl -> obj) option = Some (fun control -> (control :?> Border).Child :> obj)
-            let setter : (IControl * obj -> unit) option = None
+            let getter : (IControl -> obj) voption = ValueSome (fun control -> (control :?> Border).Child :> obj)
+            let setter : (IControl * obj -> unit) voption = ValueNone
             
             let accessor = Accessor.create("Child", getter, setter)
             let content = Content.createSingle(Accessor.InstanceProperty accessor, value)

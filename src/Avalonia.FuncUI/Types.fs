@@ -13,8 +13,8 @@ module Types =
     type PropertyAccessor =
         {
             name: string
-            getter: (IControl -> obj) option
-            setter: (IControl * obj -> unit) option
+            getter: (IControl -> obj) voption
+            setter: (IControl * obj -> unit) voption
         }
         with
             override this.Equals (other: obj) : bool =
@@ -36,16 +36,16 @@ module Types =
         {
             accessor: Accessor
             value: obj
-            customComparer: (obj * obj -> bool) option
+            comparer: (obj * obj -> bool) voption
         }
         with
             override this.Equals (other: obj) : bool =
                 match other with
                 | :? Property as other ->
                     let valueIsEqual =
-                       match this.customComparer with
-                       | Some comparer -> comparer(this.value, other.value)
-                       | None -> this.value = other.value
+                       match this.comparer with
+                       | ValueSome comparer -> comparer(this.value, other.value)
+                       | ValueNone -> this.value = other.value
                     
                     //this.accessor = other.accessor &&
                     valueIsEqual
@@ -177,14 +177,14 @@ module Types =
                 {
                     Property.accessor = accessor;
                     Property.value = value
-                    customComparer = None
+                    comparer = ValueNone
                 }
                 
             let createDirect' (accessor: Accessor, value: #obj, comparer) =
                 {
                     Property.accessor = accessor;
                     Property.value = value
-                    customComparer = Some comparer
+                    comparer = ValueSome comparer
                 }
                 
             /// create an attached property attr
@@ -192,7 +192,7 @@ module Types =
                 {
                     Property.accessor = accessor;
                     Property.value = value
-                    customComparer = None
+                    comparer = ValueNone
                 }
                 
         module Subscription =
