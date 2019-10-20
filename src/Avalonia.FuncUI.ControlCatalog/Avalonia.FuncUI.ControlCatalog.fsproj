@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Library\Extensions.fs" />
+        <Compile Include="Views\Tabs\DataTemplateDemo.fs" />
+        <Compile Include="Views\Tabs\GridDemo.fs" />
+        <Compile Include="Views\MainView.fs" />
+        <Compile Include="Main.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+      <ProjectReference Include="..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+      <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview3" />
+      <PackageReference Include="Bogus" Version="28.4.1" />
+    </ItemGroup>
+
+</Project>

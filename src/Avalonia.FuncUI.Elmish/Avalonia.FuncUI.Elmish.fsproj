@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Version>0.1.0</Version>
     <Authors>JaggerJo</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview3" />
     <PackageReference Include="Elmish" Version="3.0.0" />
   </ItemGroup>
 

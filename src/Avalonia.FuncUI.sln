@@ -13,11 +13,15 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Elmish", "A
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "CounterElmishExample", "Examples\CounterElmishExample\CounterElmishExample.fsproj", "{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Inspector", "Examples\Inspector\Inspector.fsproj", "{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{60091E7E-8B29-46FE-8CFE-4AC2952F6436}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "TemplateBundle", "Templates\TemplateBundle\TemplateBundle.fsproj", "{5F43F3DA-FCA8-49D5-A51D-0D8F431FD642}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.ControlCatalog", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj", "{2EE61E50-F492-4024-85D3-D310D05B4D72}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.DSL", "Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj", "{B55A8DAD-ED9E-426C-A91D-E80747100E63}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,22 +45,26 @@ Global
 		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5F43F3DA-FCA8-49D5-A51D-0D8F431FD642}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F43F3DA-FCA8-49D5-A51D-0D8F431FD642}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F43F3DA-FCA8-49D5-A51D-0D8F431FD642}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F43F3DA-FCA8-49D5-A51D-0D8F431FD642}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE61E50-F492-4024-85D3-D310D05B4D72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE61E50-F492-4024-85D3-D310D05B4D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE61E50-F492-4024-85D3-D310D05B4D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE61E50-F492-4024-85D3-D310D05B4D72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{C62EFED5-5C78-4E5E-9894-500C75F4CDFA} = {E5F1B811-E995-4757-B8E9-C3EB4DA274EE}
-		{8678ED34-C054-49B2-B0C3-3B4BF7382EF4} = {E5F1B811-E995-4757-B8E9-C3EB4DA274EE}
 		{5F43F3DA-FCA8-49D5-A51D-0D8F431FD642} = {60091E7E-8B29-46FE-8CFE-4AC2952F6436}
+		{2EE61E50-F492-4024-85D3-D310D05B4D72} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}

@@ -1,0 +1,230 @@
+namespace Avalonia.FuncUI.VirtualDom
+
+module internal rec Patcher =
+    open System
+    open System.Collections
+    open System.Collections.Concurrent
+    open Avalonia.Controls
+    open Avalonia
+    open Avalonia.FuncUI.VirtualDom.Delta
+    open Avalonia.FuncUI.Types
+    open System.Threading
+
+    let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
+        let subscriptions =
+            match ViewMetaData.GetViewSubscriptions(view) with
+            | null ->
+                let dict = new ConcurrentDictionary<_, _>()
+                ViewMetaData.SetViewSubscriptions(view, dict)
+                dict
+            | value -> value          
+        
+        match attr.func with
+        // add or update
+        | Some handler ->
+            let cts = attr.subscribe(view, attr.func.Value)
+
+            let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
+            
+            let updateFactory = Func<string, CancellationTokenSource, CancellationTokenSource>(fun key old_cts ->
+                old_cts.Cancel()
+                cts
+            )
+                    
+            subscriptions.AddOrUpdate(attr.UniqueName, addFactory, updateFactory) |> ignore
+        
+        // remove
+        | None ->
+            let hasValue, value = subscriptions.TryGetValue(attr.UniqueName)
+            if hasValue then
+                value.Cancel()
+                subscriptions.TryRemove(attr.UniqueName) |> ignore
+            
+    
+    let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
+        match attr.accessor with
+        | Accessor.AvaloniaProperty avaloniaProperty ->
+            match attr.value with
+            | Some value -> view.SetValue(avaloniaProperty, value);
+            | None ->
+                // TODO: create PR - include 'ClearValue' in interface 'IAvaloniaObject'
+                (view :?> AvaloniaObject).ClearValue(avaloniaProperty);
+                
+        | Accessor.InstanceProperty instanceProperty ->
+            let propertyInfo = view.GetType().GetProperty(instanceProperty.name);
+            
+            match attr.value with
+            | Some value ->
+                match propertyInfo.CanWrite with
+                | true -> propertyInfo.SetValue(view, value)
+                | false ->
+                    raise (Exception "cant set read only instance property")
+            | None ->
+                let defaultValue =
+                    if propertyInfo.PropertyType.IsValueType
+                    then Activator.CreateInstance(propertyInfo.PropertyType)
+                    else null
+                                
+                propertyInfo.SetValue(view, defaultValue)
+                
+    let private patchContentMultiple (view: IControl) (accessor: Accessor) (delta: ViewDelta list) : unit =
+        (* often lists only have a get accessor *)
+        let patch_IList (collection: IList) : unit =
+            if List.isEmpty delta then
+                collection.Clear()
+            else
+                delta |> Seq.iteri (fun index viewElement ->
+                    // try patch / reuse
+                    if index + 1 <= collection.Count then
+                        let item = collection.[index]
+ 
+                        if item.GetType() = viewElement.viewType then
+                            // patch
+                            match item with
+                            | :? Avalonia.Controls.IControl as control -> patch(control, viewElement)
+                            | _ ->
+                                // replace
+                                let newItem = Patcher.create viewElement.viewType
+                                patch(newItem, viewElement)
+                                collection.[index] <- newItem
+                        else
+                            // replace
+                            let newItem = Patcher.create viewElement.viewType
+                            patch(newItem, viewElement)
+                            collection.[index] <- newItem
+                    else
+                        // create
+                        let newItem = Patcher.create viewElement.viewType
+                        patch(newItem, viewElement)
+                        collection.Add(newItem) |> ignore
+
+                )
+
+                while delta.Length < collection.Count do
+                    collection.RemoveAt (collection.Count - 1)
+
+        (* read only, so there must be a get accessor *)
+        let patch_IEnumerable (collection: IEnumerable) : IEnumerable =
+            let newList = System.Collections.Generic.List<obj>()
+
+            if List.isEmpty delta then
+                () // list is empty by default
+            else
+                let mutable index = 0
+                for item in collection do  
+                    if index + 1 <= delta.Length then
+                        if item.GetType() = delta.[index].GetType() then
+                            newList.Add delta.[index]
+                        else
+                            let newItem = Patcher.create delta.[index].viewType
+                            patch(newItem, delta.[index])
+                            newList.Add delta.[index]
+                    else ()
+
+                if index + 1 < delta.Length then
+                    let _, remaining = delta |> List.splitAt index
+
+                    for item in remaining do
+                        let newItem = Patcher.create delta.[index].viewType
+                        patch(newItem, delta.[index])
+                        newList.Add delta.[index]
+
+            (newList :> IEnumerable)
+        
+        
+        let patch (getValue: (unit -> obj) option, setValue: (obj -> unit) option) =
+            let value =
+                match getValue with
+                | Some get -> get()
+                | _ -> failwith "accessor must have a getter"
+            
+            match value with
+            | :? IList as collection ->
+                patch_IList collection
+                
+            | :? IEnumerable as enumerable ->
+                match setValue with
+                | Some set -> set (patch_IEnumerable enumerable)
+                | _ -> failwith "accessor must have a setter"
+                
+            | _ -> raise (Exception("type does not implement IEnumerable or IList. This is required for view patching"))
+        
+        match accessor with
+        | Accessor.InstanceProperty instanceProperty ->
+            let getter =
+                match instanceProperty.getter with
+                | ValueSome getter -> Some (fun () -> getter(view))
+                | ValueNone -> None
+                
+            let setter =
+                match instanceProperty.setter with
+                | ValueSome setter -> Some (fun value -> setter(view, value))
+                | ValueNone -> None
+                
+            patch (getter ,setter)
+            
+        | Accessor.AvaloniaProperty property ->
+            let getter = Some (fun () -> view.GetValue(property))
+            let setter = Some (fun obj -> view.SetValue(property, obj))
+            patch (getter, setter)
+                
+    let private patchContentSingle (view: IControl) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
+        
+        let patch_avalonia (property: AvaloniaProperty) =
+            match viewElement with
+            | Some viewElement ->
+                let value = view.GetValue(property)
+                
+                if value <> null && value.GetType() = viewElement.viewType then
+                    Patcher.patch(value :?> IControl, viewElement)
+                else
+                    let createdControl = Patcher.create(viewElement.viewType)
+                    Patcher.patch(createdControl, viewElement)
+                    view.SetValue(property, createdControl)
+            | None ->
+                (view :?> AvaloniaObject).ClearValue(property)
+                
+        let patch_instance (property: PropertyAccessor) =
+            match viewElement with
+            | Some viewElement ->
+                let value =
+                    match property.getter with
+                    | ValueSome getter -> getter(view)
+                    | _ -> failwith "Property Accessor needs a getter"
+                
+                if value <> null && value.GetType() = viewElement.viewType then
+                    Patcher.patch(value :?> IControl, viewElement)
+                else
+                    let createdControl = Patcher.create(viewElement.viewType)
+                    Patcher.patch(createdControl, viewElement)
+                    
+                    match property.setter with
+                    | ValueSome setter -> setter(view, createdControl)
+                    | _ -> failwith "Property Accessor needs a setter"
+            | None ->
+                match property.setter with
+                | ValueSome setter -> setter(view, null)
+                | _ -> failwith "Property Accessor needs a setter"    
+        
+        match accessor with
+        | Accessor.InstanceProperty instanceProperty -> patch_instance instanceProperty
+        | Accessor.AvaloniaProperty property -> patch_avalonia property
+
+    let private patchContent (view: IControl) (attr: ContentDelta) : unit =
+        match attr.content with
+        | ViewContentDelta.Single single ->
+            patchContentSingle view attr.accessor single
+        | ViewContentDelta.Multiple multiple ->
+            patchContentMultiple view attr.accessor multiple
+    
+    let patch (view: IControl, viewElement: ViewDelta) : unit =
+        for attr in viewElement.attrs do
+            match attr with
+            | AttrDelta.Property property -> patchProperty view property
+            | AttrDelta.Content content -> patchContent view content
+            | AttrDelta.Subscription subscription -> patchSubscription view subscription
+            
+    let create (viewType: Type) : IControl =
+        let control = Activator.CreateInstance(viewType) :?> IControl
+        control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid())
+        control
