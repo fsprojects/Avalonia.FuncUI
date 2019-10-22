@@ -1,4 +1,4 @@
-namespace Avalonia.FuncUI.DSL.Builder
+namespace Avalonia.FuncUI.Builder
 
 open System
 open System.Threading
@@ -99,7 +99,7 @@ type AttrBuilder<'view>() =
     /// <summary>
     /// Create a Multiple Content Attribute for an instance (non Avalonia) Property
     /// </summary>
-    static member CreateContentSingle(name: string, getter: ('view -> obj) voption, setter: ('view * obj -> unit) voption, multipleContent: IView list) : IAttr<'view> =
+    static member CreateContentMultiple(name: string, getter: ('view -> obj) voption, setter: ('view * obj -> unit) voption, multipleContent: IView list) : IAttr<'view> =
         let accessor = Accessor.InstanceProperty {
             name = name
             getter =

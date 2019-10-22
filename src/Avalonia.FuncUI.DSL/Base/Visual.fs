@@ -5,7 +5,7 @@ module Visual =
     open Avalonia
     open Avalonia.Media
     open Avalonia.FuncUI.Types
-    open Avalonia.FuncUI.DSL.Builder
+    open Avalonia.FuncUI.Builder
             
     type Visual with
     
