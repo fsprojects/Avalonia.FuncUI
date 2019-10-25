@@ -4,9 +4,10 @@ namespace Avalonia.FuncUI.DSL
 module ComboBoxItem =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ComboBoxItem> list): IView<ComboBoxItem> =
-        View.create<ComboBoxItem>(attrs)
+        ViewBuilder.Create<ComboBoxItem>(attrs)
     
     type ComboBoxItem with
         end

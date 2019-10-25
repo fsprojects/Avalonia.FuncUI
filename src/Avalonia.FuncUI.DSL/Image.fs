@@ -10,7 +10,7 @@ module Image =
     open Avalonia.Media.Imaging
     
     let create (attrs: IAttr<Image> list): IView<Image> =
-        View.create<Image>(attrs)
+        ViewBuilder.Create<Image>(attrs)
     
     type Image with
         static member source<'t when 't :> Image>(value: IBitmap) : IAttr<'t> =

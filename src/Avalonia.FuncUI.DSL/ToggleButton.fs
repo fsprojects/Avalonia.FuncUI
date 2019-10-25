@@ -7,7 +7,7 @@ module ToggleButton =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ToggleButton> list): IView<ToggleButton> =
-        View.create<ToggleButton>(attrs)
+        ViewBuilder.Create<ToggleButton>(attrs)
      
     type ToggleButton with
         static member isThreeState<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =

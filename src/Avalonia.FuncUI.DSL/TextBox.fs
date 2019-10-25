@@ -9,7 +9,7 @@ module TextBox =
     open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<TextBox> list): IView<TextBox> =
-        View.create<TextBox>(attrs)
+        ViewBuilder.Create<TextBox>(attrs)
     
     type TextBox with
 

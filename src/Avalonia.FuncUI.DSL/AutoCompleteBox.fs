@@ -11,7 +11,7 @@ module AutoCompleteBox =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<AutoCompleteBox> list): IView<AutoCompleteBox> =
-        View.create<AutoCompleteBox>(attrs)
+        ViewBuilder.Create<AutoCompleteBox>(attrs)
     
     type AutoCompleteBox with
         static member onSelectionChanged<'t when 't :> AutoCompleteBox>(func: SelectionChangedEventArgs -> unit) =

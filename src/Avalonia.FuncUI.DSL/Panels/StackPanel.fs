@@ -8,7 +8,7 @@ module StackPanel =
     open Avalonia.FuncUI.Builder
    
     let create (attrs: IAttr<StackPanel> list): IView<StackPanel> =
-        View.create<StackPanel>(attrs)
+        ViewBuilder.Create<StackPanel>(attrs)
 
     type StackPanel with
            

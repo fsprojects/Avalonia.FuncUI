@@ -2,7 +2,7 @@
 
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.Types
+open Avalonia.FuncUI.Builder
 open Avalonia.Layout
 
 module MainView =
@@ -33,7 +33,7 @@ module MainView =
                        ]
                        TabItem.create [
                            TabItem.header "Grid Demo"
-                           TabItem.content (View.create<GridDemo.Host>([]))
+                           TabItem.content (ViewBuilder.Create<GridDemo.Host>([]))
                        ]
                    ]
                ]

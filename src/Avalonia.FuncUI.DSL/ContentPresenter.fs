@@ -14,7 +14,7 @@ module ContentPresenter =
     open Avalonia.Media.Immutable
     
     let create (attrs: IAttr<ContentPresenter> list): IView<ContentPresenter> =
-        View.create<ContentPresenter>(attrs)
+        ViewBuilder.Create<ContentPresenter>(attrs)
     
     type ContentPresenter with
         static member background<'t when 't :> ContentPresenter>(brush: IBrush) : IAttr<'t> =

@@ -10,7 +10,7 @@ module TabControl =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<TabControl> list): IView<TabControl> =
-        View.create<TabControl>(attrs)
+        ViewBuilder.Create<TabControl>(attrs)
      
     type TabControl with
 

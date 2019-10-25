@@ -7,7 +7,7 @@ module Canvas =
     open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<Canvas> list): IView<Canvas> =
-        View.create<Canvas>(attrs)
+        ViewBuilder.Create<Canvas>(attrs)
     
     type Control with
         static member left<'t when 't :> Control>(value: double) : IAttr<'t> =

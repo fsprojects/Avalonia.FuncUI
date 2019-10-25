@@ -1,9 +1,6 @@
 ﻿namespace rec Avalonia.FuncUI
 
-open Avalonia
 open Avalonia.Controls
-open Avalonia.Interactivity
-open Avalonia.FuncUI.Library
 open System
 open System.Threading
 
@@ -154,151 +151,15 @@ module Types =
             
         interface IView<'viewType> with
             member this.Attrs = this.attrs
-                        
-    [<AutoOpen>]
-    [<System.Obsolete("Do not use. Use AttrBuilder instead.")>]
-    module DomainFunctions =
-        
-        module Accessor =
-            let create(name: string, getter, setter) =
-                {
-                    name = name
-                    getter = getter
-                    setter = setter
-                }
-        
-        module Property =
-            
-            /// create a direct property attr
-            let createDirect (accessor: Accessor, value: #obj) =
-                {
-                    Property.accessor = accessor;
-                    Property.value = value
-                    comparer = ValueNone
-                }
-                
-            let createDirect' (accessor: Accessor, value: #obj, comparer) =
-                {
-                    Property.accessor = accessor;
-                    Property.value = value
-                    comparer = ValueSome comparer
-                }
-                
-            /// create an attached property attr
-            let createAttached (accessor: Accessor, value: #obj) =
-                {
-                    Property.accessor = accessor;
-                    Property.value = value
-                    comparer = ValueNone
-                }
-                
-        module Subscription =
 
-            // create a subscription attr
-            let createFromProperty (property: AvaloniaProperty<'arg>, func: 'arg -> unit) =
-                
-                // subscribe to avalonia property
-                let subscribeFunc (control: IControl, handler: 'h) =
-                    let cts = new CancellationTokenSource()
-                    control
-                        .GetObservable(property)
-                        .Subscribe(func, cts.Token)
-                    cts
-                    
-                {
-                    Subscription.name = property.Name + ".PropertySub"
-                    Subscription.subscribe = subscribeFunc
-                    Subscription.funcType = func.GetType()
-                    Subscription.funcCapturesState = FunctionAnalysis.capturesState func
-                    Subscription.func = Action<_>(func)
-                }
-                
-            // create a subscription attr
-            let createFromRoutedEvent (property: RoutedEvent<'arg>, func: 'arg -> unit) =
-                
-                // subscribe to avalonia property
-                let subscribeFunc (control: IControl, handler: 'h) =
-                    let cts = new CancellationTokenSource()
-                    control
-                        .GetObservable(property)
-                        .Subscribe(func, cts.Token)
-                    cts
-                    
-                {
-                    Subscription.name = property.Name + ".RoutedEventSub"
-                    Subscription.subscribe = subscribeFunc
-                    Subscription.funcType = func.GetType()
-                    Subscription.funcCapturesState = FunctionAnalysis.capturesState func
-                    Subscription.func = Action<_>(func)
-                }
-                
-            // create a subscription attr
-            let createFromEvent (name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit) =
-                
-                // subscribe to event
-                let subscribeFunc (control: IControl, handler: 'h) =
-                    let cts = new CancellationTokenSource()
-                    factory(control, func, cts.Token)
-                    cts
-                
-                {
-                    Subscription.name = name + ".EventSub"
-                    Subscription.subscribe = subscribeFunc
-                    Subscription.funcType = func.GetType()
-                    Subscription.funcCapturesState = FunctionAnalysis.capturesState func
-                    Subscription.func = Action<_>(func)
-                }
-                
-        module Content =
-            /// create single content attr
-            let createSingle (accessor: Accessor, content: IView option) =
-                {
-                    Content.accessor = accessor;
-                    Content.content = ViewContent.Single content;
-                }
-                
-            /// create multiple content attr
-            let createMultiple (accessor: Accessor, content: IView list) =
-                {
-                    Content.accessor = accessor;
-                    Content.content = ViewContent.Multiple content;
-                }
+    
+    // TODO: maybe use active patterns to Virtual DON Misc
+
+    let internal (|Property'|_|) (attr: IAttr)  =
+        attr.Property
         
-        module Attr =         
-            /// create property attr
-            let createProperty<'viewType>(property: Property) =
-                Attr<'viewType>.Property property
-                
-            // create content attr
-            let createContent<'viewType>(content: Content) =
-                Attr<'viewType>.Content content
-                
-            // create subscription attr
-            let createSubscription<'viewType>(subscription: Subscription) =
-                Attr<'viewType>.Subscription subscription
-                
-        module View =
-            /// create a new strongly typed View
-            let create<'viewType>(attrs: IAttr<'viewType> list) : IView<'viewType> =
-                {
-                    View.viewType = typeof<'viewType>
-                    View.attrs = attrs
-                }
-                :> IView<'viewType>
-                
-            /// create a new loosely typed View
-            let create'<'viewType>(attrs: IAttr<'viewType> list) : IView =
-                {
-                    View.viewType = typeof<'viewType>
-                    View.attrs = attrs
-                }
-                :> IView            
-            
-        let (|Property'|_|) (attr: IAttr)  =
-            attr.Property
-            
-        let (|Content'|_|) (attr: IAttr)  =
-            attr.Content
-            
-        let (|Subscription'|_|) (attr: IAttr)  =
-            attr.Subscription
+    let internal (|Content'|_|) (attr: IAttr)  =
+        attr.Content
+        
+    let internal (|Subscription'|_|) (attr: IAttr)  =
+        attr.Subscription

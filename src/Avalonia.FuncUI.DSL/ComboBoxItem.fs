@@ -7,7 +7,7 @@ module ComboBox =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ComboBox> list): IView<ComboBox> =
-        View.create<ComboBox>(attrs)
+        ViewBuilder.Create<ComboBox>(attrs)
     
     type ComboBox with
     

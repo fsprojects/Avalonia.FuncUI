@@ -12,7 +12,7 @@ module Border =
     open Avalonia.Media.Immutable
     
     let create (attrs: IAttr<Border> list): IView<Border> =
-        View.create<Border>(attrs)
+        ViewBuilder.Create<Border>(attrs)
     
     type Border with
         static member background<'t when 't :> Border>(brush: IBrush) : IAttr<'t> =

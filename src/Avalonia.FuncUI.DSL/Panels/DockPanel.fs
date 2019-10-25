@@ -7,7 +7,7 @@ module DockPanel =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<DockPanel> list): IView<DockPanel> =
-        View.create<DockPanel>(attrs)
+        ViewBuilder.Create<DockPanel>(attrs)
     
     type Control with
         static member dock<'t when 't :> Control>(dock: Dock) : IAttr<'t> =

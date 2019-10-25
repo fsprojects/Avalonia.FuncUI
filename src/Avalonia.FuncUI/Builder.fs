@@ -177,9 +177,9 @@ type AttrBuilder<'view>() =
         }
 
 [<AbstractClass; Sealed>] 
-type ViewBuilder<'view>() =
+type ViewBuilder() =
     
-    static member Create(attrs: IAttr<'view> list) : IView<'view> =
+    static member Create<'view>(attrs: IAttr<'view> list) : IView<'view> =
         {
             View.viewType = typeof<'view>
             View.attrs = attrs

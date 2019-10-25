@@ -4,13 +4,12 @@ open Avalonia.Media.Immutable
 [<AutoOpen>]
 module TextBlock =  
     open Avalonia.Controls
-    open Avalonia.Media.Immutable
     open Avalonia.Media    
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
     let create (attrs: IAttr<TextBlock> list): IView<TextBlock> =
-        View.create<TextBlock>(attrs)
+        ViewBuilder.Create<TextBlock>(attrs)
     
     type TextBlock with
             

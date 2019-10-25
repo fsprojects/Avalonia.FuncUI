@@ -8,7 +8,7 @@ module LazyView =
     open Avalonia.FuncUI.Builder
 
     let create<'state, 'args>(attrs: IAttr<LazyView<'state, 'args>> list): IView<LazyView<'state, 'args>> =
-        View.create<LazyView<'state, 'args>>(attrs)
+        ViewBuilder.Create<LazyView<'state, 'args>>(attrs)
     
     type LazyView<'state, 'args> with
             

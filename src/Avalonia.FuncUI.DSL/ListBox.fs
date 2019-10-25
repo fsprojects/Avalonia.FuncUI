@@ -9,7 +9,7 @@ module ListBox =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ListBox> list): IView<ListBox> =
-        View.create<ListBox>(attrs)
+        ViewBuilder.Create<ListBox>(attrs)
      
     type ListBox with
 

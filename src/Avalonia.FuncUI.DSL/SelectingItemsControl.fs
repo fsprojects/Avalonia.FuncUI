@@ -8,7 +8,7 @@ module SelectingItemsControl =
     open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<SelectingItemsControl> list): IView<SelectingItemsControl> =
-        View.create<SelectingItemsControl>(attrs)
+        ViewBuilder.Create<SelectingItemsControl>(attrs)
      
     type SelectingItemsControl with
 

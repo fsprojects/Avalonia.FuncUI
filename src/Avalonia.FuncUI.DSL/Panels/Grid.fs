@@ -7,7 +7,7 @@ module Grid =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<Grid> list): IView<Grid> =
-        View.create<Grid>(attrs)
+        ViewBuilder.Create<Grid>(attrs)
         
     module private Internals =
         open System.Collections.Generic

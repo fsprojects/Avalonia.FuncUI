@@ -8,7 +8,7 @@ module Carousel =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<Carousel> list): IView<Carousel> =
-        View.create<Carousel>(attrs)
+        ViewBuilder.Create<Carousel>(attrs)
      
     type Carousel with
 

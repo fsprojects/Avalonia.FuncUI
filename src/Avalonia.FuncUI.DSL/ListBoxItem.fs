@@ -7,7 +7,7 @@ module ListBoxItem =
     open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ListBoxItem> list): IView<ListBoxItem> =
-        View.create<ListBoxItem>(attrs)
+        ViewBuilder.Create<ListBoxItem>(attrs)
      
     type ListBoxItem with
 

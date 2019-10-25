@@ -12,7 +12,7 @@ module Button =
     open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<Button> list): IView<Button> =
-        View.create<Button>(attrs)
+        ViewBuilder.Create<Button>(attrs)
      
     type Button with
 
@@ -37,5 +37,5 @@ module Button =
         static member onIsPressedChanged<'t when 't :> Button>(func: bool -> unit) =
             AttrBuilder<'t>.CreateSubscription<bool>(Button.IsPressedProperty, func)
             
-        static member onClick'<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
+        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func)
