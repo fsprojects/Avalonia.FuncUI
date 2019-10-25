@@ -6,29 +6,28 @@ module Control =
     open Avalonia.Media
     open Avalonia.Visuals.Media.Imaging
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     
     type Control with
-        static member focusAdorner<'t when 't :> Control>(value: ITemplate<IControl>) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty Control.FocusAdornerProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+        static member focusAdorner<'t, 'c when 't :> Control and 'c :> IControl>(value: ITemplate<'c>) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<ITemplate<'c>>(Control.FocusAdornerProperty, value, ValueNone)
             
         static member tag<'t when 't :> Control>(value: obj) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty Control.TagProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<obj>(Control.TagProperty, value, ValueNone)
 
-        static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty Control.ContextMenuProperty
-            let property = Property.createDirect(accessor, menu)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-           
+        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu> option) : IAttr<'t> =
+            let view =
+                match menuView with
+                | Some view -> Some (view :> IView)
+                | None -> None
             
-        static member bitmapInterpolationMode<'t when 't :> Control>(mode: BitmapInterpolationMode) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty RenderOptions.BitmapInterpolationModeProperty
-            let property = Property.createAttached(accessor, mode)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            // TODO: think about exposing less generic IView<'c> 
+            AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, view)
+            
+        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu>) : IAttr<'t> =
+            AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, Some (menuView :> IView))
+        
+        static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<ContextMenu>(Control.ContextMenuProperty, menu, ValueNone)
+           
+           

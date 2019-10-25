@@ -4,21 +4,19 @@ namespace Avalonia.FuncUI.DSL
 module Panel =  
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
+    open Avalonia.Media.Immutable
     open Avalonia.Media
 
     type Panel with
             
         static member children<'t when 't :> Panel>(value: IView list) : IAttr<'t> =
-            let getter : (IControl -> obj) voption = ValueSome (fun control -> (control :?> Panel).Children :> obj)
-            let setter : (IControl * obj -> unit) voption = ValueNone
-            
-            let accessor = Accessor.create("Children", getter, setter)
-            let content = Content.createMultiple(Accessor.InstanceProperty accessor, value)
-            let attr = Attr.createContent<'t> content
-            attr :> IAttr<'t>
+            let getter : ('t -> obj) = (fun control -> control.Children :> obj)
+             
+            AttrBuilder<'t>.CreateContentMultiple("Children", ValueSome getter, ValueNone, value)
             
         static member background<'t when 't :> Panel>(value: IBrush) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty Panel.BackgroundProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>    
+            AttrBuilder<'t>.CreateProperty<IBrush>(Panel.BackgroundProperty, value, ValueNone)
+            
+        static member background<'t when 't :> Panel>(color: string) : IAttr<'t> =
+            color |> Color.Parse |> ImmutableSolidColorBrush |> Panel.background 

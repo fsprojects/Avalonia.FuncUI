@@ -15,7 +15,7 @@ type LazyView<'state, 'args>() =
     let mutable subscription : IDisposable = null
     let mutable _state : 'state = Unchecked.defaultof<'state>
     let mutable _args : 'args = Unchecked.defaultof<'args>
-    let mutable _viewFunc : option<('state -> 'args -> IView)> = None
+    let mutable _viewFunc : voption<('state -> 'args -> IView)> = ValueNone
     
     static let stateProperty =
         AvaloniaProperty.RegisterDirect<LazyView<'state, 'args>, 'state>(
@@ -32,10 +32,10 @@ type LazyView<'state, 'args>() =
         )
         
     static let viewFuncProperty =
-        AvaloniaProperty.RegisterDirect<LazyView<'state, 'args>, ('state -> 'args -> IView) option>(
+        AvaloniaProperty.RegisterDirect<LazyView<'state, 'args>, ('state -> 'args -> IView) voption>(
             "ViewFunc",
-            new Func<LazyView<'state, 'args>, option<('state -> 'args -> IView)>>(fun control -> control.ViewFunc),
-            new Action<LazyView<'state, 'args>, option<('state -> 'args -> IView)>>(fun control value -> control.ViewFunc <- value)
+            new Func<LazyView<'state, 'args>, voption<('state -> 'args -> IView)>>(fun control -> control.ViewFunc),
+            new Action<LazyView<'state, 'args>, voption<('state -> 'args -> IView)>>(fun control value -> control.ViewFunc <- value)
         )
         
     member this.State
@@ -47,18 +47,18 @@ type LazyView<'state, 'args>() =
         and set (value: 'args) = this.SetAndRaise(LazyView<'state, 'args>.ArgsProperty, &_args, value) |> ignore
             
     member this.ViewFunc
-        with get () : option<('state -> 'args -> IView)> = _viewFunc
+        with get () : voption<('state -> 'args -> IView)> = _viewFunc
         and set (value) = this.SetAndRaise(LazyView<'state, 'args>.ViewFuncProperty, &_viewFunc, value) |> ignore  
         
     override this.OnAttachedToVisualTree args =
         let onNext (state: 'state) : unit =
             let nextView =
                 match this.ViewFunc with
-                | Some func ->
+                | ValueSome func ->
                     func state this.Args
                     |> Some
                     
-                | None -> None
+                | ValueNone -> None
                 
             (this :> IViewHost).Update nextView
         

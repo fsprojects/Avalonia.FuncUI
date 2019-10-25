@@ -4,9 +4,10 @@ namespace Avalonia.FuncUI.DSL
 module Grid =  
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<Grid> list): IView<Grid> =
-        View.create<Grid>(attrs)
+        ViewBuilder.Create<Grid>(attrs)
         
     module private Internals =
         open System.Collections.Generic
@@ -51,42 +52,40 @@ module Grid =
             Enumerable.SequenceEqual(a, b, comparer);
 
     type Control with
-        static member dock<'t when 't :> Grid>(dock: Dock) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty DockPanel.DockProperty
-            let property = Property.createAttached(accessor, dock)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+        static member row<'t when 't :> Control>(row: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(Grid.RowProperty, row, ValueNone)
+            
+        static member rowSpan<'t when 't :> Control>(span: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(Grid.RowSpanProperty, span, ValueNone)
+            
+        static member column<'t when 't :> Control>(column: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(Grid.ColumnProperty, column, ValueNone)
+            
+        static member columnSpan<'t when 't :> Control>(span: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(Grid.ColumnSpanProperty, span, ValueNone)
+            
+        static member isSharedSizeScope<'t when 't :> Control>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(Grid.IsSharedSizeScopeProperty, value, ValueNone)
     
     type Grid with
         
         static member showGridLines<'t when 't :> Grid>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty Grid.ShowGridLinesProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-            
+            AttrBuilder<'t>.CreateProperty<bool>(Grid.ShowGridLinesProperty, value, ValueNone)
+
         static member columnDefinitions<'t when 't :> Grid>(value: ColumnDefinitions) : IAttr<'t> =
-            let accessor = Accessor.create(
-                "ColumnDefinitions",
-                ValueSome (fun c -> (c :?> Grid).ColumnDefinitions :> obj),
-                ValueSome (fun (c, v) -> (c :?> Grid).ColumnDefinitions <- (v :?> ColumnDefinitions)))
+            let getter : 't -> ColumnDefinitions = fun view -> view.ColumnDefinitions
+            let setter : 't * ColumnDefinitions -> unit = fun (view, value) -> view.ColumnDefinitions <- value
             
-            let property = Property.createDirect'(Accessor.InstanceProperty accessor, value, Internals.compareColumnDefinitions)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-            
+            AttrBuilder<'t>.CreateProperty<_>("ColumnDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareColumnDefinitions)
+
         static member columnDefinitions<'t when 't :> Grid>(value: string) : IAttr<'t> =
             value |> ColumnDefinitions.Parse |> Grid.columnDefinitions 
-        
+
         static member rowDefinitions<'t when 't :> Grid>(value: RowDefinitions) : IAttr<'t> =
-            let accessor = Accessor.create(
-                "RowDefinitions",
-                ValueSome (fun c -> (c :?> Grid).RowDefinitions :> obj),
-                ValueSome (fun (c, v) -> (c :?> Grid).RowDefinitions <- (v :?> RowDefinitions)))
+            let getter : 't -> RowDefinitions = fun view -> view.RowDefinitions
+            let setter : 't * RowDefinitions -> unit = fun (view, value) -> view.RowDefinitions <- value
             
-            let property = Property.createDirect'(Accessor.InstanceProperty accessor, value, Internals.compareRowDefinitions)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-            
+            AttrBuilder<'t>.CreateProperty<_>("RowDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareRowDefinitions)
+
         static member rowDefinitions<'t when 't :> Grid>(value: string) : IAttr<'t> =
             value |> RowDefinitions.Parse |> Grid.rowDefinitions 

@@ -4,26 +4,18 @@ namespace Avalonia.FuncUI.DSL
 module ComboBox =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ComboBox> list): IView<ComboBox> =
-        View.create<ComboBox>(attrs)
+        ViewBuilder.Create<ComboBox>(attrs)
     
     type ComboBox with
     
         static member isDropDownOpen<'t when 't :> ComboBox>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ComboBox.IsDropDownOpenProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<bool>(ComboBox.IsDropDownOpenProperty, value, ValueNone)
             
         static member maxDropDownHeight<'t when 't :> ComboBox>(height: float) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ComboBox.MaxDropDownHeightProperty
-            let property = Property.createDirect(accessor, height)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<float>(ComboBox.MaxDropDownHeightProperty, height, ValueNone)
             
         static member virtualizationMode<'t when 't :> ComboBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ComboBox.VirtualizationModeProperty
-            let property = Property.createDirect(accessor, mode)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<ItemVirtualizationMode>(ComboBox.VirtualizationModeProperty, mode, ValueNone)

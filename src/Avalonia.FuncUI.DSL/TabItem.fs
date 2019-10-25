@@ -4,25 +4,18 @@ namespace Avalonia.FuncUI.DSL
 module TabItem =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<TabItem> list): IView<TabItem> =
-        View.create<TabItem>(attrs)
+        ViewBuilder.Create<TabItem>(attrs)
      
     type TabItem with
 
         static member tabStripPlacement<'t when 't :> TabItem>(placement: Dock) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TabItem.TabStripPlacementProperty
-            let property = Property.createDirect(accessor, placement)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<Dock>(TabItem.TabStripPlacementProperty, placement, ValueNone)
         
         static member isSelected<'t when 't :> TabItem>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TabItem.IsSelectedProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<bool>(TabItem.IsSelectedProperty, value, ValueNone)
             
         static member onIsSelectedChanged<'t when 't :> TabItem>(func: bool -> unit) =
-            let subscription = Subscription.createFromProperty(TabItem.IsSelectedProperty, func)
-            let attr = Attr.createSubscription<'t>(subscription)
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateSubscription<bool>(TabItem.IsSelectedProperty, func)

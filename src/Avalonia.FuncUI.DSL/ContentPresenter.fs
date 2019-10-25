@@ -1,4 +1,5 @@
 namespace Avalonia.FuncUI.DSL
+open Avalonia
 
 [<AutoOpen>]
 module ContentPresenter =
@@ -8,36 +9,28 @@ module ContentPresenter =
     open Avalonia.Controls
     open Avalonia.Controls.Presenters
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     open Avalonia.Media
     open Avalonia.Media.Immutable
     
     let create (attrs: IAttr<ContentPresenter> list): IView<ContentPresenter> =
-        View.create<ContentPresenter>(attrs)
+        ViewBuilder.Create<ContentPresenter>(attrs)
     
     type ContentPresenter with
-        static member background<'t when 't :> ContentPresenter>(value: IBrush) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.BackgroundProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+        static member background<'t when 't :> ContentPresenter>(brush: IBrush) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IBrush>(ContentPresenter.BackgroundProperty, brush, ValueNone)
             
         static member background<'t when 't :> ContentPresenter>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> ContentPresenter.background
 
-        static member borderBrush<'t when 't :> ContentPresenter>(value: IBrush) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.BorderBrushProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+        static member borderBrush<'t when 't :> ContentPresenter>(brush: IBrush) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IBrush>(ContentPresenter.BorderBrushProperty, brush, ValueNone)
             
         static member borderBrush<'t when 't :> ContentPresenter>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> ContentPresenter.borderBrush
             
         static member borderThickness<'t when 't :> ContentPresenter>(value: Thickness) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.BorderThicknessProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<Thickness>(ContentPresenter.BorderThicknessProperty, value, ValueNone)
             
         static member borderThickness<'t when 't :> ContentPresenter>(value: float) : IAttr<'t> =
             Thickness(value) |> ContentPresenter.borderThickness
@@ -49,10 +42,7 @@ module ContentPresenter =
             Thickness(left, top, right, bottom) |> ContentPresenter.borderThickness
             
         static member cornerRadius<'t when 't :> ContentPresenter>(value: CornerRadius) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.CornerRadiusProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<CornerRadius>(ContentPresenter.CornerRadiusProperty, value, ValueNone)
             
         static member cornerRadius<'t when 't :> ContentPresenter>(value: float) : IAttr<'t> =
             CornerRadius(value) |> ContentPresenter.cornerRadius
@@ -64,49 +54,28 @@ module ContentPresenter =
             CornerRadius(left, right, top, bottom) |> ContentPresenter.cornerRadius
             
         static member child<'t when 't :> ContentPresenter>(value: IView option) : IAttr<'t> =
-            let getter : (IControl -> obj) voption = ValueSome (fun control -> (control :?> ContentPresenter).Child :> obj)
-            let setter : (IControl * obj -> unit) voption = ValueNone
-            
-            let accessor = Accessor.create("Child", getter, setter)
-            let content = Content.createSingle(Accessor.InstanceProperty accessor, value)
-            let attr = Attr.createContent<'t> content
-            attr :> IAttr<'t>
-            
+            AttrBuilder<'t>.CreateContentSingle(ContentPresenter.ChildProperty, value)
+
         static member child<'t when 't :> ContentPresenter>(value: IView) : IAttr<'t> =
             value |> Some |> ContentPresenter.child
                  
         static member content<'t when 't :> ContentPresenter>(value: IView option) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.ContentProperty
-            let content = Content.createSingle(accessor, value)
-            let attr = Attr.createContent<'t> content
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateContentSingle(ContentPresenter.ContentProperty, value)
 
         static member content<'t when 't :> ContentPresenter>(value: IView) : IAttr<'t> =
             value |> Some |> ContentPresenter.content
              
-        static member itemTemplate<'t when 't :> ContentPresenter>(template: IDataTemplate) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.ContentTemplateProperty
-            let property = Property.createDirect(accessor, template)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+        static member contentTemplate<'t when 't :> ContentPresenter>(template: IDataTemplate) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(ContentPresenter.ContentTemplateProperty, template, ValueNone)
             
         static member horizontalContentAlignment<'t when 't :> ContentPresenter>(value: HorizontalAlignment) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.HorizontalContentAlignmentProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(ContentPresenter.HorizontalContentAlignmentProperty, value, ValueNone)
             
         static member verticalContentAlignment<'t when 't :> ContentPresenter>(value: VerticalAlignment) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.VerticalAlignmentProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<VerticalAlignment>(ContentPresenter.VerticalContentAlignmentProperty, value, ValueNone)
             
         static member padding<'t when 't :> ContentPresenter>(value: Thickness) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentPresenter.PaddingProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<Thickness>(ContentPresenter.PaddingProperty, value, ValueNone)
             
         static member padding<'t when 't :> ContentPresenter>(value: float) : IAttr<'t> =
             Thickness(value) |> ContentPresenter.padding

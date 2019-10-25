@@ -1,42 +1,26 @@
 namespace Avalonia.FuncUI.DSL
-open System.Collections
+
 
 [<AutoOpen>]
 module ListBox =
-    open System
-    open System.Threading
-    open System.Windows.Input 
-    
+    open System.Collections
     open Avalonia.Controls
-    open Avalonia.Interactivity
-    open Avalonia.Input
-    
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ListBox> list): IView<ListBox> =
-        View.create<ListBox>(attrs)
+        ViewBuilder.Create<ListBox>(attrs)
      
     type ListBox with
 
-        static member selectedItems<'t when 't :> ListBox>(item: IList) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ListBox.SelectedItemsProperty
-            let property = Property.createDirect(accessor, item)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+        static member selectedItems<'t when 't :> ListBox>(items: IList) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IList>(ListBox.SelectedItemsProperty, items, ValueNone)
 
         static member onSelectedItemsChanged<'t when 't :> ListBox>(func: IList -> unit) =
-            let subscription = Subscription.createFromProperty(ListBox.SelectedItemsProperty, func)
-            let attr = Attr.createSubscription<'t>(subscription)
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateSubscription<IList>(ListBox.SelectedItemsProperty, func)
         
         static member selectionMode<'t when 't :> ListBox>(mode: SelectionMode) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ListBox.SelectionModeProperty
-            let property = Property.createDirect(accessor, mode)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<SelectionMode>(ListBox.SelectionModeProperty, mode, ValueNone)
         
-        static member virtualizationMode<'t when 't :> ListBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ListBox.VirtualizationModeProperty
-            let property = Property.createDirect(accessor, mode)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+        static member virtualizationMode<'t when 't :> ComboBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<ItemVirtualizationMode>(ListBox.VirtualizationModeProperty, mode, ValueNone)
