@@ -175,3 +175,13 @@ type AttrBuilder<'view>() =
             Subscription.funcCapturesState = FunctionAnalysis.capturesState func
             Subscription.func = Action<_>(func)
         }
+
+[<AbstractClass; Sealed>] 
+type ViewBuilder<'view>() =
+    
+    static member Create(attrs: IAttr<'view> list) : IView<'view> =
+        {
+            View.viewType = typeof<'view>
+            View.attrs = attrs
+        }
+        :> IView<'view>

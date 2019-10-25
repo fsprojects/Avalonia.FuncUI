@@ -4,22 +4,17 @@ namespace Avalonia.FuncUI.DSL
 module ToggleButton =
     open Avalonia.Controls.Primitives
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     
     let create (attrs: IAttr<ToggleButton> list): IView<ToggleButton> =
         View.create<ToggleButton>(attrs)
      
     type ToggleButton with
         static member isThreeState<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ToggleButton.IsThreeStateProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<bool>(ToggleButton.IsThreeStateProperty, value, ValueNone)
             
         static member isChecked<'t when 't :> ToggleButton>(value: bool) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ToggleButton.IsCheckedProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<bool>(ToggleButton.IsCheckedProperty, value, ValueNone)
 
        
 
