@@ -5,76 +5,46 @@ module TextBox =
     open Avalonia.Controls
     open Avalonia.Media.Immutable
     open Avalonia.Media
-    
+    open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
     
     let create (attrs: IAttr<TextBox> list): IView<TextBox> =
         View.create<TextBox>(attrs)
     
     type TextBox with
-            
+
         static member text<'t when 't :> TextBox>(value: string) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.TextProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<string>(TextBox.TextProperty, value, ValueNone)
             
         static member onTextChanged<'t when 't :> TextBox>(func: string -> unit) =
-            let subscription = Subscription.createFromProperty(TextBox.TextProperty, func)
-            let attr = Attr.createSubscription<'t>(subscription)
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateSubscription<string>(TextBox.TextProperty, func)
             
         static member background<'t when 't :> TextBox>(value: IBrush) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.BackgroundProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<IBrush>(TextBox.BackgroundProperty, value, ValueNone)
             
         static member background<'t when 't :> TextBox>(color: string) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.BackgroundProperty
-            let property = Property.createDirect(accessor, ImmutableSolidColorBrush(Color.Parse(color)))
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>    
+            color |> Color.Parse |> ImmutableSolidColorBrush |> TextBox.background
         
         static member fontFamily<'t when 't :> TextBox>(value: FontFamily) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.FontFamilyProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<FontFamily>(TextBox.FontFamilyProperty, value, ValueNone)
             
         static member fontSize<'t when 't :> TextBox>(value: double) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.FontSizeProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<double>(TextBox.FontSizeProperty, value, ValueNone)
             
         static member fontStyle<'t when 't :> TextBox>(value: FontStyle) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.FontStyleProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<FontStyle>(TextBox.FontStyleProperty, value, ValueNone)
             
         static member fontWeight<'t when 't :> TextBox>(value: FontWeight) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.FontWeightProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<FontWeight>(TextBox.FontWeightProperty, value, ValueNone)
             
         static member foreground<'t when 't :> TextBox>(value: IBrush) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.ForegroundProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<IBrush>(TextBox.ForegroundProperty, value, ValueNone)
+            
+        static member foreground<'t when 't :> TextBox>(color: string) : IAttr<'t> =
+            color |> Color.Parse |> ImmutableSolidColorBrush |> TextBox.foreground
             
         static member textAlignment<'t when 't :> TextBox>(alignment: TextAlignment) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.TextAlignmentProperty
-            let property = Property.createDirect(accessor, alignment)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<TextAlignment>(TextBox.TextAlignmentProperty, alignment, ValueNone)
             
         static member textWrapping<'t when 't :> TextBox>(value: TextWrapping) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty TextBox.TextWrappingProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-
+            AttrBuilder<'t>.CreateProperty<TextWrapping>(TextBox.TextWrappingProperty, value, ValueNone)

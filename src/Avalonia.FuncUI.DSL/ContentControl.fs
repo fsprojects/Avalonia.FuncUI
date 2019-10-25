@@ -4,48 +4,28 @@ namespace Avalonia.FuncUI.DSL
 module ContentControl =  
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
     open Avalonia.Controls.Templates
     open Avalonia.Layout
      
     type ContentControl with
         static member content<'t when 't :> ContentControl>(text: string) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentControl.ContentProperty
-            let property = Property.createDirect(accessor, text)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
-            
-        static member content<'t when 't :> ContentControl>(value: IView) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentControl.ContentProperty
-            let content = Content.createSingle(accessor, Some value)
-            let attr = Attr.createContent<'t> content
-            attr :> IAttr<'t>
-            
-        static member content<'t when 't :> ContentControl>(value: IView option) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentControl.ContentProperty
-            let content = Content.createSingle(accessor, value)
-            let attr = Attr.createContent<'t> content
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<string>(ContentControl.ContentProperty, text, ValueNone)
             
         static member content<'t when 't :> ContentControl>(value: obj) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentControl.BorderBrushProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<obj>(ContentControl.ContentProperty, value, ValueNone)
+            
+        static member content<'t when 't :> ContentControl>(value: IView option) : IAttr<'t> =
+            AttrBuilder<'t>.CreateContentSingle(ContentControl.ContentProperty, value)
+            
+        static member content<'t when 't :> ContentControl>(value: IView) : IAttr<'t> =
+            value |> Some |> ContentControl.content
             
         static member contentTemplate<'t when 't :> ContentControl>(value: IDataTemplate) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentControl.ContentTemplateProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(ContentControl.ContentTemplateProperty, value, ValueNone)
 
         static member horizontalAlignment<'t when 't :> ContentControl>(value: HorizontalAlignment) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentControl.HorizontalAlignmentProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(ContentControl.HorizontalAlignmentProperty, value, ValueNone)
             
         static member verticalAlignment<'t when 't :> ContentControl>(value: VerticalAlignment) : IAttr<'t> =
-            let accessor = Accessor.AvaloniaProperty ContentControl.VerticalAlignmentProperty
-            let property = Property.createDirect(accessor, value)
-            let attr = Attr.createProperty<'t> property
-            attr :> IAttr<'t>
+            AttrBuilder<'t>.CreateProperty<VerticalAlignment>(ContentControl.VerticalAlignmentProperty, value, ValueNone)
