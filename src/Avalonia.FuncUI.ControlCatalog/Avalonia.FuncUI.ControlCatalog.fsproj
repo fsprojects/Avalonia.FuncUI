@@ -7,7 +7,9 @@
 
     <ItemGroup>
         <Compile Include="Library\Extensions.fs" />
-        <Compile Include="Views\Tabs\PanelsDemo.fs" />
+        <Compile Include="Views\Tabs\TreeViewDemo.fs" />
+        <Compile Include="Views\Tabs\ToolTipDemo.fs" />
+        <Compile Include="Views\Tabs\WrapPanelDemo.fs" />
         <Compile Include="Views\Tabs\DataTemplateDemo.fs" />
         <Compile Include="Views\Tabs\GridDemo.fs" />
         <Compile Include="Views\MainView.fs" />

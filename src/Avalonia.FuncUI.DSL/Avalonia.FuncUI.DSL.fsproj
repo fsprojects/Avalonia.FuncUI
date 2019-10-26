@@ -13,12 +13,15 @@
         <Compile Include="Base\Visual.fs" />
         <Compile Include="Base\InputElement.fs" />
         <Compile Include="Base\Panel.fs" />
+        <Compile Include="Base\HeaderedItemsControl.fs" />
         <Compile Include="Panels\WrapPanel.fs" />
         <Compile Include="Panels\UniformGrid.fs" />
         <Compile Include="Panels\Canvas.fs" />
-        <Compile Include="Panels\StackPanel.fs" />
         <Compile Include="Panels\DockPanel.fs" />
         <Compile Include="Panels\Grid.fs" />
+        <Compile Include="Panels\StackPanel.fs" />
+        <Compile Include="Panels\UniformGrid.fs" />
+        <Compile Include="Panels\WrapPanel.fs" />
         <Compile Include="Components\LazyView.fs" />
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="ComboBox.fs" />
@@ -39,6 +42,8 @@
         <Compile Include="SelectingItemsControl.fs" />
         <Compile Include="ItemsControl.fs" />
         <Compile Include="Carousel.fs" />
+        <Compile Include="TreeView.fs" />
+        <Compile Include="ToolTip.fs" />
         <Compile Include="TabControl.fs" />
         <Compile Include="TabItem.fs" />
         <Compile Include="ToggleButton.fs" />
