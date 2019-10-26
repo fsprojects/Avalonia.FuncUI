@@ -22,6 +22,7 @@
         <Compile Include="Components\LazyView.fs" />
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="ComboBox.fs" />
+        <Compile Include="TabStrip.fs" />
         <Compile Include="ComboBoxItem.fs" />
         <Compile Include="ListBox.fs" />
         <Compile Include="Track.fs" />
