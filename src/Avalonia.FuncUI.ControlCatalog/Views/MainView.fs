@@ -35,6 +35,10 @@ module MainView =
                            TabItem.header "Grid Demo"
                            TabItem.content (ViewBuilder.Create<GridDemo.Host>([]))
                        ]
+                       TabItem.create [
+                           TabItem.header "Panels Demo"
+                           TabItem.content (ViewBuilder.Create<PanelsDemo.Host>([]))
+                       ]
                    ]
                ]
                
