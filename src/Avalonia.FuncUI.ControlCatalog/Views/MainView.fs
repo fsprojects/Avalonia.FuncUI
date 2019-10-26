@@ -43,8 +43,11 @@ module MainView =
                            TabItem.header "ToolTip Demo"
                            TabItem.content (ViewBuilder.Create<ToolTipDemo.Host>([]))
                        ]
+                       TabItem.create [
+                           TabItem.header "TreeView Demo"
+                           TabItem.content (ViewBuilder.Create<TreeViewDemo.Host>([]))
+                       ]
                    ]
                ]
-               
             ]
         ]       

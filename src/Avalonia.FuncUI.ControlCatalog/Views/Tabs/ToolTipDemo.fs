@@ -20,8 +20,8 @@ module ToolTipDemo =
 
     let init =
         { isOpen = true
-          tip = "Hover me to see the ToolTip";
-          placement = PlacementMode.Bottom;
+          tip = "This is the ToolTip";
+          placement = PlacementMode.Pointer;
           horizontalOffset = 0.0;
           verticalOffset = 0.0;
           showDelay = 1000 }
@@ -51,11 +51,12 @@ module ToolTipDemo =
                     TextBlock.margin 5.0
                     TextBlock.text "Hover the TextBlock to show the tooltip"
                 ]
-                CheckBox.create [
-                    CheckBox.content "IsOpen"
-                    CheckBox.isChecked state.isOpen
-                    CheckBox.onClick (fun _ -> ToggleIsOpen |> dispatch)
-                ]
+                //CheckBox.create [
+                //    DockPanel.dock Dock.Top
+                //    CheckBox.content "IsOpen"
+                //    CheckBox.isChecked state.isOpen
+                //    CheckBox.onClick (fun _ -> ToggleIsOpen |> dispatch)
+                //]
                 TextBox.create [
                     DockPanel.dock Dock.Top
                     TextBox.text (string state.tip)
@@ -71,14 +72,23 @@ module ToolTipDemo =
                         with ex -> Console.WriteLine(ex) 
                     )
                 ]
-                TextBlock.create [
-                    TextBlock.text "Hover me to see the ToolTip"
+                TextBox.create [
+                    DockPanel.dock Dock.Top
+                    ToolTip.tip "Vertical Offset"
+                    TextBox.text (string state.verticalOffset)
+                    TextBox.onTextChanged (fun text ->
+                        try
+                            text |> Double.Parse |> SetVOffset |> dispatch
+                        with ex -> Console.WriteLine(ex) 
+                    )
+                ]
+                Button.create [
+                    Button.content "Hover me to see the ToolTip"
                     ToolTip.tip state.tip
                     ToolTip.placement state.placement
                     ToolTip.horizontalOffset state.horizontalOffset
                     ToolTip.verticalOffset state.verticalOffset
                     ToolTip.showDelay state.showDelay
-                    ToolTip.isOpen state.isOpen
                 ]
             ]
         ]
