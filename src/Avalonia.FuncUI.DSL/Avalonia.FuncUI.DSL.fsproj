@@ -27,6 +27,8 @@
         <Compile Include="ComboBoxItem.fs" />
         <Compile Include="ListBox.fs" />
         <Compile Include="Track.fs" />
+        <Compile Include="RangeBase.fs" />
+        <Compile Include="ScrollBar.fs" />
         <Compile Include="Thumb.fs" />
         <Compile Include="ListBoxItem.fs" />
         <Compile Include="Border.fs" />
