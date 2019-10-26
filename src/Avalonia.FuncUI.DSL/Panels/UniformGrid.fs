@@ -8,8 +8,8 @@ module UniformGrid =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
    
-    let create (attrs: IAttr<WrapPanel> list): IView<WrapPanel> =
-        ViewBuilder.Create<WrapPanel>(attrs)
+    let create (attrs: IAttr<UniformGrid> list): IView<UniformGrid> =
+        ViewBuilder.Create<UniformGrid>(attrs)
 
     type UniformGrid with
 
