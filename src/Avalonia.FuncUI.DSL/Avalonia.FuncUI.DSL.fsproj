@@ -49,7 +49,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview3" />
+      <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview4" />
     </ItemGroup>
 
 </Project>
