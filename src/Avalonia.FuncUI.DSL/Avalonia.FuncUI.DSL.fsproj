@@ -13,6 +13,7 @@
         <Compile Include="Base\Visual.fs" />
         <Compile Include="Base\InputElement.fs" />
         <Compile Include="Base\Panel.fs" />
+        <Compile Include="Panels\WrapPanel.fs" />
         <Compile Include="Panels\Canvas.fs" />
         <Compile Include="Panels\StackPanel.fs" />
         <Compile Include="Panels\DockPanel.fs" />
