@@ -10,7 +10,7 @@ module ProgressBar =
     let create (attrs: IAttr<ProgressBar> list): IView<ProgressBar> =
         ViewBuilder.Create<ProgressBar>(attrs)
 
-    type RadioButton with
+    type ProgressBar with
 
         static member isIndeterminate<'t when 't :> ProgressBar>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(ProgressBar.IsIndeterminateProperty , value, ValueNone)

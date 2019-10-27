@@ -17,15 +17,15 @@ module ScrollViewer  =
     type ScrollViewer  with            
 
         /// <summary>
-        /// Gets or sets the vertical scrollbar visibility.
+        /// Sets the vertical scrollbar visibility.
         /// </summary>
-        static member verticalScrollBarVisibility<'t when 't :> ScrollViewer>(value: ScrollBarVisibility) : IAttr<'t> =
+        static member verticalScrollBarVisibility<'t when 't :> Control>(value: ScrollBarVisibility) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ScrollBarVisibility>(ScrollViewer.VerticalScrollBarVisibilityProperty, value, ValueNone)
 
         /// <summary>
-        /// Gets or sets the horizontal scrollbar visibility.
+        /// Sets the horizontal scrollbar visibility.
         /// </summary>
-        static member horizontalScrollBarVisibility<'t when 't :> ScrollViewer>(value: ScrollBarVisibility) : IAttr<'t> =
+        static member horizontalScrollBarVisibility<'t when 't :> Control>(value: ScrollBarVisibility) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ScrollBarVisibility>(ScrollViewer.HorizontalScrollBarVisibilityProperty, value, ValueNone)
 
         /// <summary>
