@@ -47,6 +47,10 @@ module MainView =
                            TabItem.header "TreeView Demo"
                            TabItem.content (ViewBuilder.Create<TreeViewDemo.Host>([]))
                        ]
+                       TabItem.create [
+                           TabItem.header "Spinner Demo"
+                           TabItem.content (ViewBuilder.Create<SpinnerDemo.Host>([]))
+                       ]
                    ]
                ]
             ]
