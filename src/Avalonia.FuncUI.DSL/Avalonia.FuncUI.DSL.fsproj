@@ -28,11 +28,17 @@
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="Border.fs" />
         <Compile Include="ComboBox.fs" />
+        <Compile Include="TabStrip.fs" />
+        <Compile Include="TabStripItem.fs" />
         <Compile Include="ComboBoxItem.fs" />
         <Compile Include="CheckBox.fs" />
         <Compile Include="Carousel.fs" />
         <Compile Include="Image.fs" />
         <Compile Include="ListBox.fs" />
+        <Compile Include="Track.fs" />
+        <Compile Include="RangeBase.fs" />
+        <Compile Include="ScrollBar.fs" />
+        <Compile Include="Thumb.fs" />
         <Compile Include="ListBoxItem.fs" />
         <Compile Include="ProgressBar.fs" />
         <Compile Include="RadioButton.fs" />
