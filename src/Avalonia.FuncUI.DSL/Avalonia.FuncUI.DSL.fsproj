@@ -14,17 +14,24 @@
         <Compile Include="Base\TemplatedControl.fs" />
         <Compile Include="Base\StyledElement.fs" />
         <Compile Include="Base\Panel.fs" />
+        <Compile Include="Base\ContentPresenter.fs" />
+        <Compile Include="Base\ContentControl.fs" />
+        <Compile Include="Base\HeaderedContentControl.fs" />
+        <Compile Include="Base\SelectingItemsControl.fs" />
+        <Compile Include="Base\ItemsControl.fs" />
+        <Compile Include="Base\HeaderedItemsControl.fs" />     
+        
         <Compile Include="Panels\Canvas.fs" />
         <Compile Include="Panels\DockPanel.fs" />
         <Compile Include="Panels\Grid.fs" />
         <Compile Include="Panels\StackPanel.fs" />
-        <Compile Include="Panels\WrapPanel.fs" />
         <Compile Include="Panels\UniformGrid.fs" />
         <Compile Include="Panels\WrapPanel.fs" />
-        <Compile Include="Components\RenderOptions.fs" />
         <Compile Include="Components\LazyView.fs" />
+        
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
+        <Compile Include="RenderOptions.fs" />
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="Border.fs" />
         <Compile Include="ComboBox.fs" />
@@ -46,17 +53,10 @@
         <Compile Include="ScrollViewer.fs" />
         <Compile Include="Separator.fs" />
         <Compile Include="Slider.fs" />
-        <Compile Include="Spinner.fs" />
-        <Compile Include="Track.fs" />
-        <Compile Include="Base\ContentPresenter.fs" />
-        <Compile Include="Base\ContentControl.fs" />
-        <Compile Include="Base\HeaderedContentControl.fs" />
+        <Compile Include="Spinner.fs" />       
         <Compile Include="TextBlock.fs" />
         <Compile Include="TextBox.fs" />
-        <Compile Include="Base\SelectingItemsControl.fs" />
         <Compile Include="TreeView.fs" />
-        <Compile Include="Base\ItemsControl.fs" />
-        <Compile Include="Base\HeaderedItemsControl.fs" />
         <Compile Include="ToolTip.fs" />
         <Compile Include="TabControl.fs" />
         <Compile Include="TabItem.fs" />
