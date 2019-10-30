@@ -1,6 +1,5 @@
 namespace Avalonia.FuncUI.DSL
 
-
 [<AutoOpen>]
 module RangeBase =
     open Avalonia.Controls.Primitives

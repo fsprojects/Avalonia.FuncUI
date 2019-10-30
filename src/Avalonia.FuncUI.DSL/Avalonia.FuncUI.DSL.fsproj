@@ -6,39 +6,50 @@
 
     <ItemGroup>
         <Compile Include="Library.fs" />
-        <Compile Include="Base\Animatable.fs" />
         <Compile Include="Base\Layoutable.fs" />
         <Compile Include="Base\Visual.fs" />
         <Compile Include="Base\InputElement.fs" />
         <Compile Include="Base\Control.fs" />
-        <Compile Include="Base\TemplatedControl.fs" />
         <Compile Include="Base\StyledElement.fs" />
         <Compile Include="Base\Panel.fs" />
+        <Compile Include="Base\ContentPresenter.fs" />
+        <Compile Include="Base\Animatable.fs" />
+        <Compile Include="Base\RenderOptions.fs" />
+
+        <Compile Include="Primitives\TemplatedControl.fs" />
+        <Compile Include="Primitives\HeaderedContentControl.fs" />
+        <Compile Include="Primitives\HeaderedSelectingItemsControl.fs" />
+        <Compile Include="Primitives\SelectingItemsControl.fs" />
+        <Compile Include="Primitives\ToggleButton.fs" />
+        <Compile Include="Primitives\UniformGrid.fs" />
+        <Compile Include="Primitives\HeaderedItemsControl.fs" />
+        <Compile Include="Primitives\Track.fs" />
+        <Compile Include="Primitives\Popup.fs" />
+        <Compile Include="Primitives\TabStrip.fs" />
+        <Compile Include="Primitives\TabStripItem.fs" />
+        <Compile Include="Primitives\Thumb.fs" />
+        <Compile Include="Primitives\ScrollBar.fs" />
+        
         <Compile Include="Panels\Canvas.fs" />
         <Compile Include="Panels\DockPanel.fs" />
         <Compile Include="Panels\Grid.fs" />
         <Compile Include="Panels\StackPanel.fs" />
         <Compile Include="Panels\WrapPanel.fs" />
-        <Compile Include="Panels\UniformGrid.fs" />
-        <Compile Include="Panels\WrapPanel.fs" />
-        <Compile Include="Components\RenderOptions.fs" />
         <Compile Include="Components\LazyView.fs" />
+        <Compile Include="ItemsControl.fs" />
+        <Compile Include="ContentControl.fs" />
+        
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="Border.fs" />
         <Compile Include="ComboBox.fs" />
-        <Compile Include="TabStrip.fs" />
-        <Compile Include="TabStripItem.fs" />
         <Compile Include="ComboBoxItem.fs" />
         <Compile Include="CheckBox.fs" />
         <Compile Include="Carousel.fs" />
         <Compile Include="Image.fs" />
         <Compile Include="ListBox.fs" />
-        <Compile Include="Track.fs" />
         <Compile Include="RangeBase.fs" />
-        <Compile Include="ScrollBar.fs" />
-        <Compile Include="Thumb.fs" />
         <Compile Include="ListBoxItem.fs" />
         <Compile Include="ProgressBar.fs" />
         <Compile Include="RadioButton.fs" />
@@ -46,23 +57,17 @@
         <Compile Include="ScrollViewer.fs" />
         <Compile Include="Separator.fs" />
         <Compile Include="Slider.fs" />
-        <Compile Include="Spinner.fs" />
-        <Compile Include="Track.fs" />
-        <Compile Include="Base\ContentPresenter.fs" />
-        <Compile Include="Base\ContentControl.fs" />
-        <Compile Include="Base\HeaderedContentControl.fs" />
+        <Compile Include="Spinner.fs" />       
         <Compile Include="TextBlock.fs" />
         <Compile Include="TextBox.fs" />
-        <Compile Include="Base\SelectingItemsControl.fs" />
         <Compile Include="TreeView.fs" />
-        <Compile Include="Base\ItemsControl.fs" />
-        <Compile Include="Base\HeaderedItemsControl.fs" />
+        <Compile Include="TreeViewItem.fs" />
         <Compile Include="ToolTip.fs" />
         <Compile Include="TabControl.fs" />
         <Compile Include="TabItem.fs" />
-        <Compile Include="ToggleButton.fs" />
         <Compile Include="ViewBox.fs" />
         <Compile Include="DSL.fs" />
+
     </ItemGroup>
 
     <ItemGroup>

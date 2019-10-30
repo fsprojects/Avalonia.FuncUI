@@ -12,13 +12,13 @@ module RepeatButton =
     type RepeatButton with
 
         /// <summary>
-        /// Gets or sets the amount of time, in milliseconds, of repeating clicks.
+        /// Sets the amount of time, in milliseconds, of repeating clicks.
         /// </summary>
         static member interval<'t when 't :> RepeatButton>(value: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(RepeatButton.IntervalProperty, value, ValueNone)
         
         /// <summary>
-        /// Gets or sets the amount of time, in milliseconds, to wait before repeating begins.
+        /// Sets the amount of time, in milliseconds, to wait before repeating begins.
         /// </summary>
         static member delay<'t when 't :> RepeatButton>(value: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(RepeatButton.DelayProperty, value, ValueNone)

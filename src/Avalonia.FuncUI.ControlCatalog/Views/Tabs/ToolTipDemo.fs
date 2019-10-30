@@ -58,13 +58,13 @@ module ToolTipDemo =
                 //    CheckBox.onClick (fun _ -> ToggleIsOpen |> dispatch)
                 //]
                 TextBox.create [
-                    DockPanel.dock Dock.Top
+                    TextBox.dock Dock.Top
                     TextBox.text (string state.tip)
                     TextBox.onTextChanged (fun text -> (SetTip text |> dispatch))
                 ]
                 TextBox.create [
-                    DockPanel.dock Dock.Top
-                    ToolTip.tip "Horizontal Offset"
+                    TextBox.dock Dock.Top
+                    TextBox.tip "Horizontal Offset"
                     TextBox.text (string state.horizontalOffset)
                     TextBox.onTextChanged (fun text ->
                         try
@@ -84,11 +84,11 @@ module ToolTipDemo =
                 ]
                 Button.create [
                     Button.content "Hover me to see the ToolTip"
-                    ToolTip.tip state.tip
-                    ToolTip.placement state.placement
-                    ToolTip.horizontalOffset state.horizontalOffset
-                    ToolTip.verticalOffset state.verticalOffset
-                    ToolTip.showDelay state.showDelay
+                    Button.tip state.tip
+                    Button.placement state.placement
+                    Button.horizontalOffset state.horizontalOffset
+                    Button.verticalOffset state.verticalOffset
+                    Button.showDelay state.showDelay
                 ]
             ]
         ]

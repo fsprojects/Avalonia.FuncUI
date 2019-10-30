@@ -12,7 +12,7 @@ module Spinner =
     type Spinner with
 
         /// <summary>
-        /// Gets or sets <see cref="ValidSpinDirections"/> allowed for this control.
+        /// Sets <see cref="ValidSpinDirections"/> allowed for this control.
         /// </summary>
         static member validSpinDirection<'t when 't :> Spinner>(value: ValidSpinDirections) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ValidSpinDirections>(Spinner.ValidSpinDirectionProperty, value, ValueNone)

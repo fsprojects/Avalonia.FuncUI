@@ -3,7 +3,6 @@
 [<AutoOpen>]
 module ToolTip =
     open Avalonia.Controls
-    open Avalonia.Layout
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
    
