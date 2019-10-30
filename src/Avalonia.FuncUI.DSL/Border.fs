@@ -52,10 +52,7 @@ module Border =
             (left, top, right, bottom) |> CornerRadius |> Border.cornerRadius
             
         static member child<'t when 't :> Border>(value: IView option) : IAttr<'t> =
-            let getter : ('t -> obj) voption = ValueSome (fun control -> control.Child :> obj)
-            let setter : ('t * obj -> unit) voption = ValueNone
-            
-            AttrBuilder<'t>.CreateContentSingle("Child", getter, setter, value)
+            AttrBuilder<'t>.CreateContentSingle(Border.ChildProperty, value)
         
         static member child<'t when 't :> Border>(value: IView) : IAttr<'t> =
             value |> Some |> Border.child

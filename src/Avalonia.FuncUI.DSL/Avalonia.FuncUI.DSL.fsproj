@@ -34,6 +34,7 @@
         <Compile Include="RenderOptions.fs" />
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="Border.fs" />
+        <Compile Include="Popup.fs" />
         <Compile Include="ComboBox.fs" />
         <Compile Include="TabStrip.fs" />
         <Compile Include="TabStripItem.fs" />
