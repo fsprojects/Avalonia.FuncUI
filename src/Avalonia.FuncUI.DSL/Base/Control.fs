@@ -3,10 +3,11 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module Control =  
     open Avalonia.Controls
-    open Avalonia.Media
-    open Avalonia.Visuals.Media.Imaging
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
+    
+    let create (attrs: IAttr<Control> list): IView<Control> =
+        ViewBuilder.Create<Control>(attrs)
     
     type Control with
         static member focusAdorner<'t, 'c when 't :> Control and 'c :> IControl>(value: ITemplate<'c>) : IAttr<'t> =

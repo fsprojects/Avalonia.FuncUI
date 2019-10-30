@@ -1,8 +1,8 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia.Input
 
 [<AutoOpen>]
 module Thumb =
+    open Avalonia.Input
     open Avalonia.Controls.Primitives
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder

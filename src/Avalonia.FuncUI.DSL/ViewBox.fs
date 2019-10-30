@@ -1,12 +1,9 @@
 ﻿namespace Avalonia.FuncUI.DSL
 
-open Avalonia.Media
-
 [<AutoOpen>]
 module ViewBox =
-    open Avalonia.Controls.Primitives
     open Avalonia.Controls
-    open Avalonia.Layout
+    open Avalonia.Media
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
    
@@ -16,7 +13,7 @@ module ViewBox =
     type Viewbox with
 
         /// <summary>
-        /// Gets or sets the stretch mode, which determines how child fits into the available space.
+        /// Sets the stretch mode, which determines how child fits into the available space.
         /// </summary>
         static member stretch<'t when 't :> Viewbox>(value: Stretch) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Stretch>(Viewbox.StretchProperty, value, ValueNone)

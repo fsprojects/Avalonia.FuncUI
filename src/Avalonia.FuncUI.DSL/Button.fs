@@ -2,8 +2,6 @@ namespace Avalonia.FuncUI.DSL
 
 [<AutoOpen>]
 module Button =
-    open System
-    open System.Threading
     open System.Windows.Input 
     open Avalonia.Controls
     open Avalonia.Interactivity

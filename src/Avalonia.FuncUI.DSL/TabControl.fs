@@ -1,5 +1,4 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia.Controls.Templates
 
 [<AutoOpen>]
 module TabControl =

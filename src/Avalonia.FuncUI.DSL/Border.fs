@@ -1,6 +1,4 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia
-open Avalonia.FuncUI.Builder
 
 [<AutoOpen>]
 module Border =

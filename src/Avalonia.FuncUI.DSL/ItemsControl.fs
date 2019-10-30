@@ -1,9 +1,9 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia.Controls.Templates
-open System.Collections
 
 [<AutoOpen>]
 module ItemsControl =
+    open Avalonia.Controls.Templates
+    open System.Collections
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder

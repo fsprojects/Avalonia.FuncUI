@@ -9,7 +9,10 @@ module TemplatedControl =
     open Avalonia.Media
     open Avalonia.Controls.Primitives
     open Avalonia.Controls.Templates
-      
+    
+    let create (attrs: IAttr<TemplatedControl> list): IView<TemplatedControl> =
+        ViewBuilder.Create<TemplatedControl>(attrs)
+        
     type TemplatedControl with
         static member background<'t when 't :> TemplatedControl>(value: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(TemplatedControl.BackgroundProperty, value, ValueNone)
