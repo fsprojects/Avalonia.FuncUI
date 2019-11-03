@@ -35,7 +35,9 @@
         <Compile Include="Panels\Grid.fs" />
         <Compile Include="Panels\StackPanel.fs" />
         <Compile Include="Panels\WrapPanel.fs" />
+        
         <Compile Include="Components\LazyView.fs" />
+        
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />
         
