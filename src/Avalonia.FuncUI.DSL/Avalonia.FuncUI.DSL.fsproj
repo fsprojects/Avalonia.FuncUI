@@ -35,10 +35,19 @@
         <Compile Include="Panels\Grid.fs" />
         <Compile Include="Panels\StackPanel.fs" />
         <Compile Include="Panels\WrapPanel.fs" />
+        
+        <Compile Include="Shapes\Shape.fs" />
+        <Compile Include="Shapes\Rectangle.fs" />
+        <Compile Include="Shapes\Ellipse.fs" />
+        <Compile Include="Shapes\Line.fs" />
+        <Compile Include="Shapes\Polyline.fs" />
+        <Compile Include="Shapes\Polygon.fs" />
+        <Compile Include="Shapes\Path.fs" />      
+        
         <Compile Include="Components\LazyView.fs" />
+        
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />
-        
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
         <Compile Include="ButtonSpinner.fs" />
@@ -67,7 +76,6 @@
         <Compile Include="TabItem.fs" />
         <Compile Include="ViewBox.fs" />
         <Compile Include="DSL.fs" />
-
     </ItemGroup>
 
     <ItemGroup>
@@ -75,7 +83,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview4" />
+      <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview5" />
     </ItemGroup>
 
 </Project>

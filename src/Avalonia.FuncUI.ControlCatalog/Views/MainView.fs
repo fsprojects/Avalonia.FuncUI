@@ -51,6 +51,10 @@ module MainView =
                            TabItem.header "Spinner Demo"
                            TabItem.content (ViewBuilder.Create<SpinnerDemo.Host>([]))
                        ]
+                       TabItem.create [
+                           TabItem.header "Canvas Demo"
+                           TabItem.content (ViewBuilder.Create<CanvasDemo.Host>([]))
+                       ]
                    ]
                ]
             ]

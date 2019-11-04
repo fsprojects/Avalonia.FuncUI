@@ -13,6 +13,7 @@
         <Compile Include="Views\Tabs\WrapPanelDemo.fs" />
         <Compile Include="Views\Tabs\DataTemplateDemo.fs" />
         <Compile Include="Views\Tabs\GridDemo.fs" />
+        <Compile Include="Views\Tabs\CanvasDemo.fs" />
         <Compile Include="Views\MainView.fs" />
         <Compile Include="Main.fs" />
     </ItemGroup>
@@ -24,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview4" />
+      <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview5" />
       <PackageReference Include="Bogus" Version="28.4.1" />
     </ItemGroup>
 
