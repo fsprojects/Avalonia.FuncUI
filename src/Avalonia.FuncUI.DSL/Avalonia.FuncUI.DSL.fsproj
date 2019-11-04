@@ -36,11 +36,18 @@
         <Compile Include="Panels\StackPanel.fs" />
         <Compile Include="Panels\WrapPanel.fs" />
         
+        <Compile Include="Shapes\Shape.fs" />
+        <Compile Include="Shapes\Rectangle.fs" />
+        <Compile Include="Shapes\Ellipse.fs" />
+        <Compile Include="Shapes\Line.fs" />
+        <Compile Include="Shapes\Polyline.fs" />
+        <Compile Include="Shapes\Polygon.fs" />
+        <Compile Include="Shapes\Path.fs" />      
+        
         <Compile Include="Components\LazyView.fs" />
         
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />
-        
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
         <Compile Include="ButtonSpinner.fs" />
@@ -58,8 +65,6 @@
         <Compile Include="RepeatButton.fs" />
         <Compile Include="ScrollViewer.fs" />
         <Compile Include="Separator.fs" />
-        <Compile Include="Shapes\Polygon.fs" />
-        <Compile Include="Shapes\Path.fs" />
         <Compile Include="Slider.fs" />
         <Compile Include="Spinner.fs" />       
         <Compile Include="TextBlock.fs" />
@@ -71,12 +76,6 @@
         <Compile Include="TabItem.fs" />
         <Compile Include="ViewBox.fs" />
         <Compile Include="DSL.fs" />
-        <Compile Include="Shapes\Shape.fs" />
-        <Compile Include="Shapes\Rectangle.fs" />
-        <Compile Include="Shapes\Ellipse.fs" />
-        <Compile Include="Shapes\Line.fs" />
-        <Compile Include="Shapes\Polyline.fs" />
-
     </ItemGroup>
 
     <ItemGroup>
