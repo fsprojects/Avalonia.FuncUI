@@ -5,6 +5,14 @@ module Counter =
     open Avalonia.FuncUI.DSL
     open Avalonia.Layout
     
+    type CellState =
+    | Dead
+    | Alive
+    
+    type Cell = {
+        state: CellState
+    }
+    
     type State = { count : int }
     let init = { count = 0 }
 
