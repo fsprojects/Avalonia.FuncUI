@@ -6,6 +6,10 @@
     </PropertyGroup>
     
     <ItemGroup>
+        <Compile Include="Lib.fs" />
+        <Compile Include="BoardPosition.fs" />
+        <Compile Include="BoardMatrix.fs" />
+        <Compile Include="Board.fs" />
         <Compile Include="Counter.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
