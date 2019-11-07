@@ -25,15 +25,23 @@ module Board =
             UniformGrid.rows board.height
             UniformGrid.children (
                 board.cells
-                |> Array2D.mapi (fun x y cell ->
+                |> Array2D.flati
+                |> Array.map (fun item ->
+                    let x, y, cell = item 
+                    let cellPosition = { x = x; y = y }
+                    
                     Button.create [
-                        Button.onClick (fun _ -> { x = x; y = y } |> KillCell |> dispatch)
-                    ]
+                        match cell with
+                        | Alive ->
+                            yield Button.onClick (fun _ -> cellPosition |> KillCell |> dispatch)
+                            yield Button.background "green"
+                        | Dead ->
+                            yield Button.onClick (fun _ -> cellPosition |> ReviveCell |> dispatch)
+                            yield Button.background "gray"
+                        
+                    ] |> generalize                     
                 )
-                
+                |> Array.toList
             )        
-                                
-                
-            
         ]
         |> generalize
