@@ -28,6 +28,7 @@
         <Compile Include="Primitives\TabStrip.fs" />
         <Compile Include="Primitives\TabStripItem.fs" />
         <Compile Include="Primitives\Thumb.fs" />
+        <Compile Include="Primitives\AccessText.fs" />
         <Compile Include="Primitives\ScrollBar.fs" />
         
         <Compile Include="Panels\Canvas.fs" />
@@ -60,6 +61,10 @@
         <Compile Include="ListBox.fs" />
         <Compile Include="RangeBase.fs" />
         <Compile Include="ListBoxItem.fs" />
+        <Compile Include="MenuBase.fs" />
+        <Compile Include="Menu.fs" />
+        <Compile Include="ContextMenu.fs" />
+        <Compile Include="MenuItem.fs" />
         <Compile Include="ProgressBar.fs" />
         <Compile Include="RadioButton.fs" />
         <Compile Include="RepeatButton.fs" />
