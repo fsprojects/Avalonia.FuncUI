@@ -13,8 +13,8 @@ module Main =
           evolutionRunning : bool }
         
     let initialState() =
-        { board = BoardMatrix.constructBlank(50, 50)
-          evolutionRunning = true }, Cmd.none
+        { board = BoardMatrix.constructBasic(50, 50)
+          evolutionRunning = false }, Cmd.none
 
     type Msg =
     | BoardMsg of Board.Msg   
@@ -27,7 +27,7 @@ module Main =
                 Board.Evolve |> BoardMsg |> dispatch
                 true
                     
-            DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromSeconds 1.0)
+            DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 200.0)
             ()
         Cmd.ofSub sub
     
@@ -48,16 +48,16 @@ module Main =
         DockPanel.create [
             DockPanel.children [
                 Button.create [
-                    Button.isVisible state.evolutionRunning
+                    Button.isVisible (not state.evolutionRunning)
                     Button.dock Dock.Bottom
-                    Button.background "green"
+                    Button.background "#16a085"
                     Button.onClick (fun _ -> StartEvolution |> dispatch)
                     Button.content "start"
                 ]                
                 Button.create [
-                    Button.isVisible (not state.evolutionRunning)
+                    Button.isVisible state.evolutionRunning
                     Button.dock Dock.Bottom
-                    Button.background "red"
+                    Button.background "#d35400"
                     Button.onClick (fun _ -> StopEvolution |> dispatch)
                     Button.content "stop"
                 ]

@@ -12,9 +12,9 @@ open Elmish
 type MainWindow() as this =
     inherit HostWindow()
     do
-        base.Title <- "Counter Example"
-        base.Height <- 400.0
-        base.Width <- 400.0
+        base.Title <- "Game of Life Example"
+        base.Height <- 500.0
+        base.Width <- 500.0
         
         let timer (state: Main.State) =
             let sub (dispatch: Main.Msg -> 'a) =
@@ -22,12 +22,12 @@ type MainWindow() as this =
                     Board.Evolve |> Main.BoardMsg |> dispatch
                     true
                     
-                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromSeconds 1.0)
+                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 100.0)
                 ()
             Cmd.ofSub sub
                 
       
-        //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
+        this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         Elmish.Program.mkProgram Main.initialState Main.update Main.view
         |> Program.withHost this

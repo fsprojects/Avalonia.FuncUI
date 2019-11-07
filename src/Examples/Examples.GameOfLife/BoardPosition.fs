@@ -6,6 +6,9 @@ type BoardPosition =
 
 module BoardPosition =
     
+    let create (x: int, y: int) : BoardPosition =
+        { x = x; y = y; }
+        
     let leftOf (pos: BoardPosition) : BoardPosition =
         { pos with x = pos.x - 1 }
         

@@ -8,15 +8,11 @@ type BoardMatrix =
       cells : Cell[,] }
 
 module BoardMatrix =
-    let constructBlank (width: int, height: int) : BoardMatrix =
-        { width = width
-          height = height
-          cells = Array2D.create width height Dead }
     
-    let private setCell (board: BoardMatrix, pos: BoardPosition, cell: Cell) : BoardMatrix =
+    let private setCell (pos: BoardPosition, cell: Cell) (board: BoardMatrix) : BoardMatrix =
         { board with cells = Array2D.set board.cells pos.x pos.y cell }
         
-    let private getCell (board: BoardMatrix, pos: BoardPosition) : Cell =
+    let private getCell (pos: BoardPosition) (board: BoardMatrix)  : Cell =
         Array2D.get board.cells pos.x pos.y
         
     let private tryGetCell (board: BoardMatrix, pos: BoardPosition) : Cell option =
@@ -26,6 +22,20 @@ module BoardMatrix =
             try Some (Array2D.get board.cells pos.x pos.y)
             with _ -> None
         else None
+        
+    let constructBlank (width: int, height: int) : BoardMatrix =
+        { width = width
+          height = height
+          cells = Array2D.create width height Dead }
+        
+    let constructBasic (width: int, height: int) : BoardMatrix =
+        constructBlank (width, height)
+        |> setCell (BoardPosition.create(2, 1), Alive)
+        |> setCell (BoardPosition.create(3, 2), Alive)
+        |> setCell (BoardPosition.create(1, 3), Alive)
+        |> setCell (BoardPosition.create(2, 3), Alive)
+        |> setCell (BoardPosition.create(3, 3), Alive)
+
         
     let private getNeighbors (board: BoardMatrix, pos: BoardPosition) : Cell list =
         let neighborPositions =
@@ -46,16 +56,16 @@ module BoardMatrix =
             
         
     let placeAliveCell (board: BoardMatrix, pos: BoardPosition) : BoardMatrix =
-        setCell(board, pos, Alive)
+        board |> setCell(pos, Alive)
         
     let placeDeadCell (board: BoardMatrix, pos: BoardPosition) : BoardMatrix =
-        setCell(board, pos, Dead)
+        board |> setCell(pos, Dead)
         
     let isAliveCell (board: BoardMatrix, pos: BoardPosition) : bool =
-        getCell(board, pos) = Alive
+        board |> getCell(pos) = Alive
         
     let isDeadCell (board: BoardMatrix, pos: BoardPosition) : bool =
-        getCell(board, pos) = Dead
+        board |> getCell(pos) = Dead
         
     let evolveCellDead (neighbors: Cell list) : Cell =
         let aliveNeighbors =
