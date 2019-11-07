@@ -14,6 +14,7 @@
         <Compile Include="Views\Tabs\DataTemplateDemo.fs" />
         <Compile Include="Views\Tabs\GridDemo.fs" />
         <Compile Include="Views\Tabs\CanvasDemo.fs" />
+        <Compile Include="Views\Tabs\MenuDemo.fs" />
         <Compile Include="Views\MainView.fs" />
         <Compile Include="Main.fs" />
     </ItemGroup>
