@@ -53,6 +53,8 @@
         <Compile Include="Button.fs" />
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="Border.fs" />
+        <Compile Include="Decorator.fs" />
+        <Compile Include="DataValidationErrors.fs" />
         <Compile Include="ComboBox.fs" />
         <Compile Include="ComboBoxItem.fs" />
         <Compile Include="CheckBox.fs" />
@@ -65,13 +67,17 @@
         <Compile Include="Menu.fs" />
         <Compile Include="ContextMenu.fs" />
         <Compile Include="MenuItem.fs" />
+        <Compile Include="GridSplitter.fs" />
         <Compile Include="ProgressBar.fs" />
         <Compile Include="RadioButton.fs" />
         <Compile Include="RepeatButton.fs" />
         <Compile Include="ScrollViewer.fs" />
         <Compile Include="Separator.fs" />
         <Compile Include="Slider.fs" />
-        <Compile Include="Spinner.fs" />       
+        <Compile Include="DrawingPresenter.fs" />
+        <Compile Include="Expander.fs" />
+        <Compile Include="Spinner.fs" />
+        <Compile Include="LayoutTransformControl.fs" />       
         <Compile Include="TextBlock.fs" />
         <Compile Include="TextBox.fs" />
         <Compile Include="TreeView.fs" />
