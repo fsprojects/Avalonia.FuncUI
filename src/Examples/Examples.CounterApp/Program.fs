@@ -1,24 +1,25 @@
-﻿namespace CounterElmishSample
+﻿namespace Examples.CounterApp
 
-open Avalonia.FuncUI.Components.Hosts
 open Avalonia
+open Avalonia.FuncUI.Components.Hosts
+open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Elmish
-open Elmish
 open Avalonia.Controls.ApplicationLifetimes
-open Avalonia.Controls
+open Elmish
 
 type MainWindow() as this =
-    inherit Window()
-    //inherit HostWindow()
-
+    inherit HostWindow()
     do
-        base.Title <- "Counter Elmish"
-        //base.Height <- 400.0
-        //base.Width <- 400.0    
+        base.Title <- "Counter Example"
+        base.Height <- 400.0
+        base.Width <- 400.0    
       
-        this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
+        //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
-        ()
+        Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
+        |> Program.withHost this
+        |> Program.withConsoleTrace
+        |> Program.run
         
 type App() =
     inherit Application()
@@ -32,19 +33,14 @@ type App() =
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
             let mainWindow = MainWindow()
             desktopLifetime.MainWindow <- mainWindow
-           
         | _ -> ()
 
 module Program =
-    open Avalonia
-    open Avalonia.Logging.Serilog
 
     [<EntryPoint>]
-    [<CompiledName "Main">]
     let main(args: string[]) =
         AppBuilder
             .Configure<App>()
             .UsePlatformDetect()
             .UseSkia()
-            .LogToDebug()
             .StartWithClassicDesktopLifetime(args)
