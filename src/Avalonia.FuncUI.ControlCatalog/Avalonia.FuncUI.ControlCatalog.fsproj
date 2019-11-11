@@ -7,6 +7,7 @@
 
     <ItemGroup>
         <Compile Include="Library\Extensions.fs" />
+        
         <Compile Include="Views\Tabs\SpinnerDemo.fs" />
         <Compile Include="Views\Tabs\TreeViewDemo.fs" />
         <Compile Include="Views\Tabs\ToolTipDemo.fs" />
@@ -15,7 +16,10 @@
         <Compile Include="Views\Tabs\GridDemo.fs" />
         <Compile Include="Views\Tabs\CanvasDemo.fs" />
         <Compile Include="Views\Tabs\MenuDemo.fs" />
+        <Compile Include="Views\Tabs\StylesDemo.fs" />
+        <AvaloniaResource Include="Views\Tabs\Styles.xaml" />
         <Compile Include="Views\MainView.fs" />
+        
         <Compile Include="Main.fs" />
     </ItemGroup>
 

@@ -7,7 +7,6 @@ module Helpers =
     let generalize (view: IView<'t>) : IView =
         view :> IView
         
-        
 [<AutoOpen>]
 module AvaloniaExtensions =
     open Avalonia.Markup.Xaml.Styling

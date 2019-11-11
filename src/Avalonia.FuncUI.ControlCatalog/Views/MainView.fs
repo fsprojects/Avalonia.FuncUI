@@ -26,6 +26,7 @@ module MainView =
         DockPanel.create [
             DockPanel.children [
                TabControl.create [
+                   TabControl.tabStripPlacement Dock.Left
                    TabControl.viewItems [
                        TabItem.create [
                            TabItem.header "Data Template Demo"
@@ -58,6 +59,10 @@ module MainView =
                        TabItem.create [
                            TabItem.header "Menu Demo"
                            TabItem.content (ViewBuilder.Create<MenuDemo.Host>([]))
+                       ]
+                       TabItem.create [
+                           TabItem.header "Styles Demo"
+                           TabItem.content (ViewBuilder.Create<StylesDemo.Host>([]))
                        ]
                    ]
                ]

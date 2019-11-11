@@ -39,6 +39,7 @@
     <Compile Include="Components\Lazy.fs" />
     <Compile Include="Components\DataTemplateView.fs" />
     <Compile Include="Builder.fs" />
+    <Compile Include="DSL.fs" />
   </ItemGroup>
 
 </Project>
