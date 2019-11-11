@@ -74,20 +74,20 @@ module Counter =
         | Increment -> { state with count =  state.count + 1 }
         | Decrement -> { state with count =  state.count - 1 }
     
-    let view (state: CounterState) (dispatch): View =
-        Views.dockPanel [
-            Attrs.children [
-                Views.button [
-                    Attrs.click (fun sender args -> dispatch Increment)
-                    Attrs.content "click to increment"
+    let view (state: CounterState) (dispatch): IView =
+        DockPanel.create [
+            DockPanel.children [
+                Button.create [
+                    Button.onClick (fun sender args -> dispatch Increment)
+                    Button.content "click to increment"
                 ]
-                Views.button [
-                    Attrs.click (fun sender args -> dispatch Decrement)
-                    Attrs.content "click to decrement" 
+                Button.create [
+                    Button.onClick (fun sender args -> dispatch Decrement)
+                    Button.content "click to decrement" 
                 ]
-                Views.textBlock [
-                    Attrs.dockPanel_dock Dock.Top
-                    Attrs.text (sprintf "the count is %i" state.count)
+                TextBlock.create [
+                    TextBlock.dock Dock.Top
+                    TextBlock.text (sprintf "the count is %i" state.count)
                 ]
             ]
         ]    
