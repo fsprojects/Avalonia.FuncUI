@@ -78,11 +78,11 @@ module Counter =
         DockPanel.create [
             DockPanel.children [
                 Button.create [
-                    Button.onClick (fun sender args -> dispatch Increment)
+                    Button.onClick (fun _ -> dispatch Increment)
                     Button.content "click to increment"
                 ]
                 Button.create [
-                    Button.onClick (fun sender args -> dispatch Decrement)
+                    Button.onClick (fun _ -> dispatch Decrement)
                     Button.content "click to decrement" 
                 ]
                 TextBlock.create [
