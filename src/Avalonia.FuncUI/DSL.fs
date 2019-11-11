@@ -7,6 +7,12 @@ module Helpers =
     let generalize (view: IView<'t>) : IView =
         view :> IView
         
+
+[<AutoOpen>]
+module StyleExtensions =
+    open Avalonia.FuncUI.Types
+    
+
         
 [<AutoOpen>]
 module AvaloniaExtensions =
