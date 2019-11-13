@@ -1,5 +1,6 @@
 namespace Examples.GameOfLife
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.Input
 

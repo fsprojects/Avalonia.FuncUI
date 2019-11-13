@@ -1,21 +1,14 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
 open Avalonia
-open System
-open Avalonia.Controls
 open Avalonia.Controls
 open Avalonia.Controls.Presenters
-open Avalonia.Controls.Shapes
+open Elmish
+open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
-open Elmish
-open Avalonia.Layout
-open Avalonia.Markup.Xaml.Styling
-open Avalonia.Media
 open Avalonia.Styling
-open Avalonia.Styling
-open SharpDX.Direct3D11
 
 module StylesDemo =
     type State = { color: string }

@@ -1,17 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <Version>0.1.0</Version>
-    <Authors>JaggerJo</Authors>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/JaggerJo/Avalonia.FuncUI</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/JaggerJo/Avalonia.FuncUI</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIconUrl>https://github.com/JaggerJo/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
-    <Product>JaggerJo.Avalonia.FuncUI.Elmish</Product>
-    <PackageId>JaggerJo.Avalonia.FuncUI.Elmish</PackageId>
-    <RepositoryType></RepositoryType>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

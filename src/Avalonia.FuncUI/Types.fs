@@ -153,7 +153,7 @@ module Types =
             member this.Attrs = this.attrs
 
     
-    // TODO: maybe use active patterns to Virtual DON Misc
+    // TODO: maybe move active patterns to Virtual DON Misc
 
     let internal (|Property'|_|) (attr: IAttr)  =
         attr.Property

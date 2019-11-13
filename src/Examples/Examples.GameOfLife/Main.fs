@@ -22,12 +22,12 @@ module Main =
     | StopEvolution
 
     let timer (state: State) =
-        let sub (dispatch: Msg -> 'a) =
+        let sub (dispatch: Msg -> unit) =
             let invoke() =
                 Board.Evolve |> BoardMsg |> dispatch
                 true
                     
-            DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 200.0)
+            DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 200.0) |> ignore
             ()
         Cmd.ofSub sub
     
