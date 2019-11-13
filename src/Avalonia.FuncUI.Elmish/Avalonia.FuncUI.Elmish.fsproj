@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>0.2.0</Version>
+    <Authors>JaggerJo</Authors>
+    <Product>JaggerJo.Avalonia.FuncUI.Elmish</Product>
+    <PackageId>JaggerJo.Avalonia.FuncUI.Elmish</PackageId>
+    <PackageProjectUrl>https://github.com/FuncUI/Avalonia.FuncUI</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/FuncUI/Avalonia.FuncUI</RepositoryUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
+    <Title>Avalonia FuncUI Elmish</Title>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,21 +20,10 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.9.0-preview7" />
     <PackageReference Include="Elmish" Version="3.0.0" />
+    <PackageReference Update="FSharp.Core" Version="4.6.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Update="FSharp.Core" Version="4.6.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>
-
 </Project>
