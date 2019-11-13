@@ -1,4 +1,4 @@
-namespace Avalonia.FuncUI.DSL
+namespace Avalonia.FuncUI
 
 [<AutoOpen>]
 module Helpers =

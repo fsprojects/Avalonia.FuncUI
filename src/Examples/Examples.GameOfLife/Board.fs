@@ -27,8 +27,7 @@ module Board =
             UniformGrid.children (
                 board.cells
                 |> Array2D.flati
-                |> Array.map (fun item ->
-                    let x, y, cell = item 
+                |> Array.map (fun (x, y, cell) ->
                     let cellPosition = { x = x; y = y }
                     
                     Button.create [
