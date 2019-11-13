@@ -9,7 +9,9 @@
 
   <ItemGroup>
     <Compile Include="LibTests.fs" />
-    <Compile Include="VirtualDomTests.fs" />
+    <Compile Include="VirtualDom\VirtualDom.ModuleTests.fs" />
+    <Compile Include="VirtualDom\VirtualDom.DifferTests.fs" />
+    <Compile Include="VirtualDom\VirtualDom.PatcherTests.fs" /> 
     <Compile Include="Program.fs" />
   </ItemGroup>
 

@@ -1,11 +1,11 @@
 ﻿namespace Examples.CounterApp
 
 open Avalonia
+open Elmish
 open Avalonia.FuncUI.Components.Hosts
-open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open Avalonia.Controls.ApplicationLifetimes
-open Elmish
 
 type MainWindow() as this =
     inherit HostWindow()
