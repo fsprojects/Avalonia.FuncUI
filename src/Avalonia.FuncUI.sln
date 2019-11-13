@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{681AB0E5
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControlCatalog", "ControlCatalog", "{5DB968C6-935E-41AC-A252-644B4886AF8A}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ClockApp", "Examples\Examples.ClockApp\Examples.ClockApp.fsproj", "{1401B46D-1F14-4D29-8E45-96E62D46405F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{D328F897-16D3-43CA-A746-3744DC6BA050}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D328F897-16D3-43CA-A746-3744DC6BA050}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D328F897-16D3-43CA-A746-3744DC6BA050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1401B46D-1F14-4D29-8E45-96E62D46405F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1401B46D-1F14-4D29-8E45-96E62D46405F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1401B46D-1F14-4D29-8E45-96E62D46405F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1401B46D-1F14-4D29-8E45-96E62D46405F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{D328F897-16D3-43CA-A746-3744DC6BA050} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{3D6BBB49-E127-4141-A296-BA504C597FA1} = {681AB0E5-A733-4CFE-872A-10B810DAF86D}
 		{2EE61E50-F492-4024-85D3-D310D05B4D72} = {5DB968C6-935E-41AC-A252-644B4886AF8A}
+		{1401B46D-1F14-4D29-8E45-96E62D46405F} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
