@@ -11,9 +11,12 @@ pool:
 
 steps:
 # install .Net Core
-- task: DotNetCoreInstaller@0
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
   inputs:
-    version: '3.0.100'
+    packageType: sdk
+    version: 3.x
+    installationPath: $(Agent.ToolsDirectory)/dotnet
 
 # restore
 - task: DotNetCoreCLI@2
