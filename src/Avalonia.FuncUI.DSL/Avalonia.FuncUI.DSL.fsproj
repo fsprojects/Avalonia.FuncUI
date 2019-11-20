@@ -11,6 +11,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
         <Title>Avalonia FuncUI DSL</Title>
+        <PackageVersion>0.2.3</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -29,7 +30,6 @@
         <Compile Include="Primitives\HeaderedContentControl.fs" />
         <Compile Include="Primitives\HeaderedSelectingItemsControl.fs" />
         <Compile Include="Primitives\SelectingItemsControl.fs" />
-        <Compile Include="Primitives\ToggleButton.fs" />
         <Compile Include="Primitives\UniformGrid.fs" />
         <Compile Include="Primitives\HeaderedItemsControl.fs" />
         <Compile Include="Primitives\Track.fs" />
@@ -60,6 +60,7 @@
         <Compile Include="ContentControl.fs" />
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
+        <Compile Include="ToggleButton.fs" />
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="Border.fs" />
         <Compile Include="Decorator.fs" />
