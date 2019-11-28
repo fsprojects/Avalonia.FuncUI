@@ -33,3 +33,10 @@ steps:
     command: build
     projects: '**/*.fsproj'
     arguments: '--configuration Release'
+
+# tests
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*UnitTests.csproj'
+    testRunTitle: 'Unit Tests'
