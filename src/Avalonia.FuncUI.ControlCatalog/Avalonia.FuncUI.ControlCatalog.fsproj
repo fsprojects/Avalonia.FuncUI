@@ -10,6 +10,7 @@
         
         <Compile Include="Views\Tabs\SpinnerDemo.fs" />
         <Compile Include="Views\Tabs\TreeViewDemo.fs" />
+        <Compile Include="Views\Tabs\NumericUpDownDemo.fs" />
         <Compile Include="Views\Tabs\ToolTipDemo.fs" />
         <Compile Include="Views\Tabs\WrapPanelDemo.fs" />
         <Compile Include="Views\Tabs\DataTemplateDemo.fs" />

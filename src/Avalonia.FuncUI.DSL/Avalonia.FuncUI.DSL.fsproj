@@ -62,6 +62,7 @@
         <Compile Include="Button.fs" />
         <Compile Include="ToggleButton.fs" />
         <Compile Include="ButtonSpinner.fs" />
+        <Compile Include="NumericUpDown.fs" />
         <Compile Include="Border.fs" />
         <Compile Include="Decorator.fs" />
         <Compile Include="DataValidationErrors.fs" />

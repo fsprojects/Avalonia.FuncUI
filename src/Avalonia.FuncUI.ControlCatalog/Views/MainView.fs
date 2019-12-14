@@ -6,7 +6,7 @@ open Avalonia.FuncUI.Builder
 open Avalonia.Layout
 
 module MainView =
-    
+
     type CounterState = {
         dataTemplateState : DataTemplateDemo.State
     }
@@ -16,12 +16,12 @@ module MainView =
     }
 
     type Msg =
-    | DataTemplateDemoMsg of DataTemplateDemo.Msg 
+    | DataTemplateDemoMsg of DataTemplateDemo.Msg
 
     let update (msg: Msg) (state: CounterState) : CounterState =
         match msg with
         | DataTemplateDemoMsg msg -> { state with dataTemplateState = DataTemplateDemo.update msg state.dataTemplateState }
-    
+
     let view (state: CounterState) (dispatch) =
         DockPanel.create [
             DockPanel.children [
@@ -49,6 +49,10 @@ module MainView =
                            TabItem.content (ViewBuilder.Create<TreeViewDemo.Host>([]))
                        ]
                        TabItem.create [
+                           TabItem.header "NumericUpDown Demo"
+                           TabItem.content (ViewBuilder.Create<NumericUpDownDemo.Host>([]))
+                       ]
+                       TabItem.create [
                            TabItem.header "Spinner Demo"
                            TabItem.content (ViewBuilder.Create<SpinnerDemo.Host>([]))
                        ]
@@ -67,4 +71,4 @@ module MainView =
                    ]
                ]
             ]
-        ]       
+        ]
