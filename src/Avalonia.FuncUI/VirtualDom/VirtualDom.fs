@@ -3,15 +3,14 @@ namespace Avalonia.FuncUI.VirtualDom
 open Avalonia.Controls
 
 open Avalonia.FuncUI.Types
-open Delta
+open Avalonia.FuncUI.VirtualDom.Delta
 
 module rec VirtualDom =
 
     let create (view: IView) : IControl =
-        let root = Patcher.create view.ViewType
-        let delta = ViewDelta.From view
-        Patcher.patch(root, delta)
-        root
+        view
+        |> ViewDelta.From
+        |> Patcher.create
 
     let update (root: IControl, last: IView, next: IView) : unit =
         let delta = Differ.diff(last, next)
@@ -45,4 +44,3 @@ module rec VirtualDom =
             match delta with
             | ValueSome delta -> host.Content <- Patcher.create (delta)
             | ValueNone -> host.Content <- null
-        ()
