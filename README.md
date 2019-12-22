@@ -22,28 +22,7 @@ This library allows you to write cross-plattform GUI Applications entirely in F#
 ## Getting started
 Check out the [Wiki](https://github.com/JaggerJo/Avalonia.FuncUI/wiki) (WIP) and [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
 
-### 🧱 Templates
-
-**Install the templates [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI.Templates/) / [fuget](https://www.fuget.org/packages/JaggerJo.Avalonia.FuncUI.Templates/)**
-```
-dotnet new -i JaggerJo.Avalonia.FuncUI.Templates
-```
-**Create new app**
-```
-dotnet new avalonia-funcUI-basic -n NewApp
-```
-
-### 📦 Packages
-
-**Avalonia.FuncUI [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI/) / [fuget](https://www.fuget.org/packages/JaggerJo.Avalonia.FuncUI/)**
-```
-Install-Package JaggerJo.Avalonia.FuncUI
-```
-
-**Avalonia.FuncUI.Elmish [nuget](https://www.nuget.org/packages/JaggerJo.Avalonia.FuncUI.Elmish/) /  [fuget](https://www.fuget.org/packages/JaggerJo.Avalonia.FuncUI.Elmish/)**
-```
-Install-Package JaggerJo.Avalonia.FuncUI.Elmish
-```
+### 🧱 [Templates](https://github.com/AvaloniaCommunity/Avalonia.FuncUI.ProjectTemplates)
 
 ## Current State
 Should be usable, API is stable-ish (expect some minor changes).
