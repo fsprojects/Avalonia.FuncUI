@@ -1,5 +1,10 @@
 namespace Avalonia.FuncUI.UnitTests.VirtualDom
 
+open Avalonia.Controls
+open Avalonia.FuncUI.Types
+open Avalonia.Media
+open Avalonia.Media.Immutable
+
 module ModuleTests =
     open Avalonia.FuncUI.VirtualDom
     open Avalonia.FuncUI.DSL
@@ -10,7 +15,7 @@ module ModuleTests =
 
     [<Fact>]
     let ``integration test 1`` () =
-        let view = 
+        let view =
             StackPanel.create [
                 StackPanel.children [
                     CheckBox.create [
@@ -24,7 +29,7 @@ module ModuleTests =
                 ]
             ]
 
-        let view' = 
+        let view' =
             StackPanel.create [
                 StackPanel.children [
                     CheckBox.create [
@@ -63,7 +68,7 @@ module ModuleTests =
 
     [<Fact>]
     let ``integration test 2`` () =
-        let view = 
+        let view =
             StackPanel.create [
                 StackPanel.children [
                     CheckBox.create [
@@ -77,7 +82,7 @@ module ModuleTests =
                 ]
             ]
 
-        let view' = 
+        let view' =
             StackPanel.create [
                 StackPanel.children [
                     CheckBox.create [
@@ -96,7 +101,7 @@ module ModuleTests =
                 ]
             ]
 
-        let view'' = 
+        let view'' =
             StackPanel.create [
                 StackPanel.children [
                     CheckBox.create [
@@ -142,3 +147,90 @@ module ModuleTests =
         Assert.Equal("2" :> obj, (stackpanel.Children.[2] :?> CheckBox).Content)
         Assert.Equal(Nullable(false), (stackpanel.Children.[2] :?> CheckBox).IsChecked)
         ()
+
+    [<Fact>]
+    let ``integration test 'VirtualDom.updateRoot' (from null to Button to TextBlock)`` () =
+        let view : IView =
+            Button.create [
+                Button.content "I'm a button"
+                Button.background "green"
+            ] |> generalize
+
+        let view': IView =
+            TextBlock.create [
+                TextBlock.text "I'm a text block"
+                TextBlock.background "green"
+            ] |> generalize
+
+        let host = new ContentControl()
+
+        Assert.Equal(null, host.Content)
+
+        VirtualDom.updateRoot (host, None, Some view)
+
+        Assert.IsType(typeof<Button>, host.Content)
+        Assert.Equal("I'm a button", (host.Content :?> Button).Content :?> string)
+        Assert.Equal("green" |> Color.Parse |> ImmutableSolidColorBrush |> (fun a -> a :> IBrush), (host.Content :?> Button).Background.ToImmutable())
+
+        VirtualDom.updateRoot (host, Some view, Some view')
+
+        Assert.IsType(typeof<TextBlock>, host.Content)
+        Assert.Equal("I'm a text block", (host.Content :?> TextBlock).Text)
+        Assert.Equal("green" |> Color.Parse |> ImmutableSolidColorBrush |> (fun a -> a :> IBrush), (host.Content :?> TextBlock).Background.ToImmutable())
+        ()
+
+
+    [<Fact>]
+    let ``integration test 'VirtualDom.updateRoot' (from null to Button to null)`` () =
+        let view : IView =
+            Button.create [
+                Button.content "I'm a button"
+                Button.background "green"
+            ] |> generalize
+
+        let host = new ContentControl()
+
+        Assert.Equal(null, host.Content)
+
+        VirtualDom.updateRoot (host, None, Some view)
+
+        Assert.IsType(typeof<Button>, host.Content)
+        Assert.Equal("I'm a button", (host.Content :?> Button).Content :?> string)
+        Assert.Equal("green" |> Color.Parse |> ImmutableSolidColorBrush |> (fun a -> a :> IBrush), (host.Content :?> Button).Background.ToImmutable())
+
+        VirtualDom.updateRoot (host, Some view, None)
+
+        Assert.Equal(null, host.Content)
+        ()
+
+    [<Fact>]
+    let ``integration test 'VirtualDom.updateRoot' (reuse/patch button)`` () =
+        let view : IView =
+            Button.create [
+                Button.content "I'm a button"
+                Button.background "green"
+            ] |> generalize
+
+        let view': IView =
+            Button.create [
+                Button.content "I'm still a button"
+                Button.background "red"
+            ] |> generalize
+
+        let host = new ContentControl()
+
+        Assert.Equal(null, host.Content)
+
+        VirtualDom.updateRoot (host, None, Some view)
+
+        let buttonRef = host.Content
+        Assert.IsType(typeof<Button>, host.Content)
+        Assert.Equal("I'm a button", (host.Content :?> Button).Content :?> string)
+        Assert.Equal("green" |> Color.Parse |> ImmutableSolidColorBrush |> (fun a -> a :> IBrush), (host.Content :?> Button).Background.ToImmutable())
+
+        VirtualDom.updateRoot (host, Some view, Some view')
+
+        Assert.IsType(typeof<Button>, host.Content)
+        Assert.Equal("I'm still a button", (host.Content :?> Button).Content :?> string)
+        Assert.Equal("red" |> Color.Parse |> ImmutableSolidColorBrush |> (fun a -> a :> IBrush), (host.Content :?> Button).Background.ToImmutable())
+        Assert.True(Object.ReferenceEquals(buttonRef, host.Content), "Button is still the same instance")
