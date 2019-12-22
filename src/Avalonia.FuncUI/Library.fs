@@ -47,15 +47,15 @@ module Observable =
         sub <- Observable.subscribe callback' source
         sub
 
+module internal Utils =
+    let cast<'t>(a: obj) : 't =
+        a :?> 't
+
 [<AutoOpen>]
 module internal Extensions =
-    open Avalonia
     open Avalonia.Interactivity
     open System
     open System.Reactive.Linq
-
-    let cast<'t>(a: obj) : 't =
-        a :?> 't
 
     type IObservable<'a> with
         member this.SubscribeWeakly(callback: 'a -> unit, target) =

@@ -38,7 +38,10 @@ module rec VirtualDom =
         match root with
         | ValueSome control ->
             match delta with
-            | ValueSome delta -> Patcher.patch (control, delta)
+            | ValueSome delta ->
+                match control.GetType() = delta.viewType with
+                | true -> Patcher.patch (control, delta)
+                | false -> host.Content <- Patcher.create (delta)
             | ValueNone -> host.Content <- null
         | ValueNone ->
             match delta with
