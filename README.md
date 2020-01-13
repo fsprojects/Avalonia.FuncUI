@@ -10,9 +10,6 @@
 <a href="https://gitter.im/Avalonia-FuncUI/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge"><img src="https://badges.gitter.im/Avalonia-FuncUI/community.svg"></a>
 </p><br>
 
-
-> A new major version is currently in development. Most problems that are inherited from the current architecture will be addressed. There will be breaking changes. It is basically a rewrite to get things right from the ground up. This also means there will be new features such as 📣 subscribable properties, a better discoverable DSL, even more strongly typed views and more to come.
-
 ![](github/img/hero.png)
 *(Application was created using Avalonia.FuncUI!)*
 
@@ -20,15 +17,12 @@
 This library allows you to write cross-plattform GUI Applications entirely in F# - No XAML, but a declarative elm like DSL. MVU (Model-View-Update) architecture support is built in, and bindings to use it with Elmish are also ready to use.
 
 ## Getting started
-Check out the [Wiki](https://github.com/JaggerJo/Avalonia.FuncUI/wiki) (WIP) and [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
+Check out the [Wiki](https://github.com/JaggerJo/Avalonia.FuncUI/wiki) (WIP - examples are currently for 0.1.x) and [Examples](https://github.com/JaggerJo/Avalonia.FuncUI/tree/master/src/Examples).
 
 ### 🧱 [Templates](https://github.com/AvaloniaCommunity/Avalonia.FuncUI.ProjectTemplates)
 
-## Current State
-Should be usable, API is stable-ish (expect some minor changes).
-
 ## Contributing
-Please contribute to this library through issue reports, pull requests, code reviews and discussion.
+Please contribute to this library through issue reports, pull requests, code reviews, documentation and discussion. 
 
 ## Example
 Below is the code of a simple counter app (using the Avalonia.FuncUI.Elmish package).
