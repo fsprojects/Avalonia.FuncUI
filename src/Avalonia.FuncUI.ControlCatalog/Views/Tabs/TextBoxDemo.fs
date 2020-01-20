@@ -1,0 +1,55 @@
+namespace Avalonia.FuncUI.ControlCatalog.Views
+
+open Avalonia
+open Avalonia.Controls
+open Avalonia.Controls.Presenters
+open Elmish
+open Avalonia.FuncUI
+open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.Components
+open Avalonia.FuncUI.Elmish
+open Avalonia.Styling
+
+module TextBoxDemo =
+    type State = { watermark: string }
+
+    let init = { watermark = "" }
+
+    type Msg =
+    | SetWatermark of string
+
+    let update (msg: Msg) (state: State) : State =
+        match msg with
+        | SetWatermark text -> { state with watermark = text }
+           
+    let view (state: State) (dispatch) =
+        StackPanel.create [
+            StackPanel.spacing 10.0
+            StackPanel.children [
+                TextBox.create [
+                  TextBox.watermark state.watermark
+                ]
+
+                Button.create [
+                    Button.content "Set Watermark"
+                    Button.onClick(fun _ -> dispatch (SetWatermark "I'm the watermark"))
+                ]
+                
+                Button.create [
+                    Button.content "Unset Watermark"
+                    Button.onClick(fun _ -> dispatch (SetWatermark ""))
+                ] 
+            ]
+        ]   
+        
+    type Host() as this =
+        inherit Hosts.HostControl()
+        do
+            Elmish.Program.mkSimple (fun () -> init) update view
+            |> Program.withHost this
+            |> Program.withConsoleTrace
+            |> Program.run
+        
+        
+        
+
