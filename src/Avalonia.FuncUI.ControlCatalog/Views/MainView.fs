@@ -68,6 +68,10 @@ module MainView =
                            TabItem.header "Styles Demo"
                            TabItem.content (ViewBuilder.Create<StylesDemo.Host>([]))
                        ]
+                       TabItem.create [
+                           TabItem.header "TextBox Demo"
+                           TabItem.content (ViewBuilder.Create<TextBoxDemo.Host>([]))
+                       ]
                    ]
                ]
             ]

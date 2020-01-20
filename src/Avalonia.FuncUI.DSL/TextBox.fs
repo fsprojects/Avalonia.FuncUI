@@ -72,3 +72,6 @@ module TextBox =
             
         static member newLine<'t when 't :> TextBox>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(TextBox.NewLineProperty, value, ValueNone)
+            
+        static member watermark<'t when 't :> TextBox>(value: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(TextBox.WatermarkProperty, value, ValueNone)
