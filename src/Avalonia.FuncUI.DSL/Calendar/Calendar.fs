@@ -28,14 +28,14 @@ module Calendar =
         static member selectionMode<'t when 't :> Calendar>(value: SelectionMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<SelectionMode>(Calendar.SelectionModeProperty, value, ValueNone)
 
-        static member selectedDate<'t when 't :> Calendar>(value: DateTime option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<DateTime option>(Calendar.SelectedDateProperty, value, ValueNone)
+        static member selectedDate<'t when 't :> Calendar>(value: DateTime Nullable) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DateTime Nullable>(Calendar.SelectedDateProperty, value, ValueNone)
 
         static member displayDate<'t when 't :> Calendar>(value: DateTime) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime>(Calendar.DisplayDateProperty, value, ValueNone)
 
-        static member displayDateStart<'t when 't :> Calendar>(value: DateTime option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<DateTime option>(Calendar.DisplayDateStartProperty, value, ValueNone)
+        static member displayDateStart<'t when 't :> Calendar>(value: DateTime Nullable) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DateTime Nullable>(Calendar.DisplayDateStartProperty, value, ValueNone)
 
-        static member displayDateEnd<'t when 't :> Calendar>(value: DateTime option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<DateTime option>(Calendar.DisplayDateEndProperty, value, ValueNone)
+        static member displayDateEnd<'t when 't :> Calendar>(value: DateTime Nullable) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DateTime Nullable>(Calendar.DisplayDateEndProperty, value, ValueNone)

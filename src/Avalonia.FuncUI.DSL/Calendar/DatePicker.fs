@@ -15,11 +15,11 @@ module DatePicker =
         static member displayDate<'t when 't :> DatePicker>(value: DateTime) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime>(DatePicker.DisplayDateProperty, value, ValueNone)
 
-        static member displayDateStart<'t when 't :> DatePicker>(value: DateTime option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<DateTime option>(DatePicker.DisplayDateStartProperty, value, ValueNone)
+        static member displayDateStart<'t when 't :> DatePicker>(value: DateTime Nullable) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DateTime Nullable>(DatePicker.DisplayDateStartProperty, value, ValueNone)
 
-        static member displayDateEnd<'t when 't :> DatePicker>(value: DateTime option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<DateTime option>(DatePicker.DisplayDateEndProperty, value, ValueNone)
+        static member displayDateEnd<'t when 't :> DatePicker>(value: DateTime Nullable) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DateTime Nullable>(DatePicker.DisplayDateEndProperty, value, ValueNone)
 
         static member firstDayOfWeek<'t when 't :> DatePicker>(value: DayOfWeek) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DayOfWeek>(DatePicker.FirstDayOfWeekProperty, value, ValueNone)
@@ -30,8 +30,8 @@ module DatePicker =
         static member isTodayHighlightedProperty<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DatePicker.IsTodayHighlightedProperty , value, ValueNone)
 
-        static member selectedDate<'t when 't :> DatePicker>(value: DateTime option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<DateTime option>(DatePicker.SelectedDateProperty, value, ValueNone)
+        static member selectedDate<'t when 't :> DatePicker>(value: DateTime Nullable) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DateTime Nullable>(DatePicker.SelectedDateProperty, value, ValueNone)
 
         static member selectedDateFormat<'t when 't :> DatePicker>(value: DatePickerFormat) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DatePickerFormat>(DatePicker.SelectedDateFormatProperty, value, ValueNone)
