@@ -57,9 +57,6 @@
         <Compile Include="Components\LazyView.fs" />      
         
         <Compile Include="Calendar\Calendar.fs" />      
-        <Compile Include="Calendar\CalendarItem.fs" />      
-        <Compile Include="Calendar\CalendarButton.fs" />      
-        <Compile Include="Calendar\CalendarDayButton.fs" />      
         <Compile Include="Calendar\DatePicker.fs" />
         
         <Compile Include="ItemsControl.fs" />
