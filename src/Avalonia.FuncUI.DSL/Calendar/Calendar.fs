@@ -1,5 +1,6 @@
 ﻿namespace Avalonia.FuncUI.DSL
 
+
 [<AutoOpen>]
 module Calendar =
     open System
@@ -31,11 +32,33 @@ module Calendar =
         static member selectedDate<'t when 't :> Calendar>(value: DateTime Nullable) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime Nullable>(Calendar.SelectedDateProperty, value, ValueNone)
 
+        static member selectedDate<'t when 't :> Calendar>(value: DateTime) : IAttr<'t> =
+            value |> Nullable |> Calendar.selectedDate
+
+        static member selectedDate<'t when 't :> Calendar>(value: DateTime option) : IAttr<'t> =
+            value |> Option.toNullable |> Calendar.selectedDate
+
+        static member onSelectedDateChanged<'t when 't :> Calendar>(func: (DateTime Nullable -> unit)) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<DateTime Nullable>(Calendar.SelectedDateProperty, func)
+
         static member displayDate<'t when 't :> Calendar>(value: DateTime) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime>(Calendar.DisplayDateProperty, value, ValueNone)
 
         static member displayDateStart<'t when 't :> Calendar>(value: DateTime Nullable) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime Nullable>(Calendar.DisplayDateStartProperty, value, ValueNone)
 
+        static member displayDateStart<'t when 't :> Calendar>(value: DateTime) : IAttr<'t> =
+            value |> Nullable |> Calendar.displayDateStart
+
+        static member displayDateStart<'t when 't :> Calendar>(value: DateTime option) : IAttr<'t> =
+            value |> Option.toNullable |> Calendar.displayDateStart
+
         static member displayDateEnd<'t when 't :> Calendar>(value: DateTime Nullable) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime Nullable>(Calendar.DisplayDateEndProperty, value, ValueNone)
+
+        static member displayDateEnd<'t when 't :> Calendar>(value: DateTime) : IAttr<'t> =
+            value |> Nullable |> Calendar.displayDateEnd
+
+        static member displayDateEnd<'t when 't :> Calendar>(value: DateTime option) : IAttr<'t> =
+            value |> Option.toNullable |> Calendar.displayDateEnd
+
