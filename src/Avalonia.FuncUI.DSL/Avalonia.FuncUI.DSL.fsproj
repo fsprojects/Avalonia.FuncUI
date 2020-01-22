@@ -54,7 +54,10 @@
         <Compile Include="Shapes\Polygon.fs" />
         <Compile Include="Shapes\Path.fs" />      
         
-        <Compile Include="Components\LazyView.fs" />
+        <Compile Include="Components\LazyView.fs" />      
+        
+        <Compile Include="Calendar\Calendar.fs" />      
+        <Compile Include="Calendar\DatePicker.fs" />
         
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />
