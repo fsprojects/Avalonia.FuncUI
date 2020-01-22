@@ -1,10 +1,12 @@
 ﻿namespace Avalonia.FuncUI.DSL
 
 
+
 [<AutoOpen>]
 module Calendar =
     open System
     open Avalonia.Media
+    open Avalonia.Media.Immutable
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
@@ -17,11 +19,14 @@ module Calendar =
         static member firstDayOfWeek<'t when 't :> Calendar>(value: DayOfWeek) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DayOfWeek>(Calendar.FirstDayOfWeekProperty, value, ValueNone)
         
-        static member isTodayHighlightedProperty<'t when 't :> Calendar>(value: bool) : IAttr<'t> =
+        static member isTodayHighlighted<'t when 't :> Calendar>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Calendar.IsTodayHighlightedProperty , value, ValueNone)
 
         static member headerBackground<'t when 't :> Calendar>(value: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(Calendar.HeaderBackgroundProperty, value, ValueNone)
+        
+        static member headerBackground<'t when 't :> Calendar>(color: string) : IAttr<'t> =
+            color |> Color.Parse |> ImmutableSolidColorBrush |> Calendar.headerBackground
 
         static member displayMode<'t when 't :> Calendar>(value: CalendarMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<CalendarMode>(Calendar.DisplayModeProperty, value, ValueNone)

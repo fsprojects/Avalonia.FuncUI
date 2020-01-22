@@ -42,7 +42,7 @@ module DatePicker =
         static member onDrdownOpenChanged<'t when 't :> DatePicker>(func: (bool -> unit)) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription(DatePicker.IsDropDownOpenProperty, func)
         
-        static member isTodayHighlightedProperty<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
+        static member isTodayHighlighted<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DatePicker.IsTodayHighlightedProperty , value, ValueNone)
 
         static member selectedDate<'t when 't :> DatePicker>(value: DateTime Nullable) : IAttr<'t> =
