@@ -39,8 +39,6 @@ module internal rec Differ =
                 accessor = content.accessor;
                 content = empty
             }
-        | _ -> failwithf "can't reset attribute '%A'. There is no reset operation implemented." last
-            
         | Subscription' subscription ->
             AttrDelta.Subscription {
                 name = subscription.name
@@ -49,6 +47,8 @@ module internal rec Differ =
                 funcCapturesState = subscription.funcCapturesState
                 func = None
             }
+            
+            
         
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
         match next with
