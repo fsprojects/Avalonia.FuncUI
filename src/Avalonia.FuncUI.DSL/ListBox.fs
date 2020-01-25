@@ -21,5 +21,5 @@ module ListBox =
         static member selectionMode<'t when 't :> ListBox>(mode: SelectionMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<SelectionMode>(ListBox.SelectionModeProperty, mode, ValueNone)
         
-        static member virtualizationMode<'t when 't :> ComboBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
+        static member virtualizationMode<'t when 't :> ListBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ItemVirtualizationMode>(ListBox.VirtualizationModeProperty, mode, ValueNone)
