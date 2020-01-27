@@ -35,7 +35,7 @@
     <ItemGroup>
       <PackageReference Include="Avalonia.Desktop" Version="0.9.2" />
       <PackageReference Include="Bogus" Version="28.4.1" />
-      <PackageReference Update="FSharp.Core" Version="4.6.2" />
+      <PackageReference Update="FSharp.Core" Version="4.7.0" />
     </ItemGroup>
 
 </Project>
