@@ -32,8 +32,11 @@ module TemplatedControl =
         static member borderThickness<'t when 't :> TemplatedControl>(value: float) : IAttr<'t> =
             value |> Thickness |> TemplatedControl.borderThickness
 
-        static member borderThickness<'t when 't :> TemplatedControl>(value: int) : IAttr<'t> =
-            value |> float |> Thickness |> TemplatedControl.borderThickness
+        static member borderThickness<'t when 't :> TemplatedControl>(horizontal: float, vertical: float) : IAttr<'t> =
+            (horizontal, vertical) |> Thickness |> TemplatedControl.borderThickness
+            
+        static member borderThickness<'t when 't :> TemplatedControl>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
+            (left, top, right, bottom) |> Thickness |> TemplatedControl.borderThickness
             
         static member fontFamily<'t when 't :> TemplatedControl>(value: FontFamily) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<FontFamily>(TemplatedControl.FontFamilyProperty, value, ValueNone)
