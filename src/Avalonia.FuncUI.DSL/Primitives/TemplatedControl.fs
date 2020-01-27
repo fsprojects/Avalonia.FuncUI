@@ -25,7 +25,19 @@ module TemplatedControl =
             
         static member borderBrush<'t when 't :> TemplatedControl>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> TemplatedControl.borderBrush
+            
+        static member borderThickness<'t when 't :> TemplatedControl>(value: Thickness) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<Thickness>(TemplatedControl.BorderThicknessProperty, value, ValueNone)
+            
+        static member borderThickness<'t when 't :> TemplatedControl>(value: float) : IAttr<'t> =
+            value |> Thickness |> TemplatedControl.borderThickness
 
+        static member borderThickness<'t when 't :> TemplatedControl>(horizontal: float, vertical: float) : IAttr<'t> =
+            (horizontal, vertical) |> Thickness |> TemplatedControl.borderThickness
+            
+        static member borderThickness<'t when 't :> TemplatedControl>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
+            (left, top, right, bottom) |> Thickness |> TemplatedControl.borderThickness
+            
         static member fontFamily<'t when 't :> TemplatedControl>(value: FontFamily) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<FontFamily>(TemplatedControl.FontFamilyProperty, value, ValueNone)
             
