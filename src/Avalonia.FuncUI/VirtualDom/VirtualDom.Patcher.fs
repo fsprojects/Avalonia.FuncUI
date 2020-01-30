@@ -103,37 +103,12 @@ module internal rec Patcher =
 
         (* read only, so there must be a get accessor *)
         let patch_IEnumerable (collection: IEnumerable) : IEnumerable =
-            let newList = System.Collections.Generic.List<obj>()
-
-            if List.isEmpty delta then
-                () // list is empty by default
-            else
-                // index is not modified here,
-                // so will always be 0 and
-                // Patcher.create will always be called for 0th element.
-                let mutable index = 0
-                for item in collection do
-                    if index + 1 <= delta.Length then
-                        if item.GetType() = delta.[index].GetType() then
-                            newList.Add delta.[index]
-                        else
-                            // newItem is unused
-                            let newItem = Patcher.create delta.[index]
-                            newList.Add delta.[index]
-                    else ()
-
-                if index + 1 < delta.Length then
-                    let _, remaining = delta |> List.splitAt index
-
-                    // item is unused
-                    for item in remaining do
-                        // newItem is unused.
-                        // index is not incremented, so again always 0th element will be patched.
-                        let newItem = Patcher.create delta.[index]
-                        newList.Add delta.[index]
+            let newList =
+                collection
+                |> Seq.cast<obj>
+                |> ResizeArray
 
             (newList :> IEnumerable)
-
 
         let patch (getValue: (unit -> obj) option, setValue: (obj -> unit) option) =
             let value =
