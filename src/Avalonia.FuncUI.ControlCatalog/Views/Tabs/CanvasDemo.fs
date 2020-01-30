@@ -1,16 +1,13 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
 open Avalonia
-open System
 open Avalonia.Controls
 open Avalonia.Controls.Shapes
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
 open Elmish
-open Avalonia.Layout
 open Avalonia.Media
-open SharpDX.Direct3D11
 
 module CanvasDemo =
     type State = { itemCount: int }
@@ -24,7 +21,7 @@ module CanvasDemo =
         match msg with
         | SetCount count -> { state with itemCount = count }
            
-    let view (state: State) (dispatch) =
+    let view (_state: State) (_dispatch) =
         Canvas.create [
             Canvas.width 300.0
             Canvas.height 400.0

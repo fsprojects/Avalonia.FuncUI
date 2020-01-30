@@ -22,13 +22,13 @@ module StylesDemo =
         match msg with
         | SetColor color -> { state with color = color }
            
-    let view (state: State) (dispatch) =
+    let view (_state: State) (_dispatch) =
         StackPanel.create [
             StackPanel.styles (
                 let styles = Styles()
                 let style = Style(fun x -> x.Class("round").OfType<Button>().Template().OfType<ContentPresenter>())
                          
-                let setter = new Setter(ContentPresenter.CornerRadiusProperty, CornerRadius(10.0))
+                let setter = Setter(ContentPresenter.CornerRadiusProperty, CornerRadius(10.0))
                 style.Setters.Add setter
                 styles.Add style
                 styles
@@ -41,7 +41,7 @@ module StylesDemo =
                          let styles = Styles()
                          let style = Style(fun x -> x.OfType<Button>().Template().OfType<ContentPresenter>())
                          
-                         let setter = new Setter(ContentPresenter.CornerRadiusProperty, CornerRadius(10.0))
+                         let setter = Setter(ContentPresenter.CornerRadiusProperty, CornerRadius(10.0))
                          style.Setters.Add setter
                          
                          

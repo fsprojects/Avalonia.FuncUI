@@ -1,8 +1,6 @@
 namespace Avalonia.FuncUI.DSL
 open Avalonia.Input
 open Avalonia.Interactivity
-open Avalonia.Interactivity
-open Avalonia.Interactivity
 open System.Windows.Input
 
 [<AutoOpen>]

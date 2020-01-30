@@ -15,7 +15,7 @@ module internal rec Patcher =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
             | null ->
-                let dict = new ConcurrentDictionary<_, _>()
+                let dict = ConcurrentDictionary<_, _>()
                 ViewMetaData.SetViewSubscriptions(view, dict)
                 dict
             | value -> value
@@ -23,7 +23,7 @@ module internal rec Patcher =
         match attr.func with
         // add or update
         | Some handler ->
-            let cts = attr.subscribe(view, attr.func.Value)
+            let cts = attr.subscribe(view, handler)
 
             let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
 
@@ -108,12 +108,16 @@ module internal rec Patcher =
             if List.isEmpty delta then
                 () // list is empty by default
             else
+                // index is not modified here,
+                // so will always be 0 and
+                // Patcher.create will always be called for 0th element.
                 let mutable index = 0
                 for item in collection do
                     if index + 1 <= delta.Length then
                         if item.GetType() = delta.[index].GetType() then
                             newList.Add delta.[index]
                         else
+                            // newItem is unused
                             let newItem = Patcher.create delta.[index]
                             newList.Add delta.[index]
                     else ()
@@ -121,7 +125,10 @@ module internal rec Patcher =
                 if index + 1 < delta.Length then
                     let _, remaining = delta |> List.splitAt index
 
+                    // item is unused
                     for item in remaining do
+                        // newItem is unused.
+                        // index is not incremented, so again always 0th element will be patched.
                         let newItem = Patcher.create delta.[index]
                         newList.Add delta.[index]
 

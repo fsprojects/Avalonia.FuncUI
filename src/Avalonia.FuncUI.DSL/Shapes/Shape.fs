@@ -1,11 +1,9 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia
 open Avalonia.Collections
 open Avalonia.Media.Immutable
 
 [<AutoOpen>]
 module Shape =
-    open Avalonia.Controls
     open Avalonia.Controls.Shapes
     open Avalonia.Media
     open Avalonia.FuncUI.Types

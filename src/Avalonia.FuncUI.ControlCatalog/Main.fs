@@ -40,7 +40,6 @@ type App() =
         | _ -> ()
 
 module Program =
-    open Avalonia
     open Avalonia.Logging.Serilog
 
     [<EntryPoint>]

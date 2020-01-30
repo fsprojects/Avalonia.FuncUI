@@ -9,7 +9,6 @@ module ModuleTests =
     open Avalonia.FuncUI.VirtualDom
     open Avalonia.FuncUI.DSL
     open Avalonia.FuncUI
-    open Avalonia.Controls
     open Xunit
     open System
 
@@ -162,7 +161,7 @@ module ModuleTests =
                 TextBlock.background "green"
             ] |> generalize
 
-        let host = new ContentControl()
+        let host = ContentControl()
 
         Assert.Equal(null, host.Content)
 
@@ -188,7 +187,7 @@ module ModuleTests =
                 Button.background "green"
             ] |> generalize
 
-        let host = new ContentControl()
+        let host = ContentControl()
 
         Assert.Equal(null, host.Content)
 
@@ -217,7 +216,7 @@ module ModuleTests =
                 Button.background "red"
             ] |> generalize
 
-        let host = new ContentControl()
+        let host = ContentControl()
 
         Assert.Equal(null, host.Content)
 

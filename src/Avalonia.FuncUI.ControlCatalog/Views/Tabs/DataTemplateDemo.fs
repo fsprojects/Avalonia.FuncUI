@@ -17,7 +17,7 @@ module DataTemplateDemo =
           Description : string }
         with
             static member Random () : Product =
-                let faker = new Bogus.Faker(locale = "de")
+                let faker = Bogus.Faker(locale = "de")
                 { Id = Guid.NewGuid();
                   Name = faker.Commerce.Product()
                   Price = faker.Commerce.Price(0.99m, 1000.0m, 2)
@@ -50,7 +50,7 @@ module DataTemplateDemo =
         | Select product ->
             { state with Selected = product }
     
-    let productDetailsView (state: Product option) (dispatch) =
+    let productDetailsView (state: Product option) (_dispatch) =
         DockPanel.create [
             DockPanel.dock Dock.Right
             DockPanel.isVisible state.IsSome  
@@ -148,7 +148,7 @@ module DataTemplateDemo =
                             Button.create [
                                 Button.dock Dock.Right
                                 Button.content "remove"
-                                Button.onClick (fun args -> data.Id |> Msg.Remove |> dispatch)
+                                Button.onClick (fun _ -> data.Id |> Msg.Remove |> dispatch)
                             ]                                         
                         ]
                     ]                                  

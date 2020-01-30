@@ -1,6 +1,5 @@
 namespace Avalonia.FuncUI.DSL
 open Avalonia.Controls
-open SkiaSharp
 
 [<AutoOpen>]
 module StyledElement =  

@@ -8,7 +8,6 @@ module DifferTests =
     open Xunit
     open Avalonia.Layout
     open Avalonia.Media
-    open System
 
     [<Fact>]
     let ``Diff Properties`` () =

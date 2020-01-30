@@ -34,14 +34,14 @@ module Observable =
 
         let mutable sub:IDisposable = null
         let mutable disposed = false
-        let wr = new WeakReference<_>(target)
+        let wr = WeakReference<_>(target)
 
         let dispose() =
             lock (sub) (fun () ->
                 if not disposed then sub.Dispose(); disposed <- true)
 
         let callback' x =
-            let isAlive, target = wr.TryGetTarget()
+            let isAlive, _target = wr.TryGetTarget()
             if isAlive then callback x else dispose()
 
         sub <- Observable.subscribe callback' source

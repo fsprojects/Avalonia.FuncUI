@@ -2,7 +2,6 @@ namespace Avalonia.FuncUI.DSL
 
 [<AutoOpen>]
 module Image =
-    open Avalonia
     open Avalonia.Controls
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types

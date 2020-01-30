@@ -1,17 +1,10 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
-open Avalonia
-open System
 open Avalonia.Controls
-open Avalonia.Controls
-open Avalonia.Controls.Shapes
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
 open Elmish
-open Avalonia.Layout
-open Avalonia.Media
-open SharpDX.Direct3D11
 
 module MenuDemo =
     type State = { color: string }
