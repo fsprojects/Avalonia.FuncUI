@@ -107,6 +107,8 @@ module internal rec Patcher =
                 collection
                 |> Seq.cast<obj>
                 |> ResizeArray
+                
+            patch_IList newList
 
             (newList :> IEnumerable)
 
