@@ -6,8 +6,6 @@ open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
 open Elmish
-open Avalonia.Layout
-open Avalonia.Media
 
 module SpinnerDemo =
     type State =

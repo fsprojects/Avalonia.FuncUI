@@ -1,7 +1,6 @@
 namespace Examples.ClockApp
 open Avalonia
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.DSL
 
 module Clock =
     open System
@@ -38,7 +37,7 @@ module Clock =
         Point(handX, handY)
         
     
-    let view (state: State) (dispatch) =
+    let view (state: State) (_dispatch) =
         Canvas.create [
             Canvas.background "#2c3e50"
             Canvas.children [

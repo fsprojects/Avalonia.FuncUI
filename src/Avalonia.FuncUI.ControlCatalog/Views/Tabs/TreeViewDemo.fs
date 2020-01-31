@@ -1,14 +1,10 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
-open System
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
 open Elmish
-open Avalonia.Layout
-open Avalonia.Media
-open Avalonia.Markup.Xaml.Templates
 
 module TreeViewDemo =
 
@@ -44,7 +40,7 @@ module TreeViewDemo =
         match msg with
         | Noop -> state
            
-    let view (state: State) (dispatch) =
+    let view (_state: State) (_dispatch) =
         DockPanel.create [
             DockPanel.children [
                 TreeView.create [

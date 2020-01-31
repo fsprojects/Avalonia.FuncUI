@@ -15,7 +15,7 @@ module internal rec Patcher =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
             | null ->
-                let dict = new ConcurrentDictionary<_, _>()
+                let dict = ConcurrentDictionary<_, _>()
                 ViewMetaData.SetViewSubscriptions(view, dict)
                 dict
             | value -> value
@@ -23,7 +23,7 @@ module internal rec Patcher =
         match attr.func with
         // add or update
         | Some handler ->
-            let cts = attr.subscribe(view, attr.func.Value)
+            let cts = attr.subscribe(view, handler)
 
             let addFactory = Func<string, CancellationTokenSource>(fun key -> cts)
 
@@ -103,30 +103,14 @@ module internal rec Patcher =
 
         (* read only, so there must be a get accessor *)
         let patch_IEnumerable (collection: IEnumerable) : IEnumerable =
-            let newList = System.Collections.Generic.List<obj>()
-
-            if List.isEmpty delta then
-                () // list is empty by default
-            else
-                let mutable index = 0
-                for item in collection do
-                    if index + 1 <= delta.Length then
-                        if item.GetType() = delta.[index].GetType() then
-                            newList.Add delta.[index]
-                        else
-                            let newItem = Patcher.create delta.[index]
-                            newList.Add delta.[index]
-                    else ()
-
-                if index + 1 < delta.Length then
-                    let _, remaining = delta |> List.splitAt index
-
-                    for item in remaining do
-                        let newItem = Patcher.create delta.[index]
-                        newList.Add delta.[index]
+            let newList =
+                collection
+                |> Seq.cast<obj>
+                |> ResizeArray
+                
+            patch_IList newList
 
             (newList :> IEnumerable)
-
 
         let patch (getValue: (unit -> obj) option, setValue: (obj -> unit) option) =
             let value =

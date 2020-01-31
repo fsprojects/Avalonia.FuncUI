@@ -62,7 +62,7 @@ module WrapPanelDemo =
                 CheckBox.create[
                     CheckBox.dock Dock.Top
                     CheckBox.content "Is Horizontal"
-                    CheckBox.onClick (fun e -> dispatch FlipOrientation)
+                    CheckBox.onClick (fun _ -> dispatch FlipOrientation)
                 ]
                 WrapPanel.create [
                     WrapPanel.itemHeight state.itemHeight

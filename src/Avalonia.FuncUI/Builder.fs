@@ -119,7 +119,7 @@ type AttrBuilder<'view>() =
     static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: IControl, handler: 'h) =
+        let subscribeFunc (control: IControl, _handler: 'h) =
             let cts = new CancellationTokenSource()
             control
                 .GetObservable(property)
@@ -141,7 +141,7 @@ type AttrBuilder<'view>() =
     static member CreateSubscription<'arg when 'arg :> RoutedEventArgs>(property: RoutedEvent<'arg>, func: 'arg -> unit) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: IControl, handler: 'h) =
+        let subscribeFunc (control: IControl, _handler: 'h) =
             let cts = new CancellationTokenSource()
             control
                 .GetObservable(property)
@@ -163,7 +163,7 @@ type AttrBuilder<'view>() =
     static member CreateSubscription<'arg>(name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit) =
         // TODO: extract to helpers module
         // subscribe to event
-        let subscribeFunc (control: IControl, handler: 'h) =
+        let subscribeFunc (control: IControl, _handler: 'h) =
             let cts = new CancellationTokenSource()
             factory(control, func, cts.Token)
             cts

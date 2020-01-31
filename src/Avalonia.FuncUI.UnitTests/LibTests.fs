@@ -2,7 +2,6 @@
 
 open Avalonia.FuncUI.Library
 open Xunit
-open System
 
 module Library =
 

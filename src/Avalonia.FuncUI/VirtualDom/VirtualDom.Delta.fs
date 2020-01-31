@@ -3,7 +3,6 @@ namespace Avalonia.FuncUI.VirtualDom
 open System
 open System.Threading
 
-open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
 
 module internal rec Delta =

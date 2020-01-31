@@ -48,10 +48,10 @@ type DataTemplateView<'data>(
 
         member this.Match (data: obj) : bool =
             match data with
-            | :? 'data as data -> true
+            | :? 'data as _data -> true
             | _ -> false
             
-        member this.Build (data: obj) : IControl =
+        member this.Build (_data: obj) : IControl =
             let host = HostControl()
 
             let update (data: 'data) : unit =

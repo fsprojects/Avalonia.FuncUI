@@ -1,6 +1,5 @@
 namespace Avalonia.FuncUI.VirtualDom
 
-open Avalonia.FuncUI.Library
 open Avalonia.FuncUI.Types
 open Delta
 
@@ -48,8 +47,6 @@ module internal rec Differ =
                 func = None
             }
             
-            
-        
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
         match next with
         | Some next ->
@@ -94,7 +91,7 @@ module internal rec Differ =
             | _ -> invalidOp "'next' must be of type content"
     
     let private diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
-        let delta = new ResizeArray<AttrDelta>()
+        let delta = ResizeArray<AttrDelta>()
         
         for lastAttr in lastAttrs do
             let nextAttr = nextAttrs |> List.tryFind (fun attr -> attr.UniqueName = lastAttr.UniqueName)

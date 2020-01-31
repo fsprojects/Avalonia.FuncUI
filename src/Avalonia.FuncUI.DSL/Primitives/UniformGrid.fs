@@ -3,8 +3,6 @@
 [<AutoOpen>]
 module UniformGrid =
     open Avalonia.Controls.Primitives
-    open Avalonia.Controls
-    open Avalonia.Layout
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
    
