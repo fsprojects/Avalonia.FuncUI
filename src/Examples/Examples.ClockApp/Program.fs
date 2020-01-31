@@ -22,7 +22,7 @@ type MainWindow() as this =
         base.MaxWidth <- 200.0
         base.MinWidth <- 200.0
       
-        let timer (state: Clock.State) =
+        let timer (_state: Clock.State) =
             let sub (dispatch: Clock.Msg -> unit) =
                 let invoke() =
                     DateTime.Now |> Clock.Msg.Tick |> dispatch

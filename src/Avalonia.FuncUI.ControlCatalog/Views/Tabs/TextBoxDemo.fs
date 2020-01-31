@@ -1,14 +1,11 @@
 namespace Avalonia.FuncUI.ControlCatalog.Views
 
-open Avalonia
 open Avalonia.Controls
-open Avalonia.Controls.Presenters
 open Elmish
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
-open Avalonia.Styling
 
 module TextBoxDemo =
     type State = { watermark: string }

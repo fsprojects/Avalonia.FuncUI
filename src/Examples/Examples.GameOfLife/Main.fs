@@ -3,9 +3,6 @@ namespace Examples.GameOfLife
 module Main =
     open Avalonia.Controls
     open Avalonia.FuncUI.DSL
-    open Avalonia.Layout
-    open Avalonia.Threading
-    open System
     open Elmish
     
     type State =
@@ -21,16 +18,6 @@ module Main =
     | StartEvolution
     | StopEvolution
 
-    let timer (state: State) =
-        let sub (dispatch: Msg -> unit) =
-            let invoke() =
-                Board.Evolve |> BoardMsg |> dispatch
-                true
-                    
-            DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 200.0) |> ignore
-            ()
-        Cmd.ofSub sub
-    
     let update (msg: Msg) (state: State) : State * Cmd<_>=
         match msg with
         | StartEvolution -> { state with evolutionRunning = true }, Cmd.none

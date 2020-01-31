@@ -2,10 +2,7 @@
 
 open System
 open Avalonia
-open Avalonia.Controls
-open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
-open Avalonia.FuncUI.VirtualDom
 open Avalonia.FuncUI.Components.Hosts
 
 [<Sealed>]
@@ -20,22 +17,22 @@ type LazyView<'state, 'args>() =
     static let stateProperty =
         AvaloniaProperty.RegisterDirect<LazyView<'state, 'args>, 'state>(
             "State",
-            new Func<LazyView<'state, 'args>, 'state>(fun control -> control.State),
-            new Action<LazyView<'state, 'args>, 'state>(fun control value -> control.State <- value)
+            Func<LazyView<'state, 'args>, 'state>(fun control -> control.State),
+            Action<LazyView<'state, 'args>, 'state>(fun control value -> control.State <- value)
         )
         
     static let argsProperty =
         AvaloniaProperty.RegisterDirect<LazyView<'state, 'args>, 'args>(
             "Args",
-            new Func<LazyView<'state, 'args>, 'args>(fun control -> control.Args),
-            new Action<LazyView<'state, 'args>, 'args>(fun control value -> control.Args <- value)
+            Func<LazyView<'state, 'args>, 'args>(fun control -> control.Args),
+            Action<LazyView<'state, 'args>, 'args>(fun control value -> control.Args <- value)
         )
         
     static let viewFuncProperty =
         AvaloniaProperty.RegisterDirect<LazyView<'state, 'args>, ('state -> 'args -> IView) voption>(
             "ViewFunc",
-            new Func<LazyView<'state, 'args>, voption<('state -> 'args -> IView)>>(fun control -> control.ViewFunc),
-            new Action<LazyView<'state, 'args>, voption<('state -> 'args -> IView)>>(fun control value -> control.ViewFunc <- value)
+            Func<LazyView<'state, 'args>, voption<('state -> 'args -> IView)>>(fun control -> control.ViewFunc),
+            Action<LazyView<'state, 'args>, voption<('state -> 'args -> IView)>>(fun control value -> control.ViewFunc <- value)
         )
         
     member this.State
@@ -50,7 +47,7 @@ type LazyView<'state, 'args>() =
         with get () : voption<('state -> 'args -> IView)> = _viewFunc
         and set (value) = this.SetAndRaise(LazyView<'state, 'args>.ViewFuncProperty, &_viewFunc, value) |> ignore  
         
-    override this.OnAttachedToVisualTree args =
+    override this.OnAttachedToVisualTree _args =
         let onNext (state: 'state) : unit =
             let nextView =
                 match this.ViewFunc with
@@ -67,7 +64,7 @@ type LazyView<'state, 'args>() =
                 .GetObservable(LazyView<'state, 'args>.StateProperty)
                 .Subscribe(onNext)
                 
-    override this.OnDetachedFromLogicalTree args =
+    override this.OnDetachedFromLogicalTree _args =
         if subscription <> null then
             subscription.Dispose()
             subscription <- null

@@ -8,6 +8,6 @@ module AvaloniaExtensions =
 
     type Styles with
         member this.Load (source: string) = 
-            let style = new StyleInclude(baseUri = null)
-            style.Source <- new Uri(source)
+            let style = StyleInclude(baseUri = null)
+            style.Source <- Uri(source)
             this.Add(style)

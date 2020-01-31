@@ -3,13 +3,9 @@ open Avalonia.FuncUI.Builder
 
 [<AutoOpen>]
 module Popup =
-    open Avalonia
     open Avalonia.Controls
     open Avalonia.Controls.Primitives
     open Avalonia.FuncUI.Types
-    open Avalonia.FuncUI.Builder
-    open Avalonia.Media
-    open Avalonia.Media.Immutable
     
     let create (attrs: IAttr<Popup> list): IView<Popup> =
         ViewBuilder.Create<Popup>(attrs)

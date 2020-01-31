@@ -16,7 +16,7 @@ type MainWindow() as this =
         base.Height <- 500.0
         base.Width <- 500.0
         
-        let timer (state: Main.State) =
+        let timer (_state: Main.State) =
             let sub (dispatch: Main.Msg -> unit) =
                 let invoke() =
                     Board.Evolve |> Main.BoardMsg |> dispatch

@@ -3,10 +3,8 @@ open Avalonia
 
 [<AutoOpen>]
 module ContentPresenter =
-    open Avalonia
     open Avalonia.Controls.Templates
     open Avalonia.Layout    
-    open Avalonia.Controls
     open Avalonia.Controls.Presenters
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder

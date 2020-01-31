@@ -1,12 +1,9 @@
 namespace Examples.GameOfLife
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI
-open Avalonia.FuncUI.DSL
-open Avalonia.Input
 
 module Board =
     open Avalonia.FuncUI.Types
-    open Avalonia.FuncUI.DSL
     open Avalonia.Controls
     open Avalonia.Controls.Primitives
 
