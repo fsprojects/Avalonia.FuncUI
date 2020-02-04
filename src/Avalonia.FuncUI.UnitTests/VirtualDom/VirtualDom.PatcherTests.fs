@@ -1,5 +1,9 @@
 namespace Avalonia.FuncUI.UnitTests.VirtualDom
 
+open System.Collections.Generic
+open Avalonia
+open Avalonia.Styling
+
 module PatcherTests =
     open Avalonia.FuncUI.VirtualDom
     open Avalonia.FuncUI.DSL
@@ -18,10 +22,12 @@ module PatcherTests =
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                         value = Some ("some text" :> obj)
+                        defaultValueFactory = ValueNone
                     };
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
                         value = Some (14.0 :> obj)
+                        defaultValueFactory = ValueNone
                     };
                 ]
             }
@@ -32,6 +38,62 @@ module PatcherTests =
 
         Assert.Equal("some text", control.Text)
         Assert.Equal(14.0, control.FontSize)
+        
+    [<Fact>]
+    let ``Patch Styles, Classes or Resources`` () =
+        let stylesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Styles :> obj)
+        let stylesSetter: IControl * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Styles <- v :?> Styles)
+
+        let classesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Classes :> obj)
+        let classesSetter: IControl * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Classes <- v :?> Classes)
+
+        let resourcesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Resources :> obj)
+        let resourcesSetter: IControl * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Resources <- v :?> IResourceDictionary)
+
+        let delta : Delta.ViewDelta = 
+            {
+                viewType = typeof<TextBlock>
+                attrs = [
+                    Delta.AttrDelta.Property {
+                        accessor = Accessor.InstanceProperty {
+                            name = "Styles"
+                            getter = stylesGetter |> ValueSome
+                            setter = stylesSetter |> ValueSome
+                        }
+                        value = None
+                        defaultValueFactory = (fun () -> Styles() :> obj) |> ValueSome
+                    }
+                    Delta.AttrDelta.Property {
+                        accessor = Accessor.InstanceProperty {
+                            name = "Classes"
+                            getter = classesGetter |> ValueSome
+                            setter = classesSetter |> ValueSome
+                        }
+                        value = None
+                        defaultValueFactory = (fun () -> Classes() :> obj) |> ValueSome
+                    }
+                    Delta.AttrDelta.Property {
+                        accessor = Accessor.InstanceProperty {
+                            name = "Resources"
+                            getter = resourcesGetter |> ValueSome
+                            setter = resourcesSetter |> ValueSome
+                        }
+                        value = None
+                        defaultValueFactory = (fun () -> ResourceDictionary() :> obj) |> ValueSome
+                    }
+                ]
+            }
+
+        let control = TextBlock()
+        control.Styles.Add(Style())
+        control.Classes <- Classes([| "class" |])
+        control.Resources.Add(KeyValuePair.Create("key" :> obj, "value" :> obj))
+
+        Patcher.patch (control, delta)
+
+        Assert.Equal(0, control.Styles.Count)
+        Assert.Equal(0, control.Classes.Count)
+        Assert.Equal(0, control.Resources.Count)
 
     [<Fact>]
     let ``Patch Content Single`` () =
@@ -49,10 +111,12 @@ module PatcherTests =
                                      Delta.AttrDelta.Property {
                                          accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                                          value = Some ("some text" :> obj)
+                                         defaultValueFactory = ValueNone
                                      };
                                      Delta.AttrDelta.Property {
                                          accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
                                          value = Some (15.0 :> obj)
+                                         defaultValueFactory = ValueNone
                                      };
                                  ]
                              }
@@ -91,10 +155,12 @@ module PatcherTests =
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                                         value = Some ("some text" :> obj)
+                                        defaultValueFactory = ValueNone
                                     };
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
                                         value = Some (15.0 :> obj)
+                                        defaultValueFactory = ValueNone
                                     };
                                 ]
                             };
@@ -104,6 +170,7 @@ module PatcherTests =
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
                                         value = Some ((SolidColorBrush.Parse("red").ToImmutable()) :> obj)
+                                        defaultValueFactory = ValueNone
                                     };
                                 ]
                             };
@@ -113,6 +180,7 @@ module PatcherTests =
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
                                         value = Some ((SolidColorBrush.Parse("green").ToImmutable()) :> obj)
+                                        defaultValueFactory = ValueNone
                                     };
                                 ]
                             };

@@ -19,17 +19,30 @@ module internal rec Delta =
                 | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
                 | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
            
+    [<CustomEquality; NoComparison>]
     type PropertyDelta =
         {
             accessor: Accessor
             value: obj option
+            defaultValueFactory: (unit -> obj) voption
         }
         with
             static member From (property: Property) : PropertyDelta =
                 {
-                    accessor = property.accessor;
+                    accessor = property.accessor
                     value = Some property.value
+                    defaultValueFactory = property.defaultValueFactory
                 }
+            override this.Equals (other: obj) : bool =
+                match other with
+                | :? PropertyDelta as other -> 
+                    this.accessor = other.accessor &&
+                    this.value = other.value
+                | _ -> false
+                    
+            override this.GetHashCode () =
+                (this.accessor, this.value).GetHashCode()
+
                 
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
