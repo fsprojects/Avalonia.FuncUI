@@ -12,10 +12,10 @@ open Avalonia.Data.Core
 open System.Linq.Expressions
 
 type DataTemplateView<'data>(
-                             viewFunc: 'data -> IView,
-                             matchFunc: ('data -> bool) voption,
-                             itemsSource: Expression<Func<'data, 'data seq>> voption,
-                             supportsRecycling: bool) = 
+    viewFunc: 'data -> IView,
+    matchFunc: ('data -> bool) voption,
+    itemsSource: Expression<Func<'data, 'data seq>> voption,
+    supportsRecycling: bool) = 
     
     member this.ViewFunc = viewFunc
     member this.MatchFunc = matchFunc
