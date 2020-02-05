@@ -1,0 +1,47 @@
+<Styles xmlns="https://github.com/avaloniaui">
+  <Style Selector="Button">
+    <Setter Property="Background" Value="Transparent"/>
+    <Setter Property="BorderBrush" Value="{DynamicResource ThemeBorderMidBrush}"/>
+    <Setter Property="BorderThickness" Value="{DynamicResource ThemeBorderThickness}"/>
+    <Setter Property="VerticalContentAlignment" Value="Center"/>
+    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    <Setter Property="Padding" Value="4"/>
+    <Setter Property="Template">
+      <ControlTemplate>
+        <Panel>
+          <ContentPresenter
+            Name="PART_ContentPresenter"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="5.0"
+            ContentTemplate="{TemplateBinding ContentTemplate}"
+            Content="{TemplateBinding Content}"
+            Padding="{TemplateBinding Padding}"
+            TextBlock.Foreground="{TemplateBinding Foreground}"
+            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>    
+          
+          <Border
+            Name="PART_BorderOverlay"
+            Background="{DynamicResource ThemeControlHighBrush}"
+            CornerRadius="5.0"
+            IsHitTestVisible="False"/>
+        </Panel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+  
+  <Style Selector="Button /template/ Border#PART_BorderOverlay">
+    <Setter Property="Opacity" Value="0.0"/>
+  </Style>
+  <Style Selector="Button:pointerover /template/ Border#PART_BorderOverlay">
+    <Setter Property="Opacity" Value="0.1"/>
+  </Style>
+  <Style Selector="Button:pressed /template/ Border#PART_BorderOverlay">
+    <Setter Property="Opacity" Value="0.2"/>
+  </Style>
+  <Style Selector="Button:checked /template/ Border#PART_BorderOverlay">
+    <Setter Property="Opacity" Value="0.3"/>
+  </Style>
+</Styles>
