@@ -4,6 +4,7 @@ namespace Avalonia.FuncUI.DSL
 module ToggleButton =
     open System
     open Avalonia.Controls.Primitives
+    open Avalonia.Interactivity
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     
@@ -23,5 +24,12 @@ module ToggleButton =
         static member isChecked<'t when 't :> ToggleButton>(value: bool option) : IAttr<'t> =
             value |> Option.toNullable |> ToggleButton.isChecked
             
+        [<Obsolete "use 'onChecked' or 'onUnchecked' instead">]
         static member onIsCheckedChanged<'t when 't :> ToggleButton>(func: Nullable<bool> -> unit) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription<Nullable<bool>>(ToggleButton.IsCheckedProperty, func)
+            
+        static member onChecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.CheckedEvent, func)
+            
+        static member onUnchecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.UncheckedEvent, func)
