@@ -1,5 +1,8 @@
 namespace Examples.Presso
 
+open Avalonia.Controls.Shapes
+open Avalonia.Media
+
 module Main =
     open Avalonia.Controls
     open Avalonia.Controls.Primitives
@@ -76,7 +79,7 @@ module Main =
                     UniformGrid.children [
                         for i in [ 250<ml> .. 250<ml> .. 1000<ml> ] do
                             RadioButton.create [
-                                RadioButton.onClick (fun _ -> dispatch (SetWaterAmount i))
+                                RadioButton.onChecked (fun _ -> dispatch (SetWaterAmount i))
                                 RadioButton.content (sprintf "%i ml" i)
                                 RadioButton.classes [ "water" ]
                                 RadioButton.groupName "water"
@@ -120,7 +123,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onClick (fun _ -> dispatch (SetBrewingMethod BrewingMethod.General))
+                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.General))
                             RadioButton.groupName "brewing_method"
                             RadioButton.content "General"
                             RadioButton.classes [ "brewing_method" ]
@@ -132,7 +135,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onClick (fun _ -> dispatch (SetBrewingMethod BrewingMethod.ColdBrew))
+                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.ColdBrew))
                             RadioButton.content "Cold Brew"
                             RadioButton.groupName "brewing_method"
                             RadioButton.classes [ "brewing_method" ]
@@ -144,7 +147,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onClick (fun _ -> dispatch (SetBrewingMethod BrewingMethod.FrenchPress))
+                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.FrenchPress))
                             RadioButton.content "French Press"
                             RadioButton.groupName "brewing_method"
                             RadioButton.classes [ "brewing_method" ]
@@ -156,7 +159,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onClick (fun _ -> dispatch (SetBrewingMethod BrewingMethod.PourOver))
+                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.PourOver))
                             RadioButton.content "Pour Over"
                             RadioButton.groupName "brewing_method"
                             RadioButton.classes [ "brewing_method" ]
@@ -188,14 +191,14 @@ module Main =
                             UniformGrid.columns 2
                             UniformGrid.children [
                                 RadioButton.create [
-                                    RadioButton.onClick (fun _ -> dispatch (SetStrength Strength.Regular))
+                                    RadioButton.onChecked (fun _ -> dispatch (SetStrength Strength.Regular))
                                     RadioButton.content "Regular"
                                     RadioButton.groupName "strength"
                                     RadioButton.classes [ "strength" ]
                                     RadioButton.isChecked (state.strength.Equals Strength.Regular)
                                 ]
                                 RadioButton.create [
-                                    RadioButton.onClick (fun _ -> dispatch (SetStrength Strength.Strong))
+                                    RadioButton.onChecked (fun _ -> dispatch (SetStrength Strength.Strong))
                                     RadioButton.content "Strong"
                                     RadioButton.groupName "strength"
                                     RadioButton.classes [ "strength" ]
