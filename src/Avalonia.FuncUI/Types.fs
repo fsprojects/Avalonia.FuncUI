@@ -33,6 +33,7 @@ module Types =
         {
             accessor: Accessor
             value: obj
+            defaultValueFactory: (unit -> obj) voption
             comparer: (obj * obj -> bool) voption
         }
         with
@@ -44,7 +45,6 @@ module Types =
                        | ValueSome comparer -> comparer(this.value, other.value)
                        | ValueNone -> this.value = other.value
                     
-                    //this.accessor = other.accessor &&
                     valueIsEqual
                 | _ -> false
                 

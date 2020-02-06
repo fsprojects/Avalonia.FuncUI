@@ -32,10 +32,12 @@ module DifferTests =
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                         value = Some ("some other text" :> obj)
+                        defaultValueFactory = ValueNone
                     };
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.FontStyleProperty
                         value = None
+                        defaultValueFactory = ValueNone
                     };                       
                 ]
             }
@@ -66,7 +68,8 @@ module DifferTests =
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                         value = Some ("some other text" :> obj)
-                    };
+                        defaultValueFactory = ValueNone
+                    }
                 ]
             }
 
@@ -108,6 +111,7 @@ module DifferTests =
                         Delta.AttrDelta.Property {
                             accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
                             value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
+                            defaultValueFactory = ValueNone
                         };
                         Delta.AttrDelta.Content {
                             accessor = Accessor.AvaloniaProperty Button.ContentProperty
@@ -118,10 +122,12 @@ module DifferTests =
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                                             value = Some ("some other text" :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
                                             value = Some (15.0 :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                     ]
                                 }
@@ -174,7 +180,8 @@ module DifferTests =
                         Delta.AttrDelta.Property {
                             accessor =  Accessor.AvaloniaProperty StackPanel.OrientationProperty
                             value = Some (Orientation.Vertical :> obj)
-                        };
+                            defaultValueFactory = ValueNone
+                        }
                         Delta.AttrDelta.Content {
                             accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
                             content = Delta.ViewContentDelta.Multiple [
@@ -184,11 +191,13 @@ module DifferTests =
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
                                             value = Some ("some other text" :> obj)
-                                        };
+                                            defaultValueFactory = ValueNone
+                                        }
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
                                             value = Some (15.0 :> obj)
-                                        };
+                                            defaultValueFactory = ValueNone
+                                        }
                                     ]
                                 };
                                 {
@@ -197,11 +206,12 @@ module DifferTests =
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
                                             value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
-                                        };
+                                            defaultValueFactory = ValueNone
+                                        }
                                     ]
-                                };
+                                }
                             ]
-                        };
+                        }
                     ]
                 }
 
@@ -255,6 +265,7 @@ module DifferTests =
                         Delta.AttrDelta.Property {
                             accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
                             value = Some (Orientation.Vertical :> obj)
+                            defaultValueFactory = ValueNone
                         };
                         Delta.AttrDelta.Content {
                             accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
@@ -265,10 +276,12 @@ module DifferTests =
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
                                             value = Some ("some text [new]" :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
                                             value = Some (false :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                     ]
                                 };
@@ -278,10 +291,12 @@ module DifferTests =
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
                                             value = Some ("some text 1" :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
                                             value = Some (true :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                     ]
                                 };
@@ -291,10 +306,12 @@ module DifferTests =
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
                                             value = Some ("some text 2" :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
                                             value = Some (false :> obj)
+                                            defaultValueFactory = ValueNone
                                         };
                                     ]
                                 };
@@ -353,6 +370,7 @@ module DifferTests =
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
                         value = Some (Orientation.Vertical :> obj)
+                        defaultValueFactory = ValueNone
                     };
                     Delta.AttrDelta.Content {
                         accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
@@ -363,7 +381,7 @@ module DifferTests =
                             };                             
                             {
                                 viewType = typeof<CheckBox>
-                                attrs = [  ]
+                                attrs = [ ]
                             };                         
                             {
                                 viewType = typeof<CheckBox>
@@ -371,10 +389,12 @@ module DifferTests =
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
                                         value = Some ("some text [new]" :> obj)
+                                        defaultValueFactory = ValueNone
                                     };
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
                                         value = Some (true :> obj)
+                                        defaultValueFactory = ValueNone
                                     };
                                 ]
                             };

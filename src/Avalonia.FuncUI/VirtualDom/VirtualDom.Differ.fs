@@ -9,8 +9,9 @@ module internal rec Differ =
         match next with
         | Property' property ->
             AttrDelta.Property {
-                accessor = property.accessor;
-                value = Some property.value;
+                accessor = property.accessor
+                value = Some property.value
+                defaultValueFactory = property.defaultValueFactory
             }
         | Content' content ->
             AttrDelta.Content {
@@ -26,7 +27,8 @@ module internal rec Differ =
         | Property' property ->
             AttrDelta.Property {
                 accessor = property.accessor;
-                value = None;
+                value = None
+                defaultValueFactory = property.defaultValueFactory
             }
         | Content' content ->
             let empty =
@@ -46,7 +48,8 @@ module internal rec Differ =
                 funcCapturesState = subscription.funcCapturesState
                 func = None
             }
-            
+        | _ -> failwithf "no reset operation is defined for last '%A'" last
+        
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
         match next with
         | Some next ->

@@ -22,7 +22,7 @@ module StyledElement =
             let getter : ('t -> Classes) = (fun control -> control.Classes)
             let setter : ('t * Classes -> unit) = (fun (control, value) -> control.Classes <- value)
             
-            AttrBuilder<'t>.CreateProperty<Classes>("Classes", value, ValueSome getter, ValueSome setter, ValueNone)
+            AttrBuilder<'t>.CreateProperty<Classes>("Classes", value, ValueSome getter, ValueSome setter, ValueNone, fun () -> Classes())
             
         static member classes<'t when 't :> StyledElement>(classes: string list) : IAttr<'t> =
             classes |> Classes |> StyledElement.classes  
@@ -31,10 +31,11 @@ module StyledElement =
             let getter : ('t -> Styles) = (fun control -> control.Styles)
             let setter : ('t * Styles -> unit) = (fun (control, value) -> control.Styles <- value)
             
-            AttrBuilder<'t>.CreateProperty<Styles>("Styles", value, ValueSome getter, ValueSome setter, ValueNone)
+            AttrBuilder<'t>.CreateProperty<Styles>("Styles", value, ValueSome getter, ValueSome setter, ValueNone, fun () -> Styles())
             
         static member resources<'t when 't :> StyledElement>(value: IResourceDictionary) : IAttr<'t> =
             let getter : ('t -> IResourceDictionary) = (fun control -> control.Resources)
             let setter : ('t * IResourceDictionary -> unit) = (fun (control, value) -> control.Resources <- value)
+            let factory = fun () -> ResourceDictionary() :> IResourceDictionary
             
-            AttrBuilder<'t>.CreateProperty<IResourceDictionary>("Resources", value, ValueSome getter, ValueSome setter, ValueNone)
+            AttrBuilder<'t>.CreateProperty<IResourceDictionary>("Resources", value, ValueSome getter, ValueSome setter, ValueNone, factory)

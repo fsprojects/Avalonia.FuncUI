@@ -41,15 +41,19 @@ module internal rec Patcher =
                 value.Cancel()
                 subscriptions.TryRemove(attr.UniqueName) |> ignore
 
-
     let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
         match attr.accessor with
         | Accessor.AvaloniaProperty avaloniaProperty ->
             match attr.value with
             | Some value -> view.SetValue(avaloniaProperty, value);
             | None ->
-                // TODO: create PR - include 'ClearValue' in interface 'IAvaloniaObject'
-                (view :?> AvaloniaObject).ClearValue(avaloniaProperty);
+                match attr.defaultValueFactory with
+                | ValueNone ->
+                    // TODO: create PR - include 'ClearValue' in interface 'IAvaloniaObject'
+                    (view :?> AvaloniaObject).ClearValue(avaloniaProperty)
+                | ValueSome factory ->
+                    let value = factory()
+                    view.SetValue(avaloniaProperty, value)
 
         | Accessor.InstanceProperty instanceProperty ->
             let propertyInfo = view.GetType().GetProperty(instanceProperty.name);
@@ -58,13 +62,16 @@ module internal rec Patcher =
             | Some value ->
                 match propertyInfo.CanWrite with
                 | true -> propertyInfo.SetValue(view, value)
-                | false ->
-                    raise (Exception "cant set read only instance property")
+                | false -> raise (Exception "Can't set readonly instance property")
             | None ->
                 let defaultValue =
-                    if propertyInfo.PropertyType.IsValueType
-                    then Activator.CreateInstance(propertyInfo.PropertyType)
-                    else null
+                    match attr.defaultValueFactory with
+                    | ValueSome factory -> factory()
+                    | ValueNone ->
+                        if propertyInfo.PropertyType.IsValueType then
+                            Activator.CreateInstance(propertyInfo.PropertyType)
+                        else
+                            null
 
                 propertyInfo.SetValue(view, defaultValue)
 
