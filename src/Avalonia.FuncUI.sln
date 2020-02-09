@@ -9,23 +9,25 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.UnitTests",
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Elmish", "Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj", "{3D70F99C-BA11-41F2-ADB1-A4B5ABC12CBD}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.ControlCatalog", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj", "{2EE61E50-F492-4024-85D3-D310D05B4D72}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj", "{2EE61E50-F492-4024-85D3-D310D05B4D72}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.DSL", "Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj", "{B55A8DAD-ED9E-426C-A91D-E80747100E63}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.DSL", "Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj", "{B55A8DAD-ED9E-426C-A91D-E80747100E63}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.CounterApp", "Examples\Examples.CounterApp\Examples.CounterApp.fsproj", "{972EEE7D-CB1F-4A22-B10F-D7375F700A79}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.CounterApp", "Examples\Examples.CounterApp\Examples.CounterApp.fsproj", "{972EEE7D-CB1F-4A22-B10F-D7375F700A79}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.GameOfLife", "Examples\Examples.GameOfLife\Examples.GameOfLife.fsproj", "{D328F897-16D3-43CA-A746-3744DC6BA050}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.GameOfLife", "Examples\Examples.GameOfLife\Examples.GameOfLife.fsproj", "{D328F897-16D3-43CA-A746-3744DC6BA050}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{681AB0E5-A733-4CFE-872A-10B810DAF86D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControlCatalog", "ControlCatalog", "{5DB968C6-935E-41AC-A252-644B4886AF8A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ClockApp", "Examples\Examples.ClockApp\Examples.ClockApp.fsproj", "{1401B46D-1F14-4D29-8E45-96E62D46405F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ClockApp", "Examples\Examples.ClockApp\Examples.ClockApp.fsproj", "{1401B46D-1F14-4D29-8E45-96E62D46405F}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Presso", "Examples\Examples.Presso\Examples.Presso.fsproj", "{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Presso", "Examples\Examples.Presso\Examples.Presso.fsproj", "{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.MusicPlayer", "Examples\Examples.MusicPlayer\Examples.MusicPlayer.fsproj", "{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,17 +71,22 @@ Global
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{972EEE7D-CB1F-4A22-B10F-D7375F700A79} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
-		{D328F897-16D3-43CA-A746-3744DC6BA050} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{3D6BBB49-E127-4141-A296-BA504C597FA1} = {681AB0E5-A733-4CFE-872A-10B810DAF86D}
 		{2EE61E50-F492-4024-85D3-D310D05B4D72} = {5DB968C6-935E-41AC-A252-644B4886AF8A}
+		{972EEE7D-CB1F-4A22-B10F-D7375F700A79} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
+		{D328F897-16D3-43CA-A746-3744DC6BA050} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{1401B46D-1F14-4D29-8E45-96E62D46405F} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
+		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
