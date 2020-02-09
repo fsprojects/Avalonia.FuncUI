@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <None Include="README.md" />
         <Compile Include="Icons.fs" />
         <Compile Include="Types.fs" />
         <Compile Include="Songs.fs" />
@@ -19,6 +20,8 @@
         <AvaloniaResource Include="**\*.xaml" />
         <AvaloniaResource Include="Assets\Icons\**" />
     </ItemGroup>
+
+    <ItemGroup />
     
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" Version="0.9.2" />
