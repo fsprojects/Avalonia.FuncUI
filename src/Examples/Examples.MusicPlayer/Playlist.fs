@@ -117,27 +117,38 @@ module Playlist =
 
 
     let private songTemplate (song: Types.SongRecord) (dispatch: Msg -> unit) =
-        StackPanel.create
-            [ StackPanel.spacing 8.0
-              StackPanel.onDoubleTapped (fun _ -> dispatch (PlaySong song))
-              StackPanel.onKeyUp (fun keyargs ->
-                  match keyargs.Key with
-                  | Key.Enter -> dispatch (PlaySong song)
-                  /// eventually add other shortcuts to re-arrange songs or something alike
-                  | _ -> ())
-              StackPanel.children [ TextBlock.create [ TextBlock.text song.name ] ] ]
+        StackPanel.create [
+            StackPanel.spacing 8.0
+            StackPanel.onDoubleTapped (fun _ -> dispatch (PlaySong song))
+            StackPanel.onKeyUp (fun keyargs ->
+                match keyargs.Key with
+                | Key.Enter -> dispatch (PlaySong song)
+                /// eventually add other shortcuts to re-arrange songs or something alike
+                | _ -> ())
+            StackPanel.children [
+                TextBlock.create [
+                    TextBlock.text song.name
+                ]
+            ]
+        ]
 
     let private songRecordList (selectedIndex: int) (songs: Types.SongRecord list) (dispatch: Msg -> unit) =
-        ListBox.create
-            [ ListBox.dataItems songs
-              ListBox.maxHeight 420.0
-              ListBox.selectedIndex selectedIndex
-              ListBox.itemTemplate (DataTemplateView<Types.SongRecord>.create(fun item -> songTemplate item dispatch)) ]
+        ListBox.create [
+            ListBox.dataItems songs
+            ListBox.maxHeight 420.0
+            ListBox.selectedIndex selectedIndex
+            ListBox.itemTemplate (DataTemplateView<Types.SongRecord>.create(fun item -> songTemplate item dispatch))
+        ]
 
     let private emptySongList (state: State) (dispatch: Msg -> unit) =
-        StackPanel.create
-            [ StackPanel.spacing 8.0
-              StackPanel.children [ TextBlock.create [ TextBlock.text "Nothing to play here :)" ] ] ]
+        StackPanel.create [
+            StackPanel.spacing 8.0
+            StackPanel.children [
+                TextBlock.create [
+                    TextBlock.text "Nothing to play here :)"
+                ]
+            ]
+        ]
 
     let private songList (state: State) (dispatch: Msg -> unit) =
         match state.songList with
@@ -148,6 +159,9 @@ module Playlist =
         | None -> emptySongList state dispatch :> IView
 
     let view (state: State) (dispatch: Msg -> unit) =
-        StackPanel.create
-            [ StackPanel.dock Dock.Top
-              StackPanel.children [ songList state dispatch ] ]
+        StackPanel.create [
+            StackPanel.dock Dock.Top
+            StackPanel.children [
+                songList state dispatch
+            ]
+        ]
