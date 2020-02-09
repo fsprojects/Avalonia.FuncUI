@@ -11,7 +11,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
         <Title>Avalonia FuncUI DSL</Title>
-        <PackageVersion>0.2.0</PackageVersion>
+        <PackageVersion>0.3.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
