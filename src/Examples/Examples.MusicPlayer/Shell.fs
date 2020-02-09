@@ -90,9 +90,10 @@ module Shell =
         | Some msg ->
             match msg with
             | Playlist.ExternalMsg.PlaySong(int, song) ->
-                Cmd.batch
-                    [ Cmd.ofMsg (PlayerMsg(Player.Msg.Play song))
-                      Cmd.ofMsg (SetTitle song.name) ]
+                Cmd.batch [
+                    Cmd.ofMsg (PlayerMsg(Player.Msg.Play song))
+                    Cmd.ofMsg (SetTitle song.name)
+                ]
 
     let private handlePlayerExternal (msg: Player.ExternalMsg option) =
         match msg with
@@ -150,31 +151,38 @@ module Shell =
         | LengthChanged length -> state, Cmd.none
 
     let menuBar state dispatch =
-        Menu.create
-            [ Menu.dock Dock.Top
-              Menu.viewItems
-                  [ MenuItem.create
-                      [ MenuItem.header "Files"
-                        MenuItem.viewItems
-                            [ MenuItem.create
-                                [ MenuItem.header "Select Files"
-                                  MenuItem.icon (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/file-multiple-dark.png")
-                                  MenuItem.onClick (fun _ -> dispatch OpenFiles) ]
-                              MenuItem.create
-                                  [ MenuItem.header "Select Folder"
-                                    MenuItem.icon
-                                        (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/folder-music-dark.png")
-                                    MenuItem.onClick (fun _ -> dispatch OpenFolder) ] ] ] ] ]
+        Menu.create [
+            Menu.dock Dock.Top
+            Menu.viewItems [
+                MenuItem.create [
+                    MenuItem.header "Files"
+                    MenuItem.viewItems [
+                        MenuItem.create [
+                            MenuItem.header "Select Files"
+                            MenuItem.icon (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/file-multiple-dark.png")
+                            MenuItem.onClick (fun _ -> dispatch OpenFiles)
+                        ]
+                        MenuItem.create [
+                            MenuItem.header "Select Folder"
+                            MenuItem.icon (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/folder-music-dark.png")
+                            MenuItem.onClick (fun _ -> dispatch OpenFolder)
+                        ]
+                    ]
+                ]
+            ]
+        ]
 
     let view (state: State) (dispatch: Msg -> unit) =
-        DockPanel.create
-            [ DockPanel.verticalAlignment VerticalAlignment.Stretch
-              DockPanel.horizontalAlignment HorizontalAlignment.Stretch
-              DockPanel.lastChildFill false
-              DockPanel.children
-                  [ menuBar state dispatch
-                    Playlist.view state.playlistState (PlaylistMsg >> dispatch)
-                    Player.view state.playerState (PlayerMsg >> dispatch) ] ]
+        DockPanel.create [
+            DockPanel.verticalAlignment VerticalAlignment.Stretch
+            DockPanel.horizontalAlignment HorizontalAlignment.Stretch
+            DockPanel.lastChildFill false
+            DockPanel.children [
+                menuBar state dispatch
+                Playlist.view state.playlistState (PlaylistMsg >> dispatch)
+                Player.view state.playerState (PlayerMsg >> dispatch)
+            ]
+        ]
 
     type ShellWindow() as this =
         inherit HostWindow()

@@ -78,75 +78,92 @@ module Player =
 
 
     let private mediaButtons (state: State) (dispatch: Msg -> unit) =
-        StackPanel.create
-            [ StackPanel.verticalAlignment VerticalAlignment.Bottom
-              StackPanel.horizontalAlignment HorizontalAlignment.Left
-              StackPanel.orientation Orientation.Horizontal
-              StackPanel.dock Dock.Top
-              StackPanel.children
-                  [ yield Button.create
-                              [ Button.content Icons.previous
-                                Button.classes [ "mediabtn" ]
-                                Button.onClick (fun _ -> dispatch Previous) ]
-                    if state.player.IsPlaying then
-                        yield Button.create
-                                  [ Button.content Icons.pause
-                                    Button.classes [ "mediabtn" ]
-                                    Button.onClick (fun _ -> dispatch Pause) ]
-                        yield Button.create
-                                  [ Button.content Icons.stop
-                                    Button.classes [ "mediabtn" ]
-                                    Button.onClick (fun _ -> dispatch Stop) ]
-                    else
-                        yield Button.create
-                                  [ Button.content Icons.play
-                                    Button.classes [ "mediabtn" ]
-                                    Button.onClick (fun _ -> dispatch PlayInternal) ]
-                    yield Button.create
-                              [ Button.content Icons.next
-                                Button.classes [ "mediabtn" ]
-                                Button.onClick (fun _ -> dispatch Next) ]
-                    yield Button.create
-                              [ Button.content Icons.shuffle
-                                Button.classes [ "mediabtn" ]
-                                Button.onClick (fun _ -> dispatch Shuffle) ]
+        StackPanel.create [
+            StackPanel.verticalAlignment VerticalAlignment.Bottom
+            StackPanel.horizontalAlignment HorizontalAlignment.Left
+            StackPanel.orientation Orientation.Horizontal
+            StackPanel.dock Dock.Top
+            StackPanel.children [
+                yield Button.create [
+                    Button.content Icons.previous
+                    Button.classes [ "mediabtn" ]
+                    Button.onClick (fun _ -> dispatch Previous)
+                ]
+                
+                if state.player.IsPlaying then
+                    yield Button.create [
+                        Button.content Icons.pause
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch Pause)
+                    ]
+                    yield Button.create [
+                        Button.content Icons.stop
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch Stop)
+                    ]
+                else
+                    yield Button.create [
+                        Button.content Icons.play
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch PlayInternal)
+                    ]
+                    yield Button.create [
+                        Button.content Icons.next
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch Next)
+                    ]
+                    yield Button.create [
+                        Button.content Icons.shuffle
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch Shuffle)
+                    ]
                     match state.loopState with
                     | Types.LoopState.All ->
-                        yield Button.create
-                                  [ Button.content Icons.repeat
-                                    Button.classes [ "mediabtn" ]
-                                    Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Single)) ]
+                        yield Button.create [
+                            Button.content Icons.repeat
+                            Button.classes [ "mediabtn" ]
+                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Single))
+                        ]
                     | Types.LoopState.Single ->
-                        yield Button.create
-                                  [ Button.content Icons.repeatOne
-                                    Button.classes [ "mediabtn" ]
-                                    Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Off)) ]
+                        yield Button.create [
+                            Button.content Icons.repeatOne
+                            Button.classes [ "mediabtn" ]
+                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Off))
+                        ]
                     | Types.LoopState.Off ->
-                        yield Button.create
-                                  [ Button.content Icons.repeatOff
-                                    Button.classes [ "mediabtn" ]
-                                    Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.All)) ] ] ]
+                        yield Button.create [
+                            Button.content Icons.repeatOff
+                            Button.classes [ "mediabtn" ]
+                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.All))
+                        ]
+            ]
+        ]
 
     let private progressBar (state: State) (dispatch: Msg -> unit) =
-        StackPanel.create
-            [ StackPanel.verticalAlignment VerticalAlignment.Bottom
-              StackPanel.horizontalAlignment HorizontalAlignment.Center
-              StackPanel.orientation Orientation.Horizontal
-              StackPanel.dock Dock.Bottom
-              StackPanel.children
-                  [ Slider.create
-                      [ Slider.minimum 0.0
-                        Slider.maximum 100.0
-                        Slider.width 428.0
-                        Slider.horizontalAlignment HorizontalAlignment.Center
-                        Slider.value (state.sliderPos |> double)
-                        Slider.onValueChanged (fun value -> dispatch (Seek value)) ] ] ]
+        StackPanel.create [
+            StackPanel.verticalAlignment VerticalAlignment.Bottom
+            StackPanel.horizontalAlignment HorizontalAlignment.Center
+            StackPanel.orientation Orientation.Horizontal
+            StackPanel.dock Dock.Bottom
+            StackPanel.children [
+                Slider.create [
+                    Slider.minimum 0.0
+                    Slider.maximum 100.0
+                    Slider.width 428.0
+                    Slider.horizontalAlignment HorizontalAlignment.Center
+                    Slider.value (state.sliderPos |> double)
+                    Slider.onValueChanged (fun value -> dispatch (Seek value))
+                ]
+            ]
+        ]
 
     let view (state: State) (dispatch: Msg -> unit) =
-        DockPanel.create
-            [ DockPanel.classes [ "mediabar" ]
-              DockPanel.dock Dock.Bottom
-              DockPanel.horizontalAlignment HorizontalAlignment.Center
-              DockPanel.children
-                  [ progressBar state dispatch
-                    mediaButtons state dispatch ] ]
+        DockPanel.create [
+            DockPanel.classes [ "mediabar" ]
+            DockPanel.dock Dock.Bottom
+            DockPanel.horizontalAlignment HorizontalAlignment.Center
+            DockPanel.children [
+                 progressBar state dispatch
+                 mediaButtons state dispatch
+            ]
+        ]
