@@ -45,6 +45,7 @@
         <Compile Include="Panels\Grid.fs" />
         <Compile Include="Panels\StackPanel.fs" />
         <Compile Include="Panels\WrapPanel.fs" />
+        <Compile Include="Panels\ItemsRepeater.fs" />
         
         <Compile Include="Shapes\Shape.fs" />
         <Compile Include="Shapes\Rectangle.fs" />
