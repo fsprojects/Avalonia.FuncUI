@@ -11,11 +11,11 @@ open Avalonia.Data
 open Avalonia.Data.Core
 open System.Linq.Expressions
 
-type DataTemplateView<'data>(
-    viewFunc: 'data -> IView,
-    matchFunc: ('data -> bool) voption,
-    itemsSource: Expression<Func<'data, 'data seq>> voption,
-    supportsRecycling: bool) = 
+type DataTemplateView<'data, 'view when 'view :> IView>
+    (viewFunc: 'data -> 'view,
+     matchFunc: ('data -> bool) voption,
+     itemsSource: Expression<Func<'data, 'data seq>> voption,
+     supportsRecycling: bool) =
     
     member this.ViewFunc = viewFunc
     member this.MatchFunc = matchFunc
@@ -24,7 +24,7 @@ type DataTemplateView<'data>(
     
     override this.Equals (other: obj) : bool =
         match other with
-        | :? DataTemplateView<'data> as other ->
+        | :? DataTemplateView<'data, 'view> as other ->
             this.ViewFunc.GetType() = other.ViewFunc.GetType() &&
             this.MatchFunc.GetType() = other.MatchFunc.GetType() &&
             this.SupportsRecycling = other.SupportsRecycling
@@ -55,7 +55,7 @@ type DataTemplateView<'data>(
             let host = HostControl()
 
             let update (data: 'data) : unit =
-                let view = Some (this.ViewFunc data)
+                let view = Some (this.ViewFunc data :> IView)
                 (host :> IViewHost).Update view
             
             host
@@ -73,8 +73,8 @@ type DataTemplateView<'data>(
     /// </summary>
     /// <typeparam name="'data">The Type of the data.</typeparam>
     /// <param name="viewFunc">The function that creates a view from the passed data.</param>
-    static member create(viewFunc: 'data -> IView<'view>) : DataTemplateView<'data> =
-        DataTemplateView<'data>(viewFunc = (fun a -> (viewFunc a) :> IView),
+    static member create(viewFunc: 'data -> 'view when 'view :> IView) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
                                 matchFunc = ValueNone,
                                 itemsSource = ValueNone,
                                 supportsRecycling = true)
@@ -85,8 +85,8 @@ type DataTemplateView<'data>(
     /// <typeparam name="'data">The Type of the data.</typeparam>
     /// <param name="viewFunc">The function that creates a view from the passed data.</param>
     /// <param name="matchFunc">The function that decides if this template is capable of creating a view from the passed data.</param>     
-    static member create(viewFunc: 'data -> IView<'view>, matchFunc: 'data -> bool) : DataTemplateView<'data> =
-        DataTemplateView<'data>(viewFunc = (fun a -> (viewFunc a) :> IView),
+    static member create(viewFunc: 'data ->  'view when 'view :> IView, matchFunc: 'data -> bool) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
                                 matchFunc = ValueSome matchFunc,
                                 itemsSource = ValueNone,
                                 supportsRecycling = true)
@@ -96,8 +96,8 @@ type DataTemplateView<'data>(
     /// </summary>
     /// <typeparam name="'data">The Type of the data.</typeparam>
     /// <param name="viewFunc">The function that creates a view from the passed data.</param>
-    static member create(itemsSelector, viewFunc: 'data -> IView<'view>) : DataTemplateView<'data> =
-        DataTemplateView<'data>(viewFunc = (fun a -> (viewFunc a) :> IView),
+    static member create(itemsSelector, viewFunc: 'data -> 'view when 'view :> IView) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
                                 matchFunc = ValueNone,
                                 itemsSource = ValueSome itemsSelector,
                                 supportsRecycling = true)
@@ -108,8 +108,55 @@ type DataTemplateView<'data>(
     /// <typeparam name="'data">The Type of the data.</typeparam>
     /// <param name="viewFunc">The function that creates a view from the passed data.</param>
     /// <param name="matchFunc">The function that decides if this template is capable of creating a view from the   passed data.</param>     
-    static member create(itemsSelector, viewFunc: 'data -> IView<'view>, matchFunc: 'data -> bool) : DataTemplateView<'data> =
-        DataTemplateView<'data>(viewFunc = (fun a -> (viewFunc a) :> IView),
+    static member create(itemsSelector, viewFunc: 'data -> 'view when 'view :> IView, matchFunc: 'data -> bool) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
+                                matchFunc = ValueSome matchFunc,
+                                itemsSource = ValueSome itemsSelector,
+                                supportsRecycling = true)
+
+type DataTemplateView<'data> =
+    /// <summary>
+    /// Create a DataTemplateView for data matching type ('data)
+    /// </summary>
+    /// <typeparam name="'data">The Type of the data.</typeparam>
+    /// <param name="viewFunc">The function that creates a view from the passed data.</param>
+    static member create(viewFunc: 'data -> 'view when 'view :> IView) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
+                                matchFunc = ValueNone,
+                                itemsSource = ValueNone,
+                                supportsRecycling = true)
+
+    /// <summary>
+    /// Create a DataTemplateView for data matching type ('data)
+    /// </summary>
+    /// <typeparam name="'data">The Type of the data.</typeparam>
+    /// <param name="viewFunc">The function that creates a view from the passed data.</param>
+    /// <param name="matchFunc">The function that decides if this template is capable of creating a view from the passed data.</param>
+    static member create(viewFunc: 'data ->  'view when 'view :> IView, matchFunc: 'data -> bool) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
+                                matchFunc = ValueSome matchFunc,
+                                itemsSource = ValueNone,
+                                supportsRecycling = true)
+
+    /// <summary>
+    /// Create a DataTemplateView for data matching type ('data)
+    /// </summary>
+    /// <typeparam name="'data">The Type of the data.</typeparam>
+    /// <param name="viewFunc">The function that creates a view from the passed data.</param>
+    static member create(itemsSelector, viewFunc: 'data -> 'view when 'view :> IView) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
+                                matchFunc = ValueNone,
+                                itemsSource = ValueSome itemsSelector,
+                                supportsRecycling = true)
+
+    /// <summary>
+    /// Create a DataTemplateView for data matching type ('data)
+    /// </summary>
+    /// <typeparam name="'data">The Type of the data.</typeparam>
+    /// <param name="viewFunc">The function that creates a view from the passed data.</param>
+    /// <param name="matchFunc">The function that decides if this template is capable of creating a view from the   passed data.</param>
+    static member create(itemsSelector, viewFunc: 'data -> 'view when 'view :> IView, matchFunc: 'data -> bool) : DataTemplateView<'data, 'view> =
+        DataTemplateView<'data, 'view>(viewFunc = (fun a -> viewFunc a),
                                 matchFunc = ValueSome matchFunc,
                                 itemsSource = ValueSome itemsSelector,
                                 supportsRecycling = true)
