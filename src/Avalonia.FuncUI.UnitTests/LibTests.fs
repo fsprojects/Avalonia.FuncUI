@@ -1,6 +1,9 @@
 ﻿namespace Avalonia.FuncUI.UnitTests
 
+open System
+open System.Threading
 open Avalonia.FuncUI.Library
+open Avalonia.FuncUI.Types
 open Xunit
 
 module Library =
@@ -46,3 +49,41 @@ module Library =
         Assert.True(FunctionAnalysis.cache.ContainsKey(a.GetType()))
         Assert.True(FunctionAnalysis.cache.ContainsKey(b.GetType()))
         ()
+
+    [<Fact>]
+    let ``subscriptions are different if either of them captures state`` () =
+        let dlgt = Action<_>(ignore)
+        let s1CapturingState = {
+            Subscription.name = "sub"
+            subscribe = fun _ -> new CancellationTokenSource()
+            func = dlgt
+            funcCapturesState = true
+            funcType = typeof<int>
+        }
+        let s2CapturingState = {
+            Subscription.name = "sub"
+            subscribe = fun _ -> new CancellationTokenSource()
+            func = dlgt
+            funcCapturesState = true
+            funcType = typeof<int>
+        }
+        let s1NotCapturingState = {
+            Subscription.name = "sub"
+            subscribe = fun _ -> new CancellationTokenSource()
+            func = dlgt
+            funcCapturesState = false
+            funcType = typeof<int>
+        }
+        let s2NotCapturingState = {
+            Subscription.name = "sub"
+            subscribe = fun _ -> new CancellationTokenSource()
+            func = dlgt
+            funcCapturesState = false
+            funcType = typeof<int>
+        }
+
+        Assert.False(s1CapturingState.Equals(s2CapturingState))
+        Assert.False(s1CapturingState.Equals(s1NotCapturingState))
+        Assert.False(s2CapturingState.Equals(s1CapturingState))
+
+        Assert.True(s1NotCapturingState.Equals(s2NotCapturingState))
