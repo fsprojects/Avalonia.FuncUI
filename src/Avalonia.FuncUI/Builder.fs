@@ -156,7 +156,7 @@ type AttrBuilder<'view>() =
     /// <summary>
     /// Create a Property Subscription Attribute for an Avalonia Property
     /// </summary>
-    static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit) : IAttr<'view> =
+    static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit, ?scope: obj) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
         let subscribeFunc (control: IControl, _handler: 'h) =
@@ -169,38 +169,36 @@ type AttrBuilder<'view>() =
         let attr = Attr<'view>.Subscription {
             name = property.Name + ".PropertySub"
             subscribe = subscribeFunc
-            funcType = func.GetType()
-            funcCapturesState = FunctionAnalysis.capturesState (func :> obj)
             func = Action<_>(func)
+            scope = scope
         }
         attr :> IAttr<'view>
         
-    /// <summary>
+     /// <summary>
     /// Create a Routed Event Subscription Attribute for a Routed Event
     /// </summary>
-    static member CreateSubscription<'arg when 'arg :> RoutedEventArgs>(property: RoutedEvent<'arg>, func: 'arg -> unit) : IAttr<'view> =
+    static member CreateSubscription<'arg when 'arg :> RoutedEventArgs>(routedEvent: RoutedEvent<'arg>, func: 'arg -> unit, ?scope: obj) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
         let subscribeFunc (control: IControl, _handler: 'h) =
             let cts = new CancellationTokenSource()
             control
-                .GetObservable(property)
+                .GetObservable(routedEvent)
                 .Subscribe(func, cts.Token)
             cts
             
         let attr = Attr<'view>.Subscription {
-            Subscription.name = property.Name + ".RoutedEventSub"
+            Subscription.name = routedEvent.Name + ".RoutedEventSub"
             Subscription.subscribe = subscribeFunc
-            Subscription.funcType = func.GetType()
-            Subscription.funcCapturesState = FunctionAnalysis.capturesState func
             Subscription.func = Action<_>(func)
+            Subscription.scope = scope
         }
         attr :> IAttr<'view>
         
     /// <summary>
     /// Create a Event Subscription Attribute for a .Net Event
     /// </summary>
-    static member CreateSubscription<'arg>(name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit) =
+    static member CreateSubscription<'arg>(name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit, ?scope: obj) =
         // TODO: extract to helpers module
         // subscribe to event
         let subscribeFunc (control: IControl, _handler: 'h) =
@@ -211,9 +209,8 @@ type AttrBuilder<'view>() =
         {
             Subscription.name = name + ".EventSub"
             Subscription.subscribe = subscribeFunc
-            Subscription.funcType = func.GetType()
-            Subscription.funcCapturesState = FunctionAnalysis.capturesState func
             Subscription.func = Action<_>(func)
+            Subscription.scope = scope
         }
 
 [<AbstractClass; Sealed>] 

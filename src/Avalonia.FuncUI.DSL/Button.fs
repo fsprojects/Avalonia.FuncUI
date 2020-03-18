@@ -35,5 +35,5 @@ module Button =
         static member onIsPressedChanged<'t when 't :> Button>(func: bool -> unit) =
             AttrBuilder<'t>.CreateSubscription<bool>(Button.IsPressedProperty, func)
             
-        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func)
+        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit, ?scope) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func, ?scope = scope)
