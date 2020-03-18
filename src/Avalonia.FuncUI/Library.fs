@@ -62,10 +62,16 @@ module internal Extensions =
             Observable.subscribeWeakly(this, callback, target)
 
     type IInteractive with
-        member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent) =
+        member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent) : IObservable<'args> =
 
-            let sub = Func<IObserver<'args>, IDisposable>(fun x ->
-                let act = Action<obj, 'args>(fun _ e -> x.OnNext e)
-                this.AddHandler(routedEvent, act)
+            let sub = Func<IObserver<'args>, IDisposable>(fun observer ->
+                // push new update to subscribers
+                let publish = Action<obj, 'args>(fun _ e ->
+                    observer.OnNext e
+                )
+                
+                // subscribe to event changes so they can be pushed to subscribers
+                this.AddHandler(routedEvent, publish, routedEvent.RoutingStrategies)
             )
+            
             Observable.Create(sub)
