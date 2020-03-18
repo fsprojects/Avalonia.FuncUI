@@ -1,32 +1,5 @@
 namespace Avalonia.FuncUI.Library
 
-module FunctionAnalysis =
-    open System
-    open System.Reflection
-    open System.Collections.Concurrent
-
-    let internal cache = ConcurrentDictionary<Type, bool>()
-
-    let private flags =
-        BindingFlags.Instance |||
-        BindingFlags.NonPublic |||
-        BindingFlags.Public
-
-    let capturesState (func : 'a) : bool =
-        let type' = func.GetType()
-
-        let hasValue, value = cache.TryGetValue type'
-
-        match hasValue with
-        | true -> value
-        | false ->
-            let capturesState =
-                type'.GetConstructors(flags)
-                |> Array.map (fun info -> info.GetParameters().Length)
-                |> Array.exists (fun parameterLength -> parameterLength > 0)
-
-            cache.AddOrUpdate(type', capturesState, (fun identifier lastValue -> capturesState))
-
 module Observable =
     open System
 
