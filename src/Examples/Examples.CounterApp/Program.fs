@@ -11,42 +11,53 @@ open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI.DSL
 
 module Counter =
-    type State = { count : int }
+    type State = { count : int; text : string }
 
-    let init = { count = 0 }
+    let init = { count = 0; text = "" }
 
-    type Add =
-        | Add of State
+    type Msg =
         | SetCount of int
+        | SetText of string
 
-    let update (msg : Add) (state: State) : State =
+    let update (msg : Msg) (state: State) : State =
         match msg with
         | SetCount number -> { state with count = number }
-        | Add state' ->
-            { state' with count = state'.count + 1 }
+        | SetText text -> { state with text = text }
             
 
     let view (state : State) dispatch =
         StackPanel.create [
             StackPanel.children [
-                Grid.create [
-                    Grid.children [
-                        Button.create [
-                            Button.content "+ (with scope `state`)"
-                            
-                            // function is only updated if the `scope` (need to find a better name for this) changed. In
-                            // this case we need to explicitly declare that this function relies on `state` and need to be
-                            // updated if the `state` changed
-                             
-                            Button.onClick (fun _ ->
-                                dispatch (Add state)
-                            , state) // <- this is optional!
-                        ]
-                    ]
+                Button.create [
+                    Button.content "+ (with scope `state`)"
+                    
+                    // function is only updated if the `scope` (need to find a better name for this) changed. In
+                    // this case we need to explicitly declare that this function relies on `state` and need to be
+                    // updated if the `state` changed
+                     
+                    Button.onClick (fun _ ->
+                        dispatch (SetCount (state.count + 1))
+                    , state) // <- this is optional!
+                ]
+                
+                Button.create [
+                    Button.content "+ (with changing subscription)"
+                    
+                    // will change because the funcType changes every time
+                    if (state.count % 2 = 0) then
+                        Button.onClick (fun _ ->
+                            dispatch (SetText "from function @A")
+                            dispatch (SetCount (state.count + 1))
+                        )
+                    else
+                        Button.onClick (fun _ ->
+                            dispatch (SetText "from function @B")
+                            dispatch (SetCount (state.count + 1))
+                        )
                 ]
 
-                TextBox.create [
-                    TextBox.text (string state.count)
+                TextBlock.create [
+                    TextBlock.text (sprintf "%i (%s)" state.count state.text)
                 ]
             ]
         ]

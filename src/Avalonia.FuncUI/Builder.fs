@@ -170,6 +170,7 @@ type AttrBuilder<'view>() =
             name = property.Name + ".PropertySub"
             subscribe = subscribeFunc
             func = Action<_>(func)
+            funcType = func.GetType()
             scope = scope
         }
         attr :> IAttr<'view>
@@ -188,10 +189,11 @@ type AttrBuilder<'view>() =
             cts
             
         let attr = Attr<'view>.Subscription {
-            Subscription.name = routedEvent.Name + ".RoutedEventSub"
-            Subscription.subscribe = subscribeFunc
-            Subscription.func = Action<_>(func)
-            Subscription.scope = scope
+            name = routedEvent.Name + ".RoutedEventSub"
+            subscribe = subscribeFunc
+            func = Action<_>(func)
+            funcType = func.GetType()
+            scope = scope
         }
         attr :> IAttr<'view>
         
@@ -206,12 +208,14 @@ type AttrBuilder<'view>() =
             factory(control, func, cts.Token)
             cts
         
-        {
-            Subscription.name = name + ".EventSub"
-            Subscription.subscribe = subscribeFunc
-            Subscription.func = Action<_>(func)
-            Subscription.scope = scope
+        let attr = Attr<'view>.Subscription {
+            name = name + ".EventSub"
+            subscribe = subscribeFunc
+            func = Action<_>(func)
+            funcType = func.GetType()
+            scope = scope
         }
+        attr :> IAttr<'view>
 
 [<AbstractClass; Sealed>] 
 type ViewBuilder() =

@@ -68,21 +68,20 @@ module Types =
             name: string
             subscribe:  IControl * Delegate -> CancellationTokenSource
             func: Delegate
+            funcType: Type
             scope: obj
         }
         with
             override this.Equals (other: obj) : bool =
                 match other with
                 | :? Subscription as other ->
-                    if this.scope <> null && other.scope <> null then
-                        printfn "sub: '%s' scope: `%i` -> `%i`" this.name (this.scope.GetHashCode()) (other.scope.GetHashCode())
-                    
                     this.name = other.name &&
+                    this.funcType = other.funcType &&
                     this.scope = other.scope
                 | _ -> false
                 
             override this.GetHashCode () =
-                (this.name, this.scope).GetHashCode()
+                (this.name, this.funcType, this.scope).GetHashCode()
                                
     type IAttr =
         abstract member UniqueName : string
