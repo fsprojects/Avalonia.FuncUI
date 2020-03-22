@@ -58,7 +58,7 @@ module ToolTipDemo =
                 TextBox.create [
                     TextBox.dock Dock.Top
                     TextBox.text (string state.tip)
-                    TextBox.onTextChanged (fun text -> (SetTip text |> dispatch))
+                    TextBox.onTextChanged ((fun text -> (SetTip text |> dispatch)), SubPatchOptions.Never)
                 ]
                 TextBox.create [
                     TextBox.dock Dock.Top
@@ -68,7 +68,7 @@ module ToolTipDemo =
                         try
                             text |> Double.Parse |> SetHOffset |> dispatch
                         with ex -> Console.WriteLine(ex) 
-                    )
+                    , SubPatchOptions.Never)
                 ]
                 TextBox.create [
                     DockPanel.dock Dock.Top
@@ -78,7 +78,7 @@ module ToolTipDemo =
                         try
                             text |> Double.Parse |> SetVOffset |> dispatch
                         with ex -> Console.WriteLine(ex) 
-                    )
+                    , SubPatchOptions.Never)
                 ]
                 Button.create [
                     Button.content "Hover me to see the ToolTip"

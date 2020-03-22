@@ -30,22 +30,22 @@ module MenuDemo =
                             MenuItem.viewItems [
                                 MenuItem.create [
                                     MenuItem.header "Light"
-                                    MenuItem.onClick (fun _ -> "#e74c3c" |> SetColor |> dispatch)
+                                    MenuItem.onClick ((fun _ -> "#e74c3c" |> SetColor |> dispatch), SubPatchOptions.Never)
                                 ]
                                 MenuItem.create [
                                     MenuItem.header "Dark"
-                                    MenuItem.onClick (fun _ -> "#c0392b" |> SetColor |> dispatch)
+                                    MenuItem.onClick ((fun _ -> "#c0392b" |> SetColor |> dispatch), SubPatchOptions.Never)
                                 ]  
                             ]
                             MenuItem.header "Green"
                             MenuItem.viewItems [
                                 MenuItem.create [
                                     MenuItem.header "Light"
-                                    MenuItem.onClick (fun _ -> "#2ecc71" |> SetColor |> dispatch)
+                                    MenuItem.onClick ((fun _ -> "#2ecc71" |> SetColor |> dispatch), SubPatchOptions.Never)
                                 ]
                                 MenuItem.create [
                                     MenuItem.header "Dark"
-                                    MenuItem.onClick (fun _ -> "#27ae60" |> SetColor |> dispatch)
+                                    MenuItem.onClick ((fun _ -> "#27ae60" |> SetColor |> dispatch), SubPatchOptions.Never)
                                 ]  
                             ]
                         ] 

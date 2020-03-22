@@ -48,7 +48,7 @@ module WrapPanelDemo =
                         try
                             text |> Double.Parse |> SetItemHeight |> dispatch
                         with ex -> Console.WriteLine(ex)
-                    )
+                    , SubPatchOptions.Never)
                 ]
                 TextBox.create [
                     TextBlock.dock Dock.Top
@@ -57,12 +57,12 @@ module WrapPanelDemo =
                         try
                             text |> Double.Parse |> SetItemWidth |> dispatch
                         with ex -> Console.WriteLine(ex) 
-                    )
+                    , SubPatchOptions.Never)
                 ]
                 CheckBox.create[
                     CheckBox.dock Dock.Top
                     CheckBox.content "Is Horizontal"
-                    CheckBox.onClick (fun _ -> dispatch FlipOrientation)
+                    CheckBox.onClick ((fun _ -> dispatch FlipOrientation), SubPatchOptions.Never)
                 ]
                 WrapPanel.create [
                     WrapPanel.itemHeight state.itemHeight
