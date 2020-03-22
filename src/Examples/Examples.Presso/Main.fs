@@ -79,7 +79,7 @@ module Main =
                     UniformGrid.children [
                         for i in [ 250<ml> .. 250<ml> .. 1000<ml> ] do
                             RadioButton.create [
-                                RadioButton.onChecked (fun _ -> dispatch (SetWaterAmount i))
+                                RadioButton.onChecked ((fun _ -> i |> SetWaterAmount |> dispatch), SubPatchOptions.Never)
                                 RadioButton.content (sprintf "%i ml" i)
                                 RadioButton.classes [ "water" ]
                                 RadioButton.groupName "water"
@@ -98,12 +98,11 @@ module Main =
                     Slider.isSnapToTickEnabled true
                     Slider.value (float state.water)
                     Slider.onValueChanged (fun i ->
-                        if int i <> int state.water then
-                            (int i)
-                            |> LanguagePrimitives.Int32WithMeasure<ml>
-                            |> SetWaterAmount
-                            |> dispatch
-                    )
+                        (int i)
+                        |> LanguagePrimitives.Int32WithMeasure<ml>
+                        |> SetWaterAmount
+                        |> dispatch
+                    , SubPatchOptions.Never)
                 ]
             ]
         ]
@@ -123,7 +122,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.General))
+                            RadioButton.onChecked ((fun _ -> BrewingMethod.General |> SetBrewingMethod |> dispatch), SubPatchOptions.Never)
                             RadioButton.groupName "brewing_method"
                             RadioButton.content "General"
                             RadioButton.classes [ "brewing_method" ]
@@ -135,7 +134,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.ColdBrew))
+                            RadioButton.onChecked ((fun _ -> BrewingMethod.ColdBrew |> SetBrewingMethod |> dispatch), SubPatchOptions.Never)
                             RadioButton.content "Cold Brew"
                             RadioButton.groupName "brewing_method"
                             RadioButton.classes [ "brewing_method" ]
@@ -147,7 +146,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.FrenchPress))
+                            RadioButton.onChecked ((fun _ -> BrewingMethod.FrenchPress |> SetBrewingMethod |> dispatch), SubPatchOptions.Never)
                             RadioButton.content "French Press"
                             RadioButton.groupName "brewing_method"
                             RadioButton.classes [ "brewing_method" ]
@@ -159,7 +158,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
-                            RadioButton.onChecked (fun _ -> dispatch (SetBrewingMethod BrewingMethod.PourOver))
+                            RadioButton.onChecked ((fun _ -> BrewingMethod.PourOver |> SetBrewingMethod |> dispatch), SubPatchOptions.Never)
                             RadioButton.content "Pour Over"
                             RadioButton.groupName "brewing_method"
                             RadioButton.classes [ "brewing_method" ]
@@ -191,14 +190,14 @@ module Main =
                             UniformGrid.columns 2
                             UniformGrid.children [
                                 RadioButton.create [
-                                    RadioButton.onChecked (fun _ -> dispatch (SetStrength Strength.Regular))
+                                    RadioButton.onChecked ((fun _ -> Strength.Regular |> SetStrength |> dispatch), SubPatchOptions.Never)
                                     RadioButton.content "Regular"
                                     RadioButton.groupName "strength"
                                     RadioButton.classes [ "strength" ]
                                     RadioButton.isChecked (state.strength.Equals Strength.Regular)
                                 ]
                                 RadioButton.create [
-                                    RadioButton.onChecked (fun _ -> dispatch (SetStrength Strength.Strong))
+                                    RadioButton.onChecked ((fun _ -> Strength.Strong |> SetStrength |> dispatch), SubPatchOptions.Never)
                                     RadioButton.content "Strong"
                                     RadioButton.groupName "strength"
                                     RadioButton.classes [ "strength" ]
