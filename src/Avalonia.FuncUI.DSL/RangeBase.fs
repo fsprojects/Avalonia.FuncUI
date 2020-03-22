@@ -17,8 +17,8 @@ module RangeBase =
         static member value<'t when 't :> RangeBase>(value: double) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<double>(RangeBase.ValueProperty, value, ValueNone)
 
-        static member onValueChanged<'t when 't :> RangeBase>(func: double -> unit) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<double>(RangeBase.ValueProperty, func)
+        static member onValueChanged<'t when 't :> RangeBase>(func: double -> unit, subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<double>(RangeBase.ValueProperty, func, subPatchOptions)
 
         static member smallChange<'t when 't :> RangeBase>(value: double) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<double>(RangeBase.SmallChangeProperty, value, ValueNone)
