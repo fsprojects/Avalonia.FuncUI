@@ -1,3 +1,10 @@
+namespace Avalonia.FuncUI.DSL
+
+type SubPatch<'t> =
+    | Always
+    | Never
+    | OnChangeOf of 't
+
 namespace Avalonia.FuncUI.Builder
 
 open System
