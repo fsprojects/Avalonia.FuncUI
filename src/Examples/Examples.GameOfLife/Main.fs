@@ -38,14 +38,14 @@ module Main =
                     Button.isVisible (not state.evolutionRunning)
                     Button.dock Dock.Bottom
                     Button.background "#16a085"
-                    Button.onClick (fun _ -> StartEvolution |> dispatch)
+                    Button.onClick ((fun _ -> StartEvolution |> dispatch), SubPatchOptions.Never)
                     Button.content "start"
                 ]                
                 Button.create [
                     Button.isVisible state.evolutionRunning
                     Button.dock Dock.Bottom
                     Button.background "#d35400"
-                    Button.onClick (fun _ -> StopEvolution |> dispatch)
+                    Button.onClick ((fun _ -> StopEvolution |> dispatch), SubPatchOptions.Never)
                     Button.content "stop"
                 ]
                 Board.view state.board (BoardMsg >> dispatch ) 
