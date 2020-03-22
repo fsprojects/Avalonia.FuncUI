@@ -1,5 +1,8 @@
 namespace Examples.CounterApp
 
+open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.DSL
+
 module Counter =
     open Avalonia.Controls
     open Avalonia.FuncUI.DSL
@@ -21,17 +24,17 @@ module Counter =
             DockPanel.children [
                 Button.create [
                     Button.dock Dock.Bottom
-                    Button.onClick (fun _ -> dispatch Reset)
+                    Button.onClick ((fun _ -> dispatch Reset), SubPatchOptions.Never)
                     Button.content "reset"
                 ]                
                 Button.create [
                     Button.dock Dock.Bottom
-                    Button.onClick (fun _ -> dispatch Decrement)
+                    Button.onClick ((fun _ -> dispatch Decrement), SubPatchOptions.Never)
                     Button.content "-"
                 ]
                 Button.create [
                     Button.dock Dock.Bottom
-                    Button.onClick (fun _ -> dispatch Increment)
+                    Button.onClick ((fun _ -> dispatch Increment), SubPatchOptions.Never)
                     Button.content "+"
                 ]
                 TextBlock.create [
