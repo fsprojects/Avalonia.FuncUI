@@ -6,19 +6,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Counter.fs"/>
-        <Compile Include="Program.fs"/>
+        <Compile Include="Counter.fs" />
+        <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj"/>
-        <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj"/>
-        <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj"/>
+        <ProjectReference Include="..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+        <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+        <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Desktop" Version="0.9.2"/>
-        <PackageReference Update="FSharp.Core" Version="4.7.0"/>
+        <PackageReference Include="Avalonia.Desktop" Version="0.9.2" />
+        <PackageReference Update="FSharp.Core" Version="4.7.0" />
     </ItemGroup>
 
 </Project>

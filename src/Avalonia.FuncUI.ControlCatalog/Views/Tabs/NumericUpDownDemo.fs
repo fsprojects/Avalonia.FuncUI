@@ -27,7 +27,7 @@ module NumericUpDownDemo =
             StackPanel.children [
                 NumericUpDown.create [
                     NumericUpDown.value state.count
-                    NumericUpDown.onValueChanged (fun value -> value |> Set |> dispatch)
+                    NumericUpDown.onValueChanged ((fun value -> value |> Set |> dispatch), SubPatchOptions.Never)
                     NumericUpDown.increment 0.25
                     NumericUpDown.minimum 0.0
                     NumericUpDown.maximum 1.0
@@ -35,7 +35,7 @@ module NumericUpDownDemo =
                 ]
                 NumericUpDown.create [
                     NumericUpDown.value state.count
-                    NumericUpDown.onValueChanged (fun value -> value |> Set |> dispatch)
+                    NumericUpDown.onValueChanged ((fun value -> value |> Set |> dispatch), SubPatchOptions.Never)
                     NumericUpDown.increment 0.25
                     NumericUpDown.minimum 0.0
                     NumericUpDown.maximum 1.0
@@ -44,7 +44,7 @@ module NumericUpDownDemo =
                 ]
                 NumericUpDown.create [
                     NumericUpDown.value state.count
-                    NumericUpDown.onValueChanged (fun value -> value |> Set |> dispatch)
+                    NumericUpDown.onValueChanged ((fun value -> value |> Set |> dispatch), SubPatchOptions.Never)
                     NumericUpDown.increment 0.25
                 ]
             ]

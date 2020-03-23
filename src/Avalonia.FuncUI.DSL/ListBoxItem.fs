@@ -14,5 +14,5 @@ module ListBoxItem =
         static member isSelected<'t when 't :> ListBoxItem>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(ListBoxItem.IsSelectedProperty, value, ValueNone)
 
-        static member onIsSelectedChanged<'t when 't :> ListBoxItem>(func: bool -> unit) =
-            AttrBuilder<'t>.CreateSubscription<bool>(ListBoxItem.IsSelectedProperty, func)
+        static member onIsSelectedChanged<'t when 't :> ListBoxItem>(func: bool -> unit, subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<bool>(ListBoxItem.IsSelectedProperty, func, subPatchOptions)

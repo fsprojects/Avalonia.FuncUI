@@ -115,16 +115,16 @@ module Playlist =
                       currentIndex = 0 }, Cmd.none, None
             | None -> state, Cmd.none, None
 
-
     let private songTemplate (song: Types.SongRecord) (dispatch: Msg -> unit) =
         StackPanel.create [
             StackPanel.spacing 8.0
-            StackPanel.onDoubleTapped (fun _ -> dispatch (PlaySong song))
+            StackPanel.onDoubleTapped ((fun _ -> dispatch (PlaySong song)), SubPatchOptions.OnChangeOf song)
             StackPanel.onKeyUp (fun keyargs ->
                 match keyargs.Key with
                 | Key.Enter -> dispatch (PlaySong song)
                 /// eventually add other shortcuts to re-arrange songs or something alike
-                | _ -> ())
+                | _ -> ()
+            , SubPatchOptions.OnChangeOf song)
             StackPanel.children [
                 TextBlock.create [
                     TextBlock.text song.name

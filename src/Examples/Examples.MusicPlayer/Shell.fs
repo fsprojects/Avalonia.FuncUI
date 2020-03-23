@@ -160,12 +160,12 @@ module Shell =
                         MenuItem.create [
                             MenuItem.header "Select Files"
                             MenuItem.icon (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/file-multiple-dark.png")
-                            MenuItem.onClick (fun _ -> dispatch OpenFiles)
+                            MenuItem.onClick ((fun _ -> dispatch OpenFiles), SubPatchOptions.Never)
                         ]
                         MenuItem.create [
                             MenuItem.header "Select Folder"
                             MenuItem.icon (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/folder-music-dark.png")
-                            MenuItem.onClick (fun _ -> dispatch OpenFolder)
+                            MenuItem.onClick ((fun _ -> dispatch OpenFolder), SubPatchOptions.Never)
                         ]
                     ]
                 ]

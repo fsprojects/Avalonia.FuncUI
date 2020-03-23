@@ -31,10 +31,10 @@ module Board =
                     Button.create [
                         match cell with
                         | Alive ->
-                            yield Button.onClick (fun _ -> cellPosition |> KillCell |> dispatch)
+                            yield Button.onClick ((fun _ -> cellPosition |> KillCell |> dispatch), SubPatchOptions.OnChangeOf cellPosition)
                             yield Button.background "green"
                         | Dead ->
-                            yield Button.onClick (fun _ -> cellPosition |> ReviveCell |> dispatch)
+                            yield Button.onClick ((fun _ -> cellPosition |> ReviveCell |> dispatch), SubPatchOptions.OnChangeOf cellPosition)
                             yield Button.background "gray"
                         
                     ] |> generalize                     

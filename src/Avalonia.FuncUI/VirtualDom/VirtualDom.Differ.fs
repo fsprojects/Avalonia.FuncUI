@@ -44,8 +44,6 @@ module internal rec Differ =
             AttrDelta.Subscription {
                 name = subscription.name
                 subscribe = subscription.subscribe
-                funcType = subscription.funcType
-                funcCapturesState = subscription.funcCapturesState
                 func = None
             }
         | _ -> failwithf "no reset operation is defined for last '%A'" last
@@ -103,7 +101,7 @@ module internal rec Differ =
             // update if changed
             | Some nextAttr ->
                 let eq = nextAttr.Equals lastAttr
-                if not eq || nextAttr.ForcePatch then
+                if not eq then
                     delta.Add(update lastAttr nextAttr)
                 else
                     ()

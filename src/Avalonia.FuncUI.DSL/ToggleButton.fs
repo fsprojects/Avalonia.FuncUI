@@ -25,11 +25,11 @@ module ToggleButton =
             value |> Option.toNullable |> ToggleButton.isChecked
             
         [<Obsolete "use 'onChecked' or 'onUnchecked' instead">]
-        static member onIsCheckedChanged<'t when 't :> ToggleButton>(func: Nullable<bool> -> unit) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<Nullable<bool>>(ToggleButton.IsCheckedProperty, func)
+        static member onIsCheckedChanged<'t when 't :> ToggleButton>(func: Nullable<bool> -> unit, subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<Nullable<bool>>(ToggleButton.IsCheckedProperty, func, subPatchOptions)
             
-        static member onChecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.CheckedEvent, func)
+        static member onChecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit, subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.CheckedEvent, func, subPatchOptions)
             
-        static member onUnchecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.UncheckedEvent, func)
+        static member onUnchecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit, subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.UncheckedEvent, func, subPatchOptions)
