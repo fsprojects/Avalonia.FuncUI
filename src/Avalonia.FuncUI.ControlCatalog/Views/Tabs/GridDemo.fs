@@ -36,16 +36,16 @@ module GridDemo =
                 TextBox.create [
                     TextBlock.dock Dock.Top
                     TextBox.text (string state.cellHeight)
-                    TextBox.onTextChanged (fun text ->
+                    TextBox.onTextChanged ((fun text ->
                         text |> Int32.Parse |> SetCellHeight |> dispatch
-                    )
+                    ), SubPatchOptions.Never)
                 ]
                 TextBox.create [
                     TextBlock.dock Dock.Top
                     TextBox.text (string state.cellWidth)
-                    TextBox.onTextChanged (fun text ->
+                    TextBox.onTextChanged ((fun text ->
                         text |> Int32.Parse |> SetCellWidth |> dispatch
-                    )
+                    ), SubPatchOptions.Never)
                 ]
                 Grid.create [
                     Grid.columnDefinitions (sprintf "%i, 1*" state.cellWidth)

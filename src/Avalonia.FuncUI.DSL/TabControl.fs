@@ -28,11 +28,11 @@ module TabControl =
         static member selectedContent<'t when 't :> TabControl>(value: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(TabControl.ContentTemplateProperty, value, ValueNone)
             
-        static member onSelectedContentChanged<'t when 't :> TabControl>(func: obj -> unit) =
-            AttrBuilder<'t>.CreateSubscription<obj>(TabControl.SelectedContentProperty, func)
+        static member onSelectedContentChanged<'t when 't :> TabControl>(func: obj -> unit, subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<obj>(TabControl.SelectedContentProperty, func, subPatchOptions)
             
         static member selectedContentTemplate<'t when 't :> TabControl>(value: IDataTemplate) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(TabControl.SelectedContentTemplateProperty, value, ValueNone)
             
-        static member onSelectedContentTemplateChanged<'t when 't :> TabControl>(func: IDataTemplate -> unit) =
-            AttrBuilder<'t>.CreateSubscription<IDataTemplate>(TabControl.SelectedContentTemplateProperty, func)
+        static member onSelectedContentTemplateChanged<'t when 't :> TabControl>(func: IDataTemplate -> unit, subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<IDataTemplate>(TabControl.SelectedContentTemplateProperty, func, subPatchOptions)

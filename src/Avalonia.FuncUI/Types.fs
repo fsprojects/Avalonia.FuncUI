@@ -2,6 +2,7 @@
 
 open Avalonia.Controls
 open System
+open System.Reactive.Linq
 open System.Threading
 
 module Types =
@@ -60,30 +61,30 @@ module Types =
     type ViewContent =
         | Single of IView option
         | Multiple of IView list
-         
+
     [<CustomEquality; NoComparison>]
     type Subscription =
         {
             name: string
             subscribe:  IControl * Delegate -> CancellationTokenSource
             func: Delegate
-            funcCapturesState: bool
             funcType: Type
+            scope: obj
         }
         with
             override this.Equals (other: obj) : bool =
                 match other with
-                | :? Subscription as other -> 
+                | :? Subscription as other ->
                     this.name = other.name &&
-                    this.funcType = other.funcType
+                    this.funcType = other.funcType &&
+                    this.scope = other.scope
                 | _ -> false
                 
             override this.GetHashCode () =
-                (this.name, this.funcType).GetHashCode()
+                (this.name, this.funcType, this.scope).GetHashCode()
                                
     type IAttr =
         abstract member UniqueName : string
-        abstract member ForcePatch : bool
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
@@ -109,11 +110,6 @@ module Types =
                     | Accessor.AvaloniaProperty p -> p.Name
                     | Accessor.InstanceProperty p -> p.name
                 | Subscription subscription -> subscription.name
-                
-            member this.ForcePatch =
-                match this with
-                | Subscription subscription -> subscription.funcCapturesState
-                | _ -> false
             
             member this.Property =
                 match this with

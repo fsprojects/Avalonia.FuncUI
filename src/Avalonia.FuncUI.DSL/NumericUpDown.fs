@@ -76,8 +76,8 @@ module NumericUpDown =
 
             AttrBuilder<'t>.CreateProperty<string>("Text", value, ValueSome getter, ValueSome setter, ValueNone)
 
-        static member onTextChanged<'t when 't :> NumericUpDown>(func: string -> unit) =
-            AttrBuilder<'t>.CreateSubscription<string>(NumericUpDown.TextProperty, func)
+        static member onTextChanged<'t when 't :> NumericUpDown>(func: string -> unit, subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<string>(NumericUpDown.TextProperty, func, subPatchOptions)
 
         static member value<'t when 't :> NumericUpDown>(value: double) : IAttr<'t> =
             let getter : ('t -> double) = (fun control -> control.Value)
@@ -85,8 +85,8 @@ module NumericUpDown =
 
             AttrBuilder<'t>.CreateProperty<double>("Value", value, ValueSome getter, ValueSome setter, ValueNone)
 
-        static member onValueChanged<'t when 't :> NumericUpDown>(func: double -> unit) =
-            AttrBuilder<'t>.CreateSubscription<double>(NumericUpDown.ValueProperty, func)
+        static member onValueChanged<'t when 't :> NumericUpDown>(func: double -> unit, subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<double>(NumericUpDown.ValueProperty, func, subPatchOptions)
 
         static member watermark<'t when 't :> NumericUpDown>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(NumericUpDown.WatermarkProperty, value, ValueNone)

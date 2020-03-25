@@ -117,11 +117,11 @@ module DataTemplateDemo =
     let productListView (state: State) (dispatch) =
         ListBox.create [
             ListBox.dock Dock.Left
-            ListBox.onSelectedItemChanged (fun obj ->
+            ListBox.onSelectedItemChanged ((fun obj ->
                 match obj with
                 | :? Product as p -> p |> Some |> Select |> dispatch
                 | _ -> None |> Select |> dispatch
-            )
+            ), SubPatchOptions.Never)
             ListBox.dataItems state.Products
             ListBox.itemTemplate (
                 DataTemplateView<Product>.create (fun data ->
@@ -148,7 +148,7 @@ module DataTemplateDemo =
                             Button.create [
                                 Button.dock Dock.Right
                                 Button.content "remove"
-                                Button.onClick (fun _ -> data.Id |> Msg.Remove |> dispatch)
+                                Button.onClick ((fun _ -> data.Id |> Msg.Remove |> dispatch), SubPatchOptions.OnChangeOf data.Id)
                             ]                                         
                         ]
                     ]                                  

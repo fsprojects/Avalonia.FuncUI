@@ -49,27 +49,22 @@ module internal rec Delta =
         {
             name: string
             subscribe:  Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
-            funcCapturesState: bool
-            funcType: Type
             func: Delegate option
         }
         with
             override this.Equals (other: obj) : bool =
                 match other with
                 | :? Subscription as other -> 
-                    this.name = other.name &&
-                    this.funcType = other.funcType
+                    this.name = other.name
                 | _ -> false
                     
             override this.GetHashCode () =
-                (this.name, this.funcType).GetHashCode()
+                (this.name).GetHashCode()
                 
             static member From (subscription: Subscription) : SubscriptionDelta =
                 {
                     name = subscription.name;
                     subscribe = subscription.subscribe;
-                    funcType = subscription.funcType;
-                    funcCapturesState = subscription.funcCapturesState
                     func = Some subscription.func
                 }
             member this.UniqueName = this.name

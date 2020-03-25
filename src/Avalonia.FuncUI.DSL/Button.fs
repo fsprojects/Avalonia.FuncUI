@@ -32,8 +32,8 @@ module Button =
         static member isPressed<'t when 't :> Button>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Button.IsPressedProperty, value, ValueNone)
             
-        static member onIsPressedChanged<'t when 't :> Button>(func: bool -> unit) =
-            AttrBuilder<'t>.CreateSubscription<bool>(Button.IsPressedProperty, func)
+        static member onIsPressedChanged<'t when 't :> Button>(func: bool -> unit, subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<bool>(Button.IsPressedProperty, func, subPatchOptions)
             
-        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func)
+        static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit, subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func, subPatchOptions)

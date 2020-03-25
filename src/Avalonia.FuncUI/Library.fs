@@ -1,32 +1,5 @@
 namespace Avalonia.FuncUI.Library
 
-module FunctionAnalysis =
-    open System
-    open System.Reflection
-    open System.Collections.Concurrent
-
-    let internal cache = ConcurrentDictionary<Type, bool>()
-
-    let private flags =
-        BindingFlags.Instance |||
-        BindingFlags.NonPublic |||
-        BindingFlags.Public
-
-    let capturesState (func : 'a) : bool =
-        let type' = func.GetType()
-
-        let hasValue, value = cache.TryGetValue type'
-
-        match hasValue with
-        | true -> value
-        | false ->
-            let capturesState =
-                type'.GetConstructors(flags)
-                |> Array.map (fun info -> info.GetParameters().Length)
-                |> Array.exists (fun parameterLength -> parameterLength > 0)
-
-            cache.AddOrUpdate(type', capturesState, (fun identifier lastValue -> capturesState))
-
 module Observable =
     open System
 
@@ -62,10 +35,16 @@ module internal Extensions =
             Observable.subscribeWeakly(this, callback, target)
 
     type IInteractive with
-        member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent) =
+        member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent) : IObservable<'args> =
 
-            let sub = Func<IObserver<'args>, IDisposable>(fun x ->
-                let act = Action<obj, 'args>(fun _ e -> x.OnNext e)
-                this.AddHandler(routedEvent, act)
+            let sub = Func<IObserver<'args>, IDisposable>(fun observer ->
+                // push new update to subscribers
+                let publish = Action<obj, 'args>(fun _ e ->
+                    observer.OnNext e
+                )
+                
+                // subscribe to event changes so they can be pushed to subscribers
+                this.AddHandler(routedEvent, publish, routedEvent.RoutingStrategies)
             )
+            
             Observable.Create(sub)

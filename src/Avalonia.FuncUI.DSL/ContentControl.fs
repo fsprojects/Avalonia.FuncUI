@@ -7,7 +7,10 @@ module ContentControl =
     open Avalonia.FuncUI.Builder
     open Avalonia.Controls.Templates
     open Avalonia.Layout
-     
+
+    let create (attrs : IAttr<ContentControl> list) : IView<ContentControl> =
+        ViewBuilder.Create<ContentControl>(attrs)
+
     type ContentControl with
         static member content<'t when 't :> ContentControl>(text: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(ContentControl.ContentProperty, text, ValueNone)
