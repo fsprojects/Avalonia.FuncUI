@@ -12,6 +12,15 @@ let postPredicate (projectRoot: string, page: string) =
     else
         false
 
+let controlPredicate (projectRoot: string, page: string) =
+    let fileName = Path.Combine(projectRoot,page)
+    let ext = Path.GetExtension page
+    if ext = ".md" then
+        let ctn = File.ReadAllText fileName
+        ctn.Contains("layout: control")
+    else
+        false
+
 let guidePredicate (projectRoot: string, page: string) =
     let fileName = Path.Combine(projectRoot,page)
     let ext = Path.GetExtension page
@@ -47,7 +56,7 @@ let staticPredicate (projectRoot: string, page: string) =
        page.Contains ".cmd" ||
        page.Contains ".sh" ||
        page.Contains ".gitkeep" ||
-       page.Contains "README.md" ||
+       page.Contains ".markdown" ||
        ext = ".fsx"
     then
         false
@@ -59,6 +68,7 @@ let config = {
         { Script = "sass.fsx"; Trigger = OnFileExt ".scss"; OutputFile = ChangeExtension "css" }
         { Script = "post.fsx"; Trigger = OnFilePredicate postPredicate; OutputFile = ChangeExtension "html" }
         { Script = "guide.fsx"; Trigger = OnFilePredicate guidePredicate; OutputFile = ChangeExtension "html" }
+        { Script = "control.fsx"; Trigger = OnFilePredicate controlPredicate; OutputFile = ChangeExtension "html" }
         { Script = "releasenote.fsx"; Trigger = OnFilePredicate releaseNotePredicate; OutputFile = ChangeExtension "html" }
         { Script = "staticfile.fsx"; Trigger = OnFilePredicate staticPredicate; OutputFile = SameFileName }
         { Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html" }
