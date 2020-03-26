@@ -10,8 +10,6 @@ let generate' (ctx : SiteContents) (page: string) =
         |> Option.defaultValue Seq.empty
         |> Seq.find (fun n -> n.file = page)
 
-    let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
-
     Layout.layout ctx post.title [
         article [Class "post box"] [
             header [Class "post-header"] [
@@ -29,7 +27,7 @@ let generate' (ctx : SiteContents) (page: string) =
                         span [Class "tag is-light"][ !!tag ]
                 ]
             ]
-            section [Class "post-content"] [!!post.content]
+            section [Class "post-content content"] [!!post.content]
         ]
     ]
 

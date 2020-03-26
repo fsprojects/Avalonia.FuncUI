@@ -1,22 +1,43 @@
-#r "../_lib/Fornax.Core.dll"
+﻿#r "../_lib/Fornax.Core.dll"
 #r "../_lib/Markdig.dll"
 
 open Markdig
 open Markdig.Extensions.AutoIdentifiers
 
-type PostConfig = {
+
+type GuideConfig = {
     disableLiveRefresh: bool
 }
-type Post = {
+type GuideCategory =
+    | Beginner
+    | Intermediate
+    | Advanced
+    | Uncategorized
+
+    static member FromString(value: string) =
+        match value with
+        | "beginner" -> Beginner
+        | "intermediate" -> Intermediate
+        | "advanced" -> Advanced
+        | _ -> Uncategorized
+    
+    member this.ToString() =
+        match this with
+        | Beginner      -> "Beginner"
+        | Intermediate  -> "Intermediate"
+        | Advanced      -> "Advanced"
+        | Uncategorized -> "Uncategorized"
+
+type Guide = {
     file: string
     link : string
     title: string
     author: string option
-    published: System.DateTime option
     tags: string list
+    listOrder: int
+    guideCategory: GuideCategory
     content: string
 }
-
 
 let markdownPipeline =
     MarkdownPipelineBuilder()
@@ -29,7 +50,6 @@ let markdownPipeline =
 let isSeparator (input : string) =
     input.StartsWith "---"
 
-///`fileContent` - content of page to parse. Usually whole content of `.md` file
 ///returns content of config that should be used for the page
 let getConfig (fileContent : string) =
     let fileContent = fileContent.Split '\n'
@@ -54,6 +74,7 @@ let getContent (fileContent : string) =
 let trimString (str : string) =
     str.Trim().TrimEnd('"').TrimStart('"')
 
+
 let loadFile n =
     let text = System.IO.File.ReadAllText n
 
@@ -61,20 +82,22 @@ let loadFile n =
 
     let content = getContent text
 
-    let file = System.IO.Path.Combine("posts", (n |> System.IO.Path.GetFileNameWithoutExtension) + ".md").Replace("\\", "/")
-    let link = "/" + System.IO.Path.Combine("posts", (n |> System.IO.Path.GetFileNameWithoutExtension) + ".html").Replace("\\", "/")
+    let file = System.IO.Path.Combine("guides", (n |> System.IO.Path.GetFileNameWithoutExtension) + ".md").Replace("\\", "/")
+    let link = "/" + System.IO.Path.Combine("guides", (n |> System.IO.Path.GetFileNameWithoutExtension) + ".html").Replace("\\", "/")
 
     let title = config |> List.find (fun n -> n.ToLower().StartsWith "title" ) |> fun n -> n.Split(':').[1] |> trimString
+    let listOrder = config |> List.find(fun n -> n.ToLower().StartsWith "list-order") |> fun n -> n.Split(':').[1] |> trimString |> int
+    let category = 
+        config 
+        |> List.find (fun n -> n.ToLower().StartsWith "guide-category") 
+        |> fun n -> n.Split(':').[1] 
+        |> trimString 
+        |> fun n -> n.ToLower() 
+        |> GuideCategory.FromString
 
     let author =
         try
             config |> List.tryFind (fun n -> n.ToLower().StartsWith "author" ) |> Option.map (fun n -> n.Split(':').[1] |> trimString)
-        with
-        | _ -> None
-
-    let published =
-        try
-            config |> List.tryFind (fun n -> n.ToLower().StartsWith "published" ) |> Option.map (fun n -> n.Split(':').[1] |> trimString |> System.DateTime.Parse)
         with
         | _ -> None
 
@@ -92,12 +115,14 @@ let loadFile n =
       link = link
       title = title
       author = author
-      published = published
       tags = tags
+      guideCategory = category
+      listOrder = listOrder
       content = content }
 
+
 let loader (projectRoot: string) (siteContent: SiteContents) =
-    let postsPath = System.IO.Path.Combine(projectRoot, "posts")
+    let postsPath = System.IO.Path.Combine(projectRoot, "guides")
     System.IO.Directory.GetFiles postsPath
     |> Array.filter (fun n -> n.EndsWith ".md")
     |> Array.map loadFile

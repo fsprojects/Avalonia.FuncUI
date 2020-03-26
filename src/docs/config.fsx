@@ -12,6 +12,15 @@ let postPredicate (projectRoot: string, page: string) =
     else
         false
 
+let guidePredicate (projectRoot: string, page: string) =
+    let fileName = Path.Combine(projectRoot,page)
+    let ext = Path.GetExtension page
+    if ext = ".md" then
+        let ctn = File.ReadAllText fileName
+        ctn.Contains("layout: guide")
+    else
+        false
+
 let staticPredicate (projectRoot: string, page: string) =
     let ext = Path.GetExtension page
     if page.Contains "_public" ||
@@ -33,12 +42,13 @@ let staticPredicate (projectRoot: string, page: string) =
 
 let config = {
     Generators = [
-        {Script = "less.fsx"; Trigger = OnFileExt ".less"; OutputFile = ChangeExtension "css"; }
-        {Script = "sass.fsx"; Trigger = OnFileExt ".scss"; OutputFile = ChangeExtension "css" }
-        {Script = "post.fsx"; Trigger = OnFilePredicate postPredicate; OutputFile = ChangeExtension "html" }
-        {Script = "staticfile.fsx"; Trigger = OnFilePredicate staticPredicate; OutputFile = SameFileName }
-        {Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html" }
-        {Script = "about.fsx"; Trigger = Once; OutputFile = NewFileName "about.html" }
-        {Script = "contact.fsx"; Trigger = Once; OutputFile = NewFileName "contact.html" }
+        { Script = "sass.fsx"; Trigger = OnFileExt ".scss"; OutputFile = ChangeExtension "css" }
+        { Script = "post.fsx"; Trigger = OnFilePredicate postPredicate; OutputFile = ChangeExtension "html" }
+        { Script = "guide.fsx"; Trigger = OnFilePredicate guidePredicate; OutputFile = ChangeExtension "html" }
+        { Script = "staticfile.fsx"; Trigger = OnFilePredicate staticPredicate; OutputFile = SameFileName }
+        { Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html" }
+        { Script = "about.fsx"; Trigger = Once; OutputFile = NewFileName "about.html" }
+        { Script = "posts.fsx"; Trigger = Once; OutputFile = NewFileName "blog.html" }
+        { Script = "guides.fsx"; Trigger = Once; OutputFile = NewFileName "guides.html" }
     ]
 }

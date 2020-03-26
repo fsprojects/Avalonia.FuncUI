@@ -1,6 +1,7 @@
 #r "../_lib/Fornax.Core.dll"
 #if !FORNAX
 #load "../loaders/postloader.fsx"
+#load "../loaders/guideloader.fsx"
 #load "../loaders/pageloader.fsx"
 #load "../loaders/globalloader.fsx"
 #endif
@@ -32,21 +33,28 @@ let injectWebsocketCode (webpage:string) =
 
 let layout (ctx : SiteContents) active bodyCnt =
     let pages = ctx.TryGetValues<Pageloader.Page> () |> Option.defaultValue Seq.empty
-    let posts = ctx.TryGetValues<Postloader.Post> () |> Option.defaultValue Seq.empty
+    let guides = 
+        ctx.TryGetValues<Guideloader.Guide> () 
+        |> Option.defaultValue Seq.empty<Guideloader.Guide>
+        |> Seq.sortBy(fun g -> g.listOrder)
     let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
     let ttl =
       siteInfo
       |> Option.map (fun si -> si.title)
       |> Option.defaultValue ""
+    let showSidebar = 
+        siteInfo
+        |> Option.map (fun si -> si.showSideBar)
+        |> Option.defaultValue true
 
     let menuEntries =
       pages
       |> Seq.map (fun p ->
-        let cls = if p.title = active then "navbar-item is-active" else "navbar-item"
+        let cls = if p.title = active then "navbar-item is-active is-light" else "navbar-item is-light"
         a [Class cls; Href p.link] [!! p.title ])
       |> Seq.toList
 
-    html [] [
+    html [Class "has-navbar-fixed-top"] [
         head [] [
             meta [CharSet "utf-8"]
             meta [Name "viewport"; Content "width=device-width, initial-scale=1"]
@@ -55,15 +63,16 @@ let layout (ctx : SiteContents) active bodyCnt =
             link [Rel "stylesheet"; Href "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"]
             link [Rel "stylesheet"; Href "https://fonts.googleapis.com/css?family=Open+Sans"]
             link [Rel "stylesheet"; Href "https://unpkg.com/bulma@0.8.0/css/bulma.min.css"]
+            link [Rel "stylesheet"; Href "https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism-coy.min.css"]
             link [Rel "stylesheet"; Type "text/css"; Href "/style/style.css"]
-
+            ``base`` [Href "/Avalonia.FuncUI/"]
         ]
         body [] [
-            nav [Class "navbar"] [
+            nav [Class "navbar is-funcui is-fixed-top"] [
                 div [Class "container"] [
                     div [Class "navbar-brand"] [
-                        a [Class "navbar-item"; Href "/"] [
-                            img [Src "/images/bulma.png"; Alt "Logo"]
+                        a [Class "navbar-item brand-link"; Href "/"] [
+                            img [Src "https://raw.githubusercontent.com/AvaloniaCommunity/Avalonia.FuncUI/master/github/img/logo/FuncUI.png"; Alt "Logo"]
                         ]
                         span [Class "navbar-burger burger"; Custom ("data-target", "navbarMenu")] [
                             span [] []
@@ -75,29 +84,28 @@ let layout (ctx : SiteContents) active bodyCnt =
                 ]
             ]
             main [Class "main-content"] [
-                aside [Class "menu main-menu"] [
-                    p [Class "menu-label"] [
-                        !!"Blog Posts"
-                    ]
-                    ul [Class "menu-list"] []
-                    p [Class "menu-label"] [
-                        !!"Guides"
-                    ]
-                    ul [Class "menu-list"] [
-                        for post in posts do
-                            li [] [
-                                a [Href post.link] [
-                                    !!post.title
+                if showSidebar then
+                    aside [Class "menu main-menu"] [
+                        p [Class "menu-label"] [
+                            !!"Guides"
+                        ]
+                        ul [Class "menu-list"] [
+                            for guide in guides do
+                                li [] [
+                                    a [Href guide.link] [
+                                        !!guide.title
+                                    ]
                                 ]
-                            ]
+                        ]
+                        p [Class "menu-label"] [
+                            !!"Release Notes"
+                        ]
+                        ul [Class "menu-list"] []
                     ]
-                    p [Class "menu-label"] [
-                        !!"Release Notes"
-                    ]
-                    ul [Class "menu-list"] []
-                ]
                 yield! bodyCnt
             ]
+            script [Src "https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/prism.min.js"] []
+            script [Src "https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/plugins/autoloader/prism-autoloader.min.js"] []
         ]
     ]
 
