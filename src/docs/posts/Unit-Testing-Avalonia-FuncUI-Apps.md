@@ -2,7 +2,8 @@
 layout: post
 title: Unit Testing Avalonia.FuncUI
 author: Avalonia Community
-published: 2020-03-21
+published: 2020-02-21,
+tags: testing, another, another2, another3, another4
 ---
 
 [Full Template]: ./Full-Template.html

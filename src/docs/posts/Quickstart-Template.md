@@ -2,7 +2,8 @@
 layout: post
 title: Quickstart Template
 author: Avalonia Community
-published: 2020-03-21
+published: 2020-02-19
+tags: alv
 ---
 
 The **Quickstart Template** is intended to be used as a starting point for more *serious* projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you **MUST** do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the [Basic Template](./Basic-Template.html) all you need is a couple of files and `.net core` installed to get up and running.
