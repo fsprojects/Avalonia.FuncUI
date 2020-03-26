@@ -21,6 +21,15 @@ let guidePredicate (projectRoot: string, page: string) =
     else
         false
 
+let releaseNotePredicate (projectRoot: string, page: string) =
+    let fileName = Path.Combine(projectRoot,page)
+    let ext = Path.GetExtension page
+    if ext = ".md" then
+        let ctn = File.ReadAllText fileName
+        ctn.Contains("layout: release-note")
+    else
+        false
+
 let staticPredicate (projectRoot: string, page: string) =
     let ext = Path.GetExtension page
     if page.Contains "_public" ||
@@ -37,6 +46,7 @@ let staticPredicate (projectRoot: string, page: string) =
        page.Contains ".fsx.lock" ||
        page.Contains ".cmd" ||
        page.Contains ".sh" ||
+       page.Contains ".gitkeep" ||
        page.Contains "README.md" ||
        ext = ".fsx"
     then
@@ -49,10 +59,12 @@ let config = {
         { Script = "sass.fsx"; Trigger = OnFileExt ".scss"; OutputFile = ChangeExtension "css" }
         { Script = "post.fsx"; Trigger = OnFilePredicate postPredicate; OutputFile = ChangeExtension "html" }
         { Script = "guide.fsx"; Trigger = OnFilePredicate guidePredicate; OutputFile = ChangeExtension "html" }
+        { Script = "releasenote.fsx"; Trigger = OnFilePredicate releaseNotePredicate; OutputFile = ChangeExtension "html" }
         { Script = "staticfile.fsx"; Trigger = OnFilePredicate staticPredicate; OutputFile = SameFileName }
         { Script = "index.fsx"; Trigger = Once; OutputFile = NewFileName "index.html" }
         { Script = "about.fsx"; Trigger = Once; OutputFile = NewFileName "about.html" }
         { Script = "posts.fsx"; Trigger = Once; OutputFile = NewFileName "blog.html" }
         { Script = "guides.fsx"; Trigger = Once; OutputFile = NewFileName "guides.html" }
+        { Script = "releasenotes.fsx"; Trigger = Once; OutputFile = NewFileName "release-notes.html" }
     ]
 }

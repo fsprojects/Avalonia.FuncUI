@@ -107,3 +107,8 @@ cd src/docs
 ./fake run build.fsx -t CopyDocs
 ```
 now you can push or PR the built website, after a few minutes of the PR (or change) being merged into master the website will reflect these changes
+
+
+# ***Note***
+`.markdown` files
+To prevent the [Fornax] engine from auto-processing files we use the `.markdown` file extension for files that we want to load individually on certain pages (like `index.`markdown inside the `index.fsx` file)

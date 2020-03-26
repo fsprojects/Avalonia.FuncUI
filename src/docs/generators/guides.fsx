@@ -16,7 +16,7 @@ let generate' (ctx : SiteContents) (_: string) =
         |> Seq.sortBy(fun g -> g.listOrder)
         |> Seq.groupBy(fun g -> g.guideCategory)
 
-    Layout.layout ctx "Avalonia.FuncUI Guides" [
+    Layout.layout ctx "Guides" [
         article [Class "guides box"] [
             header [Class "guides-header"] [
                 h1 [Class "title"] [
@@ -25,7 +25,7 @@ let generate' (ctx : SiteContents) (_: string) =
             ]
             section [] [
                 for (category, guides) in groups do
-                    h2 [] [!!category.ToString()]
+                    h2 [] [!!(category.ToString() + " guides")]
                     ul [] [
                         for guide in guides do
                             li [] [

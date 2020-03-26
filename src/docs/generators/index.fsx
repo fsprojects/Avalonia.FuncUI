@@ -1,25 +1,28 @@
+
 #r "../_lib/Fornax.Core.dll"
 #load "layout.fsx"
 
+open Markdig
+open Markdig.Extensions.AutoIdentifiers
 open Html
 
-let generate' (ctx : SiteContents) (_: string) =
-  let posts = ctx.TryGetValues<Postloader.Post> () |> Option.defaultValue Seq.empty
-  let siteInfo = ctx.TryGetValue<Globalloader.SiteInfo> ()
-  let desc =
-    siteInfo
-    |> Option.map (fun si -> si.description)
-    |> Option.defaultValue ""
 
-  let published (post: Postloader.Post) =
-    post.published
-    |> Option.defaultValue System.DateTime.Now
-    |> fun n -> n.ToString("yyyy-MM-dd")
+let markdownPipeline =
+    MarkdownPipelineBuilder()
+        .UseAutoIdentifiers(AutoIdentifierOptions.GitHub)
+        .UseEmojiAndSmiley()
+        .UsePipeTables()
+        .UseGridTables()
+        .Build()
 
+let generate' (ctx : SiteContents) (page: string) =
   Layout.layout ctx "Home" [
-    section [] []
+    section [Class "index-content content"] [!!page]
   ]
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
-  generate' ctx page
-  |> Layout.render ctx
+    let file = System.IO.Path.Combine(projectRoot, "index.markdown")
+    let text = System.IO.File.ReadAllText file
+    let content = Markdown.ToHtml(text, markdownPipeline)
+    generate' ctx content
+    |> Layout.render ctx

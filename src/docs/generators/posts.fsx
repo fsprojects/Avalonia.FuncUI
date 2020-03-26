@@ -16,7 +16,7 @@ let generate' (ctx : SiteContents) (_: string) =
         |> Option.defaultValue Seq.empty<Postloader.Post>
         |> Seq.sortByDescending(fun p -> p.published)
 
-    Layout.layout ctx "Avalonia.FuncUI Blog" [
+    Layout.layout ctx "Blog" [
         article [Class "blog"] [
             header [Class "blog-header"] [
                 h1 [Class "title"] [
