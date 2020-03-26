@@ -84,25 +84,283 @@
         </p>
         <ul class="menu-list"></ul>
       </aside>
-      <article class="post box">
-        <header class="post-header">
+      <article class="blog">
+        <header class="blog-header">
           <h1 class="title">
-            Quickstart Template
+            Avalonia.FuncUI Blog
           </h1>
-          <h4 class="subtitle">
-            Avalonia Community
-          </h4>
-          <small>
-            Published: Wednesday, 19 February, 2020
-          </small>
-          <section class="tags">
-            <span class="tag is-light">
-              alv
-            </span>
-          </section>
         </header>
-        <section class="post-content content">
-          <p>The <strong>Quickstart Template</strong> is intended to be used as a starting point for more <em>serious</em> projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you <strong>MUST</strong> do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the <a href="./Basic-Template.html">Basic Template</a> all you need is a couple of files and <code>.net core</code> installed to get up and running.</p>
+        <section class="box post">
+          <header class="post-header">
+            <h2 class="title">
+              <a href="/posts/Unit-Testing-Avalonia-FuncUI-Apps.html">
+                Unit Testing Avalonia.FuncUI
+              </a>
+            </h2>
+            <h3 class="subtitle">
+              Published by: Avalonia Community
+            </h3>
+            <div class="tags">
+              <span class="tag is-link is-light">
+                testing
+              </span>
+              <span class="tag is-link is-light">
+                 another
+              </span>
+              <span class="tag is-link is-light">
+                 another2
+              </span>
+              <span class="tag is-link is-light">
+                 another3
+              </span>
+              <span class="tag is-link is-light">
+                 another4
+              </span>
+            </div>
+            <small>
+              Friday, 21 February, 2020
+            </small>
+          </header>
+          <div class="content post-content">
+            <p>Testing <code>Avalonia.FuncUI apps</code> is pretty simple if you have previous experience using Elmish it should be not much different
+for the moment let's dive into it.</p>
+<blockquote>
+<p><strong>Note</strong>: For this document, we'll use <a href="https://github.com/haf/expecto">Expecto</a> unit test library.</p>
+</blockquote>
+<p>I'm using Powershell Core but feel free to follow on the terminal you like most (if it's bash like remember to change <code>;</code> for <code>&amp;</code>)</p>
+<pre><code>PS ~/github&gt; mkdir TestingExample; cd TestingExample
+
+PS ~/github/TestingExample&gt; dotnet new sln
+The template &quot;Solution File&quot; was created successfully.
+
+PS ~/github/TestingExample&gt; dotnet new funcui.full -o TestingExample ; dotnet new expecto -o TestingExample.Tests
+The template &quot;Avalonia FuncUI App (with extras)&quot; was created successfully.
+The template &quot;Expecto .net core Template&quot; was created successfully.
+
+PS ~/github/TestingExample&gt; dotnet sln add TestingExample ; dotnet sln add TestingExample.Tests
+Project `TestingExample\TestingExample.fsproj` added to the solution.
+Project `TestingExample.Tests\TestingExample.Tests.fsproj` added to the solution.
+
+PS ~/github/TestingExample&gt; dotnet add TestingExample.Tests reference TestingExample
+Reference `..\TestingExample\TestingExample.fsproj` added to the project.
+
+</code></pre>
+<p>This gives us a <a href="./Full-Template.html">Full Template</a> and a Expecto project to start our testing.</p>
+<p>First, let's replace the default content of the tests inside <code>TestingExample.Tests.Sample.fs</code> with the following</p>
+<pre><code class="language-fsharp">module Tests
+
+open Expecto
+
+[&lt;Tests&gt;]
+let tests =
+  testList &quot;Counter Tests&quot; []
+</code></pre>
+<p>Our <strong>Full Template</strong> has a fully working counter ready to run.</p>
+<pre><code class="language-fsharp">namespace TestingExample
+
+module Counter =
+    open Avalonia.Controls
+    open Avalonia.FuncUI.DSL
+    open Avalonia.Layout
+    
+    type State = { count : int }
+    let init = { count = 0 }
+
+    type Msg = Increment | Decrement | Reset
+
+    let update (msg: Msg) (state: State) : State =
+        match msg with
+        | Increment -&gt; { state with count = state.count + 1 }
+        | Decrement -&gt; { state with count = state.count - 1 }
+        | Reset -&gt; init
+    
+    let view (state: State) (dispatch) =
+        DockPanel.create [
+            DockPanel.children [
+                StackPanel.create [
+                    StackPanel.dock Dock.Bottom
+                    StackPanel.margin 5.0
+                    StackPanel.spacing 5.0
+                    StackPanel.children [
+                        Button.create [
+                            Button.onClick (fun _ -&gt; dispatch Increment)
+                            Button.content &quot;+&quot;
+                            Button.classes [ &quot;plus&quot; ]
+                        ]
+                        Button.create [
+                            Button.onClick (fun _ -&gt; dispatch Decrement)
+                            Button.content &quot;-&quot;
+                            Button.classes [ &quot;minus&quot; ]
+                        ]
+                        Button.create [
+                            Button.onClick (fun _ -&gt; dispatch Reset)
+                            Button.content &quot;reset&quot;
+                        ]                         
+                    ]
+                ]
+
+                TextBlock.create [
+                    TextBlock.dock Dock.Top
+                    TextBlock.fontSize 48.0
+                    TextBlock.verticalAlignment VerticalAlignment.Center
+                    TextBlock.horizontalAlignment HorizontalAlignment.Center
+                    TextBlock.text (string state.count)
+                ]
+            ]
+        ]
+</code></pre>
+<p>let's start adding test cases, <code>Increment</code> first:</p>
+<pre><code class="language-fsharp">module Tests
+
+open Expecto
+open TestingExample
+
+[&lt;Tests&gt;]
+let tests =
+    testList &quot;Counter Tests&quot;
+        [ testCase &quot;Increment should increment counter by 1&quot; &lt;| fun _ -&gt;
+            let initialState: Counter.State = { count = 1 }
+            let updateMessages = [ Counter.Msg.Increment; Counter.Msg.Increment ]
+
+            let actual =
+                updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
+            Expect.equal actual.count 2 &quot;Expected count to be 2&quot; ]
+</code></pre>
+<p>If you run that code with <code>dotnet test</code> right now you will get a failure</p>
+<pre><code>Microsoft (R) Test Execution Command Line Tool Version 16.3.0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+
+A total of 1 test files matched the specified pattern.
+
+  X Counter Tests/Increment should increment counter by 1 [65ms]
+  Error Message:
+   
+Expected count to be 2.
+expected: 2
+  actual: 3
+  // ... stack trace ...
+
+Test Run Failed.
+Total tests: 1
+     Passed: 0
+     Failed: 1
+</code></pre>
+<p>the simple fix is to change this line</p>
+<pre><code class="language-fsharp">let initialState: Counter.State = { count = 1 }
+</code></pre>
+<p>to</p>
+<pre><code class="language-fsharp">let initialState: Counter.State = { count = 0 }
+</code></pre>
+<p>If you run <code>dotnet test</code> again</p>
+<pre><code>Microsoft (R) Test Execution Command Line Tool Version 16.3.0
+Copyright (c) Microsoft Corporation.  All rights reserved.
+
+Starting test execution, please wait...
+
+A total of 1 test files matched the specified pattern.
+
+
+Test Run Successful.
+Total tests: 1
+     Passed: 1
+</code></pre>
+<p>let's add the <code>Decrement</code> test</p>
+<pre><code class="language-fsharp">module Tests
+
+open Expecto
+open TestingExample
+
+[&lt;Tests&gt;]
+let tests =
+    testList &quot;Counter Tests&quot;
+        [ // ... testCase &quot;Increment should increment counter by 1&quot; ...
+          testCase &quot;Decrement should decrement counter by 1&quot; &lt;| fun _ -&gt;
+              let initialState: Counter.State = { count = 0 }
+              let updateMessages = [ Counter.Msg.Decrement; Counter.Msg.Decrement ]
+
+              let actual =
+                  updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
+              Expect.equal actual.count -2 &quot;Expected count to be -2&quot; ]
+</code></pre>
+<p>Pretty simple huh?</p>
+<p>Let's add the <code>Reset</code> test case</p>
+<pre><code class="language-fsharp">module Tests
+
+open Expecto
+open TestingExample
+
+[&lt;Tests&gt;]
+let tests =
+    testList &quot;Counter Tests&quot;
+        [ // ... testCase &quot;Increment should increment counter by 1&quot; ...
+          // ..testCase &quot;Decrement should decrement counter by 1&quot; ...
+          testCase &quot;Reset should get counter back to 0&quot; &lt;| fun _ -&gt;
+              let initialState: Counter.State = { count = 5 }
+
+              let actual = Counter.update Counter.Reset initialState
+              Expect.equal actual.count 0 &quot;Expected count to be 0&quot; ]
+</code></pre>
+<p>the advantage of having a central place to do updates and that we always return a <code>State</code> is that we can provide the exact state we want and have a predictable test ouput.</p>
+<p>You don't need to provide a list of <code>Msg</code>'s but here we put a simple example on how can you provide a set of &quot;steps&quot; to archieve a specific state, this could be useful to you if you need to test a specific workflow or something similar.</p>
+<p>Lastly, Here's the full suite of tests.</p>
+<pre><code class="language-fsharp">module Tests
+
+open Expecto
+open TestingExample
+
+[&lt;Tests&gt;]
+let tests =
+    testList &quot;Counter Tests&quot;
+        [ testCase &quot;Increment should increment counter by 1&quot; &lt;| fun _ -&gt;
+            let initialState: Counter.State = { count = 0 }
+            // &quot;fire&quot; two increments
+            let updateMessages = [ Counter.Msg.Increment; Counter.Msg.Increment ]
+
+            let actual =
+                updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
+            Expect.equal actual.count 2 &quot;Expected count to be 2&quot;
+          testCase &quot;Decrement should decrement counter by 1&quot; &lt;| fun _ -&gt;
+              let initialState: Counter.State = { count = 0 }
+              // &quot;fire&quot; two decrements
+              let updateMessages = [ Counter.Msg.Decrement; Counter.Msg.Decrement ]
+
+              let actual =
+                  updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
+              Expect.equal actual.count -2 &quot;Expected count to be -2&quot;
+          testCase &quot;Reset should get counter back to 0&quot; &lt;| fun _ -&gt;
+              // set a initial state different from 0
+              let initialState: Counter.State = { count = 5 }
+
+              let actual = Counter.update Counter.Reset initialState
+              Expect.equal actual.count 0 &quot;Expected count to be 0&quot; ]
+
+</code></pre>
+
+          </div>
+        </section>
+        <section class="box post">
+          <header class="post-header">
+            <h2 class="title">
+              <a href="/posts/Quickstart-Template.html">
+                Quickstart Template
+              </a>
+            </h2>
+            <h3 class="subtitle">
+              Published by: Avalonia Community
+            </h3>
+            <div class="tags">
+              <span class="tag is-link is-light">
+                alv
+              </span>
+            </div>
+            <small>
+              Wednesday, 19 February, 2020
+            </small>
+          </header>
+          <div class="content post-content">
+            <p>The <strong>Quickstart Template</strong> is intended to be used as a starting point for more <em>serious</em> projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you <strong>MUST</strong> do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the <a href="./Basic-Template.html">Basic Template</a> all you need is a couple of files and <code>.net core</code> installed to get up and running.</p>
 <h3 id="file-structure">File Structure</h3>
 <p>This is the File Structure for the Quickstart Template</p>
 <pre><code>│   ProjectName.sln
@@ -240,6 +498,35 @@ let init = { users = Array.empty }, Cmd.OfAsync.perform loadInit () LoadImages
 </code></pre>
 <p>If you wonder how to test your application using Expecto you can find that <a href="./Unit-Testing-Avalonia-FuncUI-Apps.html">here</a></p>
 
+          </div>
+        </section>
+        <section class="box post">
+          <header class="post-header">
+            <h2 class="title">
+              <a href="/posts/blogpost3.html">
+                Some Post
+              </a>
+            </h2>
+            <h3 class="subtitle">
+              Published by: Avalonia Community
+            </h3>
+            <div class="tags">
+              <span class="tag is-link is-light">
+                ui
+              </span>
+              <span class="tag is-link is-light">
+                 desktop
+              </span>
+              <span class="tag is-link is-light">
+                 alv
+              </span>
+            </div>
+            
+          </header>
+          <div class="content post-content">
+            <p>Some Post</p>
+
+          </div>
         </section>
       </article>
     </main>

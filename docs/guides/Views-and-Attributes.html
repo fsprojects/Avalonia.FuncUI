@@ -1,22 +1,6 @@
-<html>
+<html class="has-navbar-fixed-top">
   <head>
-
-        <script type="text/javascript">
-          var wsUri = "ws://localhost:8080/websocket";
-      function init()
-      {
-        websocket = new WebSocket(wsUri);
-        websocket.onclose = function(evt) { onClose(evt) };
-      }
-      function onClose(evt)
-      {
-        console.log('closing');
-        websocket.close();
-        document.location.reload();
-      }
-      window.addEventListener("load", init, false);
-      </script>
-            <meta charSet="utf-8"/>
+    <meta charSet="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>
       Avalonia.FuncUI
@@ -25,14 +9,16 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans"/>
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism-coy.min.css"/>
     <link rel="stylesheet" type="text/css" href="/style/style.css"/>
+    <base href="/Avalonia.FuncUI/"/>
   </head>
   <body>
-    <nav class="navbar">
+    <nav class="navbar is-funcui is-fixed-top">
       <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item" href="/">
-            <img src="/images/bulma.png" alt="Logo"/>
+          <a class="navbar-item brand-link" href="/">
+            <img src="https://raw.githubusercontent.com/AvaloniaCommunity/Avalonia.FuncUI/master/github/img/logo/FuncUI.png" alt="Logo"/>
           </a>
           <span class="navbar-burger burger" data-target="navbarMenu">
             <span></span>
@@ -41,13 +27,16 @@
           </span>
         </div>
         <div id="navbarMenu" class="navbar-menu">
-          <a class="navbar-item" href="/">
+          <a class="navbar-item is-light" href="/">
             Home
           </a>
-          <a class="navbar-item" href="/guides.html">
+          <a class="navbar-item is-light" href="/blog.html">
+            Blog
+          </a>
+          <a class="navbar-item is-light" href="/guides.html">
             Guides
           </a>
-          <a class="navbar-item" href="/about.html">
+          <a class="navbar-item is-light" href="/about.html">
             About
           </a>
         </div>
@@ -56,41 +45,37 @@
     <main class="main-content">
       <aside class="menu main-menu">
         <p class="menu-label">
-          Blog Posts
-        </p>
-        <ul class="menu-list"></ul>
-        <p class="menu-label">
           Guides
         </p>
         <ul class="menu-list">
           <li>
-            <a href="/posts/Basic-Template.html">
-              Basic Template
-            </a>
-          </li>
-          <li>
-            <a href="/posts/Full-Template.html">
-              Full Template
-            </a>
-          </li>
-          <li>
-            <a href="/posts/Home.html">
+            <a href="/guides/Home.html">
               Getting Started
             </a>
           </li>
           <li>
-            <a href="/posts/Quickstart-Template.html">
+            <a href="/guides/Basic-Template.html">
+              Basic Template
+            </a>
+          </li>
+          <li>
+            <a href="/guides/Full-Template.html">
+              Full Template
+            </a>
+          </li>
+          <li>
+            <a href="/guides/Quickstart-Template.html">
               Quickstart Template
             </a>
           </li>
           <li>
-            <a href="/posts/Unit-Testing-Avalonia-FuncUI-Apps.html">
-              Unit Testing Avalonia.FuncUI
+            <a href="/guides/Views-and-Attributes.html">
+              Views And Attributes
             </a>
           </li>
           <li>
-            <a href="/posts/Views-and-Attributes.html">
-              Views And Attributes
+            <a href="/guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
+              Unit Testing Avalonia.FuncUI
             </a>
           </li>
         </ul>
@@ -99,20 +84,17 @@
         </p>
         <ul class="menu-list"></ul>
       </aside>
-      <article class="post box">
-        <header class="post-header">
+      <article class="guide box">
+        <header class="guide-header">
           <h1 class="title">
             Views And Attributes
           </h1>
           <h4 class="subtitle">
             Avalonia Community
           </h4>
-          <small>
-            Published: Saturday, 21 March, 2020
-          </small>
           <section class="tags"></section>
         </header>
-        <section class="post-content">
+        <section class="guide-content content">
           <p>F# is a great language to built DSLs (Domain Specific Languages), this library contains a <a href="https://package.elm-lang.org/packages/elm/html/latest/">elm like</a> DSL used to describe Views.</p>
 <pre><code class="language-fsharp">let view (state: CounterState) (dispatch): View =
     DockPanel.create [
@@ -231,5 +213,7 @@ StackPanel.create [
         </section>
       </article>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/plugins/autoloader/prism-autoloader.min.js"></script>
   </body>
 </html>

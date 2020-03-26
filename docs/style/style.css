@@ -10,6 +10,20 @@ html, body {
   margin: 1em;
 }
 
+.brand-link {
+  background-color: white;
+}
+
+.navbar-item,
+.navbar-link {
+  color: white;
+}
+
+.is-funcui {
+  background-color: #643580;
+  color: white;
+}
+
 .post {
   display: table;
 }
@@ -20,4 +34,24 @@ html, body {
 
 .post-content {
   padding-top: 1em;
+}
+
+.blog .blog-header {
+  text-align: center;
+}
+
+.guide-content .number,
+.post-content .number {
+  align-items: unset;
+  background-color: unset;
+  border-radius: unset;
+  display: unset;
+  font-size: unset;
+  height: unset;
+  justify-content: unset;
+  margin-right: unset;
+  min-width: unset;
+  padding: unset;
+  text-align: unset;
+  vertical-align: unset;
 }
