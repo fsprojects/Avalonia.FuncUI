@@ -30,11 +30,14 @@
           <a class="navbar-item is-light" href="">
             Home
           </a>
-          <a class="navbar-item is-light" href="blog.html">
+          <a class="navbar-item is-active is-light" href="blog.html">
             Blog
           </a>
           <a class="navbar-item is-light" href="guides.html">
             Guides
+          </a>
+          <a class="navbar-item is-light" href="release-notes.html">
+            Release Notes
           </a>
           <a class="navbar-item is-light" href="about.html">
             About
@@ -80,6 +83,10 @@
           </li>
         </ul>
         <p class="menu-label">
+          Controls
+        </p>
+        <ul class="menu-list"></ul>
+        <p class="menu-label">
           Release Notes
         </p>
         <ul class="menu-list"></ul>
@@ -91,447 +98,61 @@
               Avalonia.FuncUI Blog
             </h1>
           </header>
-          <section class="box post">
-            <header class="post-header">
-              <h2 class="title">
-                <a href="posts/Unit-Testing-Avalonia-FuncUI-Apps.html">
-                  Unit Testing Avalonia.FuncUI
-                </a>
-              </h2>
-              <h3 class="subtitle">
-                Published by: Avalonia Community
-              </h3>
-              <div class="tags">
-                <span class="tag is-link is-light">
-                  testing
-                </span>
-                <span class="tag is-link is-light">
-                   another
-                </span>
-                <span class="tag is-link is-light">
-                   another2
-                </span>
-                <span class="tag is-link is-light">
-                   another3
-                </span>
-                <span class="tag is-link is-light">
-                   another4
-                </span>
-              </div>
-              <small>
-                Friday, 21 February, 2020
-              </small>
-            </header>
-            <div class="content post-content">
-              <p>Testing <code>Avalonia.FuncUI apps</code> is pretty simple if you have previous experience using Elmish it should be not much different
-for the moment let's dive into it.</p>
-<blockquote>
-<p><strong>Note</strong>: For this document, we'll use <a href="https://github.com/haf/expecto">Expecto</a> unit test library.</p>
-</blockquote>
-<p>I'm using Powershell Core but feel free to follow on the terminal you like most (if it's bash like remember to change <code>;</code> for <code>&amp;</code>)</p>
-<pre><code>PS ~/github&gt; mkdir TestingExample; cd TestingExample
-
-PS ~/github/TestingExample&gt; dotnet new sln
-The template &quot;Solution File&quot; was created successfully.
-
-PS ~/github/TestingExample&gt; dotnet new funcui.full -o TestingExample ; dotnet new expecto -o TestingExample.Tests
-The template &quot;Avalonia FuncUI App (with extras)&quot; was created successfully.
-The template &quot;Expecto .net core Template&quot; was created successfully.
-
-PS ~/github/TestingExample&gt; dotnet sln add TestingExample ; dotnet sln add TestingExample.Tests
-Project `TestingExample\TestingExample.fsproj` added to the solution.
-Project `TestingExample.Tests\TestingExample.Tests.fsproj` added to the solution.
-
-PS ~/github/TestingExample&gt; dotnet add TestingExample.Tests reference TestingExample
-Reference `..\TestingExample\TestingExample.fsproj` added to the project.
-
-</code></pre>
-<p>This gives us a <a href="./Full-Template.html">Full Template</a> and a Expecto project to start our testing.</p>
-<p>First, let's replace the default content of the tests inside <code>TestingExample.Tests.Sample.fs</code> with the following</p>
-<pre><code class="language-fsharp">module Tests
-
-open Expecto
-
-[&lt;Tests&gt;]
-let tests =
-  testList &quot;Counter Tests&quot; []
-</code></pre>
-<p>Our <strong>Full Template</strong> has a fully working counter ready to run.</p>
-<pre><code class="language-fsharp">namespace TestingExample
-
-module Counter =
-    open Avalonia.Controls
-    open Avalonia.FuncUI.DSL
-    open Avalonia.Layout
-    
-    type State = { count : int }
-    let init = { count = 0 }
-
-    type Msg = Increment | Decrement | Reset
-
-    let update (msg: Msg) (state: State) : State =
-        match msg with
-        | Increment -&gt; { state with count = state.count + 1 }
-        | Decrement -&gt; { state with count = state.count - 1 }
-        | Reset -&gt; init
-    
-    let view (state: State) (dispatch) =
-        DockPanel.create [
-            DockPanel.children [
-                StackPanel.create [
-                    StackPanel.dock Dock.Bottom
-                    StackPanel.margin 5.0
-                    StackPanel.spacing 5.0
-                    StackPanel.children [
-                        Button.create [
-                            Button.onClick (fun _ -&gt; dispatch Increment)
-                            Button.content &quot;+&quot;
-                            Button.classes [ &quot;plus&quot; ]
-                        ]
-                        Button.create [
-                            Button.onClick (fun _ -&gt; dispatch Decrement)
-                            Button.content &quot;-&quot;
-                            Button.classes [ &quot;minus&quot; ]
-                        ]
-                        Button.create [
-                            Button.onClick (fun _ -&gt; dispatch Reset)
-                            Button.content &quot;reset&quot;
-                        ]                         
-                    ]
-                ]
-
-                TextBlock.create [
-                    TextBlock.dock Dock.Top
-                    TextBlock.fontSize 48.0
-                    TextBlock.verticalAlignment VerticalAlignment.Center
-                    TextBlock.horizontalAlignment HorizontalAlignment.Center
-                    TextBlock.text (string state.count)
-                ]
-            ]
-        ]
-</code></pre>
-<p>let's start adding test cases, <code>Increment</code> first:</p>
-<pre><code class="language-fsharp">module Tests
-
-open Expecto
-open TestingExample
-
-[&lt;Tests&gt;]
-let tests =
-    testList &quot;Counter Tests&quot;
-        [ testCase &quot;Increment should increment counter by 1&quot; &lt;| fun _ -&gt;
-            let initialState: Counter.State = { count = 1 }
-            let updateMessages = [ Counter.Msg.Increment; Counter.Msg.Increment ]
-
-            let actual =
-                updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
-            Expect.equal actual.count 2 &quot;Expected count to be 2&quot; ]
-</code></pre>
-<p>If you run that code with <code>dotnet test</code> right now you will get a failure</p>
-<pre><code>Microsoft (R) Test Execution Command Line Tool Version 16.3.0
-Copyright (c) Microsoft Corporation.  All rights reserved.
-
-Starting test execution, please wait...
-
-A total of 1 test files matched the specified pattern.
-
-  X Counter Tests/Increment should increment counter by 1 [65ms]
-  Error Message:
-   
-Expected count to be 2.
-expected: 2
-  actual: 3
-  // ... stack trace ...
-
-Test Run Failed.
-Total tests: 1
-     Passed: 0
-     Failed: 1
-</code></pre>
-<p>the simple fix is to change this line</p>
-<pre><code class="language-fsharp">let initialState: Counter.State = { count = 1 }
-</code></pre>
-<p>to</p>
-<pre><code class="language-fsharp">let initialState: Counter.State = { count = 0 }
-</code></pre>
-<p>If you run <code>dotnet test</code> again</p>
-<pre><code>Microsoft (R) Test Execution Command Line Tool Version 16.3.0
-Copyright (c) Microsoft Corporation.  All rights reserved.
-
-Starting test execution, please wait...
-
-A total of 1 test files matched the specified pattern.
-
-
-Test Run Successful.
-Total tests: 1
-     Passed: 1
-</code></pre>
-<p>let's add the <code>Decrement</code> test</p>
-<pre><code class="language-fsharp">module Tests
-
-open Expecto
-open TestingExample
-
-[&lt;Tests&gt;]
-let tests =
-    testList &quot;Counter Tests&quot;
-        [ // ... testCase &quot;Increment should increment counter by 1&quot; ...
-          testCase &quot;Decrement should decrement counter by 1&quot; &lt;| fun _ -&gt;
-              let initialState: Counter.State = { count = 0 }
-              let updateMessages = [ Counter.Msg.Decrement; Counter.Msg.Decrement ]
-
-              let actual =
-                  updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
-              Expect.equal actual.count -2 &quot;Expected count to be -2&quot; ]
-</code></pre>
-<p>Pretty simple huh?</p>
-<p>Let's add the <code>Reset</code> test case</p>
-<pre><code class="language-fsharp">module Tests
-
-open Expecto
-open TestingExample
-
-[&lt;Tests&gt;]
-let tests =
-    testList &quot;Counter Tests&quot;
-        [ // ... testCase &quot;Increment should increment counter by 1&quot; ...
-          // ..testCase &quot;Decrement should decrement counter by 1&quot; ...
-          testCase &quot;Reset should get counter back to 0&quot; &lt;| fun _ -&gt;
-              let initialState: Counter.State = { count = 5 }
-
-              let actual = Counter.update Counter.Reset initialState
-              Expect.equal actual.count 0 &quot;Expected count to be 0&quot; ]
-</code></pre>
-<p>the advantage of having a central place to do updates and that we always return a <code>State</code> is that we can provide the exact state we want and have a predictable test ouput.</p>
-<p>You don't need to provide a list of <code>Msg</code>'s but here we put a simple example on how can you provide a set of &quot;steps&quot; to archieve a specific state, this could be useful to you if you need to test a specific workflow or something similar.</p>
-<p>Lastly, Here's the full suite of tests.</p>
-<pre><code class="language-fsharp">module Tests
-
-open Expecto
-open TestingExample
-
-[&lt;Tests&gt;]
-let tests =
-    testList &quot;Counter Tests&quot;
-        [ testCase &quot;Increment should increment counter by 1&quot; &lt;| fun _ -&gt;
-            let initialState: Counter.State = { count = 0 }
-            // &quot;fire&quot; two increments
-            let updateMessages = [ Counter.Msg.Increment; Counter.Msg.Increment ]
-
-            let actual =
-                updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
-            Expect.equal actual.count 2 &quot;Expected count to be 2&quot;
-          testCase &quot;Decrement should decrement counter by 1&quot; &lt;| fun _ -&gt;
-              let initialState: Counter.State = { count = 0 }
-              // &quot;fire&quot; two decrements
-              let updateMessages = [ Counter.Msg.Decrement; Counter.Msg.Decrement ]
-
-              let actual =
-                  updateMessages |&gt; List.fold (fun state message -&gt; Counter.update message state) initialState
-              Expect.equal actual.count -2 &quot;Expected count to be -2&quot;
-          testCase &quot;Reset should get counter back to 0&quot; &lt;| fun _ -&gt;
-              // set a initial state different from 0
-              let initialState: Counter.State = { count = 5 }
-
-              let actual = Counter.update Counter.Reset initialState
-              Expect.equal actual.count 0 &quot;Expected count to be 0&quot; ]
-
-</code></pre>
-
-            </div>
-          </section>
-          <section class="box post">
-            <header class="post-header">
-              <h2 class="title">
-                <a href="posts/Quickstart-Template.html">
-                  Quickstart Template
-                </a>
-              </h2>
-              <h3 class="subtitle">
-                Published by: Avalonia Community
-              </h3>
-              <div class="tags">
-                <span class="tag is-link is-light">
-                  alv
-                </span>
-              </div>
-              <small>
-                Wednesday, 19 February, 2020
-              </small>
-            </header>
-            <div class="content post-content">
-              <p>The <strong>Quickstart Template</strong> is intended to be used as a starting point for more <em>serious</em> projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you <strong>MUST</strong> do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the <a href="./Basic-Template.html">Basic Template</a> all you need is a couple of files and <code>.net core</code> installed to get up and running.</p>
-<h3 id="file-structure">File Structure</h3>
-<p>This is the File Structure for the Quickstart Template</p>
-<pre><code>│   ProjectName.sln
-│
-├───ProjectName
-│       About.fs
-│       Program.fs
-│       ProjectName.fsproj
-│       Shell.fs
-│       Styles.xaml
-│       TreeViewPage.fs
-│       UserProfiles.fs
-│
-├───ProjectName.Core
-│       Library.fs
-│       ProjectName.Core.fsproj
-│       Users.fs
-│
-└───ProjectName.Core.Tests
-        Main.fs
-        Sample.fs
-        ProjectName.Core.Tests.fsproj
-</code></pre>
-<p>We offer three main projects</p>
-<ul>
-<li>ProjectName</li>
-<li>ProjectName.Core</li>
-<li>ProjectName.Core.Tests</li>
-</ul>
-<p><code>ProjectName</code> is where your Avalonia.FuncUI code resides, it is your application.</p>
-<p><code>ProjectName.Core</code> is where you may have Shared logic that can be reused between different kinds of solutions like <code>Web</code> or <code>Console</code> in case you decide to add these solutions for your project (having a Shared/Core is not required).</p>
-<p><code>ProjectName.Core.Tests</code> is a Test Project based on <a href="https://github.com/haf/expecto">Expecto</a> an F# Testing library. It is not required to use Expecto, you can replace it with any testing library you see fit for your needs.</p>
-<h1 id="projectname">ProjectName</h1>
-<p>The ProjectName directory contains seven files, some of those have been previously discussed in the <a href="./Basic-Template.html">Basic Template</a> and <a href="./Full-Template.html">Full Template</a> doc pages. There are a couple of differences on the <code>Shell.fs</code> file which will be covered in short. There are also two new pages</p>
-<ul>
-<li>TreeViewPage.fs</li>
-<li>UserProfiles.fs</li>
-</ul>
-<h2 id="treeviewpagefs">TreeViewPage.fs</h2>
-<p>TreeViewPage is a simple Elmish module that shows you how to use an Avalonia Tree Control</p>
-<pre><code class="language-fsharp">type Taxonomy =
-  { Name: string
-    Children: Taxonomy seq }
-</code></pre>
-<p>That is the main Tree structure that is going to be represented inside this Elmish module</p>
-<pre><code class="language-fsharp">/// ... omitted code
-TreeView.create
-    [ TreeView.dock Dock.Left
-      /// dataItems refers to the source of your control's data
-      /// these are going to be iterated to fill your template's contents
-      TreeView.dataItems [ food ]
-      TreeView.itemTemplate
-          /// You can pass the type of your data collection
-          /// to have a safe type reference in the create function
-          (DataTemplateView&lt;Taxonomy&gt;
-              .create
-                  ((fun data -&gt; data.Children),
-                    (fun data -&gt;
-                        TextBlock.create
-                            [ TextBlock.onTapped (fun _ -&gt; dispatch (ShowDetail data))
-                              TextBlock.text data.Name ]))) ]
-/// ... more omitted code
-</code></pre>
-<p>Just as you would do in a XAML based approach, you can use DataTemplates in Avalonia.FuncUI.
-<code>.dataItems</code> represents the data you want to use with this control it can be any kind of data, the item template uses <code>DataTemplateView&lt;'t&gt;</code> with a couple of functions to declare how the control should look like
-as always you can use any control you deem necessary in your data template.</p>
-<p>From there on our Elmish module is almost equal as any other module we've seen so far. There's a key difference though and that is that this module exposes a <code>Host</code> Type</p>
-<pre><code class="language-fsharp">type Host() as this =
-    inherit Hosts.HostControl()
-    do
-        /// You can use `.mkProgram` to pass Commands around
-        /// if you decide to use it, you have to also return a Command in the initFn
-        /// (init, Cmd.none)
-        /// you can learn more at https://elmish.github.io/elmish/basics.html
-        let startFn () =
-            init
-        Elmish.Program.mkSimple startFn update view
-        |&gt; Program.withHost this
-        |&gt; Program.run
-</code></pre>
-<p><a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/Components/Hosts.fs#L24">HostControls</a> are standalone controls, this is a different approach from what we saw at <a href="./Full-Template.html#shellfs">Shell.fs</a> when including children structures, in that module we used the functions exposed by the <em>About.fs</em> and <em>Counter.fs</em> and integrated them with <code>Shell</code> our workflow, so we could intercept messages and act accordingly on the <code>Shell</code> module (for a better example on that check the <a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Shell.fs#L109">Music Player's Update function</a>). The Host control can act as an individual Control itself and handle its workflow without having to expose its functions to the <code>Shell</code> module. If you know your control doesn't need any external input and doesn't have any output that might affect other Controls in your application (the about page could be an example of that as well) perhaps you may want to use the <em>HostControl</em> approach.</p>
-<h2 id="userprofilesfs">UserProfiles.fs</h2>
-<p>The <code>UserProfiles</code> page exposes a <code>HostControl</code> similarly to the <code>TreeViewPage</code>. It also shows you some ways on how to work with internet resources like a Restful API</p>
-<p>What is different from other modules?</p>
-<ul>
-<li>The usage of <code>Cmd.ofAsync</code></li>
-</ul>
-<p>our init function is defined as</p>
-<pre><code class="language-fsharp">/// sample function to load the initial data
-let loadInit() =
-    /// this comes from our `ProjectName.Core` solution
-    Users.getUsers None None
-
-type State =
-    { users: (Users.UserEndpoint.Result * Bitmap) array }
-
-type Msg =
-    | SetUsers of (Users.UserEndpoint.Result * Bitmap) array
-    | LoadImages of Users.UserEndpoint.Result array
-
-let init = { users = Array.empty }, Cmd.OfAsync.perform loadInit () LoadImages
-</code></pre>
-<p>Elmish provides a module <code>OfAsync</code> that has great functions to allows us to have a seamless workflow with async interactions as well as a module <code>OfTask</code> in case we need to deal with <code>System.Threading.Tasks.Task</code>.</p>
-<p>When the init function is called by <code>Elmish.Program.mkProgram...</code> we schedule an async command that upon successful execution it will invoke the <code>LoadImages of Users.UserEndpointResult array</code> message, that way we're loading the initial payload for this Control fetching the resources over the network.</p>
-<p>The <code>update</code> function also shows a little bit of how neat is to work with F#'s Async</p>
-<pre><code class="language-fsharp">let update (msg: Msg) (state: State): State * Cmd&lt;_&gt; =
-    match msg with
-    | LoadImages users -&gt;
-        let loadingImgs() =
-            async {
-                let! requests = users
-                                |&gt; Array.map (fun user -&gt; Users.getImageFromUrl user user.Picture.Large)
-                                |&gt; Async.Parallel
-                return requests |&gt; Array.Parallel.map (fun (user, src) -&gt; user, new Bitmap(src))
-            }
-        state, Cmd.OfAsync.perform loadingImgs () SetUsers
-    | SetUsers users -&gt;
-        { state with users = users }, Cmd.none
-</code></pre>
-<p><code>loadingImgs()</code> is an async function that does a bit of <code>Parallel</code> processing, if you come from javascript'land this is a version of <code>Promise.all(promiseArray)</code>. Once we're done with our async request we simply return what's expected from the update function, <code>The State</code> and the <code>Command</code> in this case an async command and the unmodified state, to update the state upon completion we'll use <code>SetUsers of (Users.UserEndpoint.Result * Bitmap) array</code>. The rest should be familiar and consistent with other the other templates we've discussed before</p>
-<h1 id="projectnamecore">ProjectName.Core</h1>
-<p>The core solution is a simple <code>.netstandard2.0</code> F# library. If you take a look at the <code>Library.fs</code> file you'll see the default values from <code>dotnet new classlib -lang F#</code></p>
-<pre><code class="language-fsharp">module Say =
-    let hello name = sprintf &quot;Hello, %s&quot; name
-</code></pre>
-<h2 id="usersfs">Users.fs</h2>
-<p>the <code>Users.fs</code> file includes an example of fetching resources over the network using <a href="https://fsharp.github.io/FSharp.Data/">F#'s Type Providers</a> which is a <code>Type Safe</code> way to interact with a Public Restful API. Here we used the <a href="https://randomuser.me/">Random User API</a></p>
-<h1 id="projectnamecoretests">ProjectName.Core.Tests</h1>
-<p>Lastly, the Tests solution includes a sample suite of tests including a <code>Hello World</code> test</p>
-<pre><code class="language-fsharp">test &quot;Hello, World!&quot; {
-    /// Testing our Core Library
-    let actual = hello &quot;World!&quot;
-    Expect.equal actual &quot;Hello, World!&quot; &quot;hello Should say Hello, World!&quot;
-}
-</code></pre>
-<p>If you wonder how to test your application using Expecto you can find that <a href="./Unit-Testing-Avalonia-FuncUI-Apps.html">here</a></p>
-
-            </div>
-          </section>
-          <section class="box post">
-            <header class="post-header">
-              <h2 class="title">
-                <a href="posts/blogpost3.html">
-                  Some Post
-                </a>
-              </h2>
-              <h3 class="subtitle">
-                Published by: Avalonia Community
-              </h3>
-              <div class="tags">
-                <span class="tag is-link is-light">
-                  ui
-                </span>
-                <span class="tag is-link is-light">
-                   desktop
-                </span>
-                <span class="tag is-link is-light">
-                   alv
-                </span>
-              </div>
-              
-            </header>
-            <div class="content post-content">
-              <p>Some Post</p>
-
-            </div>
-          </section>
         </article>
       </div>
     </main>
+    <footer class="main-footer footer">
+      <aside class="menu">
+        <p class="menu-label">
+          Guides
+        </p>
+        <ul class="menu-list">
+          <li>
+            <a href="guides/Home.html">
+              Getting Started
+            </a>
+          </li>
+          <li>
+            <a href="guides/Basic-Template.html">
+              Basic Template
+            </a>
+          </li>
+          <li>
+            <a href="guides/Full-Template.html">
+              Full Template
+            </a>
+          </li>
+          <li>
+            <a href="guides/Quickstart-Template.html">
+              Quickstart Template
+            </a>
+          </li>
+          <li>
+            <a href="guides/Views-and-Attributes.html">
+              Views And Attributes
+            </a>
+          </li>
+          <li>
+            <a href="guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
+              Unit Testing Avalonia.FuncUI
+            </a>
+          </li>
+        </ul>
+        <p class="menu-label">
+          Controls
+        </p>
+        <ul class="menu-list"></ul>
+        <p class="menu-label">
+          Release Notes
+        </p>
+        <ul class="menu-list"></ul>
+      </aside>
+      <section class="content has-text-centered">
+        <p>
+          Avalonia.FuncUI
+        </p>
+      </section>
+    </footer>
     <script src="/Avalonia.FuncUI/js/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/plugins/autoloader/prism-autoloader.min.js"></script>
