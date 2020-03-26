@@ -14,26 +14,8 @@ let generate' (ctx : SiteContents) (_: string) =
 
 
   Layout.layout ctx "Home" [
-    section [Class "hero is-info is-medium is-bold"] [
-      div [Class "hero-body"] [
-        div [Class "container has-text-centered"] [
-          h1 [Class "title"] [!!desc]
-        ]
-      ]
-    ]
-    div [Class "container"] [
-      section [Class "articles"] [
-        div [Class "column is-8 is-offset-2"] [
-            div [Class "card article"] [
-                div [Class "card-content"] [
-                    div [Class "content article-body"] [
-                        !! about
-                    ]
-                ]
-            ]
-        ]
-      ]
-    ]]
+    section [] []
+  ]
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =
   generate' ctx page

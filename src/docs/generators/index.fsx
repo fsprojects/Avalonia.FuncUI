@@ -17,7 +17,7 @@ let generate' (ctx : SiteContents) (_: string) =
     |> fun n -> n.ToString("yyyy-MM-dd")
 
   Layout.layout ctx "Home" [
-    
+    section [] []
   ]
 
 let generate (ctx : SiteContents) (projectRoot: string) (page: string) =

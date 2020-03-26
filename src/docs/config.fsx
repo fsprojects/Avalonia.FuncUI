@@ -37,6 +37,7 @@ let staticPredicate (projectRoot: string, page: string) =
        page.Contains ".fsx.lock" ||
        page.Contains ".cmd" ||
        page.Contains ".sh" ||
+       page.Contains "README.md" ||
        ext = ".fsx"
     then
         false

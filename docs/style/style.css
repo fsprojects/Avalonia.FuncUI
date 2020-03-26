@@ -5,9 +5,20 @@ html, body {
 
 .main-content {
   display: grid;
-  grid-template: 'menu content' 100vh / 0.25fr auto;
+  grid-template: 'menu content' 100vh / 0.25fr 0.75fr;
   gap: 1em;
   margin: 1em;
+  grid-auto-flow: dense;
+}
+
+@media screen and (max-width: 1024px) {
+  .main-content {
+    grid-template: 'content' 100vh / minmax(0, 1fr);
+  }
+}
+
+.page-content {
+  grid-area: content;
 }
 
 .brand-link {
@@ -22,10 +33,6 @@ html, body {
 .is-funcui {
   background-color: #643580;
   color: white;
-}
-
-.post {
-  display: table;
 }
 
 .post .post-header {

@@ -84,18 +84,19 @@
         </p>
         <ul class="menu-list"></ul>
       </aside>
-      <article class="guide box">
-        <header class="guide-header">
-          <h1 class="title">
-            Basic Template
-          </h1>
-          <h4 class="subtitle">
-            Avalonia Community
-          </h4>
-          <section class="tags"></section>
-        </header>
-        <section class="guide-content content">
-          <p>The basic template contains three files</p>
+      <div class="page-content">
+        <article class="guide box">
+          <header class="guide-header">
+            <h1 class="title">
+              Basic Template
+            </h1>
+            <h4 class="subtitle">
+              Avalonia Community
+            </h4>
+            <section class="tags"></section>
+          </header>
+          <section class="guide-content content">
+            <p>The basic template contains three files</p>
 <ul>
 <li><strong>{ProjectName}</strong>.fsproj</li>
 <li>Counter.fs</li>
@@ -244,9 +245,11 @@ module Counter =
 <p>The view has two parameters: <code>state</code> which is the current state (model) of your module as well as a <code>dispatch</code> function, this dispatch function takes a <code>Msg</code> (It can be any of our Msg types: <code>Increment</code>, <code>Decrement</code>, <code>Reset</code>) and doesn't have a special return type (unit) <code>Elmish</code> and <code>Avalonia.FuncUI</code> glue the dispatch function.
 to use the information that is stored in the state, we simply use <code>state.{property}</code> in this case, we have a text block (label) that renders out the current count on the screen.</p>
 
-        </section>
-      </article>
+          </section>
+        </article>
+      </div>
     </main>
+    <script src="/Avalonia.FuncUI/js/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/plugins/autoloader/prism-autoloader.min.js"></script>
   </body>

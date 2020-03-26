@@ -106,8 +106,9 @@ let layout (ctx : SiteContents) active bodyCnt =
                         ]
                         ul [Class "menu-list"] []
                     ]
-                yield! bodyCnt
+                div [Class "page-content"] [yield! bodyCnt]
             ]
+            script [Src (baseurl + "js/index.js")] []
             script [Src "https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/prism.min.js"] []
             script [Src "https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/plugins/autoloader/prism-autoloader.min.js"] []
         ]
