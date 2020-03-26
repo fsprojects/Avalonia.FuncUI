@@ -28,6 +28,10 @@ html, body {
   display: table;
 }
 
+.guide {
+  display: table;
+}
+
 .post .post-header {
   text-align: center
 }
