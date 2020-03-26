@@ -42,6 +42,10 @@ let layout (ctx : SiteContents) active bodyCnt =
       siteInfo
       |> Option.map (fun si -> si.title)
       |> Option.defaultValue ""
+    let baseurl = 
+        siteInfo
+        |> Option.map (fun si -> si.baseUrl)
+        |> Option.defaultValue "/"
     let showSidebar = 
         siteInfo
         |> Option.map (fun si -> si.showSideBar)
@@ -59,13 +63,13 @@ let layout (ctx : SiteContents) active bodyCnt =
             meta [CharSet "utf-8"]
             meta [Name "viewport"; Content "width=device-width, initial-scale=1"]
             title [] [!! ttl]
-            link [Rel "icon"; Type "image/png"; Sizes "32x32"; Href "/images/favicon.png"]
+            link [Rel "icon"; Type "image/png"; Sizes "32x32"; Href (baseurl + "images/favicon.png")]
             link [Rel "stylesheet"; Href "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"]
             link [Rel "stylesheet"; Href "https://fonts.googleapis.com/css?family=Open+Sans"]
             link [Rel "stylesheet"; Href "https://unpkg.com/bulma@0.8.0/css/bulma.min.css"]
             link [Rel "stylesheet"; Href "https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism-coy.min.css"]
-            link [Rel "stylesheet"; Type "text/css"; Href "/style/style.css"]
-            ``base`` [Href "/Avalonia.FuncUI/"]
+            link [Rel "stylesheet"; Type "text/css"; Href (baseurl + "style/style.css")]
+            ``base`` [Href baseurl]
         ]
         body [] [
             nav [Class "navbar is-funcui is-fixed-top"] [
