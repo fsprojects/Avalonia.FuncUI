@@ -1,0 +1,256 @@
+<html>
+  <head>
+
+        <script type="text/javascript">
+          var wsUri = "ws://localhost:8080/websocket";
+      function init()
+      {
+        websocket = new WebSocket(wsUri);
+        websocket.onclose = function(evt) { onClose(evt) };
+      }
+      function onClose(evt)
+      {
+        console.log('closing');
+        websocket.close();
+        document.location.reload();
+      }
+      window.addEventListener("load", init, false);
+      </script>
+            <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      Avalonia.FuncUI
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans"/>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/style/style.css"/>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <img src="/images/bulma.png" alt="Logo"/>
+          </a>
+          <span class="navbar-burger burger" data-target="navbarMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenu" class="navbar-menu">
+          <a class="navbar-item" href="/">
+            Home
+          </a>
+          <a class="navbar-item" href="/guides.html">
+            Guides
+          </a>
+          <a class="navbar-item" href="/about.html">
+            About
+          </a>
+        </div>
+      </div>
+    </nav>
+    <main class="main-content">
+      <aside class="menu main-menu">
+        <p class="menu-label">
+          Blog Posts
+        </p>
+        <ul class="menu-list"></ul>
+        <p class="menu-label">
+          Guides
+        </p>
+        <ul class="menu-list">
+          <li>
+            <a href="/posts/Basic-Template.html">
+              Basic Template
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Full-Template.html">
+              Full Template
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Home.html">
+              Getting Started
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Quickstart-Template.html">
+              Quickstart Template
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Unit-Testing-Avalonia-FuncUI-Apps.html">
+              Unit Testing Avalonia.FuncUI
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Views-and-Attributes.html">
+              Views And Attributes
+            </a>
+          </li>
+        </ul>
+        <p class="menu-label">
+          Release Notes
+        </p>
+        <ul class="menu-list"></ul>
+      </aside>
+      <article class="post box">
+        <header class="post-header">
+          <h1 class="title">
+            Full Template
+          </h1>
+          <h4 class="subtitle">
+            Avalonia Community
+          </h4>
+          <small>
+            Published: Saturday, 21 March, 2020
+          </small>
+          <section class="tags"></section>
+        </header>
+        <section class="post-content">
+          <blockquote>
+<p><strong>Note</strong>: It's recommended that you take a look at the <a href="./Basic-Template.html">Basic Template</a> document before reading this document.</p>
+</blockquote>
+<p>The Full Template contains 6 files</p>
+<ul>
+<li><strong>{ProjectName}</strong>.fsproj</li>
+<li>About.fs</li>
+<li>Counter.fs</li>
+<li>Shell.fs</li>
+<li>Program.fs</li>
+<li>Styles.xaml</li>
+</ul>
+<p>You can check <a href="./Basic-Template.html#counterfs">Counter.fs</a> and <a href="./Basic-Template.html#programfs">Program.fs</a> for more details.</p>
+<h2 id="aboutfs">About.fs</h2>
+<p>The &quot;About&quot; file is a pretty simple one, it contains links to useful resources, most of that functionality is explained in the Basic Template's Counter section. There's a piece though that can be useful if you intend to show links inside your application</p>
+<pre><code class="language-fsharp">let update (msg: Msg) (state: State) =
+    match msg with
+    | OpenUrl link -&gt; 
+        let url = 
+            match link with 
+            | FuncUIGitter -&gt; &quot;https://gitter.im/Avalonia-FuncUI&quot;
+                
+        if RuntimeInformation.IsOSPlatform(OSPlatform.Windows) then
+            let start = sprintf &quot;/c start %s&quot; url
+            Process.Start(ProcessStartInfo(&quot;cmd&quot;, start)) |&gt; ignore
+        else if RuntimeInformation.IsOSPlatform(OSPlatform.Linux) then
+            Process.Start(&quot;xdg-open&quot;, url) |&gt; ignore
+        else if RuntimeInformation.IsOSPlatform(OSPlatform.OSX) then
+            Process.Start(&quot;open&quot;, url) |&gt; ignore
+        state, Cmd.none
+</code></pre>
+<p>Since Avalonia (therefore Avalonia.FuncUI) runs on top of .net core you can use .netstandard API's
+here we use the following namespaces to determine on which platform we're running and what kind of way to open a link that works for our OS.</p>
+<pre><code class="language-fsharp">open System.Diagnostics
+open System.Runtime.InteropServices
+</code></pre>
+<h2 id="shellfs">Shell.fs</h2>
+<p>The <code>Shell.fs</code> file is a little more complex than the Counter or the Program you found in the Basic Template. Here we show you how you can use the <code>TabControl</code> to create an application that can show multiple views on the same module, people coming from a web background might think it looks like a <code>Single Page Application</code> and they would be right. All of the application is inside a single MainWindow class but, how does this impact the way the application is structured?</p>
+<p>There are some ways to do it one of them is to use <code>ViewBuilder.Create&lt;MODULE_NAME.Host&gt;([])</code> which we will talk about in the <a href="./Quickstart-Template.html">Quickstart Template</a>
+and the other is the approach used inside <code>Shell.fs</code>. The main points to talk about are</p>
+<pre><code class="language-fsharp">type State =
+    { aboutState: About.State; counterState: Counter.State;}
+type Msg =
+    | AboutMsg of About.Msg
+    | CounterMsg of Counter.Msg
+
+let init =
+    let aboutState, aboutCmd = About.init
+    let counterState = Counter.init
+    { aboutState = aboutState; counterState = counterState },
+    Cmd.batch [ aboutCmd ]
+
+let update (msg: Msg) (state: State): State * Cmd&lt;_&gt; =
+    match msg with
+    | AboutMsg bpmsg -&gt;
+        let aboutState, cmd =
+            About.update bpmsg state.aboutState
+        { state with aboutState = aboutState },
+        /// map the message to the kind of message 
+        /// your child control needs to handle
+        Cmd.map AboutMsg cmd
+    /// ... omitted code
+
+let view (state: State) (dispatch) =
+   /// ... more omitted code
+   TabItem.content (Counter.view state.counterState (CounterMsg &gt;&gt; dispatch))
+   TabItem.content (About.view state.aboutState (AboutMsg &gt;&gt; dispatch)) 
+   /// ... mode omitted code
+</code></pre>
+<p>The main take away from this is that most Elmish modules are structured in the same way and contain the same public functions, therefore you can use Elmish modules inside other modules themselves (<code>Shell.fs</code> is a Elmish module that includes other two Elmish modules).</p>
+<p>The state contains the children's state definitions</p>
+<ul>
+<li><code>aboutState: About.State;</code></li>
+<li><code>counterState: Counter.State;</code></li>
+</ul>
+<p>The Msg also contains the children's Msg types</p>
+<ul>
+<li><code>AboutMsg of About.Msg</code></li>
+<li><code>CounterMsg of Counter.Msg</code></li>
+</ul>
+<p>The init function also has some changes; There are modules that require some sort of initialization in those cases you often use <a href="https://elmish.github.io/elmish/#Commands">Commands</a> or <a href="https://elmish.github.io/elmish/#Subscriptions">Subscriptions</a> and it's very likely that the init function of that module returns the state with a command, the module may not return a command at all just the initial state (model)</p>
+<pre><code class="language-fsharp">let init =
+    let aboutState, aboutCmd = About.init
+    let counterState = Counter.init
+    { aboutState = aboutState; counterState = counterState },
+    /// If your children controls don't emit any commands
+    /// in the init function, you can just return Cmd.none
+    /// otherwise, you can use a batch operation on all of them
+    /// you can add more init commands as you need
+    Cmd.batch [ aboutCmd ]
+</code></pre>
+<p>then we only need to assign the states where they belong and if we have a command from a child module, you can batch the commands (in case you have more than one) as shown in the sample code</p>
+<p>In the update function we also make a similar change</p>
+<pre><code class="language-fsharp">let aboutState, cmd =
+    About.update bpmsg state.aboutState
+{ state with aboutState = aboutState },
+/// map the message to the kind of message 
+/// your child control needs to handle
+Cmd.map AboutMsg cmd
+</code></pre>
+<p>Here we're calling the child's module update function with the child's command, we simply take the returned state and command and apply them to our current state, and map the message to the kind of message it is <code>Cmd.map AboutMsg cmd</code> since the child module might be chaining messages (for example calling a <code>Save</code> and then returning the saved state and an <code>AfterSave</code> message</p>
+<p>For the view function we use some composition (&gt;&gt;) to indicate what is the correct kind of dispatch that the child needs</p>
+<pre><code class="language-fsharp">let view (state: State) (dispatch) =
+   /// ... more omitted code
+   TabItem.content (Counter.view state.counterState (CounterMsg &gt;&gt; dispatch))
+   TabItem.content (About.view state.aboutState (AboutMsg &gt;&gt; dispatch)) 
+   /// ... mode omitted code
+</code></pre>
+<p>Here we use the view function from the Counter and the About modules.</p>
+<p>Finally the <code>MainWindow</code>. You may ask yourself</p>
+<blockquote>
+<p>Why would I need to have the window defined in the same module as my view?</p>
+</blockquote>
+<p>The reason is that you are able to show an Elmish module inside its own window (yes you can have multiple windows) this only shows you that you don't necessarily need to define the MainWindow inside the <code>Program.fs</code> file. There's also another significant change</p>
+<pre><code class="language-fsharp">Elmish.Program.mkProgram (fun () -&gt; init) update view
+</code></pre>
+<p>instead using <code>mkSimple</code> we now use <code>mkProgram</code> which takes a function that returns a <code>State, Cmd</code>
+to begin the program.</p>
+<h2 id="programfs">Program.fs</h2>
+<p>The only difference this time is to include a custom styles file</p>
+<pre><code class="language-fsharp">this.Styles.Load &quot;avares://PROJECT_NAME/Styles.xaml&quot;
+</code></pre>
+<h2 id="styles">Styles</h2>
+<p>The Full Template includes a sample of custom styles, it is a simple Xaml file</p>
+<pre><code class="language-xaml">&lt;Styles
+    xmlns=&quot;https://github.com/avaloniaui&quot;
+    xmlns:x=&quot;http://schemas.microsoft.com/winfx/2006/xaml&quot;&gt;
+    &lt;Style Selector=&quot;Button /template/ ContentPresenter&quot;&gt;
+        &lt;Setter Property=&quot;CornerRadius&quot; Value=&quot;5&quot; /&gt;
+    &lt;/Style&gt;
+&lt;!-- ... more code --&gt;
+&lt;/Styles&gt;
+</code></pre>
+<p>You can read more about styles in the <a href="https://avaloniaui.net/docs/styles/styles">Avalonia Style's Docs</a>
+you are able to include other resources from other libraries if they expose them. One of our samples does this, you can check it <a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Program.fs#L12">here</a></p>
+
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

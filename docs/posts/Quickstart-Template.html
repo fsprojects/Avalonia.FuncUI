@@ -1,0 +1,258 @@
+<html>
+  <head>
+
+        <script type="text/javascript">
+          var wsUri = "ws://localhost:8080/websocket";
+      function init()
+      {
+        websocket = new WebSocket(wsUri);
+        websocket.onclose = function(evt) { onClose(evt) };
+      }
+      function onClose(evt)
+      {
+        console.log('closing');
+        websocket.close();
+        document.location.reload();
+      }
+      window.addEventListener("load", init, false);
+      </script>
+            <meta charSet="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>
+      Avalonia.FuncUI
+    </title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans"/>
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.8.0/css/bulma.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/style/style.css"/>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="/">
+            <img src="/images/bulma.png" alt="Logo"/>
+          </a>
+          <span class="navbar-burger burger" data-target="navbarMenu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </div>
+        <div id="navbarMenu" class="navbar-menu">
+          <a class="navbar-item" href="/">
+            Home
+          </a>
+          <a class="navbar-item" href="/guides.html">
+            Guides
+          </a>
+          <a class="navbar-item" href="/about.html">
+            About
+          </a>
+        </div>
+      </div>
+    </nav>
+    <main class="main-content">
+      <aside class="menu main-menu">
+        <p class="menu-label">
+          Blog Posts
+        </p>
+        <ul class="menu-list"></ul>
+        <p class="menu-label">
+          Guides
+        </p>
+        <ul class="menu-list">
+          <li>
+            <a href="/posts/Basic-Template.html">
+              Basic Template
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Full-Template.html">
+              Full Template
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Home.html">
+              Getting Started
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Quickstart-Template.html">
+              Quickstart Template
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Unit-Testing-Avalonia-FuncUI-Apps.html">
+              Unit Testing Avalonia.FuncUI
+            </a>
+          </li>
+          <li>
+            <a href="/posts/Views-and-Attributes.html">
+              Views And Attributes
+            </a>
+          </li>
+        </ul>
+        <p class="menu-label">
+          Release Notes
+        </p>
+        <ul class="menu-list"></ul>
+      </aside>
+      <article class="post box">
+        <header class="post-header">
+          <h1 class="title">
+            Quickstart Template
+          </h1>
+          <h4 class="subtitle">
+            Avalonia Community
+          </h4>
+          <small>
+            Published: Saturday, 21 March, 2020
+          </small>
+          <section class="tags"></section>
+        </header>
+        <section class="post-content">
+          <p>The <strong>Quickstart Template</strong> is intended to be used as a starting point for more <em>serious</em> projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you <strong>MUST</strong> do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the <a href="./Basic-Template.html">Basic Template</a> all you need is a couple of files and <code>.net core</code> installed to get up and running.</p>
+<h3 id="file-structure">File Structure</h3>
+<p>This is the File Structure for the Quickstart Template</p>
+<pre><code>│   ProjectName.sln
+│
+├───ProjectName
+│       About.fs
+│       Program.fs
+│       ProjectName.fsproj
+│       Shell.fs
+│       Styles.xaml
+│       TreeViewPage.fs
+│       UserProfiles.fs
+│
+├───ProjectName.Core
+│       Library.fs
+│       ProjectName.Core.fsproj
+│       Users.fs
+│
+└───ProjectName.Core.Tests
+        Main.fs
+        Sample.fs
+        ProjectName.Core.Tests.fsproj
+</code></pre>
+<p>We offer three main projects</p>
+<ul>
+<li>ProjectName</li>
+<li>ProjectName.Core</li>
+<li>ProjectName.Core.Tests</li>
+</ul>
+<p><code>ProjectName</code> is where your Avalonia.FuncUI code resides, it is your application.</p>
+<p><code>ProjectName.Core</code> is where you may have Shared logic that can be reused between different kinds of solutions like <code>Web</code> or <code>Console</code> in case you decide to add these solutions for your project (having a Shared/Core is not required).</p>
+<p><code>ProjectName.Core.Tests</code> is a Test Project based on <a href="https://github.com/haf/expecto">Expecto</a> an F# Testing library. It is not required to use Expecto, you can replace it with any testing library you see fit for your needs.</p>
+<h1 id="projectname">ProjectName</h1>
+<p>The ProjectName directory contains seven files, some of those have been previously discussed in the <a href="./Basic-Template.html">Basic Template</a> and <a href="./Full-Template.html">Full Template</a> doc pages. There are a couple of differences on the <code>Shell.fs</code> file which will be covered in short. There are also two new pages</p>
+<ul>
+<li>TreeViewPage.fs</li>
+<li>UserProfiles.fs</li>
+</ul>
+<h2 id="treeviewpagefs">TreeViewPage.fs</h2>
+<p>TreeViewPage is a simple Elmish module that shows you how to use an Avalonia Tree Control</p>
+<pre><code class="language-fsharp">type Taxonomy =
+  { Name: string
+    Children: Taxonomy seq }
+</code></pre>
+<p>That is the main Tree structure that is going to be represented inside this Elmish module</p>
+<pre><code class="language-fsharp">/// ... omitted code
+TreeView.create
+    [ TreeView.dock Dock.Left
+      /// dataItems refers to the source of your control's data
+      /// these are going to be iterated to fill your template's contents
+      TreeView.dataItems [ food ]
+      TreeView.itemTemplate
+          /// You can pass the type of your data collection
+          /// to have a safe type reference in the create function
+          (DataTemplateView&lt;Taxonomy&gt;
+              .create
+                  ((fun data -&gt; data.Children),
+                    (fun data -&gt;
+                        TextBlock.create
+                            [ TextBlock.onTapped (fun _ -&gt; dispatch (ShowDetail data))
+                              TextBlock.text data.Name ]))) ]
+/// ... more omitted code
+</code></pre>
+<p>Just as you would do in a XAML based approach, you can use DataTemplates in Avalonia.FuncUI.
+<code>.dataItems</code> represents the data you want to use with this control it can be any kind of data, the item template uses <code>DataTemplateView&lt;'t&gt;</code> with a couple of functions to declare how the control should look like
+as always you can use any control you deem necessary in your data template.</p>
+<p>From there on our Elmish module is almost equal as any other module we've seen so far. There's a key difference though and that is that this module exposes a <code>Host</code> Type</p>
+<pre><code class="language-fsharp">type Host() as this =
+    inherit Hosts.HostControl()
+    do
+        /// You can use `.mkProgram` to pass Commands around
+        /// if you decide to use it, you have to also return a Command in the initFn
+        /// (init, Cmd.none)
+        /// you can learn more at https://elmish.github.io/elmish/basics.html
+        let startFn () =
+            init
+        Elmish.Program.mkSimple startFn update view
+        |&gt; Program.withHost this
+        |&gt; Program.run
+</code></pre>
+<p><a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/Components/Hosts.fs#L24">HostControls</a> are standalone controls, this is a different approach from what we saw at <a href="./Full-Template.html#shellfs">Shell.fs</a> when including children structures, in that module we used the functions exposed by the <em>About.fs</em> and <em>Counter.fs</em> and integrated them with <code>Shell</code> our workflow, so we could intercept messages and act accordingly on the <code>Shell</code> module (for a better example on that check the <a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Shell.fs#L109">Music Player's Update function</a>). The Host control can act as an individual Control itself and handle its workflow without having to expose its functions to the <code>Shell</code> module. If you know your control doesn't need any external input and doesn't have any output that might affect other Controls in your application (the about page could be an example of that as well) perhaps you may want to use the <em>HostControl</em> approach.</p>
+<h2 id="userprofilesfs">UserProfiles.fs</h2>
+<p>The <code>UserProfiles</code> page exposes a <code>HostControl</code> similarly to the <code>TreeViewPage</code>. It also shows you some ways on how to work with internet resources like a Restful API</p>
+<p>What is different from other modules?</p>
+<ul>
+<li>The usage of <code>Cmd.ofAsync</code></li>
+</ul>
+<p>our init function is defined as</p>
+<pre><code class="language-fsharp">/// sample function to load the initial data
+let loadInit() =
+    /// this comes from our `ProjectName.Core` solution
+    Users.getUsers None None
+
+type State =
+    { users: (Users.UserEndpoint.Result * Bitmap) array }
+
+type Msg =
+    | SetUsers of (Users.UserEndpoint.Result * Bitmap) array
+    | LoadImages of Users.UserEndpoint.Result array
+
+let init = { users = Array.empty }, Cmd.OfAsync.perform loadInit () LoadImages
+</code></pre>
+<p>Elmish provides a module <code>OfAsync</code> that has great functions to allows us to have a seamless workflow with async interactions as well as a module <code>OfTask</code> in case we need to deal with <code>System.Threading.Tasks.Task</code>.</p>
+<p>When the init function is called by <code>Elmish.Program.mkProgram...</code> we schedule an async command that upon successful execution it will invoke the <code>LoadImages of Users.UserEndpointResult array</code> message, that way we're loading the initial payload for this Control fetching the resources over the network.</p>
+<p>The <code>update</code> function also shows a little bit of how neat is to work with F#'s Async</p>
+<pre><code class="language-fsharp">let update (msg: Msg) (state: State): State * Cmd&lt;_&gt; =
+    match msg with
+    | LoadImages users -&gt;
+        let loadingImgs() =
+            async {
+                let! requests = users
+                                |&gt; Array.map (fun user -&gt; Users.getImageFromUrl user user.Picture.Large)
+                                |&gt; Async.Parallel
+                return requests |&gt; Array.Parallel.map (fun (user, src) -&gt; user, new Bitmap(src))
+            }
+        state, Cmd.OfAsync.perform loadingImgs () SetUsers
+    | SetUsers users -&gt;
+        { state with users = users }, Cmd.none
+</code></pre>
+<p><code>loadingImgs()</code> is an async function that does a bit of <code>Parallel</code> processing, if you come from javascript'land this is a version of <code>Promise.all(promiseArray)</code>. Once we're done with our async request we simply return what's expected from the update function, <code>The State</code> and the <code>Command</code> in this case an async command and the unmodified state, to update the state upon completion we'll use <code>SetUsers of (Users.UserEndpoint.Result * Bitmap) array</code>. The rest should be familiar and consistent with other the other templates we've discussed before</p>
+<h1 id="projectnamecore">ProjectName.Core</h1>
+<p>The core solution is a simple <code>.netstandard2.0</code> F# library. If you take a look at the <code>Library.fs</code> file you'll see the default values from <code>dotnet new classlib -lang F#</code></p>
+<pre><code class="language-fsharp">module Say =
+    let hello name = sprintf &quot;Hello, %s&quot; name
+</code></pre>
+<h2 id="usersfs">Users.fs</h2>
+<p>the <code>Users.fs</code> file includes an example of fetching resources over the network using <a href="https://fsharp.github.io/FSharp.Data/">F#'s Type Providers</a> which is a <code>Type Safe</code> way to interact with a Public Restful API. Here we used the <a href="https://randomuser.me/">Random User API</a></p>
+<h1 id="projectnamecoretests">ProjectName.Core.Tests</h1>
+<p>Lastly, the Tests solution includes a sample suite of tests including a <code>Hello World</code> test</p>
+<pre><code class="language-fsharp">test &quot;Hello, World!&quot; {
+    /// Testing our Core Library
+    let actual = hello &quot;World!&quot;
+    Expect.equal actual &quot;Hello, World!&quot; &quot;hello Should say Hello, World!&quot;
+}
+</code></pre>
+<p>If you wonder how to test your application using Expecto you can find that <a href="./Unit-Testing-Avalonia-FuncUI-Apps.html">here</a></p>
+
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

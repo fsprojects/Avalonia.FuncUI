@@ -212,6 +212,8 @@ module Shell =
             |> Program.withSubscription (fun _ -> Subs.paused player)
             |> Program.withSubscription (fun _ -> Subs.stoped player)
             |> Program.withSubscription (fun _ -> Subs.ended player)
+            /// If you're debugging the elmish message trace comment the timechanged sub
+            /// it clutters the log
             |> Program.withSubscription (fun _ -> Subs.timechanged player)
             |> Program.withSubscription (fun _ -> Subs.lengthchanged player)
             |> Program.withSubscription (fun _ -> Subs.chapterchanged player)

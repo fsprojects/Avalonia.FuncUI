@@ -84,58 +84,58 @@ module Player =
             StackPanel.orientation Orientation.Horizontal
             StackPanel.dock Dock.Top
             StackPanel.children [
-                yield Button.create [
+                Button.create [
                     Button.content Icons.previous
                     Button.classes [ "mediabtn" ]
                     Button.onClick ((fun _ -> dispatch Previous), SubPatchOptions.Never)
                 ]
                 
                 if state.player.IsPlaying then
-                    yield Button.create [
+                    Button.create [
                         Button.content Icons.pause
                         Button.classes [ "mediabtn" ]
                         Button.onClick ((fun _ -> dispatch Pause), SubPatchOptions.Never)
                     ]
-                    yield Button.create [
+                    Button.create [
                         Button.content Icons.stop
                         Button.classes [ "mediabtn" ]
                         Button.onClick ((fun _ -> dispatch Stop), SubPatchOptions.Never)
                     ]
                 else
-                    yield Button.create [
+                    Button.create [
                         Button.content Icons.play
                         Button.classes [ "mediabtn" ]
                         Button.onClick ((fun _ -> dispatch PlayInternal), SubPatchOptions.Never)
                     ]
-                    yield Button.create [
-                        Button.content Icons.next
+                Button.create [
+                    Button.content Icons.next
+                    Button.classes [ "mediabtn" ]
+                    Button.onClick ((fun _ -> dispatch Next), SubPatchOptions.Never)
+                ]
+                Button.create [
+                    Button.content Icons.shuffle
+                    Button.classes [ "mediabtn" ]
+                    Button.onClick ((fun _ -> dispatch Shuffle), SubPatchOptions.Never)
+                ]
+                match state.loopState with
+                | Types.LoopState.All ->
+                    Button.create [
+                        Button.content Icons.repeat
                         Button.classes [ "mediabtn" ]
-                        Button.onClick ((fun _ -> dispatch Next), SubPatchOptions.Never)
+                        Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.Single)), SubPatchOptions.Never)
                     ]
-                    yield Button.create [
-                        Button.content Icons.shuffle
+                | Types.LoopState.Single ->
+                    Button.create [
+                        Button.content Icons.repeatOne
                         Button.classes [ "mediabtn" ]
-                        Button.onClick ((fun _ -> dispatch Shuffle), SubPatchOptions.Never)
+                        Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.Off)), SubPatchOptions.Never)
                     ]
-                    match state.loopState with
-                    | Types.LoopState.All ->
-                        yield Button.create [
-                            Button.content Icons.repeat
-                            Button.classes [ "mediabtn" ]
-                            Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.Single)), SubPatchOptions.Never)
-                        ]
-                    | Types.LoopState.Single ->
-                        yield Button.create [
-                            Button.content Icons.repeatOne
-                            Button.classes [ "mediabtn" ]
-                            Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.Off)), SubPatchOptions.Never)
-                        ]
-                    | Types.LoopState.Off ->
-                        yield Button.create [
-                            Button.content Icons.repeatOff
-                            Button.classes [ "mediabtn" ]
-                            Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.All)), SubPatchOptions.Never)
-                        ]
+                | Types.LoopState.Off ->
+                    Button.create [
+                        Button.content Icons.repeatOff
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.All)), SubPatchOptions.Never)
+                    ]
             ]
         ]
 
