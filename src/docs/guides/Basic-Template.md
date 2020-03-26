@@ -5,6 +5,10 @@ author: Avalonia Community
 list-order: 1
 guide-category: beginner
 ---
+[Views and Attributes]: guides/Views-and-Attributes.html
+[Full Template]: guides/Full-Template.html#styles
+
+
 The basic template contains three files
 
 - **{ProjectName}**.fsproj
@@ -60,7 +64,7 @@ type App() =
             desktopLifetime.MainWindow <- MainWindow()
         | _ -> ()
 ```
-This class is the equivalent of `App.xaml` and `App.xaml.cs` in Avalonia here we override the the `Initialize()` method to load the default styles that come from Avalonia, try switching `BaseDark.xaml` to `BaseLight.xaml` to use the light theme on your application, here you may also load your custom styles. For more information on that please check the [Full Template](./Full-Template.html#styles).
+This class is the equivalent of `App.xaml` and `App.xaml.cs` in Avalonia here we override the the `Initialize()` method to load the default styles that come from Avalonia, try switching `BaseDark.xaml` to `BaseLight.xaml` to use the light theme on your application, here you may also load your custom styles. For more information on that please check the [Full Template].
 
 the `OnFrameworkInitializationCompleted()` method is overridden to set our MainWindow class the application's `MainWindow`
 
@@ -152,7 +156,7 @@ In this case, the messages are simple as well as the state, so the changes are p
 `Increment` updates the count plus 1 integer, `Decrement` substracts 1 integer, `Reset` takes our initial model back to 0
 
 ### View
-This will be a brief explanation of the parts that glue everything together, to have other examples and a more concise explanation for the View Controls and their attributes, you can check [Views and Attributes](./Views-and-Attributes.html)
+This will be a brief explanation of the parts that glue everything together, to have other examples and a more concise explanation for the View Controls and their attributes, you can check [Views and Attributes]
 
 ```fsharp
 let view (state: State) (dispatch: Msg -> unit) =

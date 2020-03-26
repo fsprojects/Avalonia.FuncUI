@@ -6,7 +6,7 @@ list-order: 5
 guide-category: beginner
 ---
 
-[Full Template]: ./Full-Template.html
+[Full Template]: guides/Full-Template.html
 [Expecto]: https://github.com/haf/expecto
 
 Testing `Avalonia.FuncUI apps` is pretty simple if you have previous experience using Elmish it should be not much different

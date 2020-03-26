@@ -25,6 +25,6 @@ dotnet new funcui.quickstart -n NewApp
 ```
 
 You can check these templates in detail here
-- [Basic Template](./Basic-Template.html)
-- [Full Template](./Full-Template.html)
-- [Quickstart Template](./Quickstart-Template.html)
+- [Basic Template]: guides/Basic-Template.html
+- [Full Template]: guides/Full-Template.html
+- [Quickstart Template]: guides/Quickstart-Template.html

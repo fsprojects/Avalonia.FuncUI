@@ -32,7 +32,7 @@ let view (state: CounterState) (dispatch): View =
     ]   
 ```
 
-<img width="200" src="https://github.com/JaggerJo/Avalonia.FuncUI/blob/master/github/img/counter_screenshot.png"/>
+<img width="200" src="https://raw.githubusercontent.com/AvaloniaCommunity/Avalonia.FuncUI/master/github/img/counter_screenshot.png"/>
 
 # 🔰 Basics
 

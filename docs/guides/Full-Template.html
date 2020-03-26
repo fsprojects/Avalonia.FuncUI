@@ -27,16 +27,16 @@
           </span>
         </div>
         <div id="navbarMenu" class="navbar-menu">
-          <a class="navbar-item is-light" href="/">
+          <a class="navbar-item is-light" href="">
             Home
           </a>
-          <a class="navbar-item is-light" href="/blog.html">
+          <a class="navbar-item is-light" href="blog.html">
             Blog
           </a>
-          <a class="navbar-item is-light" href="/guides.html">
+          <a class="navbar-item is-light" href="guides.html">
             Guides
           </a>
-          <a class="navbar-item is-light" href="/about.html">
+          <a class="navbar-item is-light" href="about.html">
             About
           </a>
         </div>
@@ -49,32 +49,32 @@
         </p>
         <ul class="menu-list">
           <li>
-            <a href="/guides/Home.html">
+            <a href="guides/Home.html">
               Getting Started
             </a>
           </li>
           <li>
-            <a href="/guides/Basic-Template.html">
+            <a href="guides/Basic-Template.html">
               Basic Template
             </a>
           </li>
           <li>
-            <a href="/guides/Full-Template.html">
+            <a href="guides/Full-Template.html">
               Full Template
             </a>
           </li>
           <li>
-            <a href="/guides/Quickstart-Template.html">
+            <a href="guides/Quickstart-Template.html">
               Quickstart Template
             </a>
           </li>
           <li>
-            <a href="/guides/Views-and-Attributes.html">
+            <a href="guides/Views-and-Attributes.html">
               Views And Attributes
             </a>
           </li>
           <li>
-            <a href="/guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
+            <a href="guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
               Unit Testing Avalonia.FuncUI
             </a>
           </li>
@@ -96,7 +96,7 @@
         </header>
         <section class="guide-content content">
           <blockquote>
-<p><strong>Note</strong>: It's recommended that you take a look at the <a href="./Basic-Template.html">Basic Template</a> document before reading this document.</p>
+<p><strong>Note</strong>: It's recommended that you take a look at the <a href="guides/Basic-Template.html">Basic Template</a> document before reading this document.</p>
 </blockquote>
 <p>The Full Template contains 6 files</p>
 <ul>
@@ -107,7 +107,7 @@
 <li>Program.fs</li>
 <li>Styles.xaml</li>
 </ul>
-<p>You can check <a href="./Basic-Template.html#counterfs">Counter.fs</a> and <a href="./Basic-Template.html#programfs">Program.fs</a> for more details.</p>
+<p>You can check <a href="guides/Basic-Template.html#counterfs">Counter.fs</a> and <a href="guides/Basic-Template.html#programfs">Program.fs</a> for more details.</p>
 <h2 id="aboutfs">About.fs</h2>
 <p>The &quot;About&quot; file is a pretty simple one, it contains links to useful resources, most of that functionality is explained in the Basic Template's Counter section. There's a piece though that can be useful if you intend to show links inside your application</p>
 <pre><code class="language-fsharp">let update (msg: Msg) (state: State) =
@@ -133,7 +133,7 @@ open System.Runtime.InteropServices
 </code></pre>
 <h2 id="shellfs">Shell.fs</h2>
 <p>The <code>Shell.fs</code> file is a little more complex than the Counter or the Program you found in the Basic Template. Here we show you how you can use the <code>TabControl</code> to create an application that can show multiple views on the same module, people coming from a web background might think it looks like a <code>Single Page Application</code> and they would be right. All of the application is inside a single MainWindow class but, how does this impact the way the application is structured?</p>
-<p>There are some ways to do it one of them is to use <code>ViewBuilder.Create&lt;MODULE_NAME.Host&gt;([])</code> which we will talk about in the <a href="./Quickstart-Template.html">Quickstart Template</a>
+<p>There are some ways to do it one of them is to use <code>ViewBuilder.Create&lt;MODULE_NAME.Host&gt;([])</code> which we will talk about in the <a href="guides/Quickstart-Template.html">Quickstart Template</a>
 and the other is the approach used inside <code>Shell.fs</code>. The main points to talk about are</p>
 <pre><code class="language-fsharp">type State =
     { aboutState: About.State; counterState: Counter.State;}

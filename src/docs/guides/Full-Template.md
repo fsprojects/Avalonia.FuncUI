@@ -5,7 +5,12 @@ author: Avalonia Community
 list-order: 2
 guide-category: beginner
 ---
-> **Note**: It's recommended that you take a look at the [Basic Template](./Basic-Template.html) document before reading this document.
+[Counter.fs]: guides/Basic-Template.html#counterfs
+[Basic Template]: guides/Basic-Template.html
+[Program.fs]: guides/Basic-Template.html#programfs
+[Quickstart Template]: guides/Quickstart-Template.html
+
+> **Note**: It's recommended that you take a look at the [Basic Template] document before reading this document.
 
 The Full Template contains 6 files
 - **{ProjectName}**.fsproj
@@ -15,7 +20,7 @@ The Full Template contains 6 files
 - Program.fs
 - Styles.xaml
 
-You can check [Counter.fs](./Basic-Template.html#counterfs) and [Program.fs](./Basic-Template.html#programfs) for more details.
+You can check [Counter.fs] and [Program.fs] for more details.
 
 ## About.fs
 The "About" file is a pretty simple one, it contains links to useful resources, most of that functionality is explained in the Basic Template's Counter section. There's a piece though that can be useful if you intend to show links inside your application
@@ -46,7 +51,7 @@ open System.Runtime.InteropServices
 ## Shell.fs
 The `Shell.fs` file is a little more complex than the Counter or the Program you found in the Basic Template. Here we show you how you can use the `TabControl` to create an application that can show multiple views on the same module, people coming from a web background might think it looks like a `Single Page Application` and they would be right. All of the application is inside a single MainWindow class but, how does this impact the way the application is structured?
 
-There are some ways to do it one of them is to use `ViewBuilder.Create<MODULE_NAME.Host>([])` which we will talk about in the [Quickstart Template](./Quickstart-Template.html)
+There are some ways to do it one of them is to use `ViewBuilder.Create<MODULE_NAME.Host>([])` which we will talk about in the [Quickstart Template]
 and the other is the approach used inside `Shell.fs`. The main points to talk about are
 ```fsharp
 type State =

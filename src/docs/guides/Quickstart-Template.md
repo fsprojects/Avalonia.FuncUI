@@ -5,8 +5,11 @@ author: Avalonia Community
 list-order: 3
 guide-category: beginner
 ---
+[Basic Template]: guides/Basic-Template.html
+[Full Template]: guides/Full-Template.html
+[Shell.fs]: guides/Full-Template.html#shellfs
 
-The **Quickstart Template** is intended to be used as a starting point for more *serious* projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you **MUST** do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the [Basic Template](./Basic-Template.html) all you need is a couple of files and `.net core` installed to get up and running.
+The **Quickstart Template** is intended to be used as a starting point for more *serious* projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you **MUST** do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the [Basic Template] all you need is a couple of files and `.net core` installed to get up and running.
 
 ### File Structure
 This is the File Structure for the Quickstart Template
@@ -44,7 +47,7 @@ We offer three main projects
 `ProjectName.Core.Tests` is a Test Project based on [Expecto](https://github.com/haf/expecto) an F# Testing library. It is not required to use Expecto, you can replace it with any testing library you see fit for your needs.
 
 # ProjectName
-The ProjectName directory contains seven files, some of those have been previously discussed in the [Basic Template](./Basic-Template.html) and [Full Template](./Full-Template.html) doc pages. There are a couple of differences on the `Shell.fs` file which will be covered in short. There are also two new pages
+The ProjectName directory contains seven files, some of those have been previously discussed in the [Basic Template] and [Full Template] doc pages. There are a couple of differences on the `Shell.fs` file which will be covered in short. There are also two new pages
 
 - TreeViewPage.fs
 - UserProfiles.fs
@@ -97,7 +100,7 @@ type Host() as this =
         |> Program.withHost this
         |> Program.run
 ```
-[HostControls](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/Components/Hosts.fs#L24) are standalone controls, this is a different approach from what we saw at [Shell.fs](./Full-Template.html#shellfs) when including children structures, in that module we used the functions exposed by the *About.fs* and *Counter.fs* and integrated them with `Shell` our workflow, so we could intercept messages and act accordingly on the `Shell` module (for a better example on that check the [Music Player's Update function](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Shell.fs#L109)). The Host control can act as an individual Control itself and handle its workflow without having to expose its functions to the `Shell` module. If you know your control doesn't need any external input and doesn't have any output that might affect other Controls in your application (the about page could be an example of that as well) perhaps you may want to use the *HostControl* approach.
+[HostControls](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/Components/Hosts.fs#L24) are standalone controls, this is a different approach from what we saw at [Shell.fs] when including children structures, in that module we used the functions exposed by the *About.fs* and *Counter.fs* and integrated them with `Shell` our workflow, so we could intercept messages and act accordingly on the `Shell` module (for a better example on that check the [Music Player's Update function](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Shell.fs#L109)). The Host control can act as an individual Control itself and handle its workflow without having to expose its functions to the `Shell` module. If you know your control doesn't need any external input and doesn't have any output that might affect other Controls in your application (the about page could be an example of that as well) perhaps you may want to use the *HostControl* approach.
 
 ## UserProfiles.fs
 The `UserProfiles` page exposes a `HostControl` similarly to the `TreeViewPage`. It also shows you some ways on how to work with internet resources like a Restful API
@@ -163,6 +166,6 @@ test "Hello, World!" {
     Expect.equal actual "Hello, World!" "hello Should say Hello, World!"
 }
 ```
-If you wonder how to test your application using Expecto you can find that [here](./Unit-Testing-Avalonia-FuncUI-Apps.html)
+If you wonder how to test your application using Expecto you can find that [here](guides/Unit-Testing-Avalonia-FuncUI-Apps.html)
 
 

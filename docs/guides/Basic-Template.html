@@ -27,16 +27,16 @@
           </span>
         </div>
         <div id="navbarMenu" class="navbar-menu">
-          <a class="navbar-item is-light" href="/">
+          <a class="navbar-item is-light" href="">
             Home
           </a>
-          <a class="navbar-item is-light" href="/blog.html">
+          <a class="navbar-item is-light" href="blog.html">
             Blog
           </a>
-          <a class="navbar-item is-light" href="/guides.html">
+          <a class="navbar-item is-light" href="guides.html">
             Guides
           </a>
-          <a class="navbar-item is-light" href="/about.html">
+          <a class="navbar-item is-light" href="about.html">
             About
           </a>
         </div>
@@ -49,32 +49,32 @@
         </p>
         <ul class="menu-list">
           <li>
-            <a href="/guides/Home.html">
+            <a href="guides/Home.html">
               Getting Started
             </a>
           </li>
           <li>
-            <a href="/guides/Basic-Template.html">
+            <a href="guides/Basic-Template.html">
               Basic Template
             </a>
           </li>
           <li>
-            <a href="/guides/Full-Template.html">
+            <a href="guides/Full-Template.html">
               Full Template
             </a>
           </li>
           <li>
-            <a href="/guides/Quickstart-Template.html">
+            <a href="guides/Quickstart-Template.html">
               Quickstart Template
             </a>
           </li>
           <li>
-            <a href="/guides/Views-and-Attributes.html">
+            <a href="guides/Views-and-Attributes.html">
               Views And Attributes
             </a>
           </li>
           <li>
-            <a href="/guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
+            <a href="guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
               Unit Testing Avalonia.FuncUI
             </a>
           </li>
@@ -142,7 +142,7 @@ which is a special class that adds some of the functionality needed to allow nor
             desktopLifetime.MainWindow &lt;- MainWindow()
         | _ -&gt; ()
 </code></pre>
-<p>This class is the equivalent of <code>App.xaml</code> and <code>App.xaml.cs</code> in Avalonia here we override the the <code>Initialize()</code> method to load the default styles that come from Avalonia, try switching <code>BaseDark.xaml</code> to <code>BaseLight.xaml</code> to use the light theme on your application, here you may also load your custom styles. For more information on that please check the <a href="./Full-Template.html#styles">Full Template</a>.</p>
+<p>This class is the equivalent of <code>App.xaml</code> and <code>App.xaml.cs</code> in Avalonia here we override the the <code>Initialize()</code> method to load the default styles that come from Avalonia, try switching <code>BaseDark.xaml</code> to <code>BaseLight.xaml</code> to use the light theme on your application, here you may also load your custom styles. For more information on that please check the <a href="guides/Full-Template.html#styles">Full Template</a>.</p>
 <p>the <code>OnFrameworkInitializationCompleted()</code> method is overridden to set our MainWindow class the application's <code>MainWindow</code></p>
 <h2 id="counterfs">Counter.fs</h2>
 <p>The counter is a plain Elmish module with the Avalonia.FuncUI DSL in action</p>
@@ -222,7 +222,7 @@ module Counter =
 <p>In this case, the messages are simple as well as the state, so the changes are pretty self-descriptive
 <code>Increment</code> updates the count plus 1 integer, <code>Decrement</code> substracts 1 integer, <code>Reset</code> takes our initial model back to 0</p>
 <h3 id="view">View</h3>
-<p>This will be a brief explanation of the parts that glue everything together, to have other examples and a more concise explanation for the View Controls and their attributes, you can check <a href="./Views-and-Attributes.html">Views and Attributes</a></p>
+<p>This will be a brief explanation of the parts that glue everything together, to have other examples and a more concise explanation for the View Controls and their attributes, you can check <a href="guides/Views-and-Attributes.html">Views and Attributes</a></p>
 <pre><code class="language-fsharp">let view (state: State) (dispatch: Msg -&gt; unit) =
     DockPanel.create [
         DockPanel.children [

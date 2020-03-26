@@ -27,16 +27,16 @@
           </span>
         </div>
         <div id="navbarMenu" class="navbar-menu">
-          <a class="navbar-item is-light" href="/">
+          <a class="navbar-item is-light" href="">
             Home
           </a>
-          <a class="navbar-item is-light" href="/blog.html">
+          <a class="navbar-item is-light" href="blog.html">
             Blog
           </a>
-          <a class="navbar-item is-light" href="/guides.html">
+          <a class="navbar-item is-light" href="guides.html">
             Guides
           </a>
-          <a class="navbar-item is-light" href="/about.html">
+          <a class="navbar-item is-light" href="about.html">
             About
           </a>
         </div>
@@ -49,32 +49,32 @@
         </p>
         <ul class="menu-list">
           <li>
-            <a href="/guides/Home.html">
+            <a href="guides/Home.html">
               Getting Started
             </a>
           </li>
           <li>
-            <a href="/guides/Basic-Template.html">
+            <a href="guides/Basic-Template.html">
               Basic Template
             </a>
           </li>
           <li>
-            <a href="/guides/Full-Template.html">
+            <a href="guides/Full-Template.html">
               Full Template
             </a>
           </li>
           <li>
-            <a href="/guides/Quickstart-Template.html">
+            <a href="guides/Quickstart-Template.html">
               Quickstart Template
             </a>
           </li>
           <li>
-            <a href="/guides/Views-and-Attributes.html">
+            <a href="guides/Views-and-Attributes.html">
               Views And Attributes
             </a>
           </li>
           <li>
-            <a href="/guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
+            <a href="guides/Unit-Testing-Avalonia-FuncUI-Apps.html">
               Unit Testing Avalonia.FuncUI
             </a>
           </li>
@@ -95,7 +95,7 @@
           <section class="tags"></section>
         </header>
         <section class="guide-content content">
-          <p>The <strong>Quickstart Template</strong> is intended to be used as a starting point for more <em>serious</em> projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you <strong>MUST</strong> do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the <a href="./Basic-Template.html">Basic Template</a> all you need is a couple of files and <code>.net core</code> installed to get up and running.</p>
+          <p>The <strong>Quickstart Template</strong> is intended to be used as a starting point for more <em>serious</em> projects, which means it includes more files that give you a lead on how you can do more complex things. It also is not intended to block you or dictate how you <strong>MUST</strong> do Avalonia.FuncUI applications. You can add/remove files/solutions as you want or need. It should not impede you, as we explained in the <a href="guides/Basic-Template.html">Basic Template</a> all you need is a couple of files and <code>.net core</code> installed to get up and running.</p>
 <h3 id="file-structure">File Structure</h3>
 <p>This is the File Structure for the Quickstart Template</p>
 <pre><code>│   ProjectName.sln
@@ -129,7 +129,7 @@
 <p><code>ProjectName.Core</code> is where you may have Shared logic that can be reused between different kinds of solutions like <code>Web</code> or <code>Console</code> in case you decide to add these solutions for your project (having a Shared/Core is not required).</p>
 <p><code>ProjectName.Core.Tests</code> is a Test Project based on <a href="https://github.com/haf/expecto">Expecto</a> an F# Testing library. It is not required to use Expecto, you can replace it with any testing library you see fit for your needs.</p>
 <h1 id="projectname">ProjectName</h1>
-<p>The ProjectName directory contains seven files, some of those have been previously discussed in the <a href="./Basic-Template.html">Basic Template</a> and <a href="./Full-Template.html">Full Template</a> doc pages. There are a couple of differences on the <code>Shell.fs</code> file which will be covered in short. There are also two new pages</p>
+<p>The ProjectName directory contains seven files, some of those have been previously discussed in the <a href="guides/Basic-Template.html">Basic Template</a> and <a href="guides/Full-Template.html">Full Template</a> doc pages. There are a couple of differences on the <code>Shell.fs</code> file which will be covered in short. There are also two new pages</p>
 <ul>
 <li>TreeViewPage.fs</li>
 <li>UserProfiles.fs</li>
@@ -176,7 +176,7 @@ as always you can use any control you deem necessary in your data template.</p>
         |&gt; Program.withHost this
         |&gt; Program.run
 </code></pre>
-<p><a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/Components/Hosts.fs#L24">HostControls</a> are standalone controls, this is a different approach from what we saw at <a href="./Full-Template.html#shellfs">Shell.fs</a> when including children structures, in that module we used the functions exposed by the <em>About.fs</em> and <em>Counter.fs</em> and integrated them with <code>Shell</code> our workflow, so we could intercept messages and act accordingly on the <code>Shell</code> module (for a better example on that check the <a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Shell.fs#L109">Music Player's Update function</a>). The Host control can act as an individual Control itself and handle its workflow without having to expose its functions to the <code>Shell</code> module. If you know your control doesn't need any external input and doesn't have any output that might affect other Controls in your application (the about page could be an example of that as well) perhaps you may want to use the <em>HostControl</em> approach.</p>
+<p><a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/Components/Hosts.fs#L24">HostControls</a> are standalone controls, this is a different approach from what we saw at <a href="guides/Full-Template.html#shellfs">Shell.fs</a> when including children structures, in that module we used the functions exposed by the <em>About.fs</em> and <em>Counter.fs</em> and integrated them with <code>Shell</code> our workflow, so we could intercept messages and act accordingly on the <code>Shell</code> module (for a better example on that check the <a href="https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Shell.fs#L109">Music Player's Update function</a>). The Host control can act as an individual Control itself and handle its workflow without having to expose its functions to the <code>Shell</code> module. If you know your control doesn't need any external input and doesn't have any output that might affect other Controls in your application (the about page could be an example of that as well) perhaps you may want to use the <em>HostControl</em> approach.</p>
 <h2 id="userprofilesfs">UserProfiles.fs</h2>
 <p>The <code>UserProfiles</code> page exposes a <code>HostControl</code> similarly to the <code>TreeViewPage</code>. It also shows you some ways on how to work with internet resources like a Restful API</p>
 <p>What is different from other modules?</p>
@@ -231,7 +231,7 @@ let init = { users = Array.empty }, Cmd.OfAsync.perform loadInit () LoadImages
     Expect.equal actual &quot;Hello, World!&quot; &quot;hello Should say Hello, World!&quot;
 }
 </code></pre>
-<p>If you wonder how to test your application using Expecto you can find that <a href="./Unit-Testing-Avalonia-FuncUI-Apps.html">here</a></p>
+<p>If you wonder how to test your application using Expecto you can find that <a href="guides/Unit-Testing-Avalonia-FuncUI-Apps.html">here</a></p>
 
         </section>
       </article>
