@@ -31,4 +31,5 @@ module Control =
         static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ContextMenu>(Control.ContextMenuProperty, menu, ValueNone)
            
-           
+        static member useEffect<'t when 't :> Control>(func: 't -> unit) : IAttr<'t> =
+            AttrBuilder<'t>.CreateEffect(func)

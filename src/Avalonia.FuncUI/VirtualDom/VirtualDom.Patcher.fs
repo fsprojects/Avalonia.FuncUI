@@ -202,12 +202,16 @@ module internal rec Patcher =
         | ViewContentDelta.Multiple multiple ->
             patchContentMultiple view attr.accessor multiple
 
+    let private useEffect (view: IControl) (effect: EffectDelta) : unit =
+        effect.func (view :> obj)
+    
     let patch (view: IControl, viewElement: ViewDelta) : unit =
         for attr in viewElement.attrs do
             match attr with
             | AttrDelta.Property property -> patchProperty view property
             | AttrDelta.Content content -> patchContent view content
             | AttrDelta.Subscription subscription -> patchSubscription view subscription
+            | AttrDelta.Effect effect -> useEffect view effect
 
     let create (viewElement: ViewDelta) : IControl =
         let control = viewElement.viewType |> Activator.CreateInstance |> Utils.cast<IControl>

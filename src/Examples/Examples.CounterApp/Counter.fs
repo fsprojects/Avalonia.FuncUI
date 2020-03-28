@@ -1,7 +1,11 @@
 namespace Examples.CounterApp
 
+open System
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.DSL
+open Avalonia.Media
+open SharpDX.Direct2D1
 
 module Counter =
     open Avalonia.Controls
@@ -63,6 +67,13 @@ module Counter =
                     TextBlock.verticalAlignment VerticalAlignment.Center
                     TextBlock.horizontalAlignment HorizontalAlignment.Center
                     TextBlock.text (string state.count)
+                    TextBox.useEffect (fun control ->
+                        
+                        let random = new Random();
+                        let color = String.Format("#{0:X6}", random.Next(0x1000000))
+                        
+                        control.Background <- SolidColorBrush.Parse color
+                    )
                 ]
             ]
         ]       

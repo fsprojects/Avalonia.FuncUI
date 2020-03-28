@@ -82,12 +82,27 @@ module Types =
                 
             override this.GetHashCode () =
                 (this.name, this.funcType, this.scope).GetHashCode()
+                
+                
+    [<CustomEquality; NoComparison>]
+    type Effect =
+        {
+            name: string // TODO: this should be a union ( OnUpdate | OnInit ? | OnDeInit ? )
+            func: obj -> unit
+        }
+        with
+            override this.Equals (other: obj) : bool =
+                Object.ReferenceEquals(this, other)
+                
+            override this.GetHashCode () =
+                this.GetHashCode()
                                
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
+        abstract member Effect : Effect option
         
     type IAttr<'viewType> =
         inherit IAttr
@@ -96,6 +111,7 @@ module Types =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
+        | Effect of Effect
         
         interface IAttr<'viewType> 
         interface IAttr with
@@ -110,6 +126,7 @@ module Types =
                     | Accessor.AvaloniaProperty p -> p.Name
                     | Accessor.InstanceProperty p -> p.name
                 | Subscription subscription -> subscription.name
+                | Effect effect -> effect.name
             
             member this.Property =
                 match this with
@@ -124,6 +141,11 @@ module Types =
             member this.Subscription =
                 match this with
                 | Subscription value -> Some value
+                | _ -> None
+                
+            member this.Effect =
+                match this with
+                | Effect value -> Some value
                 | _ -> None
 
     type IView =
@@ -159,3 +181,6 @@ module Types =
         
     let internal (|Subscription'|_|) (attr: IAttr)  =
         attr.Subscription
+        
+    let internal (|Effect'|_|) (attr: IAttr)  =
+        attr.Effect

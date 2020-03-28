@@ -10,13 +10,15 @@ module internal rec Delta =
     type AttrDelta =
         | Property of PropertyDelta
         | Content of ContentDelta
-        | Subscription of SubscriptionDelta   
+        | Subscription of SubscriptionDelta
+        | Effect of EffectDelta
         with
             static member From (attr: IAttr) : AttrDelta =
                 match attr with
                 | Property' property -> Property (PropertyDelta.From property)
                 | Content' content -> Content (ContentDelta.From content)
                 | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
+                | Effect' effect -> Effect (EffectDelta.From effect)
                 | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
            
     [<CustomEquality; NoComparison>]
@@ -42,8 +44,7 @@ module internal rec Delta =
                     
             override this.GetHashCode () =
                 (this.accessor, this.value).GetHashCode()
-
-                
+            
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
         {
@@ -66,6 +67,26 @@ module internal rec Delta =
                     name = subscription.name;
                     subscribe = subscription.subscribe;
                     func = Some subscription.func
+                }
+            member this.UniqueName = this.name
+            
+    [<CustomEquality; NoComparison>]
+    type EffectDelta =
+        {
+            name: string
+            func: obj -> unit
+        }
+        with
+            override this.Equals (other: obj) : bool =
+                Object.ReferenceEquals(this, other)
+                    
+            override this.GetHashCode () =
+                this.GetHashCode()
+                
+            static member From (effect: Effect) : EffectDelta =
+                {
+                    name = effect.name
+                    func = effect.func
                 }
             member this.UniqueName = this.name
     

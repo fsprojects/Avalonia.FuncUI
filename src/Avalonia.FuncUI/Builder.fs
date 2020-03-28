@@ -212,7 +212,16 @@ type AttrBuilder<'view>() =
             scope = subPatchOptions.ToScope()
         }
         attr :> IAttr<'view>
-
+        
+        
+    /// Create a Property Attribute for an Avalonia Property
+    static member CreateEffect<'value>(func: 'view -> unit) : IAttr<'view> =
+        let attr = Attr<'view>.Effect {
+            name = "onUpdate.Effect"
+            func = fun a -> func (a :?> 'view)
+        }
+        attr :> IAttr<'view>
+        
 [<AbstractClass; Sealed>] 
 type ViewBuilder() =
     
