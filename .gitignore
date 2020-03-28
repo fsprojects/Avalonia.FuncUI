@@ -250,8 +250,11 @@ paket-files/
 # FAKE - F# Make
 .fake/
 
-#ionide
+# ionide
 .ionide/
+
+# docs
+src/docs/_public
 
 # JetBrains Rider
 .idea/
