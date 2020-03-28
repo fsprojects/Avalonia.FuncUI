@@ -20,6 +20,7 @@
         <Compile Include="Views\Tabs\StylesDemo.fs" />
         <Compile Include="Views\Tabs\TextBoxDemo.fs" />
         <Compile Include="Views\Tabs\DatePickerDemo.fs" />
+        <Compile Include="Views\Tabs\MaskedTextBoxDemo.fs" />
         <AvaloniaResource Include="Views\Tabs\Styles.xaml" />
         <Compile Include="Views\MainView.fs" />
         
