@@ -82,13 +82,13 @@ module Types =
                 
             override this.GetHashCode () =
                 (this.name, this.funcType, this.scope).GetHashCode()
-                               
+
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
-        
+
     type IAttr<'viewType> =
         inherit IAttr
                  
@@ -96,8 +96,13 @@ module Types =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
-        
-        interface IAttr<'viewType> 
+        | List of Attr<'viewType> list
+
+    type InnerAttr<'viewType> =
+        | Property of Property
+        | Content of Content
+        | Subscription of Subscription
+        interface IAttr<'viewType>
         interface IAttr with
             member this.UniqueName =
                 match this with
@@ -110,21 +115,29 @@ module Types =
                     | Accessor.AvaloniaProperty p -> p.Name
                     | Accessor.InstanceProperty p -> p.name
                 | Subscription subscription -> subscription.name
-            
+
             member this.Property =
                 match this with
                 | Property value -> Some value
                 | _ -> None
-                
+
             member this.Content =
                 match this with
                 | Content value -> Some value
                 | _ -> None
-                
+
             member this.Subscription =
                 match this with
                 | Subscription value -> Some value
                 | _ -> None
+
+    module Attr =
+        let rec toInnerAttrs (attr : Attr<'view>) : IAttr<'view> list =
+            match attr with
+            | Attr.Property p -> [InnerAttr.Property p]
+            | Attr.Subscription s -> [InnerAttr.Subscription s]
+            | Attr.Content c -> [InnerAttr.Content c]
+            | Attr.List attrs -> attrs |> List.collect toInnerAttrs
 
     type IView =
         abstract member ViewType: Type with get

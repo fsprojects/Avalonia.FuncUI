@@ -216,9 +216,11 @@ type AttrBuilder<'view>() =
 [<AbstractClass; Sealed>] 
 type ViewBuilder() =
     
-    static member Create<'view>(attrs: IAttr<'view> list) : IView<'view> =
+    static member Create<'view>(attrs: Attr<'view> list) : IView<'view> =
+        let innerAttrs = attrs |> List.collect Attr.toInnerAttrs
+
         {
             View.viewType = typeof<'view>
-            View.attrs = attrs
+            View.attrs = innerAttrs
         }
         :> IView<'view>
