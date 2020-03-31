@@ -47,8 +47,9 @@ type DataTemplateView<'data, 'view when 'view :> IView>
                 | _ -> null
 
         member this.Match (data: obj) : bool =
-            match data with
-            | :? 'data as _data -> true
+            match data, matchFunc with
+            | :? 'data as data, ValueSome f -> f data
+            | :? 'data, ValueNone -> true
             | _ -> false
             
         member this.Build (_data: obj) : IControl =
