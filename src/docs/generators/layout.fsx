@@ -101,7 +101,7 @@ let layout (ctx : SiteContents) active bodyCnt =
                     ]
             ]
             p [Class "menu-label"] [
-                !!"Controls"
+                !!"Documentation"
             ]
             ul [Class "menu-list"] [
                 for (group, controls) in controls do 
