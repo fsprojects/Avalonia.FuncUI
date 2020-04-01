@@ -86,6 +86,12 @@ html, body {
   color: white;
 }
 
+  .is-funcui
+  .navbar-item.is-active:not(:focus):not(:hover) {
+    background-color: #F0F2F4;
+    color: #A9A9A9;
+  }
+
 .post .post-header {
   text-align: center
 }
