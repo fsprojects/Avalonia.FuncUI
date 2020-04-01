@@ -15,7 +15,7 @@ let generate' (ctx: SiteContents) (page: string) =
                 h1 [Class "title"] [!!control.name]
                 h4 [Class "subtitle"] [
                     match control.group with 
-                    | Some group -> !!group
+                    | Some group -> !!group.ToString()
                     | None -> !!"Avalonia Community"
                 ]
             ]
