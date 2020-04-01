@@ -58,8 +58,8 @@ module TextBox =
         static member text<'t when 't :> TextBox>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(TextBox.TextProperty, value, ValueNone)
             
-        static member onTextChanged<'t when 't :> TextBox>(func: string -> unit, subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<string>(TextBox.TextProperty, func, subPatchOptions)
+        static member onTextChanged<'t when 't :> TextBox>(func: string -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<string>(TextBox.TextProperty, func, ?subPatchOptions = subPatchOptions)
             
         static member textAlignment<'t when 't :> TextBox>(alignment: TextAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<TextAlignment>(TextBox.TextAlignmentProperty, alignment, ValueNone)

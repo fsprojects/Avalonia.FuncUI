@@ -29,12 +29,12 @@ module TextBoxDemo =
 
                 Button.create [
                     Button.content "Set Watermark"
-                    Button.onClick((fun _ -> dispatch (SetWatermark "I'm the watermark")), SubPatchOptions.Never)
+                    Button.onClick (fun _ -> dispatch (SetWatermark "I'm the watermark"))
                 ]
                 
                 Button.create [
                     Button.content "Unset Watermark"
-                    Button.onClick((fun _ -> dispatch (SetWatermark "")), SubPatchOptions.Never)
+                    Button.onClick (fun _ -> dispatch (SetWatermark ""))
                 ] 
             ]
         ]   

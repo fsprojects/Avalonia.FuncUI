@@ -87,54 +87,54 @@ module Player =
                 yield Button.create [
                     Button.content Icons.previous
                     Button.classes [ "mediabtn" ]
-                    Button.onClick ((fun _ -> dispatch Previous), SubPatchOptions.Never)
+                    Button.onClick (fun _ -> dispatch Previous)
                 ]
                 
                 if state.player.IsPlaying then
                     yield Button.create [
                         Button.content Icons.pause
                         Button.classes [ "mediabtn" ]
-                        Button.onClick ((fun _ -> dispatch Pause), SubPatchOptions.Never)
+                        Button.onClick (fun _ -> dispatch Pause)
                     ]
                     yield Button.create [
                         Button.content Icons.stop
                         Button.classes [ "mediabtn" ]
-                        Button.onClick ((fun _ -> dispatch Stop), SubPatchOptions.Never)
+                        Button.onClick (fun _ -> dispatch Stop)
                     ]
                 else
                     yield Button.create [
                         Button.content Icons.play
                         Button.classes [ "mediabtn" ]
-                        Button.onClick ((fun _ -> dispatch PlayInternal), SubPatchOptions.Never)
+                        Button.onClick (fun _ -> dispatch PlayInternal)
                     ]
                     yield Button.create [
                         Button.content Icons.next
                         Button.classes [ "mediabtn" ]
-                        Button.onClick ((fun _ -> dispatch Next), SubPatchOptions.Never)
+                        Button.onClick (fun _ -> dispatch Next)
                     ]
                     yield Button.create [
                         Button.content Icons.shuffle
                         Button.classes [ "mediabtn" ]
-                        Button.onClick ((fun _ -> dispatch Shuffle), SubPatchOptions.Never)
+                        Button.onClick (fun _ -> dispatch Shuffle)
                     ]
                     match state.loopState with
                     | Types.LoopState.All ->
                         yield Button.create [
                             Button.content Icons.repeat
                             Button.classes [ "mediabtn" ]
-                            Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.Single)), SubPatchOptions.Never)
+                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Single))
                         ]
                     | Types.LoopState.Single ->
                         yield Button.create [
                             Button.content Icons.repeatOne
                             Button.classes [ "mediabtn" ]
-                            Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.Off)), SubPatchOptions.Never)
+                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Off))
                         ]
                     | Types.LoopState.Off ->
                         yield Button.create [
                             Button.content Icons.repeatOff
                             Button.classes [ "mediabtn" ]
-                            Button.onClick ((fun _ -> dispatch (SetLoopState Types.LoopState.All)), SubPatchOptions.Never)
+                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.All))
                         ]
             ]
         ]
@@ -152,7 +152,7 @@ module Player =
                     Slider.width 428.0
                     Slider.horizontalAlignment HorizontalAlignment.Center
                     Slider.value (state.sliderPos |> double)
-                    Slider.onValueChanged ((fun value -> dispatch (Seek value)), SubPatchOptions.Never)
+                    Slider.onValueChanged (fun value -> dispatch (Seek value))
                 ]
             ]
         ]

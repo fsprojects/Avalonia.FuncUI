@@ -39,8 +39,8 @@ module DatePicker =
         static member isDropdownOpen<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DatePicker.IsDropDownOpenProperty, value, ValueNone)
 
-        static member onDrdownOpenChanged<'t when 't :> DatePicker>(func: bool -> unit, subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription(DatePicker.IsDropDownOpenProperty, func, subPatchOptions)
+        static member onDrdownOpenChanged<'t when 't :> DatePicker>(func: bool -> unit, ?subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription(DatePicker.IsDropDownOpenProperty, func, ?subPatchOptions = subPatchOptions)
         
         static member isTodayHighlighted<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DatePicker.IsTodayHighlightedProperty , value, ValueNone)
@@ -54,8 +54,8 @@ module DatePicker =
         static member selectedDate<'t when 't :> DatePicker>(value: DateTime option) : IAttr<'t> =
             value |> Option.toNullable |> DatePicker.selectedDate
 
-        static member onSelectedDateChanged<'t when 't :> DatePicker>(func: Nullable<DateTime> -> unit, subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<DateTime Nullable>(DatePicker.SelectedDateProperty, func, subPatchOptions)
+        static member onSelectedDateChanged<'t when 't :> DatePicker>(func: Nullable<DateTime> -> unit, ?subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<DateTime Nullable>(DatePicker.SelectedDateProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member selectedDateFormat<'t when 't :> DatePicker>(value: DatePickerFormat) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DatePickerFormat>(DatePicker.SelectedDateFormatProperty, value, ValueNone)

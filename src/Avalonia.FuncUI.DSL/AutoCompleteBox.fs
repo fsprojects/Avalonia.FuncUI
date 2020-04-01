@@ -14,8 +14,8 @@ module AutoCompleteBox =
         ViewBuilder.Create<AutoCompleteBox>(attrs)
     
     type AutoCompleteBox with
-        static member onSelectionChanged<'t when 't :> AutoCompleteBox>(func: SelectionChangedEventArgs -> unit, subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<_>(AutoCompleteBox.SelectionChangedEvent, func, subPatchOptions)
+        static member onSelectionChanged<'t when 't :> AutoCompleteBox>(func: SelectionChangedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<_>(AutoCompleteBox.SelectionChangedEvent, func, ?subPatchOptions = subPatchOptions)
         
         static member watermark<'t when 't :> AutoCompleteBox>(watermark: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(AutoCompleteBox.WatermarkProperty, watermark, ValueNone)
@@ -44,20 +44,20 @@ module AutoCompleteBox =
         static member selectedItem<'t when 't :> AutoCompleteBox>(value: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(AutoCompleteBox.SelectedItemProperty, value, ValueNone)
             
-        static member onSelectedItemChanged<'t when 't :> AutoCompleteBox>(func: obj -> unit, subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<obj>(AutoCompleteBox.SelectedItemProperty, func, subPatchOptions)
+        static member onSelectedItemChanged<'t when 't :> AutoCompleteBox>(func: obj -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<obj>(AutoCompleteBox.SelectedItemProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member text<'t when 't :> AutoCompleteBox>(text: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(AutoCompleteBox.TextProperty, text, ValueNone)
             
-        static member onTextChanged<'t when 't :> AutoCompleteBox>(func: string -> unit, subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<string>(AutoCompleteBox.TextProperty, func, subPatchOptions)
+        static member onTextChanged<'t when 't :> AutoCompleteBox>(func: string -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<string>(AutoCompleteBox.TextProperty, func, ?subPatchOptions = subPatchOptions)
             
         static member searchText<'t when 't :> AutoCompleteBox>(text: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(AutoCompleteBox.SearchTextProperty, text, ValueNone)
             
-        static member onSearchTextChanged<'t when 't :> AutoCompleteBox>(func: string -> unit, subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<string>(AutoCompleteBox.SearchTextProperty, func, subPatchOptions)
+        static member onSearchTextChanged<'t when 't :> AutoCompleteBox>(func: string -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<string>(AutoCompleteBox.SearchTextProperty, func, ?subPatchOptions = subPatchOptions)
             
         static member filterMode<'t when 't :> AutoCompleteBox>(mode: AutoCompleteFilterMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<AutoCompleteFilterMode>(AutoCompleteBox.FilterModeProperty, mode, ValueNone)

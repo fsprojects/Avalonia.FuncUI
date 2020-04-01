@@ -29,17 +29,17 @@ module Counter =
             DockPanel.children [
                 Button.create [
                     Button.dock Dock.Bottom
-                    Button.onClick ((fun _ -> dispatch Reset), SubPatchOptions.Never)
+                    Button.onClick (fun _ -> dispatch Reset)
                     Button.content "reset"
                 ]                
                 Button.create [
                     Button.dock Dock.Bottom
-                    Button.onClick ((fun _ -> dispatch Decrement), SubPatchOptions.Never)
+                    Button.onClick (fun _ -> dispatch Decrement)
                     Button.content "-"
                 ]
                 Button.create [
                     Button.dock Dock.Bottom
-                    Button.onClick ((fun _ -> dispatch Increment), SubPatchOptions.Never)
+                    Button.onClick (fun _ -> dispatch Increment)
                     Button.content "+"
                 ]
                 Button.create [
@@ -52,9 +52,8 @@ module Counter =
                     TextBox.onTextChanged ((fun text ->
                         let isNumber, number = System.Int32.TryParse text
                         if isNumber then
-                            number |> SetCount |> dispatch)
-                            
-                    , SubPatchOptions.Never)
+                            number |> SetCount |> dispatch) 
+                    )
                     TextBox.text (string state.count)
                 ]
                 TextBlock.create [

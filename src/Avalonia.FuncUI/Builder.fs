@@ -152,7 +152,7 @@ type AttrBuilder<'view>() =
     /// <summary>
     /// Create a Property Subscription Attribute for an Avalonia Property
     /// </summary>
-    static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit, subPatchOptions: SubPatchOptions) : IAttr<'view> =
+    static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
         let subscribeFunc (control: IControl, _handler: 'h) =
@@ -167,14 +167,14 @@ type AttrBuilder<'view>() =
             subscribe = subscribeFunc
             func = Action<_>(func)
             funcType = func.GetType()
-            scope = subPatchOptions.ToScope()
+            scope = (Option.defaultValue SubPatchOptions.Never subPatchOptions).ToScope()
         }
         attr :> IAttr<'view>
         
      /// <summary>
     /// Create a Routed Event Subscription Attribute for a Routed Event
     /// </summary>
-    static member CreateSubscription<'arg when 'arg :> RoutedEventArgs>(routedEvent: RoutedEvent<'arg>, func: 'arg -> unit, subPatchOptions: SubPatchOptions) : IAttr<'view> =
+    static member CreateSubscription<'arg when 'arg :> RoutedEventArgs>(routedEvent: RoutedEvent<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
         let subscribeFunc (control: IControl, _handler: 'h) =
@@ -189,14 +189,14 @@ type AttrBuilder<'view>() =
             subscribe = subscribeFunc
             func = Action<_>(func)
             funcType = func.GetType()
-            scope = subPatchOptions.ToScope()
+            scope = (Option.defaultValue SubPatchOptions.Never subPatchOptions).ToScope()
         }
         attr :> IAttr<'view>
         
     /// <summary>
     /// Create a Event Subscription Attribute for a .Net Event
     /// </summary>
-    static member CreateSubscription<'arg>(name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit, subPatchOptions: SubPatchOptions) =
+    static member CreateSubscription<'arg>(name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) =
         // TODO: extract to helpers module
         // subscribe to event
         let subscribeFunc (control: IControl, _handler: 'h) =
@@ -209,7 +209,7 @@ type AttrBuilder<'view>() =
             subscribe = subscribeFunc
             func = Action<_>(func)
             funcType = func.GetType()
-            scope = subPatchOptions.ToScope()
+            scope = (Option.defaultValue SubPatchOptions.Never subPatchOptions).ToScope()
         }
         attr :> IAttr<'view>
 
