@@ -15,10 +15,16 @@ module Program =
             else
                 Dispatcher.UIThread.Post (fun () -> dispatch msg)
 
-    let withHost (host: IViewHost) (program: Program<'arg, 'model, 'msg, #IView>) =
+    let withHost (host : IViewHost) (program : Program<'arg, 'model, 'msg, #IView>) =
+        let stateRef = ref None
         let setState state dispatch =
-            let view = ((Program.view program) state dispatch)
-            host.Update (Some (view :> IView))
+            // create new view and update the host only if new model is not equal to a prev one
+            let stateDiffers = (Some state).Equals(!stateRef) |> not
+            
+            if stateDiffers then
+                stateRef := Some state
+                let view = ((Program.view program) state dispatch)
+                host.Update (Some (view :> IView))
 
         program
         |> Program.withSetState setState
