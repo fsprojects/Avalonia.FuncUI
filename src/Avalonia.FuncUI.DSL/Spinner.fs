@@ -20,6 +20,6 @@ module Spinner =
         /// <summary>
         /// Occurs when spinning is initiated by the end-user.
         /// </summary>
-        static member onSpin<'t when 't :> Spinner>(func: SpinEventArgs -> unit, subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<SpinEventArgs>(Spinner.SpinEvent, func, subPatchOptions)
+        static member onSpin<'t when 't :> Spinner>(func: SpinEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<SpinEventArgs>(Spinner.SpinEvent, func, ?subPatchOptions = subPatchOptions)
 

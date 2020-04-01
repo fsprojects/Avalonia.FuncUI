@@ -43,8 +43,8 @@ module Calendar =
         static member selectedDate<'t when 't :> Calendar>(value: DateTime option) : IAttr<'t> =
             value |> Option.toNullable |> Calendar.selectedDate
 
-        static member onSelectedDateChanged<'t when 't :> Calendar>(func: Nullable<DateTime> -> unit, subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<DateTime Nullable>(Calendar.SelectedDateProperty, func, subPatchOptions)
+        static member onSelectedDateChanged<'t when 't :> Calendar>(func: Nullable<DateTime> -> unit, ?subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<DateTime Nullable>(Calendar.SelectedDateProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member displayDate<'t when 't :> Calendar>(value: DateTime) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime>(Calendar.DisplayDateProperty, value, ValueNone)

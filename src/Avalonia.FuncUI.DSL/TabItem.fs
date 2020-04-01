@@ -17,5 +17,5 @@ module TabItem =
         static member isSelected<'t when 't :> TabItem>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(TabItem.IsSelectedProperty, value, ValueNone)
             
-        static member onIsSelectedChanged<'t when 't :> TabItem>(func: bool -> unit, subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<bool>(TabItem.IsSelectedProperty, func, subPatchOptions)
+        static member onIsSelectedChanged<'t when 't :> TabItem>(func: bool -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<bool>(TabItem.IsSelectedProperty, func, ?subPatchOptions = subPatchOptions)

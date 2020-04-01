@@ -58,17 +58,17 @@ module DatePickerDemo =
 
                 Button.create [
                   Button.content "Set Long Date Picker Format"
-                  Button.onClick((fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Long, None))), SubPatchOptions.Never)
+                  Button.onClick(fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Long, None)))
                 ]
 
                 Button.create [
                   Button.content "Set Short Date Picker Format"
-                  Button.onClick((fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Short, None))), SubPatchOptions.Never)
+                  Button.onClick(fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Short, None)))
                 ]
 
                 Button.create [
                     Button.content """Set Custom "MMMM dd, yyyy" Date Picker Format """
-                    Button.onClick((fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Custom, Some "MMMM dd, yyyy"))), SubPatchOptions.Never)
+                    Button.onClick(fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Custom, Some "MMMM dd, yyyy")))
                 ]
             ]
         ]   

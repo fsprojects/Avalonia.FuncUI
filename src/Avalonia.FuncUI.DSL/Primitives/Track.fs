@@ -22,8 +22,8 @@ module Track =
         static member value<'t when 't :> Track>(value: double) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<double>(Track.ValueProperty, value, ValueNone)
             
-        static member onValueChanged<'t when 't :> Track>(func: double -> unit, subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<double>(Track.ValueProperty, func, subPatchOptions)
+        static member onValueChanged<'t when 't :> Track>(func: double -> unit, ?subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<double>(Track.ValueProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member viewportSize<'t when 't :> Track>(value: double) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<double>(Track.ViewportSizeProperty, value, ValueNone)

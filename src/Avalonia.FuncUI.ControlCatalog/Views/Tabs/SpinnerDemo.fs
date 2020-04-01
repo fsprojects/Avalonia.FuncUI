@@ -58,7 +58,7 @@ module SpinnerDemo =
                 TextBox.create [
                     DockPanel.dock Dock.Top
                     TextBox.text (string state.tip)
-                    TextBox.onTextChanged ((fun text -> text |> SetTip |> dispatch), SubPatchOptions.Never)
+                    TextBox.onTextChanged (fun text -> text |> SetTip |> dispatch)
                 ]
                 TextBox.create [
                     DockPanel.dock Dock.Top
@@ -69,7 +69,7 @@ module SpinnerDemo =
                             text |> Double.Parse |> SetHOffset |> dispatch
                         with
                             ex -> Console.WriteLine(ex) 
-                    , SubPatchOptions.Never)
+                    )
                 ]
                 TextBox.create [
                     DockPanel.dock Dock.Top
@@ -80,7 +80,7 @@ module SpinnerDemo =
                             text |> Double.Parse |> SetVOffset |> dispatch
                         with
                         ex -> Console.WriteLine(ex) 
-                    , SubPatchOptions.Never)
+                    )
                 ]
                 ButtonSpinner.create [
                     Button.content "Hover me to see the ToolTip"
