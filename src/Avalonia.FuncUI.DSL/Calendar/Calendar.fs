@@ -31,8 +31,14 @@ module Calendar =
         static member displayMode<'t when 't :> Calendar>(value: CalendarMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<CalendarMode>(Calendar.DisplayModeProperty, value, ValueNone)
 
-        static member selectionMode<'t when 't :> Calendar>(value: SelectionMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<SelectionMode>(Calendar.SelectionModeProperty, value, ValueNone)
+        static member onDisplayModeChanged<'t when 't :> Calendar>(func: CalendarMode -> unit, ?subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<CalendarMode>(Calendar.DisplayModeProperty, func, ?subPatchOptions = subPatchOptions)
+
+        static member selectionMode<'t when 't :> Calendar>(value: CalendarSelectionMode) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<CalendarSelectionMode>(Calendar.SelectionModeProperty, value, ValueNone)
+
+        static member onSelectionModeChanged<'t when 't :> Calendar>(func: CalendarSelectionMode  -> unit, ?subPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription<CalendarSelectionMode >(Calendar.SelectionModeProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member selectedDate<'t when 't :> Calendar>(value: DateTime Nullable) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime Nullable>(Calendar.SelectedDateProperty, value, ValueNone)
