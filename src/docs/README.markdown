@@ -8,9 +8,9 @@ The docs website is built using [Fornax], to contribute to the docs you can add 
 [guides], [posts], [controls] directories.
 
 ## Guides
-Guides are a general way to explain how to archieve a result or to take a user through an explanation of an existing concept inside Avalonia.FuncUI.
+Guides are a general way to explain how to achieve a result or to take a user through an explanation of an existing concept inside Avalonia.FuncUI.
 
-Guides follow the follwing format
+Guides follow the following format
 
 ```markdown
 ---
@@ -41,7 +41,7 @@ Possible values are
 - author (optional) -> any string that denominates the author of the guide
 - tags (optional) -> comma separated strings
 
-Please put Links on the top of the document, also use relative url's when linking documents that exist inside the Avalonia.FuncUI Website.
+Please put Links on the top of the document, also use relative URL's when linking documents that exist inside the Avalonia.FuncUI Website.
 See the `[Basic Template]: guides/Basic-Template.html` example, you can refer to other documents in the [guides] directory
 
 
@@ -65,17 +65,17 @@ You can checkout [Basic Template]
 - layout -> post
     (always use post)
 - title -> any string that describes the title
-- published (optional) -> a string in the follwing format YYYY-MM-DD
+- published (optional) -> a string in the following format YYYY-MM-DD
 - author (optional) -> any string that denominates the author of the guide
 - tags (optional) -> comma separated strings
 
-In the same way you have to put Links at the top and use relative urls when linking content inside the Avalonia.FuncUI Website
+In the same way you have to put Links at the top and use relative URLs when linking content inside the Avalonia.FuncUI Website
 
 
 ### Preview while Developing
 Fornax offers a watch command that allows you to preview the website as you develop it's contents
 
-- install the fornax cli tool
+- install the fornax-cli tool
 - change directory into the docs sources
 - fornax watch
 - open your browser on localhost:8080 (for further information visit the [Fornax] repository)
@@ -94,7 +94,7 @@ fornax watch
 ### Build Docs
 To update the website, we have to build the docs sources, we use a fake script for this
 
-> Pleas note that if you are only adding/updating content (example: adding a .md file) you don't need to include the updated docs in your pull request, if you added a different layout, or modified an existing page (example: generators/index.fsx) please notify in the pull request so it can also be verified by the mantainers
+> Pleas note that if you are only adding/updating content (example: adding a .md file) you don't need to include the updated docs in your pull request, if you added a different layout, or modified an existing page (example: generators/index.fsx) please notify in the pull request so it can also be verified by the maintainers
 
 - install fornax cli tool
 - change directory into the docs sources
