@@ -45,6 +45,7 @@ let layout (ctx : SiteContents) active bodyCnt =
     let controls = 
         ctx.TryGetValues<Controlloader.Control> () 
         |> Option.defaultValue Seq.empty
+        |> Seq.sortBy(fun c -> c.name)
         |> Seq.groupBy(fun c -> c.group)
 
     let guides = 
