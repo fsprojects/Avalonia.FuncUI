@@ -36,10 +36,10 @@ module DatePicker =
         static member firstDayOfWeek<'t when 't :> DatePicker>(value: DayOfWeek) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DayOfWeek>(DatePicker.FirstDayOfWeekProperty, value, ValueNone)
 
-        static member isDropdownOpen<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
+        static member isDropDownOpen<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DatePicker.IsDropDownOpenProperty, value, ValueNone)
 
-        static member onDrdownOpenChanged<'t when 't :> DatePicker>(func: bool -> unit, ?subPatchOptions) : IAttr<'t> =
+        static member onDropDownOpenChanged<'t when 't :> DatePicker>(func: bool -> unit, ?subPatchOptions) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription(DatePicker.IsDropDownOpenProperty, func, ?subPatchOptions = subPatchOptions)
         
         static member isTodayHighlighted<'t when 't :> DatePicker>(value: bool) : IAttr<'t> =
