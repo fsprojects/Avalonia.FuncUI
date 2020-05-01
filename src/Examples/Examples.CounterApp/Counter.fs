@@ -1,11 +1,9 @@
 namespace Examples.CounterApp
 
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.DSL
 
 module Counter =
     open Avalonia.Controls
-    open Avalonia.FuncUI.DSL
     open Avalonia.Layout
     
     type State = { count : int }
