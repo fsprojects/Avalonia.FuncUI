@@ -14,7 +14,7 @@ module Image =
     type Image with
         static member source<'t when 't :> Image>(value: IBitmap) : IAttr<'t> =
             // TODO: maybe add custom bitmap comparer OR pass enum that has different options ?
-            AttrBuilder<'t>.CreateProperty<IBitmap>(Image.SourceProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, IBitmap>(Image.SourceProperty, value, ValueNone)
             
         static member stretch<'t when 't :> Image>(value: Stretch) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Stretch>(Image.StretchProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Stretch>(Image.StretchProperty, value, ValueNone)

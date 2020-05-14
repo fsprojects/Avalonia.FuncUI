@@ -12,13 +12,13 @@ module HeaderedItemsControl =
     type HeaderedItemsControl with
     
         static member header<'t when 't :> HeaderedItemsControl>(text: string) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<string>(HeaderedItemsControl.HeaderProperty, text, ValueNone)
+            AttrBuilder.CreateProperty<'t, string>(HeaderedItemsControl.HeaderProperty, text, ValueNone)
             
         static member header<'t when 't :> HeaderedItemsControl>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(HeaderedItemsControl.HeaderProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, obj>(HeaderedItemsControl.HeaderProperty, value, ValueNone)
             
         static member header<'t when 't :> HeaderedItemsControl>(value: IView option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateContentSingle(HeaderedItemsControl.HeaderProperty, value)
+            AttrBuilder.CreateContentSingle(HeaderedItemsControl.HeaderProperty, value)
             
         static member header<'t when 't :> HeaderedItemsControl>(value: IView) : IAttr<'t> =
             value |> Some |> HeaderedItemsControl.header

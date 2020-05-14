@@ -13,13 +13,13 @@ module ListBox =
     type ListBox with
 
         static member selectedItems<'t when 't :> ListBox>(items: IList) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IList>(ListBox.SelectedItemsProperty, items, ValueNone)
+            AttrBuilder.CreateProperty<'t, IList>(ListBox.SelectedItemsProperty, items, ValueNone)
 
         static member onSelectedItemsChanged<'t when 't :> ListBox>(func: IList -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<IList>(ListBox.SelectedItemsProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, IList>(ListBox.SelectedItemsProperty, func, ?subPatchOptions = subPatchOptions)
         
         static member selectionMode<'t when 't :> ListBox>(mode: SelectionMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<SelectionMode>(ListBox.SelectionModeProperty, mode, ValueNone)
+            AttrBuilder.CreateProperty<'t, SelectionMode>(ListBox.SelectionModeProperty, mode, ValueNone)
         
         static member virtualizationMode<'t when 't :> ListBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ItemVirtualizationMode>(ListBox.VirtualizationModeProperty, mode, ValueNone)
+            AttrBuilder.CreateProperty<'t, ItemVirtualizationMode>(ListBox.VirtualizationModeProperty, mode, ValueNone)

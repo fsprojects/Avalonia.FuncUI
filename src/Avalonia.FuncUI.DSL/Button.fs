@@ -15,25 +15,25 @@ module Button =
     type Button with
 
         static member clickMode<'t when 't :> Button>(value: ClickMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ClickMode>(Button.ClickModeProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, ClickMode>(Button.ClickModeProperty, value, ValueNone)
             
         static member command<'t when 't :> Button>(value: ICommand) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ICommand>(Button.CommandProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, ICommand>(Button.CommandProperty, value, ValueNone)
             
         static member hotKey<'t when 't :> Button>(value: KeyGesture) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<KeyGesture>(Button.HotKeyProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, KeyGesture>(Button.HotKeyProperty, value, ValueNone)
             
         static member commandParameter<'t when 't :> Button>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(Button.CommandParameterProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, obj>(Button.CommandParameterProperty, value, ValueNone)
             
         static member isDefault<'t when 't :> Button>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Button.IsDefaultProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Button.IsDefaultProperty, value, ValueNone)
             
         static member isPressed<'t when 't :> Button>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Button.IsPressedProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Button.IsPressedProperty, value, ValueNone)
             
         static member onIsPressedChanged<'t when 't :> Button>(func: bool -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<bool>(Button.IsPressedProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, bool>(Button.IsPressedProperty, func, ?subPatchOptions = subPatchOptions)
             
         static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, RoutedEventArgs>(Button.ClickEvent, func, ?subPatchOptions = subPatchOptions)

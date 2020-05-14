@@ -16,16 +16,16 @@ module Slider =
         /// Sets the orientation of a <see cref="Slider"/>.
         /// </summary>
         static member orientation<'t when 't :> Slider>(value: Orientation) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Orientation>(Slider.OrientationProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Orientation>(Slider.OrientationProperty, value, ValueNone)
 
         /// <summary>
         /// Sets a value that indicates whether the <see cref="Slider"/> automatically moves the <see cref="Thumb"/> to the closest tick mark.
         /// </summary>
         static member isSnapToTickEnabled<'t when 't :> Slider>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Slider.IsSnapToTickEnabledProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Slider.IsSnapToTickEnabledProperty, value, ValueNone)
 
         /// <summary>
         /// Sets the interval between tick marks.
         /// </summary>
         static member tickFrequency<'t when 't :> Slider>(value: float) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<float>(Slider.TickFrequencyProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, float>(Slider.TickFrequencyProperty, value, ValueNone)

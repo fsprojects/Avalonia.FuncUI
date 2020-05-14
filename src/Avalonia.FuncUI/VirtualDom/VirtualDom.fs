@@ -7,7 +7,7 @@ open Avalonia.FuncUI.VirtualDom.Delta
 
 module rec VirtualDom =
 
-    let create (view: IView) : IControl =
+    let create (view: IView) : Avalonia.IAvaloniaObject =
         view
         |> ViewDelta.From
         |> Patcher.create

@@ -12,10 +12,10 @@ module WrapPanel =
 
     type WrapPanel with
         static member itemHeight<'t when 't :> WrapPanel>(value: float) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<float>(WrapPanel.ItemHeightProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, float>(WrapPanel.ItemHeightProperty, value, ValueNone)
 
         static member itemWidth<'t when 't :> WrapPanel>(value: float) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<float>(WrapPanel.ItemWidthProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, float>(WrapPanel.ItemWidthProperty, value, ValueNone)
            
         static member orientation<'t when 't :> WrapPanel>(orientation: Orientation) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Orientation>(WrapPanel.OrientationProperty, orientation, ValueNone)
+            AttrBuilder.CreateProperty<'t, Orientation>(WrapPanel.OrientationProperty, orientation, ValueNone)

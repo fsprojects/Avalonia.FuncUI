@@ -11,13 +11,13 @@ module HeaderedSelectingItemsControl =
     
     type HeaderedSelectingItemsControl with
         static member header<'t when 't :> HeaderedSelectingItemsControl>(text: string) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<string>(HeaderedSelectingItemsControl.HeaderProperty, text, ValueNone)
+            AttrBuilder.CreateProperty<'t, string>(HeaderedSelectingItemsControl.HeaderProperty, text, ValueNone)
             
         static member header<'t when 't :> HeaderedSelectingItemsControl>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(HeaderedSelectingItemsControl.HeaderProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, obj>(HeaderedSelectingItemsControl.HeaderProperty, value, ValueNone)
             
         static member header<'t when 't :> HeaderedSelectingItemsControl>(value: IView option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateContentSingle(HeaderedSelectingItemsControl.HeaderProperty, value)
+            AttrBuilder.CreateContentSingle(HeaderedSelectingItemsControl.HeaderProperty, value)
             
         static member header<'t when 't :> HeaderedSelectingItemsControl>(value: IView) : IAttr<'t> =
             value |> Some |> HeaderedSelectingItemsControl.header

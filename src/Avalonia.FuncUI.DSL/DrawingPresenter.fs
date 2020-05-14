@@ -13,7 +13,7 @@ module DrawingPresenter =
     type DrawingPresenter with            
 
         static member drawing<'t when 't :> DrawingPresenter>(value: Drawing) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Drawing>(DrawingPresenter.DrawingProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Drawing>(DrawingPresenter.DrawingProperty, value, ValueNone)
 
         static member stretch<'t when 't :> DrawingPresenter>(value: Stretch) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Stretch>(DrawingPresenter.StretchProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Stretch>(DrawingPresenter.StretchProperty, value, ValueNone)

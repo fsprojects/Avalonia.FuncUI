@@ -12,5 +12,5 @@ module RadioButton =
     type RadioButton with
 
         static member groupName<'t when 't :> RadioButton>(value: string) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<string>(RadioButton.GroupNameProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, string>(RadioButton.GroupNameProperty, value, ValueNone)
         

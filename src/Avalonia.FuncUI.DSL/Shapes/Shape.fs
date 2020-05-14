@@ -12,34 +12,34 @@ module Shape =
     type Shape with
 
         static member fill<'t when 't :> Shape>(brush: IBrush) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBrush>(Shape.FillProperty, brush, ValueNone)
+            AttrBuilder.CreateProperty<'t, IBrush>(Shape.FillProperty, brush, ValueNone)
             
         static member fill<'t when 't :> Shape>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Shape.fill
         
         static member stretch<'t when 't :> Shape>(value: Stretch) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Stretch>(Shape.StretchProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Stretch>(Shape.StretchProperty, value, ValueNone)
             
         static member stroke<'t when 't :> Shape>(brush: IBrush) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBrush>(Shape.StrokeProperty, brush, ValueNone)
+            AttrBuilder.CreateProperty<'t, IBrush>(Shape.StrokeProperty, brush, ValueNone)
             
         static member stroke<'t when 't :> Shape>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Shape.stroke
             
         static member strokeThickness<'t when 't :> Shape>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Shape.StrokeThicknessProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Shape.StrokeThicknessProperty, value, ValueNone)
             
         static member strokeDashArray<'t when 't :> Shape>(value: AvaloniaList<double>) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<AvaloniaList<double>>(Shape.StrokeDashArrayProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, AvaloniaList<double>>(Shape.StrokeDashArrayProperty, value, ValueNone)
             
         static member strokeDashArray<'t when 't :> Shape>(value: double list) : IAttr<'t> =
             value |> AvaloniaList |> Shape.strokeDashArray
             
         static member strokeDashOffset<'t when 't :> Shape>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Shape.StrokeDashOffsetProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Shape.StrokeDashOffsetProperty, value, ValueNone)
             
         static member strokeLineCap<'t when 't :> Shape>(value: PenLineCap) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<PenLineCap>(Shape.StrokeLineCapProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, PenLineCap>(Shape.StrokeLineCapProperty, value, ValueNone)
 
         static member strokeJoinCap<'t when 't :> Shape>(value: PenLineJoin) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<PenLineJoin>(Shape.StrokeJoinProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, PenLineJoin>(Shape.StrokeJoinProperty, value, ValueNone)

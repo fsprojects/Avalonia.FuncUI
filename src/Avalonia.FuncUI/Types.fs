@@ -1,5 +1,6 @@
 ﻿namespace rec Avalonia.FuncUI
 
+open Avalonia
 open Avalonia.Controls
 open System
 open System.Reactive.Linq
@@ -11,8 +12,8 @@ module Types =
     type PropertyAccessor =
         {
             name: string
-            getter: (IControl -> obj) voption
-            setter: (IControl * obj -> unit) voption
+            getter: (IAvaloniaObject -> obj) voption
+            setter: (IAvaloniaObject * obj -> unit) voption
         }
         with
             override this.Equals (other: obj) : bool =
@@ -66,7 +67,7 @@ module Types =
     type Subscription =
         {
             name: string
-            subscribe:  IControl * Delegate -> CancellationTokenSource
+            subscribe:  IAvaloniaObject * Delegate -> CancellationTokenSource
             func: Delegate
             funcType: Type
             scope: obj

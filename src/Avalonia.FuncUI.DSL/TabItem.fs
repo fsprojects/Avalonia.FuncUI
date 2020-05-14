@@ -12,10 +12,10 @@ module TabItem =
     type TabItem with
 
         static member tabStripPlacement<'t when 't :> TabItem>(placement: Dock) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Dock>(TabItem.TabStripPlacementProperty, placement, ValueNone)
+            AttrBuilder.CreateProperty<'t, Dock>(TabItem.TabStripPlacementProperty, placement, ValueNone)
         
         static member isSelected<'t when 't :> TabItem>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(TabItem.IsSelectedProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(TabItem.IsSelectedProperty, value, ValueNone)
             
         static member onIsSelectedChanged<'t when 't :> TabItem>(func: bool -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<bool>(TabItem.IsSelectedProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, bool>(TabItem.IsSelectedProperty, func, ?subPatchOptions = subPatchOptions)

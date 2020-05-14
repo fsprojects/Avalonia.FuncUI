@@ -15,10 +15,10 @@ module StackPanel =
         /// Gets or sets the size of the spacing to place between child controls.
         /// </summary>
         static member spacing<'t when 't :> StackPanel>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(StackPanel.SpacingProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(StackPanel.SpacingProperty, value, ValueNone)
         
         /// <summary>
         /// Gets or sets the orientation in which child controls will be layed out.
         /// </summary>
         static member orientation<'t when 't :> StackPanel>(orientation: Orientation) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Orientation>(StackPanel.OrientationProperty, orientation, ValueNone)
+            AttrBuilder.CreateProperty<'t, Orientation>(StackPanel.OrientationProperty, orientation, ValueNone)

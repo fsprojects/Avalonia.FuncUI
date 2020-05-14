@@ -13,10 +13,10 @@ module Expander =
     type Expander with            
 
         static member contentTransition<'t when 't :> Expander>(value: IPageTransition) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IPageTransition>(Expander.ContentTransitionProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, IPageTransition>(Expander.ContentTransitionProperty, value, ValueNone)
 
         static member expandDirection<'t when 't :> Expander>(value: ExpandDirection) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ExpandDirection>(Expander.ExpandDirectionProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, ExpandDirection>(Expander.ExpandDirectionProperty, value, ValueNone)
 
         static member isExpanded<'t when 't :> Expander>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Expander.IsExpandedProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Expander.IsExpandedProperty, value, ValueNone)

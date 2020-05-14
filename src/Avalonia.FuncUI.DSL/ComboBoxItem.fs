@@ -12,10 +12,10 @@ module ComboBox =
     type ComboBox with
     
         static member isDropDownOpen<'t when 't :> ComboBox>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(ComboBox.IsDropDownOpenProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(ComboBox.IsDropDownOpenProperty, value, ValueNone)
             
         static member maxDropDownHeight<'t when 't :> ComboBox>(height: float) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<float>(ComboBox.MaxDropDownHeightProperty, height, ValueNone)
+            AttrBuilder.CreateProperty<'t, float>(ComboBox.MaxDropDownHeightProperty, height, ValueNone)
             
         static member virtualizationMode<'t when 't :> ComboBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ItemVirtualizationMode>(ComboBox.VirtualizationModeProperty, mode, ValueNone)
+            AttrBuilder.CreateProperty<'t, ItemVirtualizationMode>(ComboBox.VirtualizationModeProperty, mode, ValueNone)

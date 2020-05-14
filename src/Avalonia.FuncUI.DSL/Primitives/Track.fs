@@ -14,28 +14,28 @@ module Track =
     type Track with
 
         static member minimum<'t when 't :> Track>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Track.MinimumProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Track.MinimumProperty, value, ValueNone)
             
         static member maximum<'t when 't :> Track>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Track.MaximumProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Track.MaximumProperty, value, ValueNone)
             
         static member value<'t when 't :> Track>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Track.ValueProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Track.ValueProperty, value, ValueNone)
             
         static member onValueChanged<'t when 't :> Track>(func: double -> unit, ?subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<double>(Track.ValueProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, double>(Track.ValueProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member viewportSize<'t when 't :> Track>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Track.ViewportSizeProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Track.ViewportSizeProperty, value, ValueNone)
             
         static member orientation<'t when 't :> Track>(orientation: Orientation) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Orientation>(Track.OrientationProperty, orientation, ValueNone)
+            AttrBuilder.CreateProperty<'t, Orientation>(Track.OrientationProperty, orientation, ValueNone)
             
         static member isDirectionReversed<'t when 't :> Track>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Track.IsDirectionReversedProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Track.IsDirectionReversedProperty, value, ValueNone)
             
         static member thumb<'t when 't :> Track>(value: Thumb) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Thumb>(Track.ThumbProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Thumb>(Track.ThumbProperty, value, ValueNone)
             
         static member thumb<'t when 't :> Track>(value: IView<Thumb> voption) : IAttr<'t> =
             let value =
@@ -43,13 +43,13 @@ module Track =
                 | ValueSome view -> Some (view :> IView)
                 | ValueNone -> None
             
-            AttrBuilder<'t>.CreateContentSingle(Track.ThumbProperty, value)
+            AttrBuilder.CreateContentSingle(Track.ThumbProperty, value)
             
         static member thumb<'t when 't :> Track>(value: IView<Thumb>) : IAttr<'t> =
             value |> ValueSome |> Track.thumb
        
         static member increaseButton<'t when 't :> Track>(value: Button) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Button>(Track.IncreaseButtonProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Button>(Track.IncreaseButtonProperty, value, ValueNone)
             
         static member increaseButton<'t when 't :> Track>(value: IView<Button> voption) : IAttr<'t> =
             let value =
@@ -57,13 +57,13 @@ module Track =
                 | ValueSome view -> Some (view :> IView)
                 | ValueNone -> None
             
-            AttrBuilder<'t>.CreateContentSingle(Track.IncreaseButtonProperty, value)
+            AttrBuilder.CreateContentSingle(Track.IncreaseButtonProperty, value)
             
         static member increaseButton<'t when 't :> Track>(value: IView<Button>) : IAttr<'t> =
             value |> ValueSome |> Track.increaseButton 
             
         static member decreaseButton<'t when 't :> Track>(value: Button) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Button>(Track.DecreaseButtonProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Button>(Track.DecreaseButtonProperty, value, ValueNone)
             
         static member decreaseButton<'t when 't :> Track>(value: IView<Button> voption) : IAttr<'t> =
             let value =
@@ -71,7 +71,7 @@ module Track =
                 | ValueSome view -> Some (view :> IView)
                 | ValueNone -> None
             
-            AttrBuilder<'t>.CreateContentSingle(Track.DecreaseButtonProperty, value)
+            AttrBuilder.CreateContentSingle(Track.DecreaseButtonProperty, value)
             
         static member decreaseButton<'t when 't :> Track>(value: IView<Button>) : IAttr<'t> =
             value |> ValueSome |> Track.decreaseButton 

@@ -11,7 +11,7 @@ module internal rec Patcher =
     open Avalonia.FuncUI.Types
     open System.Threading
 
-    let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
+    let private patchSubscription (view: IAvaloniaObject) (attr: SubscriptionDelta) : unit =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
             | null ->
@@ -41,7 +41,7 @@ module internal rec Patcher =
                 value.Cancel()
                 subscriptions.TryRemove(attr.UniqueName) |> ignore
 
-    let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
+    let private patchProperty (view: IAvaloniaObject) (attr: PropertyDelta) : unit =
         match attr.accessor with
         | Accessor.AvaloniaProperty avaloniaProperty ->
             match attr.value with
@@ -75,7 +75,7 @@ module internal rec Patcher =
 
                 propertyInfo.SetValue(view, defaultValue)
 
-    let private patchContentMultiple (view: IControl) (accessor: Accessor) (delta: ViewDelta list) : unit =
+    let private patchContentMultiple (view: IAvaloniaObject) (accessor: Accessor) (delta: ViewDelta list) : unit =
         (* often lists only have a get accessor *)
         let patch_IList (collection: IList) : unit =
             if List.isEmpty delta then
@@ -155,7 +155,7 @@ module internal rec Patcher =
             let setter = Some (fun obj -> view.SetValue(property, obj))
             patch (getter, setter)
 
-    let private patchContentSingle (view: IControl) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
+    let private patchContentSingle (view: IAvaloniaObject) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
 
         let patch_avalonia (property: AvaloniaProperty) =
             match viewElement with
@@ -163,7 +163,7 @@ module internal rec Patcher =
                 let value = view.GetValue(property)
 
                 if value <> null && value.GetType() = viewElement.viewType then
-                    Patcher.patch(value :?> IControl, viewElement)
+                    Patcher.patch(value :?> IAvaloniaObject, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
                     view.SetValue(property, createdControl)
@@ -179,7 +179,7 @@ module internal rec Patcher =
                     | _ -> failwith "Property Accessor needs a getter"
 
                 if value <> null && value.GetType() = viewElement.viewType then
-                    Patcher.patch(value :?> IControl, viewElement)
+                    Patcher.patch(value :?> IAvaloniaObject, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
 
@@ -195,22 +195,22 @@ module internal rec Patcher =
         | Accessor.InstanceProperty instanceProperty -> patch_instance instanceProperty
         | Accessor.AvaloniaProperty property -> patch_avalonia property
 
-    let private patchContent (view: IControl) (attr: ContentDelta) : unit =
+    let private patchContent (view: IAvaloniaObject) (attr: ContentDelta) : unit =
         match attr.content with
         | ViewContentDelta.Single single ->
             patchContentSingle view attr.accessor single
         | ViewContentDelta.Multiple multiple ->
             patchContentMultiple view attr.accessor multiple
 
-    let patch (view: IControl, viewElement: ViewDelta) : unit =
+    let patch (view: IAvaloniaObject, viewElement: ViewDelta) : unit =
         for attr in viewElement.attrs do
             match attr with
             | AttrDelta.Property property -> patchProperty view property
             | AttrDelta.Content content -> patchContent view content
             | AttrDelta.Subscription subscription -> patchSubscription view subscription
 
-    let create (viewElement: ViewDelta) : IControl =
-        let control = viewElement.viewType |> Activator.CreateInstance |> Utils.cast<IControl>
+    let create (viewElement: ViewDelta) : IAvaloniaObject =
+        let control = viewElement.viewType |> Activator.CreateInstance |> Utils.cast<IAvaloniaObject>
 
         control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid())
         Patcher.patch (control, viewElement)

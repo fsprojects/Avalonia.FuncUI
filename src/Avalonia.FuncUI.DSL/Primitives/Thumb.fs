@@ -13,10 +13,10 @@ module Thumb =
     type Thumb with
 
         static member onDragStarted<'t when 't :> Thumb>(func: VectorEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<VectorEventArgs>(Thumb.DragStartedEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, VectorEventArgs>(Thumb.DragStartedEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onDragDelta<'t when 't :> Thumb>(func: VectorEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<VectorEventArgs>(Thumb.DragDeltaEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, VectorEventArgs>(Thumb.DragDeltaEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onDragCompleted<'t when 't :> Thumb>(func: VectorEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<VectorEventArgs>(Thumb.DragCompletedEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, VectorEventArgs>(Thumb.DragCompletedEvent, func, ?subPatchOptions = subPatchOptions)

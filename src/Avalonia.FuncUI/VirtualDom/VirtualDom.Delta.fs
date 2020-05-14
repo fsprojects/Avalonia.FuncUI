@@ -48,7 +48,7 @@ module internal rec Delta =
     type SubscriptionDelta =
         {
             name: string
-            subscribe:  Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
+            subscribe: Avalonia.IAvaloniaObject * Delegate -> CancellationTokenSource
             func: Delegate option
         }
         with

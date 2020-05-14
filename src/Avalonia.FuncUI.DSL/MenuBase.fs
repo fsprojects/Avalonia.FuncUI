@@ -10,7 +10,7 @@ module MenuBase =
     type MenuBase with
             
         static member onMenuOpened<'t when 't :> MenuBase>(func: RoutedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription(MenuBase.MenuOpenedEvent, func, ?subPatchOptions = subPatchOptions);
+            AttrBuilder.CreateSubscription(MenuBase.MenuOpenedEvent, func, ?subPatchOptions = subPatchOptions);
             
         static member onMenuClosed<'t when 't :> MenuBase>(func: RoutedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription(MenuBase.MenuClosedEvent, func, ?subPatchOptions = subPatchOptions);
+            AttrBuilder.CreateSubscription(MenuBase.MenuClosedEvent, func, ?subPatchOptions = subPatchOptions);

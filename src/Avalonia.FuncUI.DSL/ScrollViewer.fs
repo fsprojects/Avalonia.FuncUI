@@ -17,41 +17,41 @@ module ScrollViewer  =
         /// Sets the vertical scrollbar visibility.
         /// </summary>
         static member verticalScrollBarVisibility<'t when 't :> Control>(value: ScrollBarVisibility) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ScrollBarVisibility>(ScrollViewer.VerticalScrollBarVisibilityProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, ScrollBarVisibility>(ScrollViewer.VerticalScrollBarVisibilityProperty, value, ValueNone)
 
         /// <summary>
         /// Sets the horizontal scrollbar visibility.
         /// </summary>
         static member horizontalScrollBarVisibility<'t when 't :> Control>(value: ScrollBarVisibility) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ScrollBarVisibility>(ScrollViewer.HorizontalScrollBarVisibilityProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, ScrollBarVisibility>(ScrollViewer.HorizontalScrollBarVisibilityProperty, value, ValueNone)
 
     type ScrollViewer with
         /// <summary>
         /// Sets the extent of the scrollable content.
         /// </summary>
         static member extent<'t when 't :> ScrollViewer>(value: Size) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Size>(ScrollViewer.ExtentProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Size>(ScrollViewer.ExtentProperty, value, ValueNone)
 
         /// <summary>
         /// Sets the current scroll offset.
         /// </summary>
         static member offset<'t when 't :> ScrollViewer>(value: Vector) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Vector>(ScrollViewer.OffsetProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Vector>(ScrollViewer.OffsetProperty, value, ValueNone)
 
         /// <summary>
         /// Sets the size of the viewport on the scrollable content.
         /// </summary>
         static member viewport<'t when 't :> ScrollViewer>(value: Size) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Size>(ScrollViewer.ViewportProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Size>(ScrollViewer.ViewportProperty, value, ValueNone)
             
         /// <summary>
         /// Sets the vertical scrollbar value.
         /// </summary>
         static member verticalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.VerticalScrollBarValueProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(ScrollViewer.VerticalScrollBarValueProperty, value, ValueNone)
             
          /// <summary>
         /// Sets the horizontal scrollbar value.
         /// </summary>
         static member horizontalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.HorizontalScrollBarValueProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(ScrollViewer.HorizontalScrollBarValueProperty, value, ValueNone)

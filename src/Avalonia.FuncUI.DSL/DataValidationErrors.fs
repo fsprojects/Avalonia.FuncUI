@@ -13,11 +13,11 @@ module DataValidationErrors =
     
     type Control with
         static member errors<'t when 't :> Control>(errors: IEnumerable<obj>) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty(DataValidationErrors.ErrorsProperty, errors, ValueNone)
+            AttrBuilder.CreateProperty(DataValidationErrors.ErrorsProperty, errors, ValueNone)
             
         static member hasErrors<'t when 't :> Control>(hasErrors: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty(DataValidationErrors.HasErrorsProperty, hasErrors, ValueNone)
+            AttrBuilder.CreateProperty(DataValidationErrors.HasErrorsProperty, hasErrors, ValueNone)
             
     type DataValidationErrors with
         static member errorTemplate<'t when 't :> DataValidationErrors>(template: IDataTemplate) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty(DataValidationErrors.ErrorTemplateProperty, template, ValueNone)
+            AttrBuilder.CreateProperty(DataValidationErrors.ErrorTemplateProperty, template, ValueNone)

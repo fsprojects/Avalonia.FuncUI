@@ -31,15 +31,15 @@ open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Library
 
 module private Helpers =
-    let wrappedGetter<'view, 'value>(func: 'view -> 'value) : IControl -> obj =
-        let wrapper (control: IControl) : obj =
+    let wrappedGetter<'view, 'value>(func: 'view -> 'value) : IAvaloniaObject -> obj =
+        let wrapper (control: IAvaloniaObject) : obj =
             let view = control :> obj :?> 'view
             let value = func view
             value :> obj
         wrapper
         
-    let wrappedSetter<'view, 'value>(func: 'view * 'value -> unit) : IControl * obj -> unit =
-        let wrapper (control: IControl, value: obj) : unit =
+    let wrappedSetter<'view, 'value>(func: 'view * 'value -> unit) : IAvaloniaObject * obj -> unit =
+        let wrapper (control: IAvaloniaObject, value: obj) : unit =
             let view = control :> obj :?> 'view
             let value = value :?> 'value
             func(view, value)
@@ -48,7 +48,7 @@ module private Helpers =
 type Comparer = obj * obj -> bool
         
 [<AbstractClass; Sealed>]
-type AttrBuilder<'view>() =
+type AttrBuilder =
         
     static member private CreateContent(accessor: Accessor, content: ViewContent) : IAttr<'view> =
         let attr = Attr<'view>.Content {
@@ -67,16 +67,16 @@ type AttrBuilder<'view>() =
         attr :> IAttr<'view>
         
     /// Create a Property Attribute for an Avalonia Property
-    static member CreateProperty<'value>(property: AvaloniaProperty, value: 'value, comparer) : IAttr<'view> =
-        AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, ValueNone)
+    static member CreateProperty<'view, 'value>(property: AvaloniaProperty, value: 'value, comparer) : IAttr<'view> =
+        AttrBuilder.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, ValueNone)
 
     /// Create a Property Attribute for an Avalonia Property
-    static member CreateProperty<'value>(property: AvaloniaProperty, value: 'value, comparer, defaultValueFactory: (unit -> 'value)) : IAttr<'view> =
+    static member CreateProperty<'view, 'value>(property: AvaloniaProperty, value: 'value, comparer, defaultValueFactory: (unit -> 'value)) : IAttr<'view> =
         let objFactory = (fun () -> defaultValueFactory() :> obj) |> ValueSome
-        AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, objFactory)
+        AttrBuilder.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, objFactory)
         
     /// Create a Property Attribute for an instance (non Avalonia) Property
-    static member private CreateInstanceProperty<'value>(name: string, value: 'value, getter: ('view -> 'value) voption, setter: ('view * 'value -> unit) voption, comparer: Comparer voption, defaultValueFactory: (unit -> 'value) voption): IAttr<'view> =
+    static member private CreateInstanceProperty<'view, 'value>(name: string, value: 'value, getter: ('view -> 'value) voption, setter: ('view * 'value -> unit) voption, comparer: Comparer voption, defaultValueFactory: (unit -> 'value) voption): IAttr<'view> =
         let accessor = Accessor.InstanceProperty {
             name = name
             getter =
@@ -94,25 +94,25 @@ type AttrBuilder<'view>() =
         AttrBuilder.CreateProperty(accessor, value, comparer, defValueFactory)
 
     /// Create a Property Attribute for an instance (non Avalonia) Property
-    static member CreateProperty<'value>(name, value, getter, setter, comparer, defaultValueFactory): IAttr<'view> =
-        AttrBuilder<'view>.CreateInstanceProperty<'value>(name, value, getter, setter, comparer, defaultValueFactory |> ValueSome)
+    static member CreateProperty<'view, 'value>(name, value, getter, setter, comparer, defaultValueFactory): IAttr<'view> =
+        AttrBuilder.CreateInstanceProperty<'view, 'value>(name, value, getter, setter, comparer, defaultValueFactory |> ValueSome)
         
     /// <summary>
     /// Create a Property Attribute for an instance (non Avalonia) Property
     /// </summary>
-    static member CreateProperty<'value>(name, value, getter, setter, comparer): IAttr<'view> =
-        AttrBuilder<'view>.CreateInstanceProperty<'value>(name, value, getter, setter, comparer, ValueNone)
+    static member CreateProperty<'view, 'value>(name, value, getter, setter, comparer): IAttr<'view> =
+        AttrBuilder.CreateInstanceProperty<'view, 'value>(name, value, getter, setter, comparer, ValueNone)
     
     /// <summary>
     /// Create a Single Content Attribute for an Avalonia Property
     /// </summary>
-    static member CreateContentSingle(property: AvaloniaProperty, singleContent: IView option) : IAttr<'view> =
-        AttrBuilder<'view>.CreateContent(Accessor.AvaloniaProperty property, ViewContent.Single singleContent)
+    static member CreateContentSingle<'view>(property: AvaloniaProperty, singleContent: IView option) : IAttr<'view> =
+        AttrBuilder.CreateContent(Accessor.AvaloniaProperty property, ViewContent.Single singleContent)
         
     /// <summary>
     /// Create a Single Content Attribute for an instance (non Avalonia) Property
     /// </summary>
-    static member CreateContentSingle(name: string, getter, setter, singleContent: IView option) : IAttr<'view> =
+    static member CreateContentSingle<'view>(name: string, getter, setter, singleContent: IView option) : IAttr<'view> =
         let accessor = Accessor.InstanceProperty {
             name = name
             getter =
@@ -124,18 +124,18 @@ type AttrBuilder<'view>() =
                 | ValueSome setter -> Helpers.wrappedSetter<'view, obj>(setter) |> ValueSome
                 | ValueNone -> ValueNone
         }
-        AttrBuilder<'view>.CreateContent(accessor, ViewContent.Single singleContent)
+        AttrBuilder.CreateContent(accessor, ViewContent.Single singleContent)
         
     /// <summary>
     /// Create a Multiple Content Attribute for an Avalonia Property
     /// </summary>
-    static member CreateContentMultiple(property: AvaloniaProperty, multipleContent: IView list) : IAttr<'view> =
-        AttrBuilder<'view>.CreateContent(Accessor.AvaloniaProperty property, ViewContent.Multiple multipleContent)
+    static member CreateContentMultiple<'view>(property: AvaloniaProperty, multipleContent: IView list) : IAttr<'view> =
+        AttrBuilder.CreateContent(Accessor.AvaloniaProperty property, ViewContent.Multiple multipleContent)
     
     /// <summary>
     /// Create a Multiple Content Attribute for an instance (non Avalonia) Property
     /// </summary>
-    static member CreateContentMultiple(name: string, getter, setter, multipleContent: IView list) : IAttr<'view> =
+    static member CreateContentMultiple<'view>(name: string, getter, setter, multipleContent: IView list) : IAttr<'view> =
         let accessor = Accessor.InstanceProperty {
             name = name
             getter =
@@ -147,15 +147,15 @@ type AttrBuilder<'view>() =
                 | ValueSome setter -> Helpers.wrappedSetter<'view, obj>(setter) |> ValueSome
                 | ValueNone -> ValueNone
         }
-        AttrBuilder<'view>.CreateContent(accessor, ViewContent.Multiple multipleContent)
+        AttrBuilder.CreateContent(accessor, ViewContent.Multiple multipleContent)
         
     /// <summary>
     /// Create a Property Subscription Attribute for an Avalonia Property
     /// </summary>
-    static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
+    static member CreateSubscription<'view, 'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: IControl, _handler: 'h) =
+        let subscribeFunc (control: IAvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
             control
                 .GetObservable(property)
@@ -174,12 +174,12 @@ type AttrBuilder<'view>() =
      /// <summary>
     /// Create a Routed Event Subscription Attribute for a Routed Event
     /// </summary>
-    static member CreateSubscription<'arg when 'arg :> RoutedEventArgs>(routedEvent: RoutedEvent<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
+    static member CreateSubscription<'view, 'arg when 'arg :> RoutedEventArgs and 'view :> IInteractive>(routedEvent: RoutedEvent<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: IControl, _handler: 'h) =
+        let subscribeFunc (control: IAvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
-            control
+            (control :?> IInteractive)
                 .GetObservable(routedEvent)
                 .Subscribe(func, cts.Token)
             cts
@@ -196,10 +196,10 @@ type AttrBuilder<'view>() =
     /// <summary>
     /// Create a Event Subscription Attribute for a .Net Event
     /// </summary>
-    static member CreateSubscription<'arg>(name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) =
+    static member CreateSubscription<'view, 'arg>(name: string, factory: IAvaloniaObject * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) =
         // TODO: extract to helpers module
         // subscribe to event
-        let subscribeFunc (control: IControl, _handler: 'h) =
+        let subscribeFunc (control: IAvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
             factory(control, func, cts.Token)
             cts

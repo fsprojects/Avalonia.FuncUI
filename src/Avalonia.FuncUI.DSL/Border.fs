@@ -14,19 +14,19 @@ module Border =
     
     type Border with
         static member background<'t when 't :> Border>(brush: IBrush) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBrush>(Border.BackgroundProperty, brush, ValueNone)
+            AttrBuilder.CreateProperty<'t, IBrush>(Border.BackgroundProperty, brush, ValueNone)
             
         static member background<'t when 't :> Border>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Border.background
             
         static member borderBrush<'t when 't :> Border>(brush: IBrush) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBrush>(Border.BorderBrushProperty, brush, ValueNone)
+            AttrBuilder.CreateProperty<'t, IBrush>(Border.BorderBrushProperty, brush, ValueNone)
             
         static member borderBrush<'t when 't :> Border>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Border.borderBrush
             
         static member borderThickness<'t when 't :> Border>(value: Thickness) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Thickness>(Border.BorderThicknessProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Thickness>(Border.BorderThicknessProperty, value, ValueNone)
             
         static member borderThickness<'t when 't :> Border>(value: float) : IAttr<'t> =
             value |> Thickness |> Border.borderThickness
@@ -38,7 +38,7 @@ module Border =
             (left, top, right, bottom) |> Thickness |> Border.borderThickness
             
         static member cornerRadius<'t when 't :> Border>(value: CornerRadius) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<CornerRadius>(Border.CornerRadiusProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, CornerRadius>(Border.CornerRadiusProperty, value, ValueNone)
             
         static member cornerRadius<'t when 't :> Border>(value: float) : IAttr<'t> =
             value |> CornerRadius |> Border.cornerRadius
@@ -50,7 +50,7 @@ module Border =
             (left, top, right, bottom) |> CornerRadius |> Border.cornerRadius
             
         static member child<'t when 't :> Border>(value: IView option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateContentSingle(Border.ChildProperty, value)
+            AttrBuilder.CreateContentSingle(Border.ChildProperty, value)
         
         static member child<'t when 't :> Border>(value: IView) : IAttr<'t> =
             value |> Some |> Border.child

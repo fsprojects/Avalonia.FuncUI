@@ -13,7 +13,7 @@ module Carousel =
     type Carousel with
 
         static member isVirtualized<'t when 't :> Carousel>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Carousel.IsVirtualizedProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Carousel.IsVirtualizedProperty, value, ValueNone)
         
         static member pageTransition<'t when 't :> Carousel>(transition: IPageTransition) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IPageTransition>(Carousel.PageTransitionProperty, transition, ValueNone)
+            AttrBuilder.CreateProperty<'t, IPageTransition>(Carousel.PageTransitionProperty, transition, ValueNone)

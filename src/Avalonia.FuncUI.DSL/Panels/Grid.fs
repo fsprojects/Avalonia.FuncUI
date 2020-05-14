@@ -1,5 +1,7 @@
 namespace Avalonia.FuncUI.DSL
 
+open Avalonia.Controls
+
 [<AutoOpen>]
 module Grid =  
     open Avalonia.Controls
@@ -53,39 +55,45 @@ module Grid =
 
     type Control with
         static member row<'t when 't :> Control>(row: int) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<int>(Grid.RowProperty, row, ValueNone)
+            AttrBuilder.CreateProperty<'t, int>(Grid.RowProperty, row, ValueNone)
             
         static member rowSpan<'t when 't :> Control>(span: int) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<int>(Grid.RowSpanProperty, span, ValueNone)
+            AttrBuilder.CreateProperty<'t, int>(Grid.RowSpanProperty, span, ValueNone)
             
         static member column<'t when 't :> Control>(column: int) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<int>(Grid.ColumnProperty, column, ValueNone)
+            AttrBuilder.CreateProperty<'t, int>(Grid.ColumnProperty, column, ValueNone)
             
         static member columnSpan<'t when 't :> Control>(span: int) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<int>(Grid.ColumnSpanProperty, span, ValueNone)
+            AttrBuilder.CreateProperty<'t, int>(Grid.ColumnSpanProperty, span, ValueNone)
             
         static member isSharedSizeScope<'t when 't :> Control>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Grid.IsSharedSizeScopeProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Grid.IsSharedSizeScopeProperty, value, ValueNone)
     
     type Grid with
         
         static member showGridLines<'t when 't :> Grid>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Grid.ShowGridLinesProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(Grid.ShowGridLinesProperty, value, ValueNone)
 
         static member columnDefinitions<'t when 't :> Grid>(value: ColumnDefinitions) : IAttr<'t> =
             let getter : 't -> ColumnDefinitions = fun view -> view.ColumnDefinitions
             let setter : 't * ColumnDefinitions -> unit = fun (view, value) -> view.ColumnDefinitions <- value
             
-            AttrBuilder<'t>.CreateProperty<_>("ColumnDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareColumnDefinitions)
+            AttrBuilder.CreateProperty<'t, ColumnDefinitions>("ColumnDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareColumnDefinitions)
 
         static member columnDefinitions<'t when 't :> Grid>(value: string) : IAttr<'t> =
-            value |> ColumnDefinitions.Parse |> Grid.columnDefinitions 
+            value |> ColumnDefinitions.Parse |> Grid.columnDefinitions
+            
+        static member columnDefinitions<'t when 't :> Grid>(content: IView<ColumnDefinitions>) : IAttr<'t> =
+            let getter : 't -> obj = fun view -> view.ColumnDefinitions :> obj
+            let setter : 't * obj -> unit = fun (view, value) -> view.ColumnDefinitions <- value :?> ColumnDefinitions
+            
+            AttrBuilder.CreateContentSingle("ColumnDefinitions", ValueSome getter, ValueSome setter, Some (content :> IView))
 
         static member rowDefinitions<'t when 't :> Grid>(value: RowDefinitions) : IAttr<'t> =
             let getter : 't -> RowDefinitions = fun view -> view.RowDefinitions
             let setter : 't * RowDefinitions -> unit = fun (view, value) -> view.RowDefinitions <- value
             
-            AttrBuilder<'t>.CreateProperty<_>("RowDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareRowDefinitions)
+            AttrBuilder.CreateProperty<'t, RowDefinitions>("RowDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareRowDefinitions)
 
         static member rowDefinitions<'t when 't :> Grid>(value: string) : IAttr<'t> =
             value |> RowDefinitions.Parse |> Grid.rowDefinitions 

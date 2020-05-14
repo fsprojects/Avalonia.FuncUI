@@ -16,4 +16,4 @@ module ViewBox =
         /// Sets the stretch mode, which determines how child fits into the available space.
         /// </summary>
         static member stretch<'t when 't :> Viewbox>(value: Stretch) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Stretch>(Viewbox.StretchProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Stretch>(Viewbox.StretchProperty, value, ValueNone)

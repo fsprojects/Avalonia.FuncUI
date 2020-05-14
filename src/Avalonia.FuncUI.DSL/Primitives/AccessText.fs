@@ -13,4 +13,4 @@ module AccessText =
     type Control with
 
         static member showAccessKey<'t when 't :> Control>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty(AccessText.ShowAccessKeyProperty, value, ValueNone)
+            AttrBuilder.CreateProperty(AccessText.ShowAccessKeyProperty, value, ValueNone)

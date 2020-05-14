@@ -12,13 +12,13 @@ module LazyView =
     type LazyView<'state, 'args> with
             
         static member args(value: 'args) : IAttr<LazyView<'state, 'args>> =
-            AttrBuilder<LazyView<'state, 'args>>.CreateProperty<'args>(LazyView<'state, 'args>.ArgsProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<LazyView<'state, 'args>, 'args>(LazyView<'state, 'args>.ArgsProperty, value, ValueNone)
             
         static member state(value: 'state) : IAttr<LazyView<'state, 'args>> =
-            AttrBuilder<LazyView<'state, 'args>>.CreateProperty<'state>(LazyView<'state, 'args>.StateProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<LazyView<'state, 'args>, 'state>(LazyView<'state, 'args>.StateProperty, value, ValueNone)
             
         static member viewFunc(value: ('state -> 'args -> IView) voption) : IAttr<LazyView<'state, 'args>> =
-            AttrBuilder<LazyView<'state, 'args>>.CreateProperty<_>(LazyView<'state, 'args>.ViewFuncProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<LazyView<'state, 'args>, _>(LazyView<'state, 'args>.ViewFuncProperty, value, ValueNone)
             
         static member viewFunc(value: 'state -> 'args -> IView) : IAttr<LazyView<'state, 'args>> =
             value |> ValueSome |> LazyView<'state, 'args>.viewFunc

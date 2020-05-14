@@ -10,7 +10,7 @@ module RenderOptions =
     
     type Control with
         static member bitmapInterpolationMode<'t when 't :> Control>(mode: BitmapInterpolationMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<BitmapInterpolationMode>(RenderOptions.BitmapInterpolationModeProperty, mode, ValueNone)
+            AttrBuilder.CreateProperty<'t, BitmapInterpolationMode>(RenderOptions.BitmapInterpolationModeProperty, mode, ValueNone)
     
     type RenderOptions with
         end

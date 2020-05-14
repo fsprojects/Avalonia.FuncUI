@@ -11,8 +11,8 @@ module DockPanel =
     
     type Control with
         static member dock<'t when 't :> Control>(dock: Dock) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Dock>(DockPanel.DockProperty, dock, ValueNone)
+            AttrBuilder.CreateProperty<'t, Dock>(DockPanel.DockProperty, dock, ValueNone)
     
     type DockPanel with
         static member lastChildFill<'t when 't :> DockPanel>(fill: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(DockPanel.LastChildFillProperty, fill, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(DockPanel.LastChildFillProperty, fill, ValueNone)

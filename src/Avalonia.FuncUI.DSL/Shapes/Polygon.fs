@@ -14,7 +14,7 @@ module Polygon =
     type Polygon with
 
         static member points<'t when 't :> Polygon>(points: IList<Point>) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IList<Point>>(Polygon.PointsProperty, points, ValueNone)
+            AttrBuilder.CreateProperty<'t, IList<Point>>(Polygon.PointsProperty, points, ValueNone)
             
         static member points<'t when 't :> Polygon>(points: Point list) : IAttr<'t> =
             points |> ResizeArray |> Polygon.points

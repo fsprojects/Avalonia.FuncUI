@@ -14,7 +14,7 @@ module Polyline =
     type Polyline with
 
         static member points<'t when 't :> Polyline>(points: IList<Point>) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IList<Point>>(Polyline.PointsProperty, points, ValueNone)
+            AttrBuilder.CreateProperty<'t, IList<Point>>(Polyline.PointsProperty, points, ValueNone)
             
         static member points<'t when 't :> Polyline>(points: Point list) : IAttr<'t> =
             points |> ResizeArray |> Polyline.points

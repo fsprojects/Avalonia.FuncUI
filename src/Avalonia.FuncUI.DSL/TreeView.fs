@@ -16,22 +16,22 @@ module TreeView =
         /// Sets a value indicating whether to automatically scroll to newly selected items.
         /// </summary>
         static member autoScrollToSelectedItem<'t when 't :> TreeView>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(TreeView.AutoScrollToSelectedItemProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(TreeView.AutoScrollToSelectedItemProperty, value, ValueNone)
         
         /// <summary>
         /// Sets the selected items.
         /// </summary>
         static member selectedItem<'t when 't :> TreeView>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(TreeView.SelectedItemProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, obj>(TreeView.SelectedItemProperty, value, ValueNone)
          
         /// <summary>
         /// Sets the selected item.
         /// </summary>
         static member selectedItems<'t when 't :> TreeView>(value: IList) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IList>(TreeView.SelectedItemsProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, IList>(TreeView.SelectedItemsProperty, value, ValueNone)
 
         /// <summary>
         /// Sets the selection mode.
         /// </summary>
         static member selectionMode<'t when 't :> TreeView>(value: SelectionMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<SelectionMode>(TreeView.SelectionModeProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, SelectionMode>(TreeView.SelectionModeProperty, value, ValueNone)

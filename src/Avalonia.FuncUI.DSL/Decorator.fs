@@ -13,16 +13,16 @@ module Decorator =
     type Decorator with
             
         static member child<'t when 't :> Decorator>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty(Decorator.ChildProperty, value, ValueNone)    
+            AttrBuilder.CreateProperty(Decorator.ChildProperty, value, ValueNone)    
             
         static member child<'t when 't :> Decorator>(value: IView option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateContentSingle(Decorator.ChildProperty, value)
+            AttrBuilder.CreateContentSingle(Decorator.ChildProperty, value)
         
         static member child<'t when 't :> Decorator>(value: IView) : IAttr<'t> =
             value |> Some |> Decorator.child
             
         static member padding<'t when 't :> Decorator>(value: Thickness) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Thickness>(Decorator.PaddingProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, Thickness>(Decorator.PaddingProperty, value, ValueNone)
             
         static member padding<'t when 't :> Decorator>(value: float) : IAttr<'t> =
             Thickness(value) |> Decorator.padding

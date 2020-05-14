@@ -15,37 +15,37 @@ module MenuItem =
     type MenuItem with
 
         static member command<'t when 't :> MenuItem>(command: ICommand) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ICommand>(MenuItem.CommandProperty, command, ValueNone)
+            AttrBuilder.CreateProperty<'t, ICommand>(MenuItem.CommandProperty, command, ValueNone)
             
         static member commandParameter<'t when 't :> MenuItem>(parameter: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(MenuItem.CommandParameterProperty, parameter, ValueNone)
+            AttrBuilder.CreateProperty<'t, obj>(MenuItem.CommandParameterProperty, parameter, ValueNone)
         
         static member hotKey<'t when 't :> MenuItem>(value: KeyGesture) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<KeyGesture>(MenuItem.HotKeyProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, KeyGesture>(MenuItem.HotKeyProperty, value, ValueNone)
         
         static member icon<'t when 't :> MenuItem>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(MenuItem.IconProperty, value, ValueNone)     
+            AttrBuilder.CreateProperty<'t, obj>(MenuItem.IconProperty, value, ValueNone)     
         
         static member isSelected<'t when 't :> MenuItem>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(MenuItem.IsSelectedProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(MenuItem.IsSelectedProperty, value, ValueNone)
 
         static member onIsSelectedChanged<'t when 't :> MenuItem>(func: bool -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<bool>(MenuItem.IsSelectedProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, bool>(MenuItem.IsSelectedProperty, func, ?subPatchOptions = subPatchOptions)
             
         static member isSubMenuOpen<'t when 't :> MenuItem>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(MenuItem.IsSubMenuOpenProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, bool>(MenuItem.IsSubMenuOpenProperty, value, ValueNone)
             
         static member onIsSubMenuOpenChanged<'t when 't :> MenuItem>(func: bool -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<bool>(MenuItem.IsSubMenuOpenProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, bool>(MenuItem.IsSubMenuOpenProperty, func, ?subPatchOptions = subPatchOptions)
             
         static member onClick<'t when 't :> MenuItem>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(MenuItem.ClickEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, RoutedEventArgs>(MenuItem.ClickEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onPointerEnterItem<'t when 't :> MenuItem>(func: PointerEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(MenuItem.PointerEnterItemEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, PointerEventArgs>(MenuItem.PointerEnterItemEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onPointerLeaveItem<'t when 't :> MenuItem>(func: PointerEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(MenuItem.PointerLeaveItemEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, PointerEventArgs>(MenuItem.PointerLeaveItemEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onSubMenuOpened<'t when 't :> MenuItem>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(MenuItem.SubmenuOpenedEvent, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, RoutedEventArgs>(MenuItem.SubmenuOpenedEvent, func, ?subPatchOptions = subPatchOptions)

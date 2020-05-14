@@ -25,24 +25,24 @@ module ProvidedEquality =
 type ViewMetaData() =
     inherit AvaloniaObject()
 
-    static let viewId = AvaloniaProperty.RegisterAttached<ViewMetaData, IControl, Guid>("ViewId")
+    static let viewId = AvaloniaProperty.RegisterAttached<ViewMetaData, IAvaloniaObject, Guid>("ViewId")
         
-    static let viewSubscriptions = AvaloniaProperty.RegisterAttached<ViewMetaData, IControl, ConcurrentDictionary<string, CancellationTokenSource>>("ViewSubscriptions")        
+    static let viewSubscriptions = AvaloniaProperty.RegisterAttached<ViewMetaData, IAvaloniaObject, ConcurrentDictionary<string, CancellationTokenSource>>("ViewSubscriptions")        
     
     static member ViewIdProperty = viewId
     
     static member ViewSubscriptionsProperty = viewSubscriptions
     
-    static member GetViewId(control: IControl) =
+    static member GetViewId(control: IAvaloniaObject) =
         control.GetValue(ViewMetaData.ViewIdProperty)
         
-    static member SetViewId(control: IControl, value: Guid) =
+    static member SetViewId(control: IAvaloniaObject, value: Guid) =
         control.SetValue(ViewMetaData.ViewIdProperty, value)
         
-    static member GetViewSubscriptions(control: IControl) =
+    static member GetViewSubscriptions(control: IAvaloniaObject) =
         control.GetValue(ViewMetaData.ViewSubscriptionsProperty)
         
-    static member SetViewSubscriptions(control: IControl, value) =
+    static member SetViewSubscriptions(control: IAvaloniaObject, value) =
         control.SetValue(ViewMetaData.ViewSubscriptionsProperty, value)
     
     

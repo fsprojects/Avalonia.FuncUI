@@ -12,16 +12,16 @@ module HeaderedContentControl =
      
     type HeaderedContentControl with
         static member header<'t when 't :> HeaderedContentControl>(text: string) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<string>(HeaderedContentControl.HeaderProperty, text, ValueNone)
+            AttrBuilder.CreateProperty<'t, string>(HeaderedContentControl.HeaderProperty, text, ValueNone)
             
         static member header<'t when 't :> HeaderedContentControl>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(HeaderedContentControl.HeaderProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, obj>(HeaderedContentControl.HeaderProperty, value, ValueNone)
             
         static member header<'t when 't :> HeaderedContentControl>(value: IView option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateContentSingle(HeaderedContentControl.HeaderProperty, value)
+            AttrBuilder.CreateContentSingle(HeaderedContentControl.HeaderProperty, value)
             
         static member header<'t when 't :> HeaderedContentControl>(value: IView) : IAttr<'t> =
             value |> Some |> HeaderedContentControl.header
             
         static member headerTemplate<'t when 't :> HeaderedContentControl>(value: IDataTemplate) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IDataTemplate>(HeaderedContentControl.HeaderTemplateProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, IDataTemplate>(HeaderedContentControl.HeaderTemplateProperty, value, ValueNone)

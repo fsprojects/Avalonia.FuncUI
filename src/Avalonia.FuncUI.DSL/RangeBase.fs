@@ -9,19 +9,19 @@ module RangeBase =
     type RangeBase with
 
         static member minimum<'t when 't :> RangeBase>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(RangeBase.MinimumProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(RangeBase.MinimumProperty, value, ValueNone)
                 
         static member maximum<'t when 't :> RangeBase>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(RangeBase.MaximumProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(RangeBase.MaximumProperty, value, ValueNone)
             
         static member value<'t when 't :> RangeBase>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(RangeBase.ValueProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(RangeBase.ValueProperty, value, ValueNone)
 
         static member onValueChanged<'t when 't :> RangeBase>(func: double -> unit, ?subPatchOptions) : IAttr<'t> =
-            AttrBuilder<'t>.CreateSubscription<double>(RangeBase.ValueProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, double>(RangeBase.ValueProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member smallChange<'t when 't :> RangeBase>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(RangeBase.SmallChangeProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(RangeBase.SmallChangeProperty, value, ValueNone)
             
         static member largeChange<'t when 't :> RangeBase>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(RangeBase.LargeChangeProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(RangeBase.LargeChangeProperty, value, ValueNone)

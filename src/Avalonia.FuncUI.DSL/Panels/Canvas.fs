@@ -11,16 +11,16 @@ module Canvas =
     
     type Control with
         static member left<'t when 't :> Control>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Canvas.LeftProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Canvas.LeftProperty, value, ValueNone)
             
         static member top<'t when 't :> Control>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Canvas.TopProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Canvas.TopProperty, value, ValueNone)
             
         static member right<'t when 't :> Control>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Canvas.RightProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Canvas.RightProperty, value, ValueNone)
             
         static member bottom<'t when 't :> Control>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(Canvas.BottomProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, double>(Canvas.BottomProperty, value, ValueNone)
     
     type Canvas with
         end

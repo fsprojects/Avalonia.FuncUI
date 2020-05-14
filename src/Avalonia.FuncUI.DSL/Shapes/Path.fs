@@ -13,7 +13,7 @@ module Path =
     type Path with
 
         static member data<'t when 't :> Path>(geometry: Geometry) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Geometry>(Path.DataProperty, geometry, ValueNone)
+            AttrBuilder.CreateProperty<'t, Geometry>(Path.DataProperty, geometry, ValueNone)
             
         static member data<'t when 't :> Path>(data: string) : IAttr<'t> =
             data |> Geometry.Parse |> Path.data

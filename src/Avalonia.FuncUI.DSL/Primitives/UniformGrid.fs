@@ -15,16 +15,16 @@ module UniformGrid =
         /// Specifies the column count. If set to 0, column count will be calculated automatically.
         /// </summary>
         static member columns<'t when 't :> UniformGrid>(value: int) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<int>(UniformGrid.ColumnsProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, int>(UniformGrid.ColumnsProperty, value, ValueNone)
 
         /// <summary>
         /// Specifies the row count. If set to 0, row count will be calculated automatically.
         /// </summary>
         static member rows<'t when 't :> UniformGrid>(value: int) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<int>(UniformGrid.RowsProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, int>(UniformGrid.RowsProperty, value, ValueNone)
            
         /// <summary>
         /// Specifies, for the first row, the column where the items should start.
         /// </summary>
         static member firstColumn<'t when 't :> UniformGrid>(value: int) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<int>(UniformGrid.FirstColumnProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, int>(UniformGrid.FirstColumnProperty, value, ValueNone)

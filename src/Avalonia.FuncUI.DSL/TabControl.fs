@@ -14,25 +14,25 @@ module TabControl =
     type TabControl with
 
         static member tabStripPlacement<'t when 't :> TabControl>(placement: Dock) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Dock>(TabControl.TabStripPlacementProperty, placement, ValueNone)
+            AttrBuilder.CreateProperty<'t, Dock>(TabControl.TabStripPlacementProperty, placement, ValueNone)
             
         static member horizontalContentAlignment<'t when 't :> TabControl>(alignment: HorizontalAlignment) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(TabControl.HorizontalContentAlignmentProperty, alignment, ValueNone)
+            AttrBuilder.CreateProperty<'t, HorizontalAlignment>(TabControl.HorizontalContentAlignmentProperty, alignment, ValueNone)
             
         static member verticalContentAlignment<'t when 't :> TabControl>(alignment: VerticalAlignment) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<VerticalAlignment>(TabControl.VerticalContentAlignmentProperty, alignment, ValueNone)
+            AttrBuilder.CreateProperty<'t, VerticalAlignment>(TabControl.VerticalContentAlignmentProperty, alignment, ValueNone)
             
         static member contentTemplate<'t when 't :> TabControl>(value: IDataTemplate) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IDataTemplate>(TabControl.ContentTemplateProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, IDataTemplate>(TabControl.ContentTemplateProperty, value, ValueNone)
             
         static member selectedContent<'t when 't :> TabControl>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(TabControl.ContentTemplateProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, obj>(TabControl.ContentTemplateProperty, value, ValueNone)
             
         static member onSelectedContentChanged<'t when 't :> TabControl>(func: obj -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<obj>(TabControl.SelectedContentProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, obj>(TabControl.SelectedContentProperty, func, ?subPatchOptions = subPatchOptions)
             
         static member selectedContentTemplate<'t when 't :> TabControl>(value: IDataTemplate) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IDataTemplate>(TabControl.SelectedContentTemplateProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, IDataTemplate>(TabControl.SelectedContentTemplateProperty, value, ValueNone)
             
         static member onSelectedContentTemplateChanged<'t when 't :> TabControl>(func: IDataTemplate -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<IDataTemplate>(TabControl.SelectedContentTemplateProperty, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder.CreateSubscription<'t, IDataTemplate>(TabControl.SelectedContentTemplateProperty, func, ?subPatchOptions = subPatchOptions)

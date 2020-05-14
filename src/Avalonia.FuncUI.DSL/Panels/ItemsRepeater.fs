@@ -13,10 +13,10 @@ module ItemsRepeater =
         
     type ItemsRepeater with        
         static member viewItems<'t when 't :> ItemsRepeater>(views: List<IView>): IAttr<'t> =
-            AttrBuilder<'t>.CreateContentMultiple(ItemsRepeater.ItemsProperty, views)
+            AttrBuilder.CreateContentMultiple(ItemsRepeater.ItemsProperty, views)
         
         static member dataItems<'t when 't :> ItemsRepeater>(data : IEnumerable): IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IEnumerable>(ItemsRepeater.ItemsProperty, data, ValueNone)
+            AttrBuilder.CreateProperty<'t, IEnumerable>(ItemsRepeater.ItemsProperty, data, ValueNone)
             
         static member itemTemplate<'t when 't :> ItemsRepeater>(value : IDataTemplate): IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IDataTemplate>(ItemsRepeater.ItemTemplateProperty, value, ValueNone)
+            AttrBuilder.CreateProperty<'t, IDataTemplate>(ItemsRepeater.ItemTemplateProperty, value, ValueNone)
