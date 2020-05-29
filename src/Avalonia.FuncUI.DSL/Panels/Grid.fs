@@ -76,7 +76,14 @@ module Grid =
             let getter : 't -> ColumnDefinitions = fun view -> view.ColumnDefinitions
             let setter : 't * ColumnDefinitions -> unit = fun (view, value) -> view.ColumnDefinitions <- value
             
-            AttrBuilder<'t>.CreateProperty<_>("ColumnDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareColumnDefinitions)
+            AttrBuilder<'t>.CreateProperty<_>(
+                "ColumnDefinitions",
+                value,
+                ValueSome getter,
+                ValueSome setter,
+                ValueSome Internals.compareColumnDefinitions,
+                (fun () -> ColumnDefinitions())
+            )
 
         static member columnDefinitions<'t when 't :> Grid>(value: string) : IAttr<'t> =
             value |> ColumnDefinitions.Parse |> Grid.columnDefinitions 
@@ -85,7 +92,14 @@ module Grid =
             let getter : 't -> RowDefinitions = fun view -> view.RowDefinitions
             let setter : 't * RowDefinitions -> unit = fun (view, value) -> view.RowDefinitions <- value
             
-            AttrBuilder<'t>.CreateProperty<_>("RowDefinitions", value, ValueSome getter, ValueSome setter, ValueSome Internals.compareRowDefinitions)
+            AttrBuilder<'t>.CreateProperty<_>(
+                "RowDefinitions",
+                value,
+                ValueSome getter,
+                ValueSome setter,
+                ValueSome Internals.compareRowDefinitions,
+                (fun () -> RowDefinitions())
+            )
 
         static member rowDefinitions<'t when 't :> Grid>(value: string) : IAttr<'t> =
             value |> RowDefinitions.Parse |> Grid.rowDefinitions 
