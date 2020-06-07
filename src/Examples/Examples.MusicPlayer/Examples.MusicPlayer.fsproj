@@ -28,7 +28,7 @@
         <ProjectReference Include="..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
         <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
         <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.9.9" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.9.999-cibuild0008170-beta" />
         <PackageReference Include="Citrus.Avalonia" Version="1.2.5" />
         <PackageReference Include="LibVLCSharp" Version="3.4.2" />
         <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.8.1" />

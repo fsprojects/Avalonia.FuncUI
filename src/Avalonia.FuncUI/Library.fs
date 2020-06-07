@@ -1,5 +1,7 @@
 namespace Avalonia.FuncUI.Library
 
+open System.Reactive.Disposables
+
 module Observable =
     open System
 
@@ -45,6 +47,12 @@ module internal Extensions =
                 
                 // subscribe to event changes so they can be pushed to subscribers
                 this.AddHandler(routedEvent, publish, routedEvent.RoutingStrategies)
+                
+                let disposableState = (this, publish, routedEvent)
+                       
+                let dispose = Action<IInteractive * _ * RoutedEvent>(fun (state, publish, routedEvent) ->  state.RemoveHandler(routedEvent, publish))
+                
+                Disposable.Create(disposableState, dispose)
             )
             
             Observable.Create(sub)

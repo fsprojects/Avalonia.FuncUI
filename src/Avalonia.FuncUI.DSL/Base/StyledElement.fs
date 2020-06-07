@@ -29,7 +29,7 @@ module StyledElement =
              
         static member styles<'t when 't :> StyledElement>(value: Styles) : IAttr<'t> =
             let getter : ('t -> Styles) = (fun control -> control.Styles)
-            let setter : ('t * Styles -> unit) = (fun (control, value) -> control.Styles <- value)
+            let setter : ('t * Styles -> unit) = (fun (control, value) -> control.Styles.AddRange value)
             
             AttrBuilder<'t>.CreateProperty<Styles>("Styles", value, ValueSome getter, ValueSome setter, ValueNone, fun () -> Styles())
             

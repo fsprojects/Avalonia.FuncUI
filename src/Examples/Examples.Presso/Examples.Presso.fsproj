@@ -9,7 +9,7 @@
         <AvaloniaResource Include="**\*.xaml" />
         <AvaloniaResource Include="Assets\*" />
         
-        <PackageReference Include="Avalonia.Desktop" Version="0.9.9" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.9.999-cibuild0008170-beta" />
     </ItemGroup>
     
     <ItemGroup>
