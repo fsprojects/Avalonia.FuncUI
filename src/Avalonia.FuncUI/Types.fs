@@ -41,13 +41,17 @@ module Types =
             override this.Equals (other: obj) : bool =
                 match other with
                 | :? Property as other ->
-                    let valueIsEqual =
-                       match this.comparer with
-                       | ValueSome comparer -> comparer(this.value, other.value)
-                       | ValueNone -> this.value = other.value
+                    match this.accessor.Equals other.accessor with
+                    | true ->
+                        match this.comparer with
+                        | ValueSome comparer -> comparer(this.value, other.value)
+                        | ValueNone -> this.value = other.value
+                        
+                    | false ->
+                        false
                     
-                    valueIsEqual
-                | _ -> false
+                | _ ->
+                    false
                 
             override this.GetHashCode () =
                 (this.accessor, this.value).GetHashCode()

@@ -72,8 +72,12 @@ module MainView =
                            TabItem.content (ViewBuilder.Create<TextBoxDemo.Host>([]))
                        ]
                        TabItem.create [
-                         TabItem.header "DatePicker Demo"
-                         TabItem.content (ViewBuilder.Create<DatePickerDemo.Host>([]))
+                           TabItem.header "DatePicker Demo"
+                           TabItem.content (ViewBuilder.Create<DatePickerDemo.Host>([]))
+                       ]
+                       TabItem.create [
+                           TabItem.header "Grid patch Demo"
+                           TabItem.content (ViewBuilder.Create<GridPatchDemo.Host>([]))
                        ]
                    ]
                ]
