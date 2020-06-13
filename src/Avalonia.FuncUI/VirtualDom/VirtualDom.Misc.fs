@@ -11,6 +11,8 @@ type ViewMetaData() =
 
     static let viewId = AvaloniaProperty.RegisterAttached<ViewMetaData, IControl, Guid>("ViewId")
         
+    /// Avalonia automatically add subscriptions that are setup in XAML to a disposable bag (or something along the lines).
+    /// This basically is what FuncUI uses instead to make sure it cancels subscriptions. 
     static let viewSubscriptions = AvaloniaProperty.RegisterAttached<ViewMetaData, IControl, ConcurrentDictionary<string, CancellationTokenSource>>("ViewSubscriptions")        
     
     static member ViewIdProperty = viewId
