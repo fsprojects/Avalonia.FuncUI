@@ -6,27 +6,13 @@ open Avalonia
 open Avalonia.Controls
 open System.Collections.Concurrent
 
-module ProvidedEquality =
-    let private cache = ConcurrentDictionary<Type, Func<obj * obj, bool>>()
-               
-    let provideFor (type': Type, func: obj * obj -> bool) : unit =
-        cache.AddOrUpdate(type', func, fun _ _ -> Func<obj * obj, bool>(func)) |> ignore
-        
-    let remove (type': Type) : bool =
-        match cache.TryRemove(type') with
-        | (true, _) -> true
-        | (false, _) -> false
-        
-    let tryGet (type': Type) : Func<obj * obj, bool> option =
-        match cache.TryGetValue(type') with
-        | (true, impl) -> Some impl
-        | (false, _) -> None
-
 type ViewMetaData() =
     inherit AvaloniaObject()
 
     static let viewId = AvaloniaProperty.RegisterAttached<ViewMetaData, IControl, Guid>("ViewId")
         
+    /// Avalonia automatically add subscriptions that are setup in XAML to a disposable bag (or something along the lines).
+    /// This basically is what FuncUI uses instead to make sure it cancels subscriptions. 
     static let viewSubscriptions = AvaloniaProperty.RegisterAttached<ViewMetaData, IControl, ConcurrentDictionary<string, CancellationTokenSource>>("ViewSubscriptions")        
     
     static member ViewIdProperty = viewId

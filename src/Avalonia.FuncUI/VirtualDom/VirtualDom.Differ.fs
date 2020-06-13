@@ -1,5 +1,6 @@
 namespace Avalonia.FuncUI.VirtualDom
 
+open System.Collections.Generic
 open Avalonia.FuncUI.Types
 open Delta
 
@@ -92,27 +93,47 @@ module internal rec Differ =
             | _ -> invalidOp "'next' must be of type content"
     
     let private diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
-        let delta = ResizeArray<AttrDelta>()
-        
-        for lastAttr in lastAttrs do
-            let nextAttr = nextAttrs |> List.tryFind (fun attr -> attr.UniqueName = lastAttr.UniqueName)
+        (* TODO: optimize. *)
+
+        (* NOTE: using a map here might be actually slower
+        than iterating over a short list. views usually don't
+        have a lot of attributes set. needs benchmarking  *)
+        let nextAttrsMap : Map<string, IAttr> =
+            nextAttrs
+            |> List.map (fun i -> i.UniqueName, i)
+            |> Map.ofList
             
-            match nextAttr with
-            // update if changed
-            | Some nextAttr ->
-                let eq = nextAttr.Equals lastAttr
-                if not eq then
-                    delta.Add(update lastAttr nextAttr)
-                else
-                    ()
-            // reset  
+        let lastAttrsMap : Map<string, IAttr> =
+            lastAttrs
+            |> List.map (fun i -> i.UniqueName, i)
+            |> Map.ofList
+            
+        let delta = ResizeArray<AttrDelta>()            
+            
+        (* check if there is a corresponding new attribute for all old attributes *)
+        for lastAttr in lastAttrs do
+            
+            (* check if attribute is still present *)
+            match Map.tryFind lastAttr.UniqueName nextAttrsMap with
+            
+            (* attribute is still there, but it's value changed. -> update value *)
+            | Some nextAttr when not (nextAttr.Equals lastAttr) ->
+                let attrDelta = update lastAttr nextAttr
+                delta.Add attrDelta
+                
+            (* attribute is still there. It hasn't changed -> do nothing *)
+            | Some _ -> ()
+
+            (* attribute is no longer present. -> reset value *)
             | None ->
-                delta.Add(reset lastAttr)
-        
+                let attrDelta = reset lastAttr
+                delta.Add attrDelta
+                    
+        (* check if new attributes need to be added  *)
         for nextAttr in nextAttrs do
-            let exists = lastAttrs |> List.exists (fun attr -> attr.UniqueName = nextAttr.UniqueName)
-            // add if not there
-            if not exists then
+            
+            (* attribute is new - create delta from it -> set value  *)
+            if not (Map.containsKey nextAttr.UniqueName lastAttrsMap) then
                 delta.Add (AttrDelta.From nextAttr)
                 
         List.ofSeq delta

@@ -18,6 +18,7 @@ module internal rec Delta =
                 | Content' content -> Content (ContentDelta.From content)
                 | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
                 | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
+                
            
     [<CustomEquality; NoComparison>]
     type PropertyDelta =
@@ -48,7 +49,7 @@ module internal rec Delta =
     type SubscriptionDelta =
         {
             name: string
-            subscribe:  Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
+            subscribe: Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
             func: Delegate option
         }
         with
