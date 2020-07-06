@@ -44,6 +44,9 @@ module TemplatedControl =
         static member fontSize<'t when 't :> TemplatedControl>(value: double) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<double>(TemplatedControl.FontSizeProperty, value, ValueNone)
             
+        static member fontStyle<'t when 't :> TemplatedControl>(value: FontStyle) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<FontStyle>(TemplatedControl.FontStyleProperty, value, ValueNone)
+
         static member fontWeight<'t when 't :> TemplatedControl>(value: FontWeight) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<FontWeight>(TemplatedControl.FontWeightProperty, value, ValueNone)
             
