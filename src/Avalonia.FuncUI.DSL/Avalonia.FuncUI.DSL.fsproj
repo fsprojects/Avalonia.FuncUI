@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <Version>0.4.0</Version>
+        <Version>0.4.2</Version>
         <Authors>JaggerJo</Authors>
         <Product>JaggerJo.Avalonia.FuncUI.DSL</Product>
         <PackageId>JaggerJo.Avalonia.FuncUI.DSL</PackageId>
@@ -11,7 +11,7 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
         <Title>Avalonia FuncUI DSL</Title>
-        <PackageVersion>0.4.1</PackageVersion>
+        <PackageVersion>0.4.3</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
