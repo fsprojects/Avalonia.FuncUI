@@ -40,6 +40,9 @@ module TextBlock =
         static member foreground<'t when 't :> TextBlock>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> TextBlock.foreground
             
+        static member maxLines<'t when 't :> TextBlock>(value: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(TextBlock.MaxLinesProperty, value, ValueNone)
+
         static member textAlignment<'t when 't :> TextBlock>(alignment: TextAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<TextAlignment>(TextBlock.TextAlignmentProperty, alignment, ValueNone)
             
