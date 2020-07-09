@@ -70,8 +70,8 @@
         <Compile Include="Border.fs" />
         <Compile Include="Decorator.fs" />
         <Compile Include="DataValidationErrors.fs" />
-        <Compile Include="ComboBox.fs" />
         <Compile Include="ComboBoxItem.fs" />
+        <Compile Include="ComboBox.fs" />
         <Compile Include="CheckBox.fs" />
         <Compile Include="Carousel.fs" />
         <Compile Include="Image.fs" />
