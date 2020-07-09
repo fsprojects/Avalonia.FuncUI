@@ -13,19 +13,19 @@ module DatePickerDemo =
       { date: DateTime Nullable
         watermark: string
         customFormat: string
-        selectedFormat: DatePickerFormat }
+        selectedFormat: CalendarDatePickerFormat }
 
     let init = 
         { date = Nullable(DateTime.Today)
           watermark = ""
           customFormat = ""
-          selectedFormat = DatePickerFormat.Long
+          selectedFormat = CalendarDatePickerFormat.Long
         }
 
     type Msg =
     | SetDate of DateTime Nullable
     | SetWatermark of string
-    | SetDatePickerFormat of DatePickerFormat * customFormat: string option
+    | SetDatePickerFormat of CalendarDatePickerFormat * customFormat: string option
 
     let update (msg: Msg) (state: State) : State =
         match msg with
@@ -33,42 +33,42 @@ module DatePickerDemo =
         | SetWatermark text -> { state with watermark = text }
         | SetDatePickerFormat (format, custom) ->
           match format with
-          | DatePickerFormat.Short 
-          | DatePickerFormat.Long -> 
+          | CalendarDatePickerFormat.Short 
+          | CalendarDatePickerFormat.Long -> 
             { state with selectedFormat = format }
-          | DatePickerFormat.Custom ->
+          | CalendarDatePickerFormat.Custom ->
             match custom with
             | Some customFormat -> 
               { state with selectedFormat = format; customFormat = customFormat }
-            | None -> { state with selectedFormat = DatePickerFormat.Long; customFormat = "" }
-          | _ -> { state with selectedFormat = DatePickerFormat.Long; customFormat = "" }
+            | None -> { state with selectedFormat = CalendarDatePickerFormat.Long; customFormat = "" }
+          | _ -> { state with selectedFormat = CalendarDatePickerFormat.Long; customFormat = "" }
               
            
     let view (state: State) (dispatch) =
         StackPanel.create [
             StackPanel.spacing 10.0
             StackPanel.children [
-                DatePicker.create [
-                  yield DatePicker.selectedDate state.date
-                  yield DatePicker.selectedDateFormat state.selectedFormat
+                CalendarDatePicker.create [
+                  yield CalendarDatePicker.selectedDate state.date
+                  yield CalendarDatePicker.selectedDateFormat state.selectedFormat
                   if state.customFormat.Length > 0 then 
-                    yield DatePicker.customDateFormatString state.customFormat
-                  yield DatePicker.watermark state.watermark
+                    yield CalendarDatePicker.customDateFormatString state.customFormat
+                  yield CalendarDatePicker.watermark state.watermark
                 ]
 
                 Button.create [
                   Button.content "Set Long Date Picker Format"
-                  Button.onClick(fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Long, None)))
+                  Button.onClick(fun _ -> dispatch (SetDatePickerFormat (CalendarDatePickerFormat.Long, None)))
                 ]
 
                 Button.create [
                   Button.content "Set Short Date Picker Format"
-                  Button.onClick(fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Short, None)))
+                  Button.onClick(fun _ -> dispatch (SetDatePickerFormat (CalendarDatePickerFormat.Short, None)))
                 ]
 
                 Button.create [
                     Button.content """Set Custom "MMMM dd, yyyy" Date Picker Format """
-                    Button.onClick(fun _ -> dispatch (SetDatePickerFormat (DatePickerFormat.Custom, Some "MMMM dd, yyyy")))
+                    Button.onClick(fun _ -> dispatch (SetDatePickerFormat (CalendarDatePickerFormat.Custom, Some "MMMM dd, yyyy")))
                 ]
             ]
         ]   

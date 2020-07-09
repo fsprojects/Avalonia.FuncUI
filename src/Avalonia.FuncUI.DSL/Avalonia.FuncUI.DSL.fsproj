@@ -58,7 +58,7 @@
         <Compile Include="Components\LazyView.fs" />
 
         <Compile Include="Calendar\Calendar.fs" />
-        <Compile Include="Calendar\DatePicker.fs" />
+        <Compile Include="Calendar\CalendarDatePicker.fs" />
 
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />
@@ -105,7 +105,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-      <PackageReference Include="Avalonia.Desktop" Version="0.9.9" />
+      <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 
 </Project>

@@ -9,7 +9,7 @@
         <AvaloniaResource Include="**\*.xaml" />
         <AvaloniaResource Include="Assets\*" />
         
-        <PackageReference Include="Avalonia.Desktop" Version="0.9.9" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview1" />
     </ItemGroup>
     
     <ItemGroup>
@@ -22,5 +22,9 @@
       <ProjectReference Include="..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
       <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
       <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 </Project>

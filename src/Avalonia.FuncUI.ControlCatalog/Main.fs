@@ -40,7 +40,6 @@ type App() =
         | _ -> ()
 
 module Program =
-    open Avalonia.Logging.Serilog
 
     [<EntryPoint>]
     let main(args: string[]) =
@@ -48,6 +47,5 @@ module Program =
             .Configure<App>()
             .UsePlatformDetect()
             .UseSkia()
-            .LogToDebug()
             .StartWithClassicDesktopLifetime(args)
 
