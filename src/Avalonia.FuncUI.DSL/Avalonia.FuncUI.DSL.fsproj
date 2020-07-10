@@ -15,7 +15,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Library.fs" />
         <Compile Include="Base\Layoutable.fs" />
         <Compile Include="Base\Visual.fs" />
         <Compile Include="Base\InputElement.fs" />
@@ -65,6 +64,7 @@
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
         <Compile Include="ToggleButton.fs" />
+        <Compile Include="ToggleSwitch.fs" />
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="NumericUpDown.fs" />
         <Compile Include="Border.fs" />

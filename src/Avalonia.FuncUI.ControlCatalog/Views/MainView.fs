@@ -63,10 +63,11 @@ module MainView =
                            TabItem.header "Menu Demo"
                            TabItem.content (ViewBuilder.Create<MenuDemo.Host>([]))
                        ]
-                       TabItem.create [
-                           TabItem.header "Styles Demo"
-                           TabItem.content (ViewBuilder.Create<StylesDemo.Host>([]))
-                       ]
+                       // ToDo: return it back when styles will be worked
+                       //TabItem.create [
+                       //    TabItem.header "Styles Demo"
+                       //    TabItem.content (ViewBuilder.Create<StylesDemo.Host>([]))
+                       //]
                        TabItem.create [
                            TabItem.header "TextBox Demo"
                            TabItem.content (ViewBuilder.Create<TextBoxDemo.Host>([]))
@@ -78,6 +79,10 @@ module MainView =
                        TabItem.create [
                            TabItem.header "Grid patch Demo"
                            TabItem.content (ViewBuilder.Create<GridPatchDemo.Host>([]))
+                       ]
+                       TabItem.create [
+                           TabItem.header "ToggleSwitch Demo"
+                           TabItem.content (ViewBuilder.Create<ToggleSwitchDemo.Host>([]))
                        ]
                    ]
                ]
