@@ -107,7 +107,6 @@ module DataTemplateDemo =
                                 TextBlock.text product.Description
                                 TextBlock.margin 5.0
                             ]
-                                 
                         ]
                     ]
                 | None -> ()

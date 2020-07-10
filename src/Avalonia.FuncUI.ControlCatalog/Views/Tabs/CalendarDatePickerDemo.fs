@@ -3,12 +3,13 @@ namespace Avalonia.FuncUI.ControlCatalog.Views
 open System
 open Elmish
 open Avalonia.Controls
+open Avalonia.Layout
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
 
-module DatePickerDemo =
+module CalendarDatePickerDemo =
     type State = 
       { date: DateTime Nullable
         watermark: string
@@ -49,26 +50,30 @@ module DatePickerDemo =
             StackPanel.spacing 10.0
             StackPanel.children [
                 CalendarDatePicker.create [
-                  yield CalendarDatePicker.selectedDate state.date
-                  yield CalendarDatePicker.selectedDateFormat state.selectedFormat
+                  CalendarDatePicker.selectedDate state.date
+                  CalendarDatePicker.selectedDateFormat state.selectedFormat
                   if state.customFormat.Length > 0 then 
-                    yield CalendarDatePicker.customDateFormatString state.customFormat
-                  yield CalendarDatePicker.watermark state.watermark
+                   CalendarDatePicker.customDateFormatString state.customFormat
+                  CalendarDatePicker.watermark state.watermark
+                  CalendarDatePicker.horizontalAlignment HorizontalAlignment.Stretch
                 ]
 
                 Button.create [
                   Button.content "Set Long Date Picker Format"
                   Button.onClick(fun _ -> dispatch (SetDatePickerFormat (CalendarDatePickerFormat.Long, None)))
+                  Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
 
                 Button.create [
                   Button.content "Set Short Date Picker Format"
                   Button.onClick(fun _ -> dispatch (SetDatePickerFormat (CalendarDatePickerFormat.Short, None)))
+                  Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
 
                 Button.create [
                     Button.content """Set Custom "MMMM dd, yyyy" Date Picker Format """
                     Button.onClick(fun _ -> dispatch (SetDatePickerFormat (CalendarDatePickerFormat.Custom, Some "MMMM dd, yyyy")))
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
             ]
         ]   

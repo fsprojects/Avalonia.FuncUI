@@ -25,6 +25,7 @@ type App() =
     override this.Initialize() =
         this.Styles.Load "avares://Avalonia.Themes.Fluent/Accents/FluentDark.xaml"
         this.Styles.Load "avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"
+        this.Styles.Load "avares://Avalonia.FuncUI.ControlCatalog/Styles/TabControl.xaml"
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
