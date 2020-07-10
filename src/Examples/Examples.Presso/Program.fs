@@ -12,8 +12,8 @@ type MainWindow() as this =
     inherit HostWindow()
     do
         base.Title <- "Presso"
-        base.Width <- 400.0
-        base.Height <- 400.0
+        base.Width <- 500.0
+        base.Height <- 500.0
         
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
@@ -27,7 +27,7 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Load "avares://Avalonia.Themes.Default/DefaultTheme.xaml"
+        this.Styles.Load "avares://Avalonia.Themes.Fluent/Accents/FluentDark.xaml"
         this.Styles.Load "avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"
         this.Styles.Load "avares://Examples.Presso/Styles/Styles.xaml"
 

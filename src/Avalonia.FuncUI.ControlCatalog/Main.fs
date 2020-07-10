@@ -23,9 +23,8 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Load "avares://Avalonia.Themes.Default/DefaultTheme.xaml"
-        //this.Styles.Load "resm:Avalonia.Themes.Default.DefaultTheme.xaml?assembly=Avalonia.Themes.Default"
-        this.Styles.Load "resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default"
+        this.Styles.Load "avares://Avalonia.Themes.Fluent/Accents/FluentDark.xaml"
+        this.Styles.Load "avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with

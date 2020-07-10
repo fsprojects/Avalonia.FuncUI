@@ -29,21 +29,25 @@ module Counter =
                     Button.dock Dock.Bottom
                     Button.onClick (fun _ -> dispatch Reset)
                     Button.content "reset"
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]                
                 Button.create [
                     Button.dock Dock.Bottom
                     Button.onClick (fun _ -> dispatch Decrement)
                     Button.content "-"
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
                 Button.create [
                     Button.dock Dock.Bottom
                     Button.onClick (fun _ -> dispatch Increment)
                     Button.content "+"
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
                 Button.create [
                     Button.dock Dock.Bottom
                     Button.onClick ((fun _ -> state.count * 2 |> SetCount |> dispatch), SubPatchOptions.OnChangeOf state.count)
                     Button.content "x2"
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
                 TextBox.create [
                     TextBox.dock Dock.Bottom
@@ -53,6 +57,7 @@ module Counter =
                             number |> SetCount |> dispatch) 
                     )
                     TextBox.text (string state.count)
+                    TextBox.horizontalAlignment HorizontalAlignment.Stretch
                 ]
                 TextBlock.create [
                     TextBlock.dock Dock.Top
@@ -62,4 +67,4 @@ module Counter =
                     TextBlock.text (string state.count)
                 ]
             ]
-        ]       
+        ]
