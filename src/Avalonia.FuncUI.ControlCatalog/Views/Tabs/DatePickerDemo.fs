@@ -3,7 +3,6 @@
 open System
 open Elmish
 open Avalonia.Controls
-open Avalonia.Layout
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components

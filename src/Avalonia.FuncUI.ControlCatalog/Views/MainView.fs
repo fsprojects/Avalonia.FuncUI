@@ -86,5 +86,9 @@ module MainView =
                     TabItem.header "DatePicker Demo"
                     TabItem.content (ViewBuilder.Create<DatePickerDemo.Host>([]))
                 ]
+                TabItem.create [
+                    TabItem.header "TimePicker Demo"
+                    TabItem.content (ViewBuilder.Create<TimePickerDemo.Host>([]))
+                ]
             ]
         ]

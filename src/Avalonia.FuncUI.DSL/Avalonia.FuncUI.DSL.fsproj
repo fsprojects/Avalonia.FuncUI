@@ -59,6 +59,7 @@
         <Compile Include="Calendar\Calendar.fs" />
         <Compile Include="Calendar\CalendarDatePicker.fs" />
         <Compile Include="DatePicker.fs" />
+        <Compile Include="TimePicker.fs" />
 
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />

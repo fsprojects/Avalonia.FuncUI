@@ -55,8 +55,3 @@ module DatePicker =
         static member headerTemplate<'t when 't :> DatePicker>(template: IDataTemplate) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(DatePicker.HeaderTemplateProperty, template, ValueNone)
         
-            
-
-
-
-
