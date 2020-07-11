@@ -21,6 +21,7 @@
         <Compile Include="Views\Tabs\StylesDemo.fs" />
         <Compile Include="Views\Tabs\TextBoxDemo.fs" />
         <Compile Include="Views\Tabs\CalendarDatePickerDemo.fs" />
+        <Compile Include="Views\Tabs\DatePickerDemo.fs" />
         <AvaloniaResource Include="**\*.xaml" />
         <Compile Include="Views\Tabs\GridPatchDemo.fs" />
         <Compile Include="Views\MainView.fs" />

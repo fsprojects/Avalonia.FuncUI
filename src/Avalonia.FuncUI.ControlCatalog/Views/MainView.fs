@@ -82,5 +82,9 @@ module MainView =
                     TabItem.header "ToggleSwitch Demo"
                     TabItem.content (ViewBuilder.Create<ToggleSwitchDemo.Host>([]))
                 ]
+                TabItem.create [
+                    TabItem.header "DatePicker Demo"
+                    TabItem.content (ViewBuilder.Create<DatePickerDemo.Host>([]))
+                ]
             ]
         ]

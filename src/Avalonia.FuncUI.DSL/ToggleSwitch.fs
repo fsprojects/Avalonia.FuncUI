@@ -17,7 +17,7 @@ module ToggleSwitch =
             AttrBuilder<'t>.CreateProperty<obj>(ToggleSwitch.OnContentProperty, value, ValueNone)
         
         static member onContentTemplate<'t when 't :> ToggleSwitch>(template: IDataTemplate) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(ToggleSwitch.OnContentTemplateProperty, template, ValueNone)
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(ToggleSwitch.OnContentTemplateProperty, template, ValueNone)
         
         static member offContent<'t when 't :> ToggleSwitch>(value: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(ToggleSwitch.OffContentProperty, value, ValueNone)
