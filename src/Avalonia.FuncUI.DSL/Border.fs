@@ -49,6 +49,12 @@ module Border =
         static member cornerRadius<'t when 't :> Border>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
             (left, top, right, bottom) |> CornerRadius |> Border.cornerRadius
             
+        static member boxShadows<'t when 't :> Border>(value: BoxShadows) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty(Border.BoxShadowProperty, value, ValueNone)
+            
+        static member boxShadow<'t when 't :> Border>(value: BoxShadow) : IAttr<'t> =
+            value |> BoxShadows |> Border.boxShadows
+            
         static member child<'t when 't :> Border>(value: IView option) : IAttr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Border.ChildProperty, value)
         
