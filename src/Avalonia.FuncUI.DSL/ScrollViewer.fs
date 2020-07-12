@@ -26,17 +26,33 @@ module ScrollViewer  =
             AttrBuilder<'t>.CreateProperty<ScrollBarVisibility>(ScrollViewer.HorizontalScrollBarVisibilityProperty, value, ValueNone)
 
     type ScrollViewer with
+
+        static member allowAutoHide<'t when 't :> ScrollViewer>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(ScrollViewer.AllowAutoHideProperty, value, ValueNone)
+        
         /// <summary>
         /// Sets the extent of the scrollable content.
         /// </summary>
         static member extent<'t when 't :> ScrollViewer>(value: Size) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Size>(ScrollViewer.ExtentProperty, value, ValueNone)
 
+        static member isExpanded<'t when 't :> ScrollViewer>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(ScrollViewer.IsExpandedProperty, value, ValueNone)
+
+        static member largeChange<'t when 't :> ScrollViewer>(value: Size) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<Size>(ScrollViewer.LargeChangeProperty, value, ValueNone)
+
         /// <summary>
         /// Sets the current scroll offset.
         /// </summary>
         static member offset<'t when 't :> ScrollViewer>(value: Vector) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Vector>(ScrollViewer.OffsetProperty, value, ValueNone)
+
+        static member onScrollChanged<'t when 't :> ScrollViewer>(func: ScrollChangedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<ScrollChangedEventArgs>(ScrollViewer.ScrollChangedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member smallChange<'t when 't :> ScrollViewer>(value: Size) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<Size>(ScrollViewer.SmallChangeProperty, value, ValueNone)
 
         /// <summary>
         /// Sets the size of the viewport on the scrollable content.
