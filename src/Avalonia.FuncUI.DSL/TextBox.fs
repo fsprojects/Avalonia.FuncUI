@@ -3,6 +3,7 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module TextBox =  
     open Avalonia.Controls
+    open Avalonia.Layout
     open Avalonia.Media.Immutable
     open Avalonia.Media
     open Avalonia.FuncUI.Builder
@@ -23,8 +24,11 @@ module TextBox =
             AttrBuilder<'t>.CreateProperty<int>(TextBox.CaretIndexProperty, value, ValueNone)                
                         
         static member isReadOnly<'t when 't :> TextBox>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(TextBox.IsReadOnlyProperty, value, ValueNone)                        
-                        
+            AttrBuilder<'t>.CreateProperty<bool>(TextBox.IsReadOnlyProperty, value, ValueNone)
+
+        static member horizontalContentAlignment<'t when 't :> TextBox>(value: HorizontalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(TextBox.HorizontalContentAlignmentProperty, value, ValueNone)
+
         static member passwordChar<'t when 't :> TextBox>(value: char) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<char>(TextBox.PasswordCharProperty, value, ValueNone)
             
@@ -72,6 +76,9 @@ module TextBox =
             
         static member newLine<'t when 't :> TextBox>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(TextBox.NewLineProperty, value, ValueNone)
+
+        static member verticalContentAlignment<'t when 't :> TextBox>(value: VerticalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<VerticalAlignment>(TextBox.VerticalContentAlignmentProperty, value, ValueNone)
             
         static member watermark<'t when 't :> TextBox>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(TextBox.WatermarkProperty, value, ValueNone)

@@ -12,6 +12,12 @@ module ScrollBar =
      
     type ScrollBar with
     
+        static member allowAutoHide<'t when 't :> ScrollBar>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(ScrollBar.AllowAutoHideProperty, value, ValueNone)
+
+        static member isExpanded<'t when 't :> ScrollBar>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(ScrollBar.IsExpandedProperty, value, ValueNone)
+        
         /// <summary>
         /// Sets the amount of the scrollable content that is currently visible.
         /// </summary>

@@ -2,6 +2,7 @@
 
 [<AutoOpen>]
 module Slider =
+    open Avalonia.Collections
     open Avalonia.Controls
     open Avalonia.Layout
     open Avalonia.FuncUI.Types
@@ -29,3 +30,12 @@ module Slider =
         /// </summary>
         static member tickFrequency<'t when 't :> Slider>(value: float) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<float>(Slider.TickFrequencyProperty, value, ValueNone)
+
+        static member tickPlacement<'t when 't :> Slider>(value: TickPlacement) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<TickPlacement>(Slider.TickPlacementProperty, value, ValueNone)
+
+        static member ticks<'t when 't :> Slider>(value: AvaloniaList<float>) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float AvaloniaList>(Slider.TicksProperty, value, ValueNone)
+
+        static member ticks<'t when 't :> Slider>(value: seq<float>) : IAttr<'t> =
+            value |> AvaloniaList |> Slider.ticks

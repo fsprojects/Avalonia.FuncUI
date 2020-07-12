@@ -13,7 +13,10 @@ module ProgressBar =
     type ProgressBar with
 
         static member isIndeterminate<'t when 't :> ProgressBar>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(ProgressBar.IsIndeterminateProperty , value, ValueNone)
+            AttrBuilder<'t>.CreateProperty<bool>(ProgressBar.IsIndeterminateProperty, value, ValueNone)
 
         static member orientation<'t when 't :> ProgressBar>(value: Orientation) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Orientation>(ProgressBar.OrientationProperty , value, ValueNone)
+            AttrBuilder<'t>.CreateProperty<Orientation>(ProgressBar.OrientationProperty, value, ValueNone)
+
+        static member showProgressText<'t when 't :> ProgressBar>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(ProgressBar.ShowProgressTextProperty, value, ValueNone)
