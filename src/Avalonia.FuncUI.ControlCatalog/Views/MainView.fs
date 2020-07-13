@@ -90,5 +90,9 @@ module MainView =
                     TabItem.header "TimePicker Demo"
                     TabItem.content (ViewBuilder.Create<TimePickerDemo.Host>([]))
                 ]
+                TabItem.create [
+                    TabItem.header "SplitView Demo"
+                    TabItem.content (ViewBuilder.Create<SplitViewDemo.Host>([]))
+                ]
             ]
         ]
