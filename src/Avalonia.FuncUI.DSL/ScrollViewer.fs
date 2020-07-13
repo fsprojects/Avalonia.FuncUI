@@ -8,8 +8,8 @@ module ScrollViewer  =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
    
-    let create (attrs: IAttr<ScrollViewer > list): IView<ScrollViewer> =
-        ViewBuilder.Create<ScrollViewer >(attrs)
+    let create (attrs: IAttr<ScrollViewer> list): IView<ScrollViewer> =
+        ViewBuilder.Create<ScrollViewer>(attrs)
 
     type Control with            
 
