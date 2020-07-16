@@ -94,5 +94,9 @@ module MainView =
                     TabItem.header "SplitView Demo"
                     TabItem.content (ViewBuilder.Create<SplitViewDemo.Host>([]))
                 ]
+                TabItem.create [
+                    TabItem.header "TickBar Demo"
+                    TabItem.content (ViewBuilder.Create<TickBarDemo.Host>([]))
+                ]
             ]
         ]

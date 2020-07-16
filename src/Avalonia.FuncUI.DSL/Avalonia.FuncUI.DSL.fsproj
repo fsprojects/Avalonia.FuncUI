@@ -15,6 +15,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="TickBar.fs" />
         <Compile Include="Base\Layoutable.fs" />
         <Compile Include="Base\Visual.fs" />
         <Compile Include="Base\InputElement.fs" />

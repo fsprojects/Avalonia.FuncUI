@@ -25,6 +25,7 @@
         <Compile Include="Views\Tabs\DatePickerDemo.fs" />
         <Compile Include="Views\Tabs\TimePickerDemo.fs" />
         <Compile Include="Views\Tabs\SplitViewDemo.fs" />
+        <Compile Include="Views\Tabs\TickBarDemo.fs" />
         <AvaloniaResource Include="**\*.xaml" />
         <Compile Include="Views\MainView.fs" />
         
