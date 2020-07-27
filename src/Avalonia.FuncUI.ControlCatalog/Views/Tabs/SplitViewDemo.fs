@@ -170,15 +170,12 @@ module SplitViewDemo =
                                             TextBox.horizontalAlignment HorizontalAlignment.Stretch
                                             TextBox.textAlignment TextAlignment.Center
                                             TextBox.onTextChanged (fun txt ->
-                                                try
-                                                    match Color.TryParse txt with
-                                                    | (true, color) -> 
-                                                        color 
-                                                        |> Msg.SetColor 
-                                                        |> dispatch
-                                                    | _ -> ()
-                                                with _ ->
-                                                    ()
+                                                match Color.TryParse txt with
+                                                | (true, color) -> 
+                                                    color 
+                                                    |> Msg.SetColor 
+                                                    |> dispatch
+                                                | _ -> ()
                                             )
                                         ]
                                     ]

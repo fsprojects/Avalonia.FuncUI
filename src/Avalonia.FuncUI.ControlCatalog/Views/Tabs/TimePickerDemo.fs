@@ -83,9 +83,21 @@ module TimePickerDemo =
                     )
                 ]
 
-                // ToDo: add some control to set clockIdentifier
+                ComboBox.create [
+                    ComboBox.dataItems [
+                        "12HourClock"
+                        "24HourClock"
+                    ]
+
+                    ComboBox.selectedItem state.clockIdentifier
+
+                    ComboBox.onSelectedItemChanged(
+                        tryUnbox
+                        >> Option.iter(Msg.SetClockIdentifier >> dispatch)
+                    )
+                ]
             ]
-        ]   
+        ]
         
     type Host() as this =
         inherit Hosts.HostControl()

@@ -16,8 +16,8 @@ module TickBarDemo =
         min: float
         color: Color
         orientation: Orientation
-        frequency: float 
-        placement : TickBarPlacement 
+        frequency: float
+        placement : TickBarPlacement
         isDirectionReversed : bool }
 
     let init = 
@@ -233,15 +233,12 @@ module TickBarDemo =
                                     TextBox.horizontalAlignment HorizontalAlignment.Stretch
                                     TextBox.textAlignment TextAlignment.Center
                                     TextBox.onTextChanged (fun txt ->
-                                        try
-                                            match Color.TryParse txt with
-                                            | (true, color) -> 
-                                                color 
-                                                |> Msg.SetColor 
-                                                |> dispatch
-                                            | _ -> ()
-                                        with _ ->
-                                            ()
+                                        match Color.TryParse txt with
+                                        | (true, color) -> 
+                                            color 
+                                            |> Msg.SetColor 
+                                            |> dispatch
+                                        | _ -> ()
                                     )
                                 ]
                             ]
