@@ -79,6 +79,10 @@ module MainView =
                            TabItem.header "Grid patch Demo"
                            TabItem.content (ViewBuilder.Create<GridPatchDemo.Host>([]))
                        ]
+                       TabItem.create [
+                           TabItem.header "Drag+Drop Demo"
+                           TabItem.content (ViewBuilder.Create<DragDropDemo.Host>([]))
+                       ]
                    ]
                ]
             ]

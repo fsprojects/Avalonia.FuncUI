@@ -40,8 +40,10 @@ type App() =
         | _ -> ()
 
 module Program =
+    open System
     open Avalonia.Logging.Serilog
 
+    [<STAThread>]
     [<EntryPoint>]
     let main(args: string[]) =
         AppBuilder
