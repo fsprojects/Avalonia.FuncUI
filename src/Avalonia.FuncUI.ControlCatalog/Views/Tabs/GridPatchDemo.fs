@@ -20,7 +20,9 @@ module GridPatchDemo =
                 orientation =
                     match state.orientation with
                     | Orientation.Horizontal -> Orientation.Vertical
-                    | Orientation.Vertical -> Orientation.Horizontal }
+                    | Orientation.Vertical   -> Orientation.Horizontal
+                    | _                      -> Orientation.Horizontal
+            }
            
     let view (state: State) (dispatch) =
         DockPanel.create [
