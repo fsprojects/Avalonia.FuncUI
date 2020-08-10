@@ -215,10 +215,14 @@ type AttrBuilder<'view>() =
 
 [<AbstractClass; Sealed>] 
 type ViewBuilder() =
-    
-    static member Create<'view>(attrs: IAttr<'view> list) : IView<'view> =
+   
+    static member Create<'view>(attrs: IAttr<'view> list, constructorParams: obj array) : IView<'view> =
         {
             View.viewType = typeof<'view>
+            View.viewConstructorParams = constructorParams
             View.attrs = attrs
         }
         :> IView<'view>
+        
+    static member Create<'view>(attrs: IAttr<'view> list) : IView<'view> =
+        ViewBuilder.Create(attrs, null)

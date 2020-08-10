@@ -28,6 +28,7 @@ module DifferTests =
         let delta : Delta.ViewDelta = 
             {
                 viewType = typeof<TextBlock>
+                viewConstructorParams = null
                 attrs = [
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -40,6 +41,7 @@ module DifferTests =
                         defaultValueFactory = ValueNone
                     };                       
                 ]
+                reinstantiate = false
             }
 
         let result = Differ.diff(last, next)
@@ -64,6 +66,7 @@ module DifferTests =
         let delta : Delta.ViewDelta = 
             {
                 viewType = typeof<TextBlock>
+                viewConstructorParams = null
                 attrs = [
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -71,6 +74,7 @@ module DifferTests =
                         defaultValueFactory = ValueNone
                     }
                 ]
+                reinstantiate = false
             }
 
         let result = Differ.diff(last, next)
@@ -107,6 +111,7 @@ module DifferTests =
             let delta : Delta.ViewDelta = 
                 {
                     viewType = typeof<Button>
+                    viewConstructorParams = null
                     attrs = [
                         Delta.AttrDelta.Property {
                             accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -118,6 +123,7 @@ module DifferTests =
                             content = Delta.ViewContentDelta.Single
                                 ( Some {
                                     viewType = typeof<TextBlock>
+                                    viewConstructorParams = null
                                     attrs = [
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -130,10 +136,12 @@ module DifferTests =
                                             defaultValueFactory = ValueNone
                                         };
                                     ]
+                                    reinstantiate = false
                                 }
                             )
                         };
                     ]
+                    reinstantiate = false
                 }
 
             let result = Differ.diff(last, next)
@@ -176,6 +184,7 @@ module DifferTests =
             let delta : Delta.ViewDelta = 
                 {
                     viewType = typeof<StackPanel>
+                    viewConstructorParams = null
                     attrs = [
                         Delta.AttrDelta.Property {
                             accessor =  Accessor.AvaloniaProperty StackPanel.OrientationProperty
@@ -187,6 +196,7 @@ module DifferTests =
                             content = Delta.ViewContentDelta.Multiple [
                                 {
                                     viewType = typeof<TextBlock>
+                                    viewConstructorParams = null
                                     attrs = [
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -199,9 +209,11 @@ module DifferTests =
                                             defaultValueFactory = ValueNone
                                         }
                                     ]
+                                    reinstantiate = false
                                 };
                                 {
                                     viewType = typeof<Button>
+                                    viewConstructorParams = null
                                     attrs = [
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -209,10 +221,12 @@ module DifferTests =
                                             defaultValueFactory = ValueNone
                                         }
                                     ]
+                                    reinstantiate = false
                                 }
                             ]
                         }
                     ]
+                    reinstantiate = false
                 }
 
             let result = Differ.diff(last, next)
@@ -261,6 +275,7 @@ module DifferTests =
             let delta : Delta.ViewDelta = 
                 {
                     viewType = typeof<StackPanel>
+                    viewConstructorParams = null
                     attrs = [
                         Delta.AttrDelta.Property {
                             accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
@@ -272,6 +287,7 @@ module DifferTests =
                             content = Delta.ViewContentDelta.Multiple [
                                 {
                                     viewType = typeof<CheckBox>
+                                    viewConstructorParams = null
                                     attrs = [
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -284,9 +300,11 @@ module DifferTests =
                                             defaultValueFactory = ValueNone
                                         };
                                     ]
+                                    reinstantiate = false
                                 };
                                 {
                                     viewType = typeof<CheckBox>
+                                    viewConstructorParams = null
                                     attrs = [
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -299,9 +317,11 @@ module DifferTests =
                                             defaultValueFactory = ValueNone
                                         };
                                     ]
+                                    reinstantiate = false
                                 };
                                 {
                                     viewType = typeof<CheckBox>
+                                    viewConstructorParams = null
                                     attrs = [
                                         Delta.AttrDelta.Property {
                                             accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -314,10 +334,12 @@ module DifferTests =
                                             defaultValueFactory = ValueNone
                                         };
                                     ]
+                                    reinstantiate = false
                                 };
                             ]
                         };
                     ]
+                    reinstantiate = false
                 }
 
             let result = Differ.diff(last, next)
@@ -366,6 +388,7 @@ module DifferTests =
         let delta : Delta.ViewDelta = 
             {
                 viewType = typeof<StackPanel>
+                viewConstructorParams = null
                 attrs = [
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
@@ -377,14 +400,19 @@ module DifferTests =
                         content = Delta.ViewContentDelta.Multiple [
                             {
                                 viewType = typeof<CheckBox>
+                                viewConstructorParams = null
                                 attrs = [  ]
+                                reinstantiate = false
                             };                             
                             {
                                 viewType = typeof<CheckBox>
+                                viewConstructorParams = null
                                 attrs = [ ]
+                                reinstantiate = false
                             };                         
                             {
                                 viewType = typeof<CheckBox>
+                                viewConstructorParams = null
                                 attrs = [
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -397,10 +425,12 @@ module DifferTests =
                                         defaultValueFactory = ValueNone
                                     };
                                 ]
+                                reinstantiate = false
                             };
                         ]
                     };
                 ]
+                reinstantiate = false
             }
 
         let result = Differ.diff(last, next)

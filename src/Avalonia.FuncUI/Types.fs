@@ -132,6 +132,7 @@ module Types =
 
     type IView =
         abstract member ViewType: Type with get
+        abstract member ViewConstructorParams: obj array with get
         abstract member Attrs: IAttr list with get
         
     type IView<'viewType> =
@@ -141,11 +142,13 @@ module Types =
     type View<'viewType> =
         {
             viewType: Type
+            viewConstructorParams: obj array
             attrs: IAttr<'viewType> list
         }
         
         interface IView with
-            member this.ViewType =  this.viewType
+            member this.ViewType = this.viewType
+            member this.ViewConstructorParams = this.viewConstructorParams
             member this.Attrs =
                 this.attrs |> List.map (fun attr -> attr :> IAttr)
             

@@ -105,11 +105,18 @@ module internal rec Delta =
     type ViewDelta =
         {
             viewType: Type
+            viewConstructorParams: obj array
             attrs: AttrDelta list
+            reinstantiate: bool
         }
         with
-            static member From (view: IView) : ViewDelta =
+            static member From (view: IView, constructorParams: obj array) : ViewDelta =
                 {
                     viewType = view.ViewType
+                    viewConstructorParams = constructorParams
                     attrs = view.Attrs |> List.map AttrDelta.From
+                    reinstantiate = false
                 }
+                
+            static member From (view: IView) : ViewDelta =
+                ViewDelta.From (view, null)

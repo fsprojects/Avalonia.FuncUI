@@ -18,6 +18,7 @@ module PatcherTests =
         let delta : Delta.ViewDelta = 
             {
                 viewType = typeof<TextBlock>
+                viewConstructorParams = null
                 attrs = [
                     Delta.AttrDelta.Property {
                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -30,6 +31,7 @@ module PatcherTests =
                         defaultValueFactory = ValueNone
                     };
                 ]
+                reinstantiate = false
             }
 
         let control = TextBlock()
@@ -53,6 +55,7 @@ module PatcherTests =
         let delta : Delta.ViewDelta = 
             {
                 viewType = typeof<TextBlock>
+                viewConstructorParams = null
                 attrs = [
                     Delta.AttrDelta.Property {
                         accessor = Accessor.InstanceProperty {
@@ -82,6 +85,7 @@ module PatcherTests =
                         defaultValueFactory = (fun () -> ResourceDictionary() :> obj) |> ValueSome
                     }
                 ]
+                reinstantiate = false
             }
 
         let control = TextBlock()
@@ -101,12 +105,14 @@ module PatcherTests =
         let delta : Delta.ViewDelta = 
              {
                  viewType = typeof<Button>
+                 viewConstructorParams = null
                  attrs = [
                      Delta.AttrDelta.Content {
                          accessor = Accessor.AvaloniaProperty Button.ContentProperty
                          content = Delta.ViewContentDelta.Single
                              ( Some {
                                  viewType = typeof<TextBlock>
+                                 viewConstructorParams = null
                                  attrs = [
                                      Delta.AttrDelta.Property {
                                          accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -119,10 +125,12 @@ module PatcherTests =
                                          defaultValueFactory = ValueNone
                                      };
                                  ]
+                                 reinstantiate = false
                              }
                          )
                      };
                  ]
+                 reinstantiate = false
              }
 
         let control = Button()
@@ -141,6 +149,7 @@ module PatcherTests =
         let delta : Delta.ViewDelta = 
             {
                 viewType = typeof<StackPanel>
+                viewConstructorParams = null
                 attrs = [
                     Delta.AttrDelta.Content {
                         accessor = Accessor.InstanceProperty {
@@ -151,6 +160,7 @@ module PatcherTests =
                         content = Delta.ViewContentDelta.Multiple [
                             {
                                 viewType = typeof<TextBlock>
+                                viewConstructorParams = null
                                 attrs = [
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -163,9 +173,11 @@ module PatcherTests =
                                         defaultValueFactory = ValueNone
                                     };
                                 ]
+                                reinstantiate = false
                             };
                             {
                                 viewType = typeof<Button>
+                                viewConstructorParams = null
                                 attrs = [
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -173,9 +185,11 @@ module PatcherTests =
                                         defaultValueFactory = ValueNone
                                     };
                                 ]
+                                reinstantiate = false
                             };
                             {
                                 viewType = typeof<Button>
+                                viewConstructorParams = null
                                 attrs = [
                                     Delta.AttrDelta.Property {
                                         accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -183,10 +197,12 @@ module PatcherTests =
                                         defaultValueFactory = ValueNone
                                     };
                                 ]
+                                reinstantiate = false
                             };
                         ]
                     };
                 ]
+                reinstantiate = false
             }
 
         let stackpanel = StackPanel()

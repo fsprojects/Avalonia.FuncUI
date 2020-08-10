@@ -86,7 +86,7 @@ module internal rec Patcher =
                     if index + 1 <= collection.Count then
                         let item = collection.[index]
 
-                        if item.GetType() = viewElement.viewType then
+                        if item <> null && item.GetType() = viewElement.viewType && not viewElement.reinstantiate then
                             // patch
                             match item with
                             | :? Avalonia.Controls.IControl as control -> patch(control, viewElement)
@@ -162,7 +162,7 @@ module internal rec Patcher =
             | Some viewElement ->
                 let value = view.GetValue(property)
 
-                if value <> null && value.GetType() = viewElement.viewType then
+                if value <> null && value.GetType() = viewElement.viewType && not viewElement.reinstantiate then
                     Patcher.patch(value :?> IControl, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
@@ -178,7 +178,7 @@ module internal rec Patcher =
                     | ValueSome getter -> getter(view)
                     | _ -> failwith "Property Accessor needs a getter"
 
-                if value <> null && value.GetType() = viewElement.viewType then
+                if value <> null && value.GetType() = viewElement.viewType && not viewElement.reinstantiate then
                     Patcher.patch(value :?> IControl, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
@@ -210,7 +210,17 @@ module internal rec Patcher =
             | AttrDelta.Subscription subscription -> patchSubscription view subscription
 
     let create (viewElement: ViewDelta) : IControl =
-        let control = viewElement.viewType |> Activator.CreateInstance |> Utils.cast<IControl>
+        let control =
+            match viewElement.viewConstructorParams with
+            | null ->
+                viewElement.viewType
+                |> Activator.CreateInstance
+                |> Utils.cast<IControl>
+                
+            | constructorParams ->
+                (viewElement.viewType, constructorParams)
+                |> Activator.CreateInstance
+                |> Utils.cast<IControl>
 
         control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid())
         Patcher.patch (control, viewElement)

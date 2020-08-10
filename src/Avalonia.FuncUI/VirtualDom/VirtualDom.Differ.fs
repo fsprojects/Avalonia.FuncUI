@@ -141,10 +141,24 @@ module internal rec Differ =
     let diff (last: IView, next: IView) : ViewDelta =
         // only diff attributes if viewType matches
         if last.ViewType = next.ViewType then
-            {
-                ViewDelta.viewType = next.ViewType
-                ViewDelta.attrs = diffAttributes last.Attrs next.Attrs
-            }
+            
+            (* patch existing *)
+            if last.ViewConstructorParams = next.ViewConstructorParams then
+                {
+                    ViewDelta.viewType = next.ViewType
+                    ViewDelta.attrs = diffAttributes last.Attrs next.Attrs
+                    ViewDelta.viewConstructorParams = next.ViewConstructorParams
+                    ViewDelta.reinstantiate = false
+                }
+                
+            (* reinstantiate *)
+            else
+                {
+                    ViewDelta.viewType = next.ViewType
+                    ViewDelta.attrs = List.map AttrDelta.From next.Attrs
+                    ViewDelta.viewConstructorParams = next.ViewConstructorParams
+                    ViewDelta.reinstantiate = last.ViewConstructorParams <> next.ViewConstructorParams
+                }
         else
             ViewDelta.From next
 
