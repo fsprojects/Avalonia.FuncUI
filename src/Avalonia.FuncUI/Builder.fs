@@ -216,13 +216,22 @@ type AttrBuilder<'view>() =
 [<AbstractClass; Sealed>] 
 type ViewBuilder() =
    
-    static member Create<'view>(attrs: IAttr<'view> list, constructorParams: obj array) : IView<'view> =
+    /// Creates a host control with user defined constructor props.
+    static member Create<'view, 'props>(attrs: IAttr<'view> list, createView: 'props -> 'view, props: 'props) : IView<'view> =
         {
             View.viewType = typeof<'view>
-            View.viewConstructorParams = constructorParams
+            View.createView = createView >> Utils.cast<IControl>
+            View.viewConstructorParams = props
             View.attrs = attrs
         }
         :> IView<'view>
         
+    /// Creates a host control.
     static member Create<'view>(attrs: IAttr<'view> list) : IView<'view> =
-        ViewBuilder.Create(attrs, null)
+        {
+            View.viewType = typeof<'view>
+            View.createView = (fun () -> Activator.CreateInstance<'view>()) >> Utils.cast<IControl>
+            View.viewConstructorParams = ()
+            View.attrs = attrs
+        }
+        :> IView<'view>

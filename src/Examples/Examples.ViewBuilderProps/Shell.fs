@@ -65,7 +65,7 @@ module Shell =
                                   TabItem.content (Counter.view state.counterState (CounterMsg >> dispatch)) ]
                             TabItem.create [
                                   TabItem.header "Form"
-                                  TabItem.content (ViewBuilder.Create<Form.Host>([], [| formProps |])) ]
+                                  TabItem.content (ViewBuilder.Create([], Form.Host, formProps)) ]
                             ]
                       ]
                 ]

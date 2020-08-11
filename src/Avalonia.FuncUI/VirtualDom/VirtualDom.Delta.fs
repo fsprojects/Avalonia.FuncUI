@@ -105,7 +105,8 @@ module internal rec Delta =
     type ViewDelta =
         {
             viewType: Type
-            viewConstructorParams: obj array
+            viewConstructorParams: obj
+            createView: obj -> Avalonia.Controls.IControl
             attrs: AttrDelta list
             reinstantiate: bool
         }
@@ -114,6 +115,7 @@ module internal rec Delta =
                 {
                     viewType = view.ViewType
                     viewConstructorParams = view.ViewConstructorParams
+                    createView    = view.CreateView
                     attrs = view.Attrs |> List.map AttrDelta.From
                     reinstantiate = false
                 }

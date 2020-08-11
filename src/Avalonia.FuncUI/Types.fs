@@ -132,27 +132,30 @@ module Types =
 
     type IView =
         abstract member ViewType: Type with get
-        abstract member ViewConstructorParams: obj array with get
+        abstract member ViewConstructorParams: obj
+        abstract member CreateView: (obj -> IControl) with get
         abstract member Attrs: IAttr list with get
         
-    type IView<'viewType> =
+    type IView<'view> =
         inherit IView
-        abstract member Attrs: IAttr<'viewType> list with get
+        abstract member Attrs: IAttr<'view> list with get
         
-    type View<'viewType> =
+    type View<'view, 'props> =
         {
             viewType: Type
-            viewConstructorParams: obj array
-            attrs: IAttr<'viewType> list
+            createView: 'props -> IControl
+            viewConstructorParams: 'props
+            attrs: IAttr<'view> list
         }
         
         interface IView with
             member this.ViewType = this.viewType
-            member this.ViewConstructorParams = this.viewConstructorParams
+            member this.ViewConstructorParams = this.viewConstructorParams |> box
+            member this.CreateView = (fun o -> (o :?> 'props) |> this.createView)
             member this.Attrs =
                 this.attrs |> List.map (fun attr -> attr :> IAttr)
             
-        interface IView<'viewType> with
+        interface IView<'view> with
             member this.Attrs = this.attrs
 
     

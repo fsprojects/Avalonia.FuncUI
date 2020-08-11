@@ -211,16 +211,8 @@ module internal rec Patcher =
 
     let create (viewElement: ViewDelta) : IControl =
         let control =
-            match viewElement.viewConstructorParams with
-            | null ->
-                viewElement.viewType
-                |> Activator.CreateInstance
-                |> Utils.cast<IControl>
-                
-            | constructorParams ->
-                (viewElement.viewType, constructorParams)
-                |> Activator.CreateInstance
-                |> Utils.cast<IControl>
+            viewElement.viewConstructorParams
+            |> viewElement.createView
 
         control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid())
         Patcher.patch (control, viewElement)

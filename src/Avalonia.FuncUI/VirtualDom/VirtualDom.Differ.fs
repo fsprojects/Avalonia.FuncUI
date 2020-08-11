@@ -148,6 +148,7 @@ module internal rec Differ =
                     ViewDelta.viewType = next.ViewType
                     ViewDelta.attrs = diffAttributes last.Attrs next.Attrs
                     ViewDelta.viewConstructorParams = next.ViewConstructorParams
+                    ViewDelta.createView = next.CreateView
                     ViewDelta.reinstantiate = false
                 }
                 
@@ -157,6 +158,7 @@ module internal rec Differ =
                     ViewDelta.viewType = next.ViewType
                     ViewDelta.attrs = List.map AttrDelta.From next.Attrs
                     ViewDelta.viewConstructorParams = next.ViewConstructorParams
+                    ViewDelta.createView = next.CreateView
                     ViewDelta.reinstantiate = last.ViewConstructorParams <> next.ViewConstructorParams
                 }
         else
