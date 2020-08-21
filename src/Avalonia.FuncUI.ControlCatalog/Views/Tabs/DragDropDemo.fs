@@ -15,22 +15,16 @@ module DragDropDemo =
     type State =
         { dropText: string
           dragText: string
-
-          // For some reason we get two onPointerPressed events when the user presses the mouse button over the drag
-          // source.  This is used to ignore the second one and avoid initiating two drag events.
-          dragging: bool
           dragCount: int }
 
     let init =
         { dropText = "Drop some text or files here"
           dragText = "Drag Me"
-          dragging = false
           dragCount = 0 }, Cmd.none
 
     type Msg =
         | BeginDrag of PointerPressedEventArgs
         | Dragged of string
-        | DragFailed of Exception
         | Dropped of string
 
     let doDrag (e, dragCount) =
@@ -50,20 +44,10 @@ module DragDropDemo =
     let update (msg: Msg) (state: State): State * Cmd<_> =
         match msg with
         | BeginDrag e ->
-            // If dragging has already been started, do nothing.  This works around a problem where we recieve two
-            // PointerPressedEvents.
-            if state.dragging then
-                state, Cmd.none
-            else
-                let dragCount = state.dragCount + 1
-                { state with
-                      dragging = true
-                      dragCount = dragCount }, Cmd.OfAsync.either doDrag (e, dragCount) Dragged DragFailed
+            let dragCount = state.dragCount + 1
+            { state with dragCount = dragCount }, Cmd.OfAsync.perform doDrag (e, dragCount) Dragged
         | Dragged s ->
-            { state with
-                  dragText = s
-                  dragging = false }, Cmd.none
-        | DragFailed _ -> { state with dragging = false }, Cmd.none
+            { state with dragText = s }, Cmd.none
         | Dropped s -> { state with dropText = s }, Cmd.none
 
     let view (state: State) (dispatch) =
@@ -88,7 +72,10 @@ module DragDropDemo =
                                     Border.borderThickness 2.0
                                     Border.padding 16.0
                                     Border.child (TextBlock.create [ TextBlock.text state.dragText ])
-                                    Border.onPointerPressed (BeginDrag >> dispatch) ]
+                                    Border.onPointerPressed (fun e ->
+                                                             // Set Handled to true, otherwise this will fire twice
+                                                             e.Handled <- true
+                                                             BeginDrag e |> dispatch) ]
                                 Border.create
                                     [ Border.classes [ "drop" ]
                                       Border.padding 16.0
