@@ -20,3 +20,6 @@ module Expander =
 
         static member isExpanded<'t when 't :> Expander>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Expander.IsExpandedProperty, value, ValueNone)
+
+        static member onIsExpandedChanged<'t when 't :> Expander>(func: bool -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'t> =
+            AttrBuilder<'t>.CreateSubscription(Expander.IsExpandedProperty, func, ?subPatchOptions = subPatchOptions)
