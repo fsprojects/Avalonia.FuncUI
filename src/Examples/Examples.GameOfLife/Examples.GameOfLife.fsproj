@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview2" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview5" />
         <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 

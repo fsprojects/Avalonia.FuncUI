@@ -23,9 +23,6 @@ module SelectingItemsControl =
             
         static member selectedItem<'t when 't :> SelectingItemsControl>(item: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(SelectingItemsControl.SelectedItemProperty, item, ValueNone)
-
-        static member selection<'t when 't :> SelectingItemsControl>(item: ISelectionModel) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ISelectionModel>(SelectingItemsControl.SelectionProperty, item, ValueNone)
             
         static member onSelectedItemChanged<'t when 't :> SelectingItemsControl>(func: obj -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<obj>(SelectingItemsControl.SelectedItemProperty, func, ?subPatchOptions = subPatchOptions)

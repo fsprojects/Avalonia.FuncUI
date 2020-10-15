@@ -79,6 +79,7 @@ module Main =
                     UniformGrid.children [
                         for i in [ 250<ml> .. 250<ml> .. 1000<ml> ] do
                             RadioButton.create [
+                                RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                                 RadioButton.onChecked (fun _ -> i |> SetWaterAmount |> dispatch)
                                 RadioButton.content (sprintf "%i ml" i)
                                 RadioButton.classes [ "water" ]
@@ -97,7 +98,7 @@ module Main =
                     Slider.tickFrequency 5.0
                     Slider.isSnapToTickEnabled true
                     Slider.value (float state.water)
-                    Slider.onValueChanged (fun i ->
+                    Slider.onValueChanged (fun i ->  
                         (int i)
                         |> LanguagePrimitives.Int32WithMeasure<ml>
                         |> SetWaterAmount
