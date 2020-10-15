@@ -18,6 +18,9 @@ module Border =
             
         static member background<'t when 't :> Border>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Border.background
+
+        static member background<'t when 't :> Border>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> Border.background
             
         static member borderBrush<'t when 't :> Border>(brush: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(Border.BorderBrushProperty, brush, ValueNone)
@@ -48,6 +51,12 @@ module Border =
             
         static member cornerRadius<'t when 't :> Border>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
             (left, top, right, bottom) |> CornerRadius |> Border.cornerRadius
+            
+        static member boxShadows<'t when 't :> Border>(value: BoxShadows) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty(Border.BoxShadowProperty, value, ValueNone)
+            
+        static member boxShadow<'t when 't :> Border>(value: BoxShadow) : IAttr<'t> =
+            value |> BoxShadows |> Border.boxShadows
             
         static member child<'t when 't :> Border>(value: IView option) : IAttr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Border.ChildProperty, value)

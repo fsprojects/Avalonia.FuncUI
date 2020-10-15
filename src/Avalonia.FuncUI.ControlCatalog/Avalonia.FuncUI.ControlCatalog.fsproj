@@ -7,6 +7,7 @@
 
     <ItemGroup>
         <Compile Include="Library\Extensions.fs" />
+        <Compile Include="Views\Tabs\ToggleSwitchDemo.fs" />
         
         <Compile Include="Views\Tabs\SpinnerDemo.fs" />
         <Compile Include="Views\Tabs\TreeViewDemo.fs" />
@@ -19,9 +20,13 @@
         <Compile Include="Views\Tabs\MenuDemo.fs" />
         <Compile Include="Views\Tabs\StylesDemo.fs" />
         <Compile Include="Views\Tabs\TextBoxDemo.fs" />
-        <Compile Include="Views\Tabs\DatePickerDemo.fs" />
-        <AvaloniaResource Include="Views\Tabs\Styles.xaml" />
         <Compile Include="Views\Tabs\GridPatchDemo.fs" />
+        <Compile Include="Views\Tabs\CalendarDatePickerDemo.fs" />
+        <Compile Include="Views\Tabs\DatePickerDemo.fs" />
+        <Compile Include="Views\Tabs\TimePickerDemo.fs" />
+        <Compile Include="Views\Tabs\SplitViewDemo.fs" />
+        <Compile Include="Views\Tabs\TickBarDemo.fs" />
+        <AvaloniaResource Include="**\*.xaml" />
         <Compile Include="Views\MainView.fs" />
         
         <Compile Include="Main.fs" />
@@ -34,9 +39,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Avalonia.Desktop" Version="0.9.9" />
+      <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview2" />
       <PackageReference Include="Bogus" Version="28.4.1" />
-      <PackageReference Update="FSharp.Core" Version="4.7.0" />
+      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 
 </Project>

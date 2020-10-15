@@ -27,10 +27,14 @@ module StyledElement =
         static member classes<'t when 't :> StyledElement>(classes: string list) : IAttr<'t> =
             classes |> Classes |> StyledElement.classes  
              
+        /// Use 'classes' instead when possible.
         static member styles<'t when 't :> StyledElement>(value: Styles) : IAttr<'t> =
             let getter : ('t -> Styles) = (fun control -> control.Styles)
-            let setter : ('t * Styles -> unit) = (fun (control, value) -> control.Styles <- value)
-            
+            let setter : ('t * Styles -> unit) = 
+                (fun (control, value) -> 
+                     control.Styles.Clear()
+                     control.Styles.AddRange(value))
+
             AttrBuilder<'t>.CreateProperty<Styles>("Styles", value, ValueSome getter, ValueSome setter, ValueNone, fun () -> Styles())
             
         static member resources<'t when 't :> StyledElement>(value: IResourceDictionary) : IAttr<'t> =

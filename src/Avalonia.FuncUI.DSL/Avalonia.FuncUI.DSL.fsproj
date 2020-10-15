@@ -15,7 +15,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Library.fs" />
+        <Compile Include="TickBar.fs" />
         <Compile Include="Base\Layoutable.fs" />
         <Compile Include="Base\Visual.fs" />
         <Compile Include="Base\InputElement.fs" />
@@ -58,20 +58,23 @@
         <Compile Include="Components\LazyView.fs" />
 
         <Compile Include="Calendar\Calendar.fs" />
-        <Compile Include="Calendar\DatePicker.fs" />
+        <Compile Include="Calendar\CalendarDatePicker.fs" />
+        <Compile Include="DatePicker.fs" />
+        <Compile Include="TimePicker.fs" />
 
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
         <Compile Include="ToggleButton.fs" />
+        <Compile Include="ToggleSwitch.fs" />
         <Compile Include="ButtonSpinner.fs" />
         <Compile Include="NumericUpDown.fs" />
         <Compile Include="Border.fs" />
         <Compile Include="Decorator.fs" />
         <Compile Include="DataValidationErrors.fs" />
-        <Compile Include="ComboBox.fs" />
         <Compile Include="ComboBoxItem.fs" />
+        <Compile Include="ComboBox.fs" />
         <Compile Include="CheckBox.fs" />
         <Compile Include="Carousel.fs" />
         <Compile Include="Image.fs" />
@@ -89,6 +92,7 @@
         <Compile Include="ScrollViewer.fs" />
         <Compile Include="Separator.fs" />
         <Compile Include="Slider.fs" />
+        <Compile Include="SplitView.fs" />
         <Compile Include="DrawingPresenter.fs" />
         <Compile Include="Expander.fs" />
         <Compile Include="Spinner.fs" />
@@ -105,7 +109,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-      <PackageReference Include="Avalonia.Desktop" Version="0.9.9" />
+      <PackageReference Include="Avalonia.Desktop" Version="0.10.0-preview2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 
 </Project>

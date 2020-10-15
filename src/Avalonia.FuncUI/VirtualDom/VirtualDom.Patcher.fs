@@ -45,7 +45,9 @@ module internal rec Patcher =
         match attr.accessor with
         | Accessor.AvaloniaProperty avaloniaProperty ->
             match attr.value with
-            | Some value -> view.SetValue(avaloniaProperty, value);
+            | Some value -> 
+                view.SetValue(avaloniaProperty, value)
+                |> ignore
             | None ->
                 match attr.defaultValueFactory with
                 | ValueNone ->
@@ -54,6 +56,7 @@ module internal rec Patcher =
                 | ValueSome factory ->
                     let value = factory()
                     view.SetValue(avaloniaProperty, value)
+                    |> ignore
 
         | Accessor.InstanceProperty instanceProperty ->
             let propertyInfo = view.GetType().GetProperty(instanceProperty.name);
@@ -152,7 +155,7 @@ module internal rec Patcher =
 
         | Accessor.AvaloniaProperty property ->
             let getter = Some (fun () -> view.GetValue(property))
-            let setter = Some (fun obj -> view.SetValue(property, obj))
+            let setter = Some (fun obj -> view.SetValue(property, obj) |> ignore)
             patch (getter, setter)
 
     let private patchContentSingle (view: IControl) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
@@ -167,6 +170,7 @@ module internal rec Patcher =
                 else
                     let createdControl = Patcher.create(viewElement)
                     view.SetValue(property, createdControl)
+                    |> ignore
             | None ->
                 (view :?> AvaloniaObject).ClearValue(property)
 
@@ -212,6 +216,6 @@ module internal rec Patcher =
     let create (viewElement: ViewDelta) : IControl =
         let control = viewElement.viewType |> Activator.CreateInstance |> Utils.cast<IControl>
 
-        control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid())
+        control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid()) |> ignore
         Patcher.patch (control, viewElement)
         control

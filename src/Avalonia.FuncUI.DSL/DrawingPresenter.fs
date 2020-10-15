@@ -1,6 +1,8 @@
 ﻿namespace Avalonia.FuncUI.DSL
 
-[<AutoOpen>]
+open System
+
+[<AutoOpen; Obsolete "use 'Image' with 'DrawingImage' instead">]
 module DrawingPresenter =
     open Avalonia.Controls
     open Avalonia.Media

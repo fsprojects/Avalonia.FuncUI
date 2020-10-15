@@ -1,0 +1,42 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style Selector="TabControl">
+        <Setter Property="TabStripPlacement" Value="Left" />
+        <Setter Property="Padding" Value="8 0 0 0" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    Margin="{TemplateBinding Margin}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}">
+                    <DockPanel>
+                        <ScrollViewer
+                            Name="PART_ScrollViewer"
+                            Background="{TemplateBinding Background}"
+                            DockPanel.Dock="Left"
+                            HorizontalScrollBarVisibility="{TemplateBinding (ScrollViewer.HorizontalScrollBarVisibility)}"
+                            VerticalScrollBarVisibility="{TemplateBinding (ScrollViewer.VerticalScrollBarVisibility)}">
+                            <ItemsPresenter
+                                Name="PART_ItemsPresenter"
+                                ItemTemplate="{TemplateBinding ItemTemplate}"
+                                Items="{TemplateBinding Items}"
+                                ItemsPanel="{TemplateBinding ItemsPanel}" />
+                        </ScrollViewer>
+                        <ContentControl
+                            HorizontalContentAlignment="Right"
+                            Content="{TemplateBinding Tag}"
+                            DockPanel.Dock="Bottom" />
+                        <ScrollViewer HorizontalScrollBarVisibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.(ScrollViewer.HorizontalScrollBarVisibility)}" VerticalScrollBarVisibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=SelectedItem.(ScrollViewer.VerticalScrollBarVisibility)}">
+                            <ContentPresenter
+                                Name="PART_SelectedContentHost"
+                                Margin="{TemplateBinding Padding}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Content="{TemplateBinding SelectedContent}"
+                                ContentTemplate="{TemplateBinding SelectedContentTemplate}" />
+                        </ScrollViewer>
+                    </DockPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

@@ -1,6 +1,7 @@
 namespace Avalonia.FuncUI.ControlCatalog.Views
 
 open Avalonia.Controls
+open Avalonia.Layout
 open Elmish
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
@@ -25,16 +26,19 @@ module TextBoxDemo =
             StackPanel.children [
                 TextBox.create [
                   TextBox.watermark state.watermark
+                  TextBox.horizontalAlignment HorizontalAlignment.Stretch
                 ]
 
                 Button.create [
                     Button.content "Set Watermark"
                     Button.onClick (fun _ -> dispatch (SetWatermark "I'm the watermark"))
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
                 
                 Button.create [
                     Button.content "Unset Watermark"
                     Button.onClick (fun _ -> dispatch (SetWatermark ""))
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ] 
             ]
         ]   

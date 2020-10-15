@@ -1,11 +1,10 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
-open System
 open Avalonia.Controls
+open Avalonia.Layout
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
-open Avalonia.Layout
 open Elmish
 
 module GridPatchDemo =
@@ -17,10 +16,13 @@ module GridPatchDemo =
     let update (msg: Msg) (state: State) : State =
         match msg with
         | Toggle ->
-            { state with orientation =
-                match state.orientation with
-                | Orientation.Horizontal -> Orientation.Vertical
-                | Orientation.Vertical -> Orientation.Horizontal }
+            { state with 
+                orientation =
+                    match state.orientation with
+                    | Orientation.Horizontal -> Orientation.Vertical
+                    | Orientation.Vertical   -> Orientation.Horizontal
+                    | _                      -> Orientation.Horizontal
+            }
            
     let view (state: State) (dispatch) =
         DockPanel.create [
@@ -28,13 +30,14 @@ module GridPatchDemo =
                 Button.create [
                     Button.dock Dock.Top
                     Button.content "toggle"
-                    Button.onClick (fun args -> dispatch Toggle)
+                    Button.onClick (fun _ -> dispatch Toggle)
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                 ]
                 Grid.create [
                     yield
                         match state.orientation with
-                        | Orientation.Horizontal -> Grid.rowDefinitions "1*, 1*"
-                        | Orientation.Vertical -> Grid.columnDefinitions "1*, 1*"
+                        | Orientation.Horizontal -> Grid.rowDefinitions "*, *"
+                        | Orientation.Vertical -> Grid.columnDefinitions "*, *"
                     
                     yield Grid.showGridLines true
                     yield Grid.children [

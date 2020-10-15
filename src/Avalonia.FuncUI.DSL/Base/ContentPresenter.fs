@@ -1,8 +1,8 @@
 namespace Avalonia.FuncUI.DSL
-open Avalonia
 
 [<AutoOpen>]
 module ContentPresenter =
+    open Avalonia
     open Avalonia.Controls.Templates
     open Avalonia.Layout    
     open Avalonia.Controls.Presenters
@@ -38,6 +38,12 @@ module ContentPresenter =
             
         static member borderThickness<'t when 't :> ContentPresenter>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
             Thickness(left, top, right, bottom) |> ContentPresenter.borderThickness
+        
+        static member boxShadows<'t when 't :> ContentPresenter>(value: BoxShadows) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty(ContentPresenter.BoxShadowProperty, value, ValueNone)
+            
+        static member boxShadow<'t when 't :> ContentPresenter>(value: BoxShadow) : IAttr<'t> =
+            value |> BoxShadows |> ContentPresenter.boxShadows
             
         static member cornerRadius<'t when 't :> ContentPresenter>(value: CornerRadius) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<CornerRadius>(ContentPresenter.CornerRadiusProperty, value, ValueNone)

@@ -32,11 +32,8 @@ type DataTemplateView<'data, 'view when 'view :> IView>
         
     override this.GetHashCode () =
         (this.ViewFunc.GetType(), this.SupportsRecycling).GetHashCode()
-    
+
     interface ITreeDataTemplate with
-        member this.SupportsRecycling =
-            this.SupportsRecycling
-            
         member this.ItemsSelector (item: obj) : InstancedBinding =
             match this.ItemsSource with
             | ValueNone -> null
