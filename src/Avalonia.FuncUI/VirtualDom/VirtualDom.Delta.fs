@@ -11,105 +11,92 @@ module internal rec Delta =
         | Property of PropertyDelta
         | Content of ContentDelta
         | Subscription of SubscriptionDelta   
-        with
-            static member From (attr: IAttr) : AttrDelta =
-                match attr with
-                | Property' property -> Property (PropertyDelta.From property)
-                | Content' content -> Content (ContentDelta.From content)
-                | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
-                | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
+
+        static member From (attr: IAttr) : AttrDelta =
+            match attr with
+            | Property' property -> Property (PropertyDelta.From property)
+            | Content' content -> Content (ContentDelta.From content)
+            | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
+            | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
                 
            
     [<CustomEquality; NoComparison>]
     type PropertyDelta =
-        {
-            accessor: Accessor
-            value: obj option
-            defaultValueFactory: (unit -> obj) voption
-        }
-        with
-            static member From (property: Property) : PropertyDelta =
-                {
-                    accessor = property.accessor
-                    value = Some property.value
-                    defaultValueFactory = property.defaultValueFactory
-                }
-            override this.Equals (other: obj) : bool =
-                match other with
-                | :? PropertyDelta as other -> 
-                    this.accessor = other.accessor &&
-                    this.value = other.value
-                | _ -> false
-                    
-            override this.GetHashCode () =
-                (this.accessor, this.value).GetHashCode()
+        { Accessor: Accessor
+          Value: obj option
+          DefaultValueFactory: (unit -> obj) voption }
+
+        static member From (property: Property) : PropertyDelta =
+            { Accessor = property.Accessor
+              Value = Some property.Value
+              DefaultValueFactory = property.DefaultValueFactory }
+            
+        override this.Equals (other: obj) : bool =
+            match other with
+            | :? PropertyDelta as other -> 
+                this.Accessor = other.Accessor &&
+                this.Value = other.Value
+            | _ -> false
+                
+        override this.GetHashCode () =
+            (this.Accessor, this.Value).GetHashCode()
 
                 
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
-        {
-            name: string
-            subscribe: Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
-            func: Delegate option
-        }
-        with
-            override this.Equals (other: obj) : bool =
-                match other with
-                | :? Subscription as other -> 
-                    this.name = other.name
-                | _ -> false
-                    
-            override this.GetHashCode () =
-                (this.name).GetHashCode()
+        { Name: string
+          Subscribe: Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
+          Func: Delegate option }
+
+        override this.Equals (other: obj) : bool =
+            match other with
+            | :? Subscription as other -> 
+                this.Name = other.Name
+            | _ -> false
                 
-            static member From (subscription: Subscription) : SubscriptionDelta =
-                {
-                    name = subscription.name;
-                    subscribe = subscription.subscribe;
-                    func = Some subscription.func
-                }
-            member this.UniqueName = this.name
+        override this.GetHashCode () =
+            this.Name.GetHashCode()
+            
+        static member From (subscription: Subscription) : SubscriptionDelta =
+            { Name = subscription.Name;
+              Subscribe = subscription.Subscribe;
+              Func = Some subscription.Func }
+            
+        member this.UniqueName = this.Name
     
     type  ContentDelta =
-        {
-            accessor: Accessor
-            content: ViewContentDelta
-        }
-        with
-            static member From (content: Content) : ContentDelta =
-                {
-                    accessor = content.accessor;
-                    content = ViewContentDelta.From content.content
-                }
+        { Accessor: Accessor
+          Content: ViewContentDelta }
+
+        static member From (content: Content) : ContentDelta =
+            { Accessor = content.Accessor;
+              Content = ViewContentDelta.From content.Content }
         
     type ViewContentDelta =
         | Single of ViewDelta option
         | Multiple of ViewDelta list
-        with
-            static member From (viewContent: ViewContent) : ViewContentDelta =
-                match viewContent with
-                | ViewContent.Single single ->
-                    match single with
-                    | Some view ->
-                        (ViewDelta.From view)
-                        |> Some
-                        |> ViewContentDelta.Single
-                    | None ->
-                        None
-                        |> ViewContentDelta.Single    
-                | ViewContent.Multiple multiple ->
-                    multiple
-                    |> List.map (fun view -> ViewDelta.From view)
-                    |> ViewContentDelta.Multiple
+
+        static member From (viewContent: ViewContent) : ViewContentDelta =
+            match viewContent with
+            | ViewContent.Single single ->
+                match single with
+                | Some view ->
+                    (ViewDelta.From view)
+                    |> Some
+                    |> ViewContentDelta.Single
+                | None ->
+                    None
+                    |> ViewContentDelta.Single
+                    
+            | ViewContent.Multiple multiple ->
+                multiple
+                |> List.map (fun view -> ViewDelta.From view)
+                |> ViewContentDelta.Multiple
 
     type ViewDelta =
-        {
-            viewType: Type
-            attrs: AttrDelta list
-        }
-        with
-            static member From (view: IView) : ViewDelta =
-                {
-                    viewType = view.ViewType
-                    attrs = view.Attrs |> List.map AttrDelta.From
-                }
+        { ViewType: Type
+          Attrs: AttrDelta list }
+
+        static member From (view: IView) : ViewDelta =
+            { ViewType = view.ViewType
+              Attrs = view.Attrs |> List.map AttrDelta.From }

@@ -9,44 +9,45 @@ module internal rec Differ =
     let private update (last: IAttr) (next: IAttr) : AttrDelta =
         match next with
         | Property' property ->
-            AttrDelta.Property {
-                accessor = property.accessor
-                value = Some property.value
-                defaultValueFactory = property.defaultValueFactory
-            }
+            AttrDelta.Property
+                { Accessor = property.Accessor
+                  Value = Some property.Value
+                  DefaultValueFactory = property.DefaultValueFactory }
+                
         | Content' content ->
-            AttrDelta.Content {
-                accessor = content.accessor;
-                content = Differ.diffContent last next
-            }
+            AttrDelta.Content
+                { Accessor = content.Accessor;
+                  Content = Differ.diffContent last next }
+                
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
+            
         | _ -> failwithf "no update operation is defined for '%A' next" next
     
     let private reset (last: IAttr) : AttrDelta =
         match last with
         | Property' property ->
-            AttrDelta.Property {
-                accessor = property.accessor;
-                value = None
-                defaultValueFactory = property.defaultValueFactory
-            }
+            AttrDelta.Property
+                { Accessor = property.Accessor;
+                  Value = None
+                  DefaultValueFactory = property.DefaultValueFactory }
+                
         | Content' content ->
             let empty =
-                match content.content with
+                match content.Content with
                 | ViewContent.Single _ -> ViewContentDelta.Single None
                 | ViewContent.Multiple _ -> ViewContentDelta.Multiple []
             
-            AttrDelta.Content {
-                accessor = content.accessor;
-                content = empty
-            }
+            AttrDelta.Content
+                { Accessor = content.Accessor;
+                  Content = empty }
+                
         | Subscription' subscription ->
-            AttrDelta.Subscription {
-                name = subscription.name
-                subscribe = subscription.subscribe
-                func = None
-            }
+            AttrDelta.Subscription
+                { Name = subscription.Name
+                  Subscribe = subscription.Subscribe
+                  Func = None }
+                  
         | _ -> failwithf "no reset operation is defined for last '%A'" last
         
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
@@ -70,11 +71,11 @@ module internal rec Differ =
             | Content' nextContent ->
                 match last with
                 | Content' lastContent ->
-                    match nextContent.content with
+                    match nextContent.Content with
                     
                     // Single Content
                     | ViewContent.Single nextSingleContent ->
-                        match lastContent.content with
+                        match lastContent.Content with
                         | ViewContent.Single lastSingleContent ->
                             ViewContentDelta.Single (diffContentSingle lastSingleContent nextSingleContent)
                         | _ ->
@@ -82,7 +83,7 @@ module internal rec Differ =
                 
                     // Multiple Content
                     | ViewContent.Multiple nextMultipleContent ->
-                        match lastContent.content with
+                        match lastContent.Content with
                         | ViewContent.Multiple lastMultipleContent ->
                             ViewContentDelta.Multiple (diffContentMultiple lastMultipleContent nextMultipleContent)
                         | _ ->
@@ -141,10 +142,7 @@ module internal rec Differ =
     let diff (last: IView, next: IView) : ViewDelta =
         // only diff attributes if viewType matches
         if last.ViewType = next.ViewType then
-            {
-                ViewDelta.viewType = next.ViewType
-                ViewDelta.attrs = diffAttributes last.Attrs next.Attrs
-            }
+            { ViewDelta.ViewType = next.ViewType
+              ViewDelta.Attrs = diffAttributes last.Attrs next.Attrs }
         else
             ViewDelta.From next
-

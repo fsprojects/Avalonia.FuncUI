@@ -4,10 +4,9 @@ module Observable =
     open System
 
     let subscribeWeakly (source: IObservable<'a>, callback: 'a -> unit, target: 'target) =
-
-        let mutable sub:IDisposable = null
-        let mutable disposed = false
-        let wr = WeakReference<_>(target)
+        let mutable sub: IDisposable = null
+        let mutable disposed: bool = false
+        let wr = WeakReference<'target>(target)
 
         let dispose() =
             lock (sub) (fun () ->
