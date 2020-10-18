@@ -59,25 +59,24 @@ module internal rec Patcher =
                     |> ignore
 
         | Accessor.InstanceProperty instanceProperty ->
-            let propertyInfo = view.GetType().GetProperty(instanceProperty.Name);
-
-            match attr.Value with
-            | Some value ->
-                match propertyInfo.CanWrite with
-                | true -> propertyInfo.SetValue(view, value)
-                | false -> raise (Exception "Can't set readonly instance property")
-            | None ->
-                let defaultValue =
+            let value =
+                match attr.Value with
+                | Some value -> value
+                | None ->
                     match attr.DefaultValueFactory with
                     | ValueSome factory -> factory()
                     | ValueNone ->
-                        if propertyInfo.PropertyType.IsValueType then
-                            Activator.CreateInstance(propertyInfo.PropertyType)
-                        else
-                            null
+                        // TODO: get rid of reflection here
+                        let propertyInfo = view.GetType().GetProperty(instanceProperty.Name)
+                        
+                        match propertyInfo.PropertyType.IsValueType with
+                        | true -> Activator.CreateInstance(propertyInfo.PropertyType)
+                        | false -> null
 
-                propertyInfo.SetValue(view, defaultValue)
-
+            match instanceProperty.Setter with
+            | ValueSome setter -> setter (view, value)
+            | ValueNone _ -> failwithf "instance property ('%s') has no setter. " instanceProperty.Name
+                
     let private patchContentMultiple (view: IControl) (accessor: Accessor) (delta: ViewDelta list) : unit =
         (* often lists only have a get accessor *)
         let patch_IList (collection: IList) : unit =
