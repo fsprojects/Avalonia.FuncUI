@@ -17,7 +17,7 @@ steps:
   displayName: 'Use .NET Core sdk'
   inputs:
     packageType: sdk
-    version: 3.x
+    version: 5.x
     installationPath: $(Agent.ToolsDirectory)/dotnet
 
 # restore
