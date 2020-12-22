@@ -2,6 +2,7 @@
 
 open System
 open Avalonia
+open Avalonia.Themes.Fluent
 open Avalonia.Threading
 open Elmish
 open Avalonia.FuncUI.Components.Hosts
@@ -44,8 +45,7 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Load "avares://Avalonia.Themes.Fluent/Accents/FluentDark.xaml"
-        this.Styles.Load "avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"
+        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with

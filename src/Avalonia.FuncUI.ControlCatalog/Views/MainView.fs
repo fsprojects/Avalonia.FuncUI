@@ -58,8 +58,12 @@ module MainView =
                     TabItem.content (ViewBuilder.Create<CanvasDemo.Host>([]))
                 ]
                 TabItem.create [
-                    TabItem.header "Menu Demo"
-                    TabItem.content (ViewBuilder.Create<MenuDemo.Host>([]))
+                    TabItem.header "Context Menu Demo"
+                    TabItem.content (ViewBuilder.Create<ContextMenuDemo.Host>([]))
+                ]
+                TabItem.create [
+                    TabItem.header "Widow Menu Demo"
+                    TabItem.content (ViewBuilder.Create<WindowMenuDemo.Host>([]))
                 ]
                 // ToDo: return it back when styles will be worked
                 //TabItem.create [
