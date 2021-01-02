@@ -32,3 +32,9 @@ module ContentControl =
             
         static member verticalAlignment<'t when 't :> ContentControl>(value: VerticalAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<VerticalAlignment>(ContentControl.VerticalAlignmentProperty, value, ValueNone)
+        
+        static member horizontalContentAlignment<'t when 't :> ContentControl>(value: HorizontalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(ContentControl.HorizontalContentAlignmentProperty, value, ValueNone)
+
+        static member verticalContentAlignment<'t when 't :> ContentControl>(value: VerticalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<VerticalAlignment>(ContentControl.VerticalContentAlignmentProperty, value, ValueNone)
