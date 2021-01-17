@@ -60,10 +60,6 @@ module MainView =
                            TabItem.content (ViewBuilder.Create<CanvasDemo.Host>([]))
                        ]
                        TabItem.create [
-                           TabItem.header "Menu Demo"
-                           TabItem.content (ViewBuilder.Create<MenuDemo.Host>([]))
-                       ]
-                       TabItem.create [
                            TabItem.header "Styles Demo"
                            TabItem.content (ViewBuilder.Create<StylesDemo.Host>([]))
                        ]
