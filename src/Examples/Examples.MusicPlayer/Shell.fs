@@ -1,6 +1,5 @@
 namespace Examples.MusicPlayer
 
-
 module Shell =
     open System
     open Elmish
@@ -8,7 +7,6 @@ module Shell =
     open Avalonia.Controls
     open Avalonia.Input
     open Avalonia.Layout
-    open Avalonia.Threading
     open Avalonia.FuncUI.Elmish
     open Avalonia.FuncUI.Components.Hosts
     open Avalonia.FuncUI.DSL
@@ -16,8 +14,7 @@ module Shell =
     open Examples.MusicPlayer
 
     type State =
-        { window: HostWindow
-          title: string
+        { title: string
           playerState: Player.State
           playlistState: Playlist.State }
 
@@ -70,10 +67,9 @@ module Shell =
             Cmd.ofSub sub
 
 
-    let init (window: HostWindow) (player: MediaPlayer) =
-        { window = window
-          title = "Music Player in F# :)"
-          playerState = Player.init player
+    let init =
+        { title = "Music Player in F# :)"
+          playerState = Player.init
           playlistState = Playlist.init }
 
     (* here we use these functions to handle which kind of actions we need to take
@@ -106,10 +102,10 @@ module Shell =
             | Player.ExternalMsg.Shuffle -> Cmd.ofMsg (PlaylistMsg(Playlist.Msg.Shuffle))
             | Player.ExternalMsg.SetLoopState loopstate -> Cmd.ofMsg (PlaylistMsg(Playlist.Msg.SetLoopState loopstate))
 
-    let update (msg: Msg) (state: State) =
+    let update (msg: Msg) (state: State) (window: HostWindow) (player: MediaPlayer) =
         match msg with
         | PlayerMsg playermsg ->
-            let s, cmd, external = Player.update playermsg state.playerState
+            let s, cmd, external = Player.update playermsg state.playerState player
             let handled = handlePlayerExternal external
             let mapped = Cmd.map PlayerMsg cmd
             let batch = Cmd.batch [ mapped; handled ]
@@ -121,16 +117,16 @@ module Shell =
             let batch = Cmd.batch [ mapped; handled ]
             { state with playlistState = s }, batch
         | SetTitle title ->
-            state.window.Title <- title
+            window.Title <- title
             { state with title = title }, Cmd.none
         | OpenFiles ->
             let dialog = Dialogs.getMusicFilesDialog None
             let showDialog window = dialog.ShowAsync(window) |> Async.AwaitTask
-            state, Cmd.OfAsync.perform showDialog state.window AfterSelectFiles
+            state, Cmd.OfAsync.perform showDialog window AfterSelectFiles
         | OpenFolder ->
             let dialog = Dialogs.getFolderDialog
             let showDialog window = dialog.ShowAsync(window) |> Async.AwaitTask
-            state, Cmd.OfAsync.perform showDialog state.window AfterSelectFolder
+            state, Cmd.OfAsync.perform showDialog window AfterSelectFolder
         | AfterSelectFolder path ->
             let songs = Songs.populateFromDirectory path |> Array.toList
             state, Cmd.map PlaylistMsg (Cmd.ofMsg (Playlist.Msg.AddFiles songs))
@@ -192,22 +188,21 @@ module Shell =
             base.Height <- 600.0
             base.MinWidth <- 526.0
             base.MinHeight <- 526.0
+            this.SystemDecorations <- SystemDecorations.Full
+            
 
             //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
             //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
             let player = PlayerLib.getEmptyPlayer
-            let programInit (window, player) = init window player, Cmd.none
+            let init _ = init, Cmd.none
 #if DEBUG
             this.AttachDevTools(KeyGesture(Key.F12))
 #endif
-            let syncDispatch (dispatch: Dispatch<'msg>): Dispatch<'msg> =
-                match Dispatcher.UIThread.CheckAccess() with
-                | true -> fun msg -> Dispatcher.UIThread.Post(fun () -> dispatch msg)
-                | false -> fun msg -> dispatch msg
-
-            Program.mkProgram programInit update view
+            let updateWithServices (msg: Msg) (state: State) =
+                update msg state this player
+            
+            Program.mkProgram init updateWithServices view
             |> Program.withHost this
-            |> Program.withSyncDispatch syncDispatch
             |> Program.withSubscription (fun _ -> Subs.playing player)
             |> Program.withSubscription (fun _ -> Subs.paused player)
             |> Program.withSubscription (fun _ -> Subs.stoped player)
@@ -218,4 +213,4 @@ module Shell =
 #if DEBUG
             |> Program.withConsoleTrace
 #endif
-            |> Program.runWith (this, player)
+            |> Program.run

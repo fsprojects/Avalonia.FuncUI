@@ -26,7 +26,7 @@ module NumericUpDown =
             AttrBuilder<'t>.CreateProperty<bool>(NumericUpDown.ShowButtonSpinnerProperty, value, ValueNone)
 
         /// <summary>
-        /// Sets current location of the <see cref="NumericUPDown"/>.
+        /// Sets current location of the <see cref="NumericUpDown"/>.
         /// </summary>
         static member buttonSpinnerLocation<'t when 't :> NumericUpDown>(value: Location) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Location>(NumericUpDown.ButtonSpinnerLocationProperty, value, ValueNone)
@@ -47,7 +47,7 @@ module NumericUpDown =
             let getter : ('t -> CultureInfo) = (fun control -> control.CultureInfo)
             let setter : ('t * CultureInfo -> unit) = (fun (control, value) -> control.CultureInfo <- value)
 
-            AttrBuilder<'t>.CreateProperty<CultureInfo>("ClipValueToMinMax", value, ValueSome getter, ValueSome setter, ValueNone)
+            AttrBuilder<'t>.CreateProperty<CultureInfo>("CultureInfo", value, ValueSome getter, ValueSome setter, ValueNone)
 
         static member formatString<'t when 't :> NumericUpDown>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(NumericUpDown.FormatStringProperty, value, ValueNone)

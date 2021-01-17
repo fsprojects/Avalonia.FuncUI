@@ -11,9 +11,9 @@ module Player =
     open Examples.MusicPlayer
 
     type State =
-        { player: MediaPlayer
-          length: int64
+        { length: int64
           sliderPos: int
+          isPlaying: bool
           loopState: Types.LoopState }
 
     /// if you need to rise an event that needs to be consumed
@@ -32,6 +32,7 @@ module Player =
         | SetPos of int64
         | SetLength of int64
         | SetLoopState of Types.LoopState
+        | SetPlayState of bool
         | Previous
         | Pause
         | Stop
@@ -39,41 +40,44 @@ module Player =
         | Next
         | Shuffle
 
-    let init player =
-        { player = player
-          length = 0L
+    let init =
+        { length = 0L
           sliderPos = 0
+          isPlaying = false
           loopState = Types.LoopState.Off }
 
-    let update msg state =
+    let update (msg: Msg) (state: State) (player: MediaPlayer) =
         match msg with
+        | SetPlayState isPlaying ->
+            { state with isPlaying = isPlaying }, Cmd.none, None
         | Play song ->
             use media = PlayerLib.getMediaFromlocal song.path
-            state.player.Play media |> ignore
-            state, Cmd.ofMsg (SetLength state.player.Length), None
+            player.Play media |> ignore
+            let batch = Cmd.batch [ Cmd.ofMsg (SetLength player.Length); Cmd.ofMsg (SetPlayState true) ]
+            state, batch, None
         | Seek position ->
-            let time = (position |> int64) * state.player.Length / 100L
+            let time = (position |> int64) * player.Length / 100L
             (* find a way to differentiate from user action vs player event *)
             state, Cmd.none, None
         | SetLength length -> { state with length = length }, Cmd.none, None
         | SetPos position ->
-            let pos = (position * 100L / state.player.Length) |> int
+            let pos = (position * 100L / player.Length) |> int
             { state with sliderPos = pos }, Cmd.none, None
         | SetLoopState loopState ->
             { state with loopState = loopState }, Cmd.none, Some(ExternalMsg.SetLoopState loopState)
         | Shuffle -> state, Cmd.none, Some ExternalMsg.Shuffle
         | Previous ->
-            state.player.PreviousChapter()
+            player.PreviousChapter()
             state, Cmd.none, Some ExternalMsg.Previous
         | Next ->
-            state.player.NextChapter()
+            player.NextChapter()
             state, Cmd.none, Some ExternalMsg.Next
         | Pause ->
-            state.player.Pause()
-            state, Cmd.none, None
+            player.Pause()
+            state, Cmd.ofMsg (SetPlayState false), None
         | Stop ->
-            state.player.Stop()
-            state, Cmd.none, None
+            player.Stop()
+            state, Cmd.ofMsg (SetPlayState false), None
         | PlayInternal -> state, Cmd.none, Some ExternalMsg.Play
 
 
@@ -84,58 +88,57 @@ module Player =
             StackPanel.orientation Orientation.Horizontal
             StackPanel.dock Dock.Top
             StackPanel.children [
-                yield Button.create [
-                    Button.content Icons.previous
-                    Button.classes [ "mediabtn" ]
-                    Button.onClick (fun _ -> dispatch Previous)
-                ]
-                
-                if state.player.IsPlaying then
-                    yield Button.create [
+                if state.isPlaying then
+                    Button.create [
+                        Button.content Icons.previous
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch Previous)
+                    ]
+                    Button.create [
                         Button.content Icons.pause
                         Button.classes [ "mediabtn" ]
                         Button.onClick (fun _ -> dispatch Pause)
                     ]
-                    yield Button.create [
+                    Button.create [
                         Button.content Icons.stop
                         Button.classes [ "mediabtn" ]
                         Button.onClick (fun _ -> dispatch Stop)
                     ]
-                else
-                    yield Button.create [
-                        Button.content Icons.play
-                        Button.classes [ "mediabtn" ]
-                        Button.onClick (fun _ -> dispatch PlayInternal)
-                    ]
-                    yield Button.create [
+                    Button.create [
                         Button.content Icons.next
                         Button.classes [ "mediabtn" ]
                         Button.onClick (fun _ -> dispatch Next)
                     ]
-                    yield Button.create [
+                else
+                    Button.create [
+                        Button.content Icons.play
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch PlayInternal)
+                    ]
+                    Button.create [
                         Button.content Icons.shuffle
                         Button.classes [ "mediabtn" ]
                         Button.onClick (fun _ -> dispatch Shuffle)
                     ]
-                    match state.loopState with
-                    | Types.LoopState.All ->
-                        yield Button.create [
-                            Button.content Icons.repeat
-                            Button.classes [ "mediabtn" ]
-                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Single))
-                        ]
-                    | Types.LoopState.Single ->
-                        yield Button.create [
-                            Button.content Icons.repeatOne
-                            Button.classes [ "mediabtn" ]
-                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Off))
-                        ]
-                    | Types.LoopState.Off ->
-                        yield Button.create [
-                            Button.content Icons.repeatOff
-                            Button.classes [ "mediabtn" ]
-                            Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.All))
-                        ]
+                match state.loopState with
+                | Types.LoopState.All ->
+                    Button.create [
+                        Button.content Icons.repeat
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Single))
+                    ]
+                | Types.LoopState.Single ->
+                    Button.create [
+                        Button.content Icons.repeatOne
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.Off))
+                    ]
+                | Types.LoopState.Off ->
+                    Button.create [
+                        Button.content Icons.repeatOff
+                        Button.classes [ "mediabtn" ]
+                        Button.onClick (fun _ -> dispatch (SetLoopState Types.LoopState.All))
+                    ]
             ]
         ]
 

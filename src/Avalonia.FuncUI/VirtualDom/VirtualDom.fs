@@ -22,7 +22,8 @@ module rec VirtualDom =
                 match host.Content with
                 | :? IControl as control -> ValueSome control
                 | _ -> ValueNone
-            else ValueNone
+            else
+                ValueNone
 
         let delta : ViewDelta voption =
             match last with
@@ -39,10 +40,12 @@ module rec VirtualDom =
         | ValueSome control ->
             match delta with
             | ValueSome delta ->
-                match control.GetType() = delta.viewType with
+                match control.GetType() = delta.ViewType with
                 | true -> Patcher.patch (control, delta)
                 | false -> host.Content <- Patcher.create (delta)
-            | ValueNone -> host.Content <- null
+            | ValueNone ->
+                host.Content <- null
+            
         | ValueNone ->
             match delta with
             | ValueSome delta -> host.Content <- Patcher.create (delta)

@@ -1,8 +1,11 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog
 
-open Avalonia.FuncUI.Components.Hosts
+open System
 open Avalonia
+open Avalonia.Logging.Serilog
+open Avalonia.FuncUI.Components.Hosts
 open Avalonia.FuncUI.Elmish
+open Avalonia.Themes.Fluent
 open Elmish
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI.ControlCatalog.Views
@@ -23,9 +26,8 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Load "avares://Avalonia.Themes.Default/DefaultTheme.xaml"
-        //this.Styles.Load "resm:Avalonia.Themes.Default.DefaultTheme.xaml?assembly=Avalonia.Themes.Default"
-        this.Styles.Load "resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default"
+        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
+        this.Styles.Load "avares://Avalonia.FuncUI.ControlCatalog/Styles/TabControl.xaml"
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
@@ -40,8 +42,6 @@ type App() =
         | _ -> ()
 
 module Program =
-    open System
-    open Avalonia.Logging.Serilog
 
     [<STAThread>]
     [<EntryPoint>]
@@ -50,6 +50,5 @@ module Program =
             .Configure<App>()
             .UsePlatformDetect()
             .UseSkia()
-            .LogToDebug()
             .StartWithClassicDesktopLifetime(args)
 

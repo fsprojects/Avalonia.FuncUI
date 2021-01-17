@@ -2,6 +2,7 @@ namespace Examples.MusicPlayer
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI
+open Avalonia.Themes.Fluent
 open LibVLCSharp.Shared
 
 
@@ -9,7 +10,7 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Load "avares://Citrus.Avalonia/Rust.xaml"
+        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
         this.Styles.Load "avares://Examples.MusicPlayer/Styles.xaml"
         Core.Initialize()
 

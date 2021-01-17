@@ -2,6 +2,7 @@
 
 open System
 open Avalonia
+open Avalonia.Themes.Fluent
 open Elmish
 open Avalonia.FuncUI.Components.Hosts
 open Avalonia.FuncUI
@@ -38,8 +39,7 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Load "resm:Avalonia.Themes.Default.DefaultTheme.xaml?assembly=Avalonia.Themes.Default"
-        this.Styles.Load "resm:Avalonia.Themes.Default.Accents.BaseDark.xaml?assembly=Avalonia.Themes.Default"
+        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with

@@ -4,10 +4,9 @@ module Observable =
     open System
 
     let subscribeWeakly (source: IObservable<'a>, callback: 'a -> unit, target: 'target) =
-
-        let mutable sub:IDisposable = null
-        let mutable disposed = false
-        let wr = WeakReference<_>(target)
+        let mutable sub: IDisposable = null
+        let mutable disposed: bool = false
+        let wr = WeakReference<'target>(target)
 
         let dispose() =
             lock (sub) (fun () ->
@@ -35,16 +34,16 @@ module internal Extensions =
             Observable.subscribeWeakly(this, callback, target)
 
     type IInteractive with
-        member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent) : IObservable<'args> =
+        member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent<'args>) : IObservable<'args> =
 
             let sub = Func<IObserver<'args>, IDisposable>(fun observer ->
                 // push new update to subscribers
-                let publish = Action<obj, 'args>(fun _ e ->
+                let handler = EventHandler<'args>(fun _ e ->
                     observer.OnNext e
                 )
                 
                 // subscribe to event changes so they can be pushed to subscribers
-                this.AddHandler(routedEvent, publish, routedEvent.RoutingStrategies)
+                this.AddDisposableHandler(routedEvent, handler, routedEvent.RoutingStrategies)
             )
             
             Observable.Create(sub)

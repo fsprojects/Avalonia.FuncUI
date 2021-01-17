@@ -3,6 +3,7 @@
 open Elmish
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.Components.Hosts
@@ -12,8 +13,8 @@ type MainWindow() as this =
     inherit HostWindow()
     do
         base.Title <- "Presso"
-        base.Width <- 400.0
-        base.Height <- 400.0
+        base.Width <- 500.0
+        base.Height <- 500.0
         
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
@@ -27,8 +28,7 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Load "avares://Avalonia.Themes.Default/DefaultTheme.xaml"
-        this.Styles.Load "avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"
+        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
         this.Styles.Load "avares://Examples.Presso/Styles/Styles.xaml"
 
     override this.OnFrameworkInitializationCompleted() =
@@ -36,10 +36,6 @@ type App() =
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
             desktopLifetime.MainWindow <- MainWindow()
             
-            match desktopLifetime.MainWindow.PlatformImpl with
-            | :? Avalonia.Native.WindowImpl as mac ->
-                mac.SetTitleBarColor(Color.Parse "#282828")
-            | _ -> ()
         | _ -> ()
 
 module Program =

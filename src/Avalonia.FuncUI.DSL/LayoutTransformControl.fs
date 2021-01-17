@@ -12,7 +12,7 @@ module LayoutTransformControl =
 
     type LayoutTransformControl with
         static member layoutTransform<'t when 't :> LayoutTransformControl>(value: Transform) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<Transform>(LayoutTransformControl.TransitionsProperty, value, ValueNone)
+            AttrBuilder<'t>.CreateProperty<Transform>(LayoutTransformControl.LayoutTransformProperty, value, ValueNone)
             
         static member useRenderTransform<'t when 't :> LayoutTransformControl>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(LayoutTransformControl.UseRenderTransformProperty, value, ValueNone)

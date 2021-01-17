@@ -79,6 +79,7 @@ module Main =
                     UniformGrid.children [
                         for i in [ 250<ml> .. 250<ml> .. 1000<ml> ] do
                             RadioButton.create [
+                                RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                                 RadioButton.onChecked (fun _ -> i |> SetWaterAmount |> dispatch)
                                 RadioButton.content (sprintf "%i ml" i)
                                 RadioButton.classes [ "water" ]
@@ -97,7 +98,7 @@ module Main =
                     Slider.tickFrequency 5.0
                     Slider.isSnapToTickEnabled true
                     Slider.value (float state.water)
-                    Slider.onValueChanged (fun i ->
+                    Slider.onValueChanged (fun i ->  
                         (int i)
                         |> LanguagePrimitives.Int32WithMeasure<ml>
                         |> SetWaterAmount
@@ -122,6 +123,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
+                            RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.General |> SetBrewingMethod |> dispatch)
                             RadioButton.groupName "brewing_method"
                             RadioButton.content "General"
@@ -134,6 +136,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
+                            RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.ColdBrew |> SetBrewingMethod |> dispatch)
                             RadioButton.content "Cold Brew"
                             RadioButton.groupName "brewing_method"
@@ -146,6 +149,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
+                            RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.FrenchPress |> SetBrewingMethod |> dispatch)
                             RadioButton.content "French Press"
                             RadioButton.groupName "brewing_method"
@@ -158,6 +162,7 @@ module Main =
                                 brush.Stretch <- Stretch.UniformToFill
                                 brush                                  
                             )
+                            RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.PourOver |> SetBrewingMethod |> dispatch)
                             RadioButton.content "Pour Over"
                             RadioButton.groupName "brewing_method"
@@ -195,6 +200,7 @@ module Main =
                                     RadioButton.groupName "strength"
                                     RadioButton.classes [ "strength" ]
                                     RadioButton.isChecked (state.strength.Equals Strength.Regular)
+                                    RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                                 ]
                                 RadioButton.create [
                                     RadioButton.onChecked (fun _ -> Strength.Strong |> SetStrength |> dispatch)
@@ -202,6 +208,7 @@ module Main =
                                     RadioButton.groupName "strength"
                                     RadioButton.classes [ "strength" ]
                                     RadioButton.isChecked (state.strength.Equals Strength.Strong)
+                                    RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                                 ]
                             ]
                         ]

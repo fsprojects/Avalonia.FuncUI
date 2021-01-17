@@ -27,17 +27,17 @@ module DifferTests =
 
         let delta : Delta.ViewDelta = 
             {
-                viewType = typeof<TextBlock>
-                attrs = [
+                ViewType = typeof<TextBlock>
+                Attrs = [
                     Delta.AttrDelta.Property {
-                        accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
-                        value = Some ("some other text" :> obj)
-                        defaultValueFactory = ValueNone
+                        Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
+                        Value = Some ("some other text" :> obj)
+                        DefaultValueFactory = ValueNone
                     };
                     Delta.AttrDelta.Property {
-                        accessor = Accessor.AvaloniaProperty TextBlock.FontStyleProperty
-                        value = None
-                        defaultValueFactory = ValueNone
+                        Accessor = Accessor.AvaloniaProperty TextBlock.FontStyleProperty
+                        Value = None
+                        DefaultValueFactory = ValueNone
                     };                       
                 ]
             }
@@ -63,12 +63,12 @@ module DifferTests =
 
         let delta : Delta.ViewDelta = 
             {
-                viewType = typeof<TextBlock>
-                attrs = [
+                ViewType = typeof<TextBlock>
+                Attrs = [
                     Delta.AttrDelta.Property {
-                        accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
-                        value = Some ("some other text" :> obj)
-                        defaultValueFactory = ValueNone
+                        Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
+                        Value = Some ("some other text" :> obj)
+                        DefaultValueFactory = ValueNone
                     }
                 ]
             }
@@ -106,28 +106,28 @@ module DifferTests =
 
             let delta : Delta.ViewDelta = 
                 {
-                    viewType = typeof<Button>
-                    attrs = [
+                    ViewType = typeof<Button>
+                    Attrs = [
                         Delta.AttrDelta.Property {
-                            accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
-                            value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
-                            defaultValueFactory = ValueNone
+                            Accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
+                            Value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
+                            DefaultValueFactory = ValueNone
                         };
                         Delta.AttrDelta.Content {
-                            accessor = Accessor.AvaloniaProperty Button.ContentProperty
-                            content = Delta.ViewContentDelta.Single
+                            Accessor = Accessor.AvaloniaProperty Button.ContentProperty
+                            Content = Delta.ViewContentDelta.Single
                                 ( Some {
-                                    viewType = typeof<TextBlock>
-                                    attrs = [
+                                    ViewType = typeof<TextBlock>
+                                    Attrs = [
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
-                                            value = Some ("some other text" :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
+                                            Value = Some ("some other text" :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
-                                            value = Some (15.0 :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
+                                            Value = Some (15.0 :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                     ]
                                 }
@@ -175,38 +175,38 @@ module DifferTests =
 
             let delta : Delta.ViewDelta = 
                 {
-                    viewType = typeof<StackPanel>
-                    attrs = [
+                    ViewType = typeof<StackPanel>
+                    Attrs = [
                         Delta.AttrDelta.Property {
-                            accessor =  Accessor.AvaloniaProperty StackPanel.OrientationProperty
-                            value = Some (Orientation.Vertical :> obj)
-                            defaultValueFactory = ValueNone
+                            Accessor =  Accessor.AvaloniaProperty StackPanel.OrientationProperty
+                            Value = Some (Orientation.Vertical :> obj)
+                            DefaultValueFactory = ValueNone
                         }
                         Delta.AttrDelta.Content {
-                            accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
-                            content = Delta.ViewContentDelta.Multiple [
+                            Accessor = Accessor.InstanceProperty { Name = "Children"; Setter = ValueNone; Getter = ValueNone }
+                            Content = Delta.ViewContentDelta.Multiple [
                                 {
-                                    viewType = typeof<TextBlock>
-                                    attrs = [
+                                    ViewType = typeof<TextBlock>
+                                    Attrs = [
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
-                                            value = Some ("some other text" :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
+                                            Value = Some ("some other text" :> obj)
+                                            DefaultValueFactory = ValueNone
                                         }
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
-                                            value = Some (15.0 :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty TextBlock.FontSizeProperty
+                                            Value = Some (15.0 :> obj)
+                                            DefaultValueFactory = ValueNone
                                         }
                                     ]
                                 };
                                 {
-                                    viewType = typeof<Button>
-                                    attrs = [
+                                    ViewType = typeof<Button>
+                                    Attrs = [
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
-                                            value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
+                                            Value = Some ((Avalonia.Media.SolidColorBrush.Parse("red").ToImmutable()) :> obj)
+                                            DefaultValueFactory = ValueNone
                                         }
                                     ]
                                 }
@@ -260,58 +260,58 @@ module DifferTests =
 
             let delta : Delta.ViewDelta = 
                 {
-                    viewType = typeof<StackPanel>
-                    attrs = [
+                    ViewType = typeof<StackPanel>
+                    Attrs = [
                         Delta.AttrDelta.Property {
-                            accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
-                            value = Some (Orientation.Vertical :> obj)
-                            defaultValueFactory = ValueNone
+                            Accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
+                            Value = Some (Orientation.Vertical :> obj)
+                            DefaultValueFactory = ValueNone
                         };
                         Delta.AttrDelta.Content {
-                            accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
-                            content = Delta.ViewContentDelta.Multiple [
+                            Accessor = Accessor.InstanceProperty { Name = "Children"; Setter = ValueNone; Getter = ValueNone }
+                            Content = Delta.ViewContentDelta.Multiple [
                                 {
-                                    viewType = typeof<CheckBox>
-                                    attrs = [
+                                    ViewType = typeof<CheckBox>
+                                    Attrs = [
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
-                                            value = Some ("some text [new]" :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
+                                            Value = Some ("some text [new]" :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
-                                            value = Some (false :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
+                                            Value = Some (false :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                     ]
                                 };
                                 {
-                                    viewType = typeof<CheckBox>
-                                    attrs = [
+                                    ViewType = typeof<CheckBox>
+                                    Attrs = [
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
-                                            value = Some ("some text 1" :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
+                                            Value = Some ("some text 1" :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
-                                            value = Some (true :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
+                                            Value = Some (true :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                     ]
                                 };
                                 {
-                                    viewType = typeof<CheckBox>
-                                    attrs = [
+                                    ViewType = typeof<CheckBox>
+                                    Attrs = [
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
-                                            value = Some ("some text 2" :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
+                                            Value = Some ("some text 2" :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                         Delta.AttrDelta.Property {
-                                            accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
-                                            value = Some (false :> obj)
-                                            defaultValueFactory = ValueNone
+                                            Accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
+                                            Value = Some (false :> obj)
+                                            DefaultValueFactory = ValueNone
                                         };
                                     ]
                                 };
@@ -365,36 +365,36 @@ module DifferTests =
 
         let delta : Delta.ViewDelta = 
             {
-                viewType = typeof<StackPanel>
-                attrs = [
+                ViewType = typeof<StackPanel>
+                Attrs = [
                     Delta.AttrDelta.Property {
-                        accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
-                        value = Some (Orientation.Vertical :> obj)
-                        defaultValueFactory = ValueNone
+                        Accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
+                        Value = Some (Orientation.Vertical :> obj)
+                        DefaultValueFactory = ValueNone
                     };
                     Delta.AttrDelta.Content {
-                        accessor = Accessor.InstanceProperty { name = "Children"; setter = ValueNone; getter = ValueNone }
-                        content = Delta.ViewContentDelta.Multiple [
+                        Accessor = Accessor.InstanceProperty { Name = "Children"; Setter = ValueNone; Getter = ValueNone }
+                        Content = Delta.ViewContentDelta.Multiple [
                             {
-                                viewType = typeof<CheckBox>
-                                attrs = [  ]
+                                ViewType = typeof<CheckBox>
+                                Attrs = [  ]
                             };                             
                             {
-                                viewType = typeof<CheckBox>
-                                attrs = [ ]
+                                ViewType = typeof<CheckBox>
+                                Attrs = [ ]
                             };                         
                             {
-                                viewType = typeof<CheckBox>
-                                attrs = [
+                                ViewType = typeof<CheckBox>
+                                Attrs = [
                                     Delta.AttrDelta.Property {
-                                        accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
-                                        value = Some ("some text [new]" :> obj)
-                                        defaultValueFactory = ValueNone
+                                        Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
+                                        Value = Some ("some text [new]" :> obj)
+                                        DefaultValueFactory = ValueNone
                                     };
                                     Delta.AttrDelta.Property {
-                                        accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
-                                        value = Some (true :> obj)
-                                        defaultValueFactory = ValueNone
+                                        Accessor = Accessor.AvaloniaProperty CheckBox.IsCheckedProperty
+                                        Value = Some (true :> obj)
+                                        DefaultValueFactory = ValueNone
                                     };
                                 ]
                             };

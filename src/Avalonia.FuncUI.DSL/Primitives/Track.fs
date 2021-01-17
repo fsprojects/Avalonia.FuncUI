@@ -47,7 +47,10 @@ module Track =
             
         static member thumb<'t when 't :> Track>(value: IView<Thumb>) : IAttr<'t> =
             value |> ValueSome |> Track.thumb
-       
+        
+        static member ignoreThumbDragProperty<'t when 't :> Track>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(Track.IgnoreThumbDragProperty, value, ValueNone)
+
         static member increaseButton<'t when 't :> Track>(value: Button) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Button>(Track.IncreaseButtonProperty, value, ValueNone)
             

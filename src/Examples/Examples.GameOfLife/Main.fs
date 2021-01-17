@@ -2,6 +2,7 @@ namespace Examples.GameOfLife
 
 module Main =
     open Avalonia.Controls
+    open Avalonia.Layout
     open Avalonia.FuncUI.DSL
     open Elmish
     
@@ -35,6 +36,7 @@ module Main =
         DockPanel.create [
             DockPanel.children [
                 Button.create [
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                     Button.isVisible (not state.evolutionRunning)
                     Button.dock Dock.Bottom
                     Button.background "#16a085"
@@ -42,6 +44,7 @@ module Main =
                     Button.content "start"
                 ]                
                 Button.create [
+                    Button.horizontalAlignment HorizontalAlignment.Stretch
                     Button.isVisible state.evolutionRunning
                     Button.dock Dock.Bottom
                     Button.background "#d35400"

@@ -9,21 +9,17 @@ module Types =
     
     [<CustomEquality; NoComparison>]
     type PropertyAccessor =
-        {
-            name: string
-            getter: (IControl -> obj) voption
-            setter: (IControl * obj -> unit) voption
-        }
-        with
-            override this.Equals (other: obj) : bool =
-                match other with
-                | :? PropertyAccessor as other ->
-                    // getter and setter does not matter
-                    this.name = other.name
-                | _ -> false
-                
-            override this.GetHashCode () =
-                this.name.GetHashCode()
+        { Name: string
+          Getter: (IControl -> obj) voption
+          Setter: (IControl * obj -> unit) voption }
+        
+        override this.Equals (other: obj) : bool =
+            match other with
+            | :? PropertyAccessor as other -> this.Name = other.Name
+            | _ -> false
+            
+        override this.GetHashCode () =
+            this.Name.GetHashCode()
 
     type Accessor =
         | InstanceProperty of PropertyAccessor
@@ -31,36 +27,32 @@ module Types =
             
     [<CustomEquality; NoComparison>]
     type Property =
-        {
-            accessor: Accessor
-            value: obj
-            defaultValueFactory: (unit -> obj) voption
-            comparer: (obj * obj -> bool) voption
-        }
-        with
-            override this.Equals (other: obj) : bool =
-                match other with
-                | :? Property as other ->
-                    match this.accessor.Equals other.accessor with
-                    | true ->
-                        match this.comparer with
-                        | ValueSome comparer -> comparer(this.value, other.value)
-                        | ValueNone -> this.value = other.value
-                        
-                    | false ->
-                        false
+        { Accessor: Accessor
+          Value: obj
+          DefaultValueFactory: (unit -> obj) voption
+          Comparer: (obj * obj -> bool) voption }
+        
+        override this.Equals (other: obj) : bool =
+            match other with
+            | :? Property as other ->
+                match this.Accessor.Equals other.Accessor with
+                | true ->
+                    match this.Comparer with
+                    | ValueSome comparer -> comparer(this.Value, other.Value)
+                    | ValueNone -> this.Value = other.Value
                     
-                | _ ->
+                | false ->
                     false
                 
-            override this.GetHashCode () =
-                (this.accessor, this.value).GetHashCode()
+            | _ ->
+                false
+            
+        override this.GetHashCode () =
+            (this.Accessor, this.Value).GetHashCode()
         
     type Content =
-        {
-            accessor: Accessor
-            content: ViewContent
-        }
+        { Accessor: Accessor
+          Content: ViewContent }
          
     type ViewContent =
         | Single of IView option
@@ -68,25 +60,23 @@ module Types =
 
     [<CustomEquality; NoComparison>]
     type Subscription =
-        {
-            name: string
-            subscribe:  IControl * Delegate -> CancellationTokenSource
-            func: Delegate
-            funcType: Type
-            scope: obj
-        }
-        with
-            override this.Equals (other: obj) : bool =
-                match other with
-                | :? Subscription as other ->
-                    this.name = other.name &&
-                    this.funcType = other.funcType &&
-                    this.scope = other.scope
-                | _ -> false
-                
-            override this.GetHashCode () =
-                (this.name, this.funcType, this.scope).GetHashCode()
-                               
+        { Name: string
+          Subscribe:  IControl * Delegate -> CancellationTokenSource
+          Func: Delegate
+          FuncType: Type
+          Scope: obj }
+        
+        override this.Equals (other: obj) : bool =
+            match other with
+            | :? Subscription as other ->
+                this.Name = other.Name &&
+                this.FuncType = other.FuncType &&
+                this.Scope = other.Scope
+            | _ -> false
+            
+        override this.GetHashCode () =
+            (this.Name, this.FuncType, this.Scope).GetHashCode()
+                           
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
@@ -101,19 +91,22 @@ module Types =
         | Content of Content
         | Subscription of Subscription
         
-        interface IAttr<'viewType> 
+        interface IAttr<'viewType>
+        
         interface IAttr with
             member this.UniqueName =
                 match this with
                 | Property property ->
-                    match property.accessor with
+                    match property.Accessor with
                     | Accessor.AvaloniaProperty p -> p.Name
-                    | Accessor.InstanceProperty p -> p.name
+                    | Accessor.InstanceProperty p -> p.Name
+                    
                 | Content content ->
-                    match content.accessor with
+                    match content.Accessor with
                     | Accessor.AvaloniaProperty p -> p.Name
-                    | Accessor.InstanceProperty p -> p.name
-                | Subscription subscription -> subscription.name
+                    | Accessor.InstanceProperty p -> p.Name
+                    
+                | Subscription subscription -> subscription.Name
             
             member this.Property =
                 match this with
@@ -139,18 +132,16 @@ module Types =
         abstract member Attrs: IAttr<'viewType> list with get
         
     type View<'viewType> =
-        {
-            viewType: Type
-            attrs: IAttr<'viewType> list
-        }
+        { ViewType: Type
+          Attrs: IAttr<'viewType> list }
         
         interface IView with
-            member this.ViewType =  this.viewType
+            member this.ViewType =  this.ViewType
             member this.Attrs =
-                this.attrs |> List.map (fun attr -> attr :> IAttr)
+                this.Attrs |> List.map (fun attr -> attr :> IAttr)
             
         interface IView<'viewType> with
-            member this.Attrs = this.attrs
+            member this.Attrs = this.Attrs
 
     
     // TODO: maybe move active patterns to Virtual DON Misc
