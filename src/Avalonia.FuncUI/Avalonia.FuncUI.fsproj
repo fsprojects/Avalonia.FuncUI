@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0-rc1" />
     <PackageReference Update="FSharp.Core" Version="4.7.2" />
+    <PackageReference Include="FSharp.Control.Reactive" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

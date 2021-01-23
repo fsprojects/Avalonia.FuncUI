@@ -25,6 +25,9 @@
         <Compile Include="Base\ContentPresenter.fs" />
         <Compile Include="Base\Animatable.fs" />
         <Compile Include="Base\RenderOptions.fs" />
+        <Compile Include="Controls\Helpers.fs" />
+
+        <Compile Include="Controls\ControlledTextBox.fs" />
 
         <Compile Include="Primitives\TemplatedControl.fs" />
         <Compile Include="Primitives\HeaderedContentControl.fs" />
@@ -105,6 +108,7 @@
         <Compile Include="TabControl.fs" />
         <Compile Include="TabItem.fs" />
         <Compile Include="ViewBox.fs" />
+        <Compile Include="ControlledTextBox.fs" />
     </ItemGroup>
 
     <ItemGroup>
