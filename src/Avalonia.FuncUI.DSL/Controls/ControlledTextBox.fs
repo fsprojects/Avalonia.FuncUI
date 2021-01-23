@@ -13,7 +13,7 @@ open Avalonia.Styling
 type State = { Text: string; CaretIdx: int }
 
 type ControlledTextBox() =
-    inherit TextBox()    
+    inherit TextBox()
 
     let sort a b =
         (min a b, max a b)
@@ -45,7 +45,9 @@ type ControlledTextBox() =
     let nullStrToEmpty str =
         match str with null -> "" | s -> s
         
-    member val ControlledValue = "" with get, set
+    interface IStyleable with
+        member this.StyleKey = typeof<TextBox>
+        
     member val NextCaretIdx = 0 with get, set
     member val OnChangeCallback : TextInputEventArgs -> unit = ignore with get, set
     
@@ -193,5 +195,3 @@ type ControlledTextBox() =
         this.Text <- str
         this.CaretIndex <- this.NextCaretIdx
                 
-    interface IStyleable with
-        member this.StyleKey = typeof<TextBox>

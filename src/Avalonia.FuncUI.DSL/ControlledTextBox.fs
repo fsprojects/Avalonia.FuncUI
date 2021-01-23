@@ -1,14 +1,10 @@
 ﻿namespace Avalonia.FuncUI.DSL
 
 open Avalonia.FuncUI.Controls
-open Avalonia.FuncUI.DSL
 open Avalonia.Input
 
 [<AutoOpen>]
 module ControlledTextBox =
-    open Avalonia
-    open Avalonia.Controls
-    open Avalonia.Media    
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
     

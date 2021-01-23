@@ -26,6 +26,7 @@
         <Compile Include="Base\Animatable.fs" />
         <Compile Include="Base\RenderOptions.fs" />
         <Compile Include="Controls\Helpers.fs" />
+        <Compile Include="Controls\ControlledCheckBox.fs" />
 
         <Compile Include="Controls\ControlledTextBox.fs" />
 
@@ -109,6 +110,7 @@
         <Compile Include="TabItem.fs" />
         <Compile Include="ViewBox.fs" />
         <Compile Include="ControlledTextBox.fs" />
+        <Compile Include="ControlledCheckBox.fs" />
     </ItemGroup>
 
     <ItemGroup>
