@@ -1,9 +1,10 @@
 ﻿namespace Examples.ControlledComponents
 
 open System.Text.RegularExpressions
+open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Controls
-open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.DSL.Controls
 open Avalonia.FuncUI.Helpers
 
 module ControlledDemo =
@@ -12,12 +13,16 @@ module ControlledDemo =
     
     type State =
         { maskedString : string
+          expanderOpen: bool
           checkItems: (string * bool) list
+          selectedComboBoxIndex: int
           pickerString : string
           changeCt : int }
     let init =
         { maskedString = ""
+          expanderOpen = false
           checkItems = [("A", false); ("B", true); ("C", false)]
+          selectedComboBoxIndex = 0
           pickerString = "A"
           changeCt = 0 }
 
@@ -25,6 +30,8 @@ module ControlledDemo =
     | SetMaskedString of string
     | SetPickerString of string
     | SetIsChecked of (string * bool)
+    | SetExpander of bool
+    | SetComboBoxIdx of int
     | ToggleCheckAll
     | IncrChange
     
@@ -37,11 +44,13 @@ module ControlledDemo =
         match msg with
         | SetMaskedString str -> { state with maskedString = str }
         | SetPickerString str -> { state with pickerString = str }
+        | SetExpander b -> { state with expanderOpen = b }
         | SetIsChecked (name, isChecked) ->
             let list =
                 state.checkItems
                 |> List.map (fun t -> if (fst t) = name then (name, isChecked) else t)
             { state with checkItems = list }
+        | SetComboBoxIdx i -> { state with selectedComboBoxIndex = i }
         | ToggleCheckAll ->
             let nextList =
                 let isChecked = state.checkItems |> List.forall snd |> not
@@ -149,6 +158,34 @@ module ControlledDemo =
     let view (state: State) (dispatch) =
         DockPanel.create [
             DockPanel.children [
+                ControlledComboBox.create [
+                    ControlledComboBox.controlledSelectedIndex state.selectedComboBoxIndex
+                    ControlledComboBox.onControlledSelectedIndexChange (SetComboBoxIdx >> dispatch)
+                    ComboBox.dataItems [
+                        "Item 0"
+                        "Item 1"
+                        "Item 2"
+                    ]
+                    ComboBox.itemTemplate ((fun s ->
+                        s |> TextBlock.text |> List.singleton |> TextBlock.create
+                    ) |> DataTemplateView<string>.create)
+                ]
+                ControlledExpander.create [
+                    ControlledExpander.openValue true
+                    ControlledExpander.onOpenChange (fun b ->
+                        b |> SetExpander |> dispatch
+                    )
+                    Expander.header (
+                        TextBlock.create [
+                            TextBlock.text "Header"
+                        ]
+                    )
+                    Expander.content (
+                        TextBlock.create [
+                            TextBlock.text "Content"
+                        ]
+                    )
+                ]
                 selectAllView state dispatch
                 labelTextBoxView
                     "Masked input: Filters vowels"

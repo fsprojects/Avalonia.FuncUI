@@ -25,10 +25,6 @@
         <Compile Include="Base\ContentPresenter.fs" />
         <Compile Include="Base\Animatable.fs" />
         <Compile Include="Base\RenderOptions.fs" />
-        <Compile Include="Controls\Helpers.fs" />
-        <Compile Include="Controls\ControlledCheckBox.fs" />
-
-        <Compile Include="Controls\ControlledTextBox.fs" />
 
         <Compile Include="Primitives\TemplatedControl.fs" />
         <Compile Include="Primitives\HeaderedContentControl.fs" />
@@ -111,6 +107,8 @@
         <Compile Include="ViewBox.fs" />
         <Compile Include="ControlledTextBox.fs" />
         <Compile Include="ControlledCheckBox.fs" />
+        <Compile Include="ControlledExpander.fs" />
+        <Compile Include="ControlledComboBox.fs" />
     </ItemGroup>
 
     <ItemGroup>
