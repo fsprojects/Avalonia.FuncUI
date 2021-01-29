@@ -158,9 +158,8 @@ module ControlledDemo =
     let view (state: State) (dispatch) =
         DockPanel.create [
             DockPanel.children [
-                ControlledComboBox.create [
-                    ControlledComboBox.controlledSelectedIndex state.selectedComboBoxIndex
-                    ControlledComboBox.onControlledSelectedIndexChange (SetComboBoxIdx >> dispatch)
+                ComboBox.create [
+                    ComboBox.controlledSelectedIndex (state.selectedComboBoxIndex, SetComboBoxIdx >> dispatch)
                     ComboBox.dataItems [
                         "Item 0"
                         "Item 1"
@@ -170,11 +169,8 @@ module ControlledDemo =
                         s |> TextBlock.text |> List.singleton |> TextBlock.create
                     ) |> DataTemplateView<string>.create)
                 ]
-                ControlledExpander.create [
-                    ControlledExpander.openValue true
-                    ControlledExpander.onOpenChange (fun b ->
-                        b |> SetExpander |> dispatch
-                    )
+                Expander.create [
+                    Expander.controlledIsExpanded (state.selectedComboBoxIndex = 1, (SetExpander >> dispatch))
                     Expander.header (
                         TextBlock.create [
                             TextBlock.text "Header"

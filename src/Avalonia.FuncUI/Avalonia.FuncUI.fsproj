@@ -37,8 +37,6 @@
     <Compile Include="Controls\Helpers.fs" />
     <Compile Include="Controls\ControlledCheckBox.fs" />
     <Compile Include="Controls\ControlledTextBox.fs" />
-    <Compile Include="Controls\ControlledExpander.fs" />
-    <Compile Include="Controls\ControlledComboBox.fs" />
   </ItemGroup>
 
 </Project>

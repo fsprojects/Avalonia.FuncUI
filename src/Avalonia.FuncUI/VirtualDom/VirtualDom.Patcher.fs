@@ -10,7 +10,7 @@ module internal rec Patcher =
     open Avalonia.FuncUI.Library
     open Avalonia.FuncUI.Types
     open System.Threading
-
+    
     let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
@@ -40,6 +40,13 @@ module internal rec Patcher =
             if hasValue then
                 value.Cancel()
                 subscriptions.TryRemove(attr.UniqueName) |> ignore
+                
+    let private defaultInstancePropertyValue (view: IControl) (name: string) =
+        // TODO: get rid of reflection here
+        let propertyInfo = view.GetType().GetProperty(name)        
+        match propertyInfo.PropertyType.IsValueType with
+        | true -> Activator.CreateInstance(propertyInfo.PropertyType)
+        | false -> null
 
     let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
         match attr.Accessor with
@@ -51,8 +58,7 @@ module internal rec Patcher =
             | None ->
                 match attr.DefaultValueFactory with
                 | ValueNone ->
-                    // TODO: create PR - include 'ClearValue' in interface 'IAvaloniaObject'
-                    (view :?> AvaloniaObject).ClearValue(avaloniaProperty)
+                    view.ClearValue(avaloniaProperty)
                 | ValueSome factory ->
                     let value = factory()
                     view.SetValue(avaloniaProperty, value)
@@ -65,13 +71,7 @@ module internal rec Patcher =
                 | None ->
                     match attr.DefaultValueFactory with
                     | ValueSome factory -> factory()
-                    | ValueNone ->
-                        // TODO: get rid of reflection here
-                        let propertyInfo = view.GetType().GetProperty(instanceProperty.Name)
-                        
-                        match propertyInfo.PropertyType.IsValueType with
-                        | true -> Activator.CreateInstance(propertyInfo.PropertyType)
-                        | false -> null
+                    | ValueNone -> defaultInstancePropertyValue view instanceProperty.Name
 
             match instanceProperty.Setter with
             | ValueSome setter -> setter (view, value)
@@ -204,6 +204,41 @@ module internal rec Patcher =
             patchContentSingle view attr.Accessor single
         | ViewContentDelta.Multiple multiple ->
             patchContentMultiple view attr.Accessor multiple
+               
+    let private patchControlledProperty (view: IControl) (attr: ControlledPropertyDelta) : unit =
+        let name = attr.Accessor |> accessorName
+        let controllers =
+            match ViewMetaData.GetViewPropertyControllers(view) with
+            | null ->
+                let dict = ConcurrentDictionary<_,_>()
+                ViewMetaData.SetViewPropertyControllers(view, dict)
+                dict
+            | value -> value
+            
+        match attr.Control with
+        | Some (value, fn) ->
+            let controller = attr.MakeController view fn
+            let addFactory = Func<string, PropertyController>(fun _ -> controller)
+            let updateFactory = Func<string, PropertyController, PropertyController>(fun _ oldCtr ->
+                oldCtr.Cancellation.Cancel()
+                controller
+            )
+            controllers.AddOrUpdate(name, addFactory, updateFactory) |> ignore
+            controller.SetControlledValue value
+
+        | None ->
+            let hasController, controller = controllers.TryGetValue(name)
+            if hasController then
+                controller.Cancellation.Cancel()
+                controllers.TryRemove(name) |> ignore
+            match attr.Accessor with
+            | Accessor.AvaloniaProperty ap ->
+                view.ClearValue(ap)
+            | Accessor.InstanceProperty ip ->
+                let value = defaultInstancePropertyValue view ip.Name
+                match ip.Setter with
+                | ValueSome setter -> setter (view, value)
+                | ValueNone _ -> failwithf "instance property ('%s') has no setter. " ip.Name                
 
     let patch (view: IControl, viewElement: ViewDelta) : unit =
         for attr in viewElement.Attrs do
@@ -211,6 +246,7 @@ module internal rec Patcher =
             | AttrDelta.Property property -> patchProperty view property
             | AttrDelta.Content content -> patchContent view content
             | AttrDelta.Subscription subscription -> patchSubscription view subscription
+            | AttrDelta.ControlledProperty cp -> patchControlledProperty view cp
 
     let create (viewElement: ViewDelta) : IControl =
         let control = viewElement.ViewType |> Activator.CreateInstance |> Utils.cast<IControl>

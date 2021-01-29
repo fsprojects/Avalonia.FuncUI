@@ -107,8 +107,6 @@
         <Compile Include="ViewBox.fs" />
         <Compile Include="ControlledTextBox.fs" />
         <Compile Include="ControlledCheckBox.fs" />
-        <Compile Include="ControlledExpander.fs" />
-        <Compile Include="ControlledComboBox.fs" />
     </ItemGroup>
 
     <ItemGroup>

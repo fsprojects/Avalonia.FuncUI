@@ -26,3 +26,7 @@ module ComboBox =
             
         static member virtualizationMode<'t when 't :> ComboBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ItemVirtualizationMode>(ComboBox.VirtualizationModeProperty, mode, ValueNone)
+            
+        static member controlledSelectedIndex<'t when 't :> ComboBox>(value: int, onChange: int -> unit) =
+            AttrBuilder<'t>.CreateControlledProperty<int>(ComboBox.SelectedIndexProperty, value, onChange, ValueNone)
+            

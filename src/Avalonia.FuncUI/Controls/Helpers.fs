@@ -1,11 +1,6 @@
 ﻿namespace Avalonia.FuncUI.DSL.Controls
 
 module Helpers =
-    [<Struct>]
-    type ControllerState =
-        | Writing
-        | Resetting
-        | Listening
         
     module ActionHistory =
         [<Struct>]
