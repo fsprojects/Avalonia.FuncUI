@@ -26,6 +26,7 @@
         <Compile Include="Views\Tabs\SplitViewDemo.fs" />
         <Compile Include="Views\Tabs\TickBarDemo.fs" />
         <Compile Include="Views\Tabs\WindowMenuDemo.fs" />
+        <Compile Include="Views\Tabs\DataGridDemo.fs" />
         <Compile Include="Views\MainView.fs" />
         <AvaloniaResource Include="**\*.xaml" />        
         <Compile Include="Main.fs" />
