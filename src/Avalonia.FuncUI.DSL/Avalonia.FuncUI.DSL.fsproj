@@ -77,6 +77,7 @@
         <Compile Include="ComboBox.fs" />
         <Compile Include="CheckBox.fs" />
         <Compile Include="Carousel.fs" />
+        <Compile Include="DataGrid.fs" />
         <Compile Include="Image.fs" />
         <Compile Include="ListBox.fs" />
         <Compile Include="RangeBase.fs" />
@@ -110,6 +111,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
       <PackageReference Include="Avalonia.Desktop" Version="0.10.0-rc1" />
+      <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.0" />
     </ItemGroup>
 
     <ItemGroup>
