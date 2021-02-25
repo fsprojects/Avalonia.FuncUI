@@ -24,7 +24,10 @@ module MenuItem =
             AttrBuilder<'t>.CreateProperty<KeyGesture>(MenuItem.HotKeyProperty, value, ValueNone)
         
         static member icon<'t when 't :> MenuItem>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(MenuItem.IconProperty, value, ValueNone)     
+            AttrBuilder<'t>.CreateProperty<obj>(MenuItem.IconProperty, value, ValueNone)
+
+        static member inputGesture<'t when 't :> MenuItem>(value: KeyGesture) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<KeyGesture>(MenuItem.InputGestureProperty, value, ValueNone)
         
         static member isSelected<'t when 't :> MenuItem>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(MenuItem.IsSelectedProperty, value, ValueNone)
