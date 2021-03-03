@@ -1,5 +1,7 @@
 namespace Avalonia.FuncUI.DSL
 
+open Avalonia.FuncUI.VirtualDom
+
 [<AutoOpen>]
 module Control =  
     open Avalonia.Controls
@@ -31,4 +33,5 @@ module Control =
         static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ContextMenu>(Control.ContextMenuProperty, menu, ValueNone)
            
-           
+        static member key<'t when 't :> Control>(key: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(ViewMetaData.KeyProperty, key, ValueNone)
