@@ -30,6 +30,7 @@ module PatcherTests =
                         DefaultValueFactory = ValueNone
                     };
                 ]
+                KeyDidChange = false
             }
 
         let control = TextBlock()
@@ -87,6 +88,7 @@ module PatcherTests =
                         DefaultValueFactory = (fun () -> ResourceDictionary() :> obj) |> ValueSome
                     }
                 ]
+                KeyDidChange = false
             }
 
         let control = TextBlock()
@@ -124,10 +126,12 @@ module PatcherTests =
                                          DefaultValueFactory = ValueNone
                                      };
                                  ]
+                                 KeyDidChange = false
                              }
                          )
                      };
                  ]
+                 KeyDidChange = false
              }
 
         let control = Button()
@@ -168,6 +172,7 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                KeyDidChange = false
                             };
                             {
                                 ViewType = typeof<Button>
@@ -178,6 +183,7 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                KeyDidChange = false
                             };
                             {
                                 ViewType = typeof<Button>
@@ -188,10 +194,12 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                KeyDidChange = false
                             };
                         ]
                     };
                 ]
+                KeyDidChange = false
             }
 
         let stackpanel = StackPanel()

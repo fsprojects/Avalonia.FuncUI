@@ -81,6 +81,29 @@ module DifferTests =
 
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
+        
+    [<Fact>]
+    let ``Skip diff when key changes`` () =
+        let last = TextBlock.create [
+            TextBlock.text "Prev text"
+            Control.key "A"
+        ]
+        let next = TextBlock.create [
+            Control.key "B"
+        ]
+        let delta : Delta.ViewDelta = {
+            ViewType = typeof<TextBlock>
+            Attrs = [
+                Delta.AttrDelta.Property {
+                    Accessor = Accessor.AvaloniaProperty ViewMetaData.KeyProperty
+                    Value = Some ("B" :> obj)
+                    DefaultValueFactory = ValueNone
+                }
+            ]
+            KeyDidChange = true
+        }
+        let result = Differ.diff(last, next)
+        Assert.Equal(delta, result)
 
     [<Fact>]
     let ``Diff Content Single`` () =
