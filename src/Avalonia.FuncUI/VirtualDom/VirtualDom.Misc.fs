@@ -40,4 +40,3 @@ type ViewMetaData() =
         
     static member SetKey(control: IControl, value) : unit =
         control.SetValue(ViewMetaData.KeyProperty, value) |> ignore
-    
