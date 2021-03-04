@@ -40,6 +40,7 @@ module DifferTests =
                         DefaultValueFactory = ValueNone
                     };                       
                 ]
+                KeyDidChange = false
             }
 
         let result = Differ.diff(last, next)
@@ -71,6 +72,7 @@ module DifferTests =
                         DefaultValueFactory = ValueNone
                     }
                 ]
+                KeyDidChange = false
             }
 
         let result = Differ.diff(last, next)
@@ -130,10 +132,12 @@ module DifferTests =
                                             DefaultValueFactory = ValueNone
                                         };
                                     ]
+                                    KeyDidChange = false
                                 }
                             )
                         };
                     ]
+                    KeyDidChange = false
                 }
 
             let result = Differ.diff(last, next)
@@ -199,6 +203,7 @@ module DifferTests =
                                             DefaultValueFactory = ValueNone
                                         }
                                     ]
+                                    KeyDidChange = false
                                 };
                                 {
                                     ViewType = typeof<Button>
@@ -209,10 +214,12 @@ module DifferTests =
                                             DefaultValueFactory = ValueNone
                                         }
                                     ]
+                                    KeyDidChange = false
                                 }
                             ]
                         }
                     ]
+                    KeyDidChange = false
                 }
 
             let result = Differ.diff(last, next)
@@ -270,7 +277,7 @@ module DifferTests =
                         Delta.AttrDelta.Content {
                             Accessor = Accessor.InstanceProperty { Name = "Children"; Setter = ValueNone; Getter = ValueNone }
                             Content = Delta.ViewContentDelta.Multiple [
-                                {
+                                {                                    
                                     ViewType = typeof<CheckBox>
                                     Attrs = [
                                         Delta.AttrDelta.Property {
@@ -284,6 +291,7 @@ module DifferTests =
                                             DefaultValueFactory = ValueNone
                                         };
                                     ]
+                                    KeyDidChange = false
                                 };
                                 {
                                     ViewType = typeof<CheckBox>
@@ -299,6 +307,7 @@ module DifferTests =
                                             DefaultValueFactory = ValueNone
                                         };
                                     ]
+                                    KeyDidChange = false
                                 };
                                 {
                                     ViewType = typeof<CheckBox>
@@ -314,10 +323,12 @@ module DifferTests =
                                             DefaultValueFactory = ValueNone
                                         };
                                     ]
+                                    KeyDidChange = false
                                 };
                             ]
                         };
                     ]
+                    KeyDidChange = false
                 }
 
             let result = Differ.diff(last, next)
@@ -378,10 +389,12 @@ module DifferTests =
                             {
                                 ViewType = typeof<CheckBox>
                                 Attrs = [  ]
+                                KeyDidChange = false
                             };                             
                             {
                                 ViewType = typeof<CheckBox>
                                 Attrs = [ ]
+                                KeyDidChange = false
                             };                         
                             {
                                 ViewType = typeof<CheckBox>
@@ -397,10 +410,12 @@ module DifferTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                KeyDidChange = false
                             };
                         ]
                     };
                 ]
+                KeyDidChange = false
             }
 
         let result = Differ.diff(last, next)
