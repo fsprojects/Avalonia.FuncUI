@@ -10,9 +10,11 @@ module internal rec Patcher =
     open Avalonia.FuncUI.Library
     open Avalonia.FuncUI.Types
     open System.Threading
-                    
+
     let private shouldPatch (value: obj) (viewElement: ViewDelta) =
-        value <> null && value.GetType() = viewElement.ViewType            
+        value <> null
+        && value.GetType() = viewElement.ViewType
+        && not viewElement.KeyDidChange
     
     let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
         let subscriptions =

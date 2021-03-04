@@ -5,6 +5,17 @@ open Avalonia.FuncUI.Types
 open Delta
 
 module internal rec Differ =
+    
+    let private isKeyAttr (attr: IAttr) =
+        attr.UniqueName = ViewMetaData.KeyProperty.Name
+    
+    let private keyChanged (last: IView) (next: IView) =
+        let lastKey = last.Attrs |> List.tryFind isKeyAttr
+        let nextKey = next.Attrs |> List.tryFind isKeyAttr
+        match (lastKey, nextKey) with
+        | (None, None) -> false
+        | (Some a, Some b) -> not (a.Equals b)
+        | _ -> true
  
     let private update (last: IAttr) (next: IAttr) : AttrDelta =
         match next with
@@ -140,9 +151,12 @@ module internal rec Differ =
         List.ofSeq delta
     
     let diff (last: IView, next: IView) : ViewDelta =
-        // only diff attributes if viewType matches
-        if last.ViewType = next.ViewType then
-            { ViewDelta.ViewType = next.ViewType
-              ViewDelta.Attrs = diffAttributes last.Attrs next.Attrs }
-        else
+        // Replace all attributes if the ViewType or key changed, else diff attributes
+        if keyChanged last next then
+            ViewDelta.FromKeyChanged next
+        elif last.ViewType <> next.ViewType then
             ViewDelta.From next
+        else
+            { ViewType = next.ViewType
+              Attrs = diffAttributes last.Attrs next.Attrs
+              KeyDidChange = false }

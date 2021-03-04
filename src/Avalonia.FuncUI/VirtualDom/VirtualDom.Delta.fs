@@ -95,8 +95,15 @@ module internal rec Delta =
 
     type ViewDelta =
         { ViewType: Type
-          Attrs: AttrDelta list }
+          Attrs: AttrDelta list
+          KeyDidChange: bool }
 
         static member From (view: IView) : ViewDelta =
             { ViewType = view.ViewType
-              Attrs = view.Attrs |> List.map AttrDelta.From }
+              Attrs = view.Attrs |> List.map AttrDelta.From
+              KeyDidChange = false }
+            
+        static member FromKeyChanged (view: IView) : ViewDelta =
+            { ViewType = view.ViewType
+              Attrs = view.Attrs |> List.map AttrDelta.From
+              KeyDidChange = true }
