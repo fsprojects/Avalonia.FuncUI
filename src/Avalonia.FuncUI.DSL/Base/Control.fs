@@ -35,3 +35,6 @@ module Control =
            
         static member key<'t when 't :> Control>(key: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(ViewMetaData.KeyProperty, key, ValueNone)
+            
+        static member key<'t when 't :> Control>(key: System.Guid) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(ViewMetaData.KeyProperty, string key, ValueNone)
