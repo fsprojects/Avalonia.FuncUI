@@ -68,3 +68,6 @@ module Counter =
             ]
         ]    
 ```
+
+# Maintainer(s)
+The default maintainer account for projects under "fsprojects" is @fsprojectsgit - F# Community Project Incubation Space (repo management)
