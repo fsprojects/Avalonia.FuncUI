@@ -109,7 +109,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-      <PackageReference Include="Avalonia.Desktop" Version="0.10.0-rc1" />
     </ItemGroup>
 
     <ItemGroup>
