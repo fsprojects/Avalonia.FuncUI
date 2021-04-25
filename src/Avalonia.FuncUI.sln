@@ -29,6 +29,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Presso", "Examples
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.MusicPlayer", "Examples\Examples.MusicPlayer\Examples.MusicPlayer.fsproj", "{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ControlledComponents", "Examples\Examples.ControlledComponents\Examples.ControlledComponents.fsproj", "{F23A44E1-3D11-4DF9-AC4B-2CDA42EF9369}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F23A44E1-3D11-4DF9-AC4B-2CDA42EF9369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F23A44E1-3D11-4DF9-AC4B-2CDA42EF9369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F23A44E1-3D11-4DF9-AC4B-2CDA42EF9369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F23A44E1-3D11-4DF9-AC4B-2CDA42EF9369}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{1401B46D-1F14-4D29-8E45-96E62D46405F} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
+		{F23A44E1-3D11-4DF9-AC4B-2CDA42EF9369} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}

@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
     <PackageReference Update="FSharp.Core" Version="4.7.2" />
+    <PackageReference Include="FSharp.Control.Reactive" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +34,9 @@
     <Compile Include="Components\DataTemplateView.fs" />
     <Compile Include="Builder.fs" />
     <Compile Include="Helpers.fs" />
+    <Compile Include="Controls\Helpers.fs" />
+    <Compile Include="Controls\ControlledCheckBox.fs" />
+    <Compile Include="Controls\ControlledTextBox.fs" />
   </ItemGroup>
 
 </Project>

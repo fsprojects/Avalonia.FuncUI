@@ -2,6 +2,7 @@ namespace Avalonia.FuncUI.VirtualDom
 
 open System
 open System.Threading
+open ActivePatterns
 
 open Avalonia.FuncUI.Types
 
@@ -10,15 +11,16 @@ module internal rec Delta =
     type AttrDelta =
         | Property of PropertyDelta
         | Content of ContentDelta
-        | Subscription of SubscriptionDelta   
+        | Subscription of SubscriptionDelta
+        | ControlledProperty of ControlledPropertyDelta
 
         static member From (attr: IAttr) : AttrDelta =
             match attr with
             | Property' property -> Property (PropertyDelta.From property)
             | Content' content -> Content (ContentDelta.From content)
             | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
-            | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
-                
+            | ControlledProperty' cp -> ControlledProperty (ControlledPropertyDelta.From cp)
+            | _ -> raise (Exception "unknown IAttr type (not a Property, Content, Subscription, or ControlledProperty attribute)")                
            
     [<CustomEquality; NoComparison>]
     type PropertyDelta =
@@ -40,7 +42,6 @@ module internal rec Delta =
                 
         override this.GetHashCode () =
             (this.Accessor, this.Value).GetHashCode()
-
                 
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
@@ -64,13 +65,37 @@ module internal rec Delta =
             
         member this.UniqueName = this.Name
     
-    type  ContentDelta =
+    type ContentDelta =
         { Accessor: Accessor
           Content: ViewContentDelta }
 
         static member From (content: Content) : ContentDelta =
             { Accessor = content.Accessor;
               Content = ViewContentDelta.From content.Content }
+
+    [<CustomEquality; NoComparison>]            
+    type ControlledPropertyDelta =
+         { Accessor: Accessor
+           Control: (obj * (obj -> unit)) option
+           MakeController: Avalonia.Controls.IControl -> (obj -> unit) -> PropertyController }
+         
+         member this.Value () =
+             Option.map fst this.Control
+         
+         override this.Equals (other: obj) : bool =
+             match other with
+             | :? ControlledPropertyDelta as other ->
+                 this.Accessor = other.Accessor &&
+                 this.Value() = other.Value()
+             | _ -> false
+             
+         override this.GetHashCode () =
+             (this.Accessor, this.Value()).GetHashCode()
+             
+         static member From (controlledProperty: ControlledProperty) : ControlledPropertyDelta =
+             { Accessor = controlledProperty.Property.Accessor               
+               MakeController = controlledProperty.MakeController
+               Control = (controlledProperty.Property.Value, controlledProperty.Func) |> Some }         
         
     type ViewContentDelta =
         | Single of ViewDelta option

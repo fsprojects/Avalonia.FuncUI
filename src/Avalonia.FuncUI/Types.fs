@@ -23,7 +23,11 @@ module Types =
 
     type Accessor =
         | InstanceProperty of PropertyAccessor
-        | AvaloniaProperty of Avalonia.AvaloniaProperty        
+        | AvaloniaProperty of Avalonia.AvaloniaProperty
+        
+    let accessorName = function
+        | InstanceProperty p -> p.Name
+        | AvaloniaProperty p -> p.Name
             
     [<CustomEquality; NoComparison>]
     type Property =
@@ -61,7 +65,7 @@ module Types =
     [<CustomEquality; NoComparison>]
     type Subscription =
         { Name: string
-          Subscribe:  IControl * Delegate -> CancellationTokenSource
+          Subscribe: IControl * Delegate -> CancellationTokenSource
           Func: Delegate
           FuncType: Type
           Scope: obj }
@@ -76,37 +80,55 @@ module Types =
             
         override this.GetHashCode () =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
+            
+    type PropertyController =
+        { SetControlledValue: obj -> unit
+          Cancellation: CancellationTokenSource }
+    
+    [<CustomEquality; NoComparison>]
+    type ControlledProperty =
+        { Property: Property
+          MakeController: IControl -> (obj -> unit) -> PropertyController
+          Func: (obj -> unit)
+          FuncType: Type
+          Scope: obj }
+        
+        override this.Equals (other: obj) : bool =
+            match other with
+            | :? ControlledProperty as other ->
+                this.Property = other.Property &&
+                this.FuncType = other.FuncType &&
+                this.Scope = other.Scope
+            | _ -> false
+        
+        override this.GetHashCode () =
+            (this.Property, this.FuncType, this.Scope).GetHashCode()
                            
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
+        abstract member ControlledProperty : ControlledProperty option
         
     type IAttr<'viewType> =
-        inherit IAttr
+        inherit IAttr        
                  
     type Attr<'viewType> =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
+        | ControlledProperty of ControlledProperty
         
         interface IAttr<'viewType>
         
         interface IAttr with
             member this.UniqueName =
                 match this with
-                | Property property ->
-                    match property.Accessor with
-                    | Accessor.AvaloniaProperty p -> p.Name
-                    | Accessor.InstanceProperty p -> p.Name
-                    
-                | Content content ->
-                    match content.Accessor with
-                    | Accessor.AvaloniaProperty p -> p.Name
-                    | Accessor.InstanceProperty p -> p.Name
-                    
+                | Property property -> property.Accessor |> accessorName
+                | Content content -> content.Accessor |> accessorName
                 | Subscription subscription -> subscription.Name
+                | ControlledProperty cp -> cp.Property.Accessor |> accessorName
             
             member this.Property =
                 match this with
@@ -121,6 +143,11 @@ module Types =
             member this.Subscription =
                 match this with
                 | Subscription value -> Some value
+                | _ -> None
+                
+            member this.ControlledProperty =
+                match this with
+                | ControlledProperty value -> Some value
                 | _ -> None
 
     type IView =
@@ -142,15 +169,3 @@ module Types =
             
         interface IView<'viewType> with
             member this.Attrs = this.Attrs
-
-    
-    // TODO: maybe move active patterns to Virtual DON Misc
-
-    let internal (|Property'|_|) (attr: IAttr)  =
-        attr.Property
-        
-    let internal (|Content'|_|) (attr: IAttr)  =
-        attr.Content
-        
-    let internal (|Subscription'|_|) (attr: IAttr)  =
-        attr.Subscription

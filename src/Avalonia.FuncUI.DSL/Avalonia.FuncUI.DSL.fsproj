@@ -105,6 +105,8 @@
         <Compile Include="TabControl.fs" />
         <Compile Include="TabItem.fs" />
         <Compile Include="ViewBox.fs" />
+        <Compile Include="ControlledTextBox.fs" />
+        <Compile Include="ControlledCheckBox.fs" />
     </ItemGroup>
 
     <ItemGroup>

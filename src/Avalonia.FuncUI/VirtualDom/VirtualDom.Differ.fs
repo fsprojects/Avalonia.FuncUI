@@ -1,6 +1,6 @@
 namespace Avalonia.FuncUI.VirtualDom
 
-open System.Collections.Generic
+open Avalonia.FuncUI.VirtualDom.ActivePatterns
 open Avalonia.FuncUI.Types
 open Delta
 
@@ -21,6 +21,9 @@ module internal rec Differ =
                 
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
+            
+        | ControlledProperty' controlledProperty ->
+            AttrDelta.ControlledProperty (ControlledPropertyDelta.From controlledProperty)
             
         | _ -> failwithf "no update operation is defined for '%A' next" next
     
@@ -47,6 +50,12 @@ module internal rec Differ =
                 { Name = subscription.Name
                   Subscribe = subscription.Subscribe
                   Func = None }
+                
+        | ControlledProperty' controlledProperty ->
+            AttrDelta.ControlledProperty {
+                MakeController = controlledProperty.MakeController
+                Accessor = controlledProperty.Property.Accessor
+                Control = (controlledProperty.Property.Value, controlledProperty.Func) |> Some }
                   
         | _ -> failwithf "no reset operation is defined for last '%A'" last
         
