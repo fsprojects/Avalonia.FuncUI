@@ -32,7 +32,7 @@ module Popup =
             AttrBuilder<'t>.CreateProperty<bool>(Popup.TopmostProperty, value, ValueNone)
 
         static member placementAnchor<'t when 't :> Popup>(value: PopupAnchor) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<PopupAnchor>(Popup.PlacementModeProperty, value, ValueNone)
+            AttrBuilder<'t>.CreateProperty<PopupAnchor>(Popup.PlacementAnchorProperty, value, ValueNone)
             
         static member placementConstraintAdjustment<'t when 't :> Popup>(value: PopupPositionerConstraintAdjustment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<PopupPositionerConstraintAdjustment>(Popup.PlacementConstraintAdjustmentProperty, value, ValueNone)
