@@ -12,7 +12,7 @@ module Decorator =
     
     type Decorator with
             
-        static member child<'t when 't :> Decorator>(value: obj) : IAttr<'t> =
+        static member child<'t when 't :> Decorator>(value: IControl) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty(Decorator.ChildProperty, value, ValueNone)    
             
         static member child<'t when 't :> Decorator>(value: IView option) : IAttr<'t> =

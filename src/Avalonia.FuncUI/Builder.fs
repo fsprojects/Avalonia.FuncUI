@@ -66,13 +66,21 @@ type AttrBuilder<'view>() =
         attr :> IAttr<'view>
         
     /// Create a Property Attribute for an Avalonia Property
-    static member CreateProperty<'value>(property: AvaloniaProperty, value: 'value, comparer) : IAttr<'view> =
+    static member CreateProperty<'value>(property: AvaloniaProperty<'value>, value: 'value, comparer) : IAttr<'view> =
         AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, ValueNone)
 
     /// Create a Property Attribute for an Avalonia Property
-    static member CreateProperty<'value>(property: AvaloniaProperty, value: 'value, comparer, defaultValueFactory: (unit -> 'value)) : IAttr<'view> =
+    static member CreateProperty<'value>(property: AvaloniaProperty<'value>, value: 'value, comparer, defaultValueFactory: (unit -> 'value)) : IAttr<'view> =
         let objFactory = (fun () -> defaultValueFactory() :> obj) |> ValueSome
         AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, objFactory)
+
+    // Create a Property Attribute for an Avalonia Property of ITemplate<_>
+    static member CreateProperty<'value>(property: AvaloniaProperty<ITemplate<_>>, value: 'value, comparer) : IAttr<'view> =
+        AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, ValueNone)
+
+    // Create a string-type Property Attribute for an Avalonia Property of type obj
+    static member CreateProperty<'value>(property: AvaloniaProperty<obj>, value: string, comparer) : IAttr<'view> =
+        AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, ValueNone)
         
     /// Create a Property Attribute for an instance (non Avalonia) Property
     static member private CreateInstanceProperty<'value>(name: string, value: 'value, getter: ('view -> 'value) voption, setter: ('view * 'value -> unit) voption, comparer: Comparer voption, defaultValueFactory: (unit -> 'value) voption): IAttr<'view> =

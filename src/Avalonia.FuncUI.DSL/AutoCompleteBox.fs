@@ -62,12 +62,12 @@ module AutoCompleteBox =
         static member filterMode<'t when 't :> AutoCompleteBox>(mode: AutoCompleteFilterMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<AutoCompleteFilterMode>(AutoCompleteBox.FilterModeProperty, mode, ValueNone)
             
-        static member itemFilter<'t when 't :> AutoCompleteBox>(filterFunc: string * obj -> bool) : IAttr<'t> =
+        static member itemFilter<'t when 't :> AutoCompleteBox>(filterFunc: string -> obj -> bool) : IAttr<'t> =
             // TODO: implement custom comparer (value is a function)
             AttrBuilder<'t>.CreateProperty<_>(AutoCompleteBox.ItemFilterProperty, filterFunc, ValueNone)
             
-        static member textFilter<'t when 't :> AutoCompleteBox>(filter: string) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<string>(AutoCompleteBox.TextFilterProperty, filter, ValueNone)
+        static member textFilter<'t when 't :> AutoCompleteBox>(filterFunc: string -> obj -> bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(AutoCompleteBox.TextFilterProperty, filterFunc, ValueNone)
             
         static member dataItems<'t when 't :> AutoCompleteBox>(items: IEnumerable) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IEnumerable>(AutoCompleteBox.ItemsProperty, items, ValueNone)

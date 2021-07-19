@@ -26,7 +26,7 @@ module TabControl =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(TabControl.ContentTemplateProperty, value, ValueNone)
             
         static member selectedContent<'t when 't :> TabControl>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(TabControl.ContentTemplateProperty, value, ValueNone)
+            AttrBuilder<'t>.CreateProperty<obj>(TabControl.SelectedContentProperty, value, ValueNone)
             
         static member onSelectedContentChanged<'t when 't :> TabControl>(func: obj -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<obj>(TabControl.SelectedContentProperty, func, ?subPatchOptions = subPatchOptions)
