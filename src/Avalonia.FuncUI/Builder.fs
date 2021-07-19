@@ -66,11 +66,11 @@ type AttrBuilder<'view>() =
         attr :> IAttr<'view>
         
     /// Create a Property Attribute for an Avalonia Property
-    static member CreateProperty<'value>(property: AvaloniaProperty, value: 'value, comparer) : IAttr<'view> =
+    static member CreateProperty<'value>(property: AvaloniaProperty<'value>, value: 'value, comparer) : IAttr<'view> =
         AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, ValueNone)
 
     /// Create a Property Attribute for an Avalonia Property
-    static member CreateProperty<'value>(property: AvaloniaProperty, value: 'value, comparer, defaultValueFactory: (unit -> 'value)) : IAttr<'view> =
+    static member CreateProperty<'value>(property: AvaloniaProperty<'value>, value: 'value, comparer, defaultValueFactory: (unit -> 'value)) : IAttr<'view> =
         let objFactory = (fun () -> defaultValueFactory() :> obj) |> ValueSome
         AttrBuilder<'view>.CreateProperty(Accessor.AvaloniaProperty property, value :> obj, comparer, objFactory)
         
