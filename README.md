@@ -70,4 +70,12 @@ module Counter =
 ```
 
 # Maintainer(s)
+
+The current co-maintainers of Avalonia.FuncUI are
+
+* @JordanMarr
+* @sleepyfran
+
+with advice from the project originator @JaggerJo.
+
 The default maintainer account for projects under "fsprojects" is @fsprojectsgit - F# Community Project Incubation Space (repo management)
