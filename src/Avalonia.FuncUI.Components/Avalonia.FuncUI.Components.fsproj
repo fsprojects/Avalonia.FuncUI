@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <WarnOn>3390;$(WarnOn)</WarnOn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Lib\Lib.DisposableBag.fs" />
+        <Compile Include="Lib\Lib.Deferred.fs" />
+        <Compile Include="Wires.fs" />
+        <Compile Include="ComponentCtx.fs" />
+        <Compile Include="Component.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FSharp.Control.Reactive" Version="5.0.2" />
+    </ItemGroup>
+
+</Project>

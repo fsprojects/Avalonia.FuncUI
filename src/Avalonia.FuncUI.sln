@@ -29,6 +29,10 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Presso", "Examples
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.MusicPlayer", "Examples\Examples.MusicPlayer\Examples.MusicPlayer.fsproj", "{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ContactBook", "Examples\Examples.ContactBook\Examples.ContactBook.fsproj", "{B305072C-3641-4C8E-AD57-6D7B72F4586E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.Components", "Avalonia.FuncUI.Components\Avalonia.FuncUI.Components.fsproj", "{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +79,14 @@ Global
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +99,7 @@ Global
 		{1401B46D-1F14-4D29-8E45-96E62D46405F} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
+		{B305072C-3641-4C8E-AD57-6D7B72F4586E} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}

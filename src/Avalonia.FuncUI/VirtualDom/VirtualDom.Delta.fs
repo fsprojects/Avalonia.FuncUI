@@ -6,11 +6,11 @@ open System.Threading
 open Avalonia.FuncUI.Types
 
 module internal rec Delta =
-    
+
     type AttrDelta =
         | Property of PropertyDelta
         | Content of ContentDelta
-        | Subscription of SubscriptionDelta   
+        | Subscription of SubscriptionDelta
 
         static member From (attr: IAttr) : AttrDelta =
             match attr with
@@ -18,8 +18,8 @@ module internal rec Delta =
             | Content' content -> Content (ContentDelta.From content)
             | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
             | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
-                
-           
+
+
     [<CustomEquality; NoComparison>]
     type PropertyDelta =
         { Accessor: Accessor
@@ -30,18 +30,18 @@ module internal rec Delta =
             { Accessor = property.Accessor
               Value = Some property.Value
               DefaultValueFactory = property.DefaultValueFactory }
-            
+
         override this.Equals (other: obj) : bool =
             match other with
-            | :? PropertyDelta as other -> 
+            | :? PropertyDelta as other ->
                 this.Accessor = other.Accessor &&
                 this.Value = other.Value
             | _ -> false
-                
+
         override this.GetHashCode () =
             (this.Accessor, this.Value).GetHashCode()
 
-                
+
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
         { Name: string
@@ -50,20 +50,20 @@ module internal rec Delta =
 
         override this.Equals (other: obj) : bool =
             match other with
-            | :? Subscription as other -> 
+            | :? Subscription as other ->
                 this.Name = other.Name
             | _ -> false
-                
+
         override this.GetHashCode () =
             this.Name.GetHashCode()
-            
+
         static member From (subscription: Subscription) : SubscriptionDelta =
             { Name = subscription.Name;
               Subscribe = subscription.Subscribe;
               Func = Some subscription.Func }
-            
+
         member this.UniqueName = this.Name
-    
+
     type  ContentDelta =
         { Accessor: Accessor
           Content: ViewContentDelta }
@@ -71,7 +71,7 @@ module internal rec Delta =
         static member From (content: Content) : ContentDelta =
             { Accessor = content.Accessor;
               Content = ViewContentDelta.From content.Content }
-        
+
     type ViewContentDelta =
         | Single of ViewDelta option
         | Multiple of ViewDelta list
@@ -87,7 +87,7 @@ module internal rec Delta =
                 | None ->
                     None
                     |> ViewContentDelta.Single
-                    
+
             | ViewContent.Multiple multiple ->
                 multiple
                 |> List.map (fun view -> ViewDelta.From view)
@@ -95,8 +95,12 @@ module internal rec Delta =
 
     type ViewDelta =
         { ViewType: Type
-          Attrs: AttrDelta list }
+          Attrs: AttrDelta list
+          ConstructorArgs: obj array
+          KeyDidChange: bool }
 
-        static member From (view: IView) : ViewDelta =
+        static member From (view: IView, ?keyDidChange: bool) : ViewDelta =
             { ViewType = view.ViewType
-              Attrs = view.Attrs |> List.map AttrDelta.From }
+              Attrs = view.Attrs |> List.map AttrDelta.From
+              ConstructorArgs = view.ConstructorArgs
+              KeyDidChange = defaultArg keyDidChange false }

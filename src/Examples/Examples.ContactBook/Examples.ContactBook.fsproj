@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <WarnOn>3390;$(WarnOn)</WarnOn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Avalonia.FuncUI.Components\Avalonia.FuncUI.Components.fsproj" />
+        <ProjectReference Include="..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+        <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+        <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="Api.fs" />
+        <Compile Include="Types.fs" />
+        <Compile Include="Views.fs" />
+        <Compile Include="Program.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Bogus" Version="34.0.1" />
+    </ItemGroup>
+
+</Project>

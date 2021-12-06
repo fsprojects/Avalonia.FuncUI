@@ -5,7 +5,6 @@ open Avalonia.FuncUI.Types
 open Delta
 
 module internal rec Differ =
- 
     let private update (last: IAttr) (next: IAttr) : AttrDelta =
         match next with
         | Property' property ->
@@ -13,17 +12,17 @@ module internal rec Differ =
                 { Accessor = property.Accessor
                   Value = Some property.Value
                   DefaultValueFactory = property.DefaultValueFactory }
-                
+
         | Content' content ->
             AttrDelta.Content
                 { Accessor = content.Accessor;
                   Content = Differ.diffContent last next }
-                
+
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
-            
+
         | _ -> failwithf "no update operation is defined for '%A' next" next
-    
+
     let private reset (last: IAttr) : AttrDelta =
         match last with
         | Property' property ->
@@ -31,25 +30,25 @@ module internal rec Differ =
                 { Accessor = property.Accessor;
                   Value = None
                   DefaultValueFactory = property.DefaultValueFactory }
-                
+
         | Content' content ->
             let empty =
                 match content.Content with
                 | ViewContent.Single _ -> ViewContentDelta.Single None
                 | ViewContent.Multiple _ -> ViewContentDelta.Multiple []
-            
+
             AttrDelta.Content
                 { Accessor = content.Accessor;
                   Content = empty }
-                
+
         | Subscription' subscription ->
             AttrDelta.Subscription
                 { Name = subscription.Name
                   Subscribe = subscription.Subscribe
                   Func = None }
-                  
+
         | _ -> failwithf "no reset operation is defined for last '%A'" last
-        
+
     let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
         match next with
         | Some next ->
@@ -57,7 +56,7 @@ module internal rec Differ =
             | Some last -> Some (Differ.diff(last, next))
             | None -> Some (ViewDelta.From next)
         | None -> None
-                
+
     let private diffContentMultiple (lastList: IView list) (nextList: IView list) : ViewDelta list =
         nextList |> List.mapi (fun index next ->
             if index + 1 <= lastList.Length then
@@ -72,7 +71,7 @@ module internal rec Differ =
                 match last with
                 | Content' lastContent ->
                     match nextContent.Content with
-                    
+
                     // Single Content
                     | ViewContent.Single nextSingleContent ->
                         match lastContent.Content with
@@ -80,7 +79,7 @@ module internal rec Differ =
                             ViewContentDelta.Single (diffContentSingle lastSingleContent nextSingleContent)
                         | _ ->
                             ViewContentDelta.Single None
-                
+
                     // Multiple Content
                     | ViewContent.Multiple nextMultipleContent ->
                         match lastContent.Content with
@@ -88,11 +87,11 @@ module internal rec Differ =
                             ViewContentDelta.Multiple (diffContentMultiple lastMultipleContent nextMultipleContent)
                         | _ ->
                             ViewContentDelta.Multiple (diffContentMultiple [] nextMultipleContent)
-                            
+
                 | _ -> invalidOp "'last' must be of type content"
-                
+
             | _ -> invalidOp "'next' must be of type content"
-    
+
     let private diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
         (* TODO: optimize. *)
 
@@ -103,25 +102,25 @@ module internal rec Differ =
             nextAttrs
             |> List.map (fun i -> i.UniqueName, i)
             |> Map.ofList
-            
+
         let lastAttrsMap : Map<string, IAttr> =
             lastAttrs
             |> List.map (fun i -> i.UniqueName, i)
             |> Map.ofList
-            
-        let delta = ResizeArray<AttrDelta>()            
-            
+
+        let delta = ResizeArray<AttrDelta>()
+
         (* check if there is a corresponding new attribute for all old attributes *)
         for lastAttr in lastAttrs do
-            
+
             (* check if attribute is still present *)
             match Map.tryFind lastAttr.UniqueName nextAttrsMap with
-            
+
             (* attribute is still there, but it's value changed. -> update value *)
             | Some nextAttr when not (nextAttr.Equals lastAttr) ->
                 let attrDelta = update lastAttr nextAttr
                 delta.Add attrDelta
-                
+
             (* attribute is still there. It hasn't changed -> do nothing *)
             | Some _ -> ()
 
@@ -129,20 +128,24 @@ module internal rec Differ =
             | None ->
                 let attrDelta = reset lastAttr
                 delta.Add attrDelta
-                    
+
         (* check if new attributes need to be added  *)
         for nextAttr in nextAttrs do
-            
+
             (* attribute is new - create delta from it -> set value  *)
             if not (Map.containsKey nextAttr.UniqueName lastAttrsMap) then
                 delta.Add (AttrDelta.From nextAttr)
-                
+
         List.ofSeq delta
-    
+
     let diff (last: IView, next: IView) : ViewDelta =
         // only diff attributes if viewType matches
-        if last.ViewType = next.ViewType then
-            { ViewDelta.ViewType = next.ViewType
-              ViewDelta.Attrs = diffAttributes last.Attrs next.Attrs }
-        else
-            ViewDelta.From next
+        if last.ViewKey <> next.ViewKey then
+             ViewDelta.From (next, true)
+         elif last.ViewType <> next.ViewType then
+             ViewDelta.From next
+         else
+             { ViewType = next.ViewType
+               Attrs = diffAttributes last.Attrs next.Attrs
+               ConstructorArgs = next.ConstructorArgs
+               KeyDidChange = false }
