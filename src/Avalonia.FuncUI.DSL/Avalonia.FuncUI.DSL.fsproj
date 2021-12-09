@@ -111,4 +111,8 @@
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Update="FSharp.Core" Version="4.7.2" />
+    </ItemGroup>
+
 </Project>

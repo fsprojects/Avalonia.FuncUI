@@ -39,6 +39,7 @@
 
     <ItemGroup>
       <PackageReference Include="Bogus" Version="28.4.1" />
+      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 
 </Project>
