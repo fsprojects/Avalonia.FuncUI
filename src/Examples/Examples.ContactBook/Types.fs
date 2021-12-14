@@ -31,7 +31,7 @@ type Contact =
 
 
 type ContactStore () =
-    let value = Port [
+    let value = Value [
          for _ = 0 to 100 do
              Contact.Random
     ]

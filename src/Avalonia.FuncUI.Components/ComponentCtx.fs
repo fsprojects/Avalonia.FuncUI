@@ -57,10 +57,26 @@ type ComponentCtx () =
     member this.triggerRender () =
         onSignal.Trigger ()
 
-    member this.useWire<'signal>(wire: IWire<'signal>, ?renderOnChange: bool) : IWire<'signal> =
+    member this.useValue<'signal>(init: 'signal, ?renderOnChange: bool) : IWritable<'signal> =
         let result =
             if deps.ItemExists then
-                deps.Item.Connectable :?> IWire<'signal>
+                deps.Item.Connectable :?> IWritable<'signal>
+            else
+                let port = new Value<'signal>(init)
+                bag.Add port
+                deps.Item <- CtxDependency.Create port
+                if defaultArg renderOnChange true then
+                    bag.Add((port :> IWritable<_>).Subscribe (ignore >> onSignal.Trigger))
+                port :> IWritable<_>
+
+        deps.NextIndex ()
+
+        result
+
+    member this.usePassedValue<'signal>(wire: IWritable<'signal>, ?renderOnChange: bool) : IWritable<'signal> =
+        let result =
+            if deps.ItemExists then
+                deps.Item.Connectable :?> IWritable<'signal>
             else
                 deps.Item <- CtxDependency.Create wire
                 if defaultArg renderOnChange true then
@@ -73,10 +89,10 @@ type ComponentCtx () =
 
         result
 
-    member this.useTap<'signal>(tap: ITap<'signal>, ?renderOnChange: bool) : ITap<'signal> =
+    member this.usePassedReadOnly<'signal>(tap: IReadable<'signal>, ?renderOnChange: bool) : IReadable<'signal> =
         let result =
             if deps.ItemExists then
-                deps.Item.Connectable :?> ITap<'signal>
+                deps.Item.Connectable :?> IReadable<'signal>
             else
                 deps.Item <- CtxDependency.Create tap
                 if defaultArg renderOnChange true then
@@ -89,36 +105,20 @@ type ComponentCtx () =
 
         result
 
-    member this.usePort<'signal>(init: 'signal, ?renderOnChange: bool) : IWire<'signal> =
-        let result =
-            if deps.ItemExists then
-                deps.Item.Connectable :?> IWire<'signal>
-            else
-                let port = new Port<'signal>(init)
-                bag.Add port
-                deps.Item <- CtxDependency.Create port
-                if defaultArg renderOnChange true then
-                    bag.Add((port :> IWire<_>).Subscribe (ignore >> onSignal.Trigger))
-                port :> IWire<_>
+    member this.useAsync<'signal>(init: Async<'signal>) : IWritable<Deferred<'signal>> =
+        let state = this.useValue Deferred.NotStartedYet
 
-        deps.NextIndex ()
-
-        result
-
-    member this.useAsync<'signal>(init: Async<'signal>) : IWire<Deferred<'signal>> =
-        let state = this.usePort Deferred.NotStartedYet
-
-        match  state.CurrentSignal with
+        match  state.Current with
         | Deferred.NotStartedYet ->
-            state.Send Deferred.Pending
+            state.Set Deferred.Pending
 
             Async.StartImmediate (
                 async {
                     let! result = Async.Catch init
 
                     match result with
-                    | Choice1Of2 value -> state.Send (Deferred.Resolved value)
-                    | Choice2Of2 exn -> state.Send (Deferred.Failed exn)
+                    | Choice1Of2 value -> state.Set (Deferred.Resolved value)
+                    | Choice2Of2 exn -> state.Set (Deferred.Failed exn)
                 }
             )
 

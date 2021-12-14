@@ -9,7 +9,9 @@
     <ItemGroup>
         <Compile Include="Lib\Lib.DisposableBag.fs" />
         <Compile Include="Lib\Lib.Deferred.fs" />
-        <Compile Include="Wires.fs" />
+        <Compile Include="Value\Value.fs" />
+        <Compile Include="Value\Value.Adapters.fs" />
+        <Compile Include="Value\Value.Functions.fs" />
         <Compile Include="ComponentCtx.fs" />
         <Compile Include="Component.fs" />
     </ItemGroup>

@@ -8,11 +8,11 @@ open Avalonia.FuncUI.Types
 open Avalonia.Layout
 open Avalonia.FuncUI
 
-let contactListView (contacts: ITap<Contact list>, selectedId: IWire<Guid option>, filter: IWire<string option>) =
+let contactListView (contacts: IReadable<Contact list>, selectedId: IWritable<Guid option>, filter: IWritable<string option>) =
     Component.create ("contact list", fun ctx ->
-        let contacts = ctx.useTap contacts
-        let filter = ctx.useWire filter
-        let selectedId = ctx.useWire selectedId
+        let contacts = ctx.usePassedReadOnly contacts
+        let filter = ctx.usePassedValue filter
+        let selectedId = ctx.usePassedValue selectedId
 
         DockPanel.create [
             DockPanel.width 300.0
@@ -21,17 +21,17 @@ let contactListView (contacts: ITap<Contact list>, selectedId: IWire<Guid option
                 TextBox.create [
                     TextBox.dock Dock.Top
                     TextBox.watermark "search.."
-                    TextBox.text (Option.defaultValue String.Empty filter.CurrentSignal)
+                    TextBox.text (Option.defaultValue String.Empty filter.Current)
                     TextBox.onTextChanged (fun text ->
                         if String.IsNullOrEmpty(text)
-                        then filter.Send None
-                        else filter.Send (Some text)
+                        then filter.Set None
+                        else filter.Set (Some text)
                     )
                 ]
 
                 ListBox.create [
                     ListBox.dock Dock.Top
-                    ListBox.dataItems contacts.CurrentSignal
+                    ListBox.dataItems contacts.Current
                     ListBox.itemTemplate (
                         DataTemplateView.create<_, _>(fun data ->
                             TextBlock.create [
@@ -40,16 +40,16 @@ let contactListView (contacts: ITap<Contact list>, selectedId: IWire<Guid option
                         )
                     )
                     ListBox.onSelectedIndexChanged (fun idx ->
-                        contacts.CurrentSignal
+                        contacts.Current
                         |> List.mapi (fun i v -> i, v)
                         |> Map.ofList
                         |> Map.tryFind idx
                         |> Option.map (fun c -> c.Id)
-                        |> selectedId.Send
+                        |> selectedId.Set
                     )
                     ListBox.selectedItem (
-                        contacts.CurrentSignal
-                        |> List.tryFind (fun c -> Some c.Id = selectedId.CurrentSignal)
+                        contacts.Current
+                        |> List.tryFind (fun c -> Some c.Id = selectedId.Current)
                         |> Option.map (fun c -> c :> obj)
                         |> Option.defaultValue null
                     )
@@ -59,9 +59,9 @@ let contactListView (contacts: ITap<Contact list>, selectedId: IWire<Guid option
         :> IView
     )
 
-let contactEditor (contact: IWire<Contact>) =
+let contactEditor (contact: IWritable<Contact>) =
     Component.create ("contact-editor", fun ctx ->
-        let contact = ctx.useWire contact
+        let contact = ctx.usePassedValue contact
 
         StackPanel.create [
             StackPanel.orientation Orientation.Vertical
@@ -72,9 +72,9 @@ let contactEditor (contact: IWire<Contact>) =
                     TextBox.dock Dock.Top
                     TextBox.watermark "Full Name"
                     TextBox.useFloatingWatermark true
-                    TextBox.text contact.CurrentSignal.FullName
+                    TextBox.text contact.Current.FullName
                     TextBox.onTextChanged (fun text ->
-                        contact.Send { contact.CurrentSignal with FullName = text }
+                        contact.Set { contact.Current with FullName = text }
                     )
                 ]
 
@@ -82,9 +82,9 @@ let contactEditor (contact: IWire<Contact>) =
                     TextBox.dock Dock.Top
                     TextBox.watermark "Mail"
                     TextBox.useFloatingWatermark true
-                    TextBox.text contact.CurrentSignal.Mail
+                    TextBox.text contact.Current.Mail
                     TextBox.onTextChanged (fun text ->
-                        contact.Send { contact.CurrentSignal with Mail = text }
+                        contact.Set { contact.Current with Mail = text }
                     )
                 ]
 
@@ -92,9 +92,9 @@ let contactEditor (contact: IWire<Contact>) =
                     TextBox.dock Dock.Top
                     TextBox.watermark "Phone"
                     TextBox.useFloatingWatermark true
-                    TextBox.text contact.CurrentSignal.Phone
+                    TextBox.text contact.Current.Phone
                     TextBox.onTextChanged (fun text ->
-                        contact.Send { contact.CurrentSignal with Phone = text }
+                        contact.Set { contact.Current with Phone = text }
                     )
                 ]
 
@@ -103,9 +103,9 @@ let contactEditor (contact: IWire<Contact>) =
         :> IView
     )
 
-let contactView (contact: ITap<Contact>) =
+let contactView (contact: IReadable<Contact>) =
     Component.create ("contact-view", fun ctx ->
-        let contact = ctx.useTap contact
+        let contact = ctx.usePassedReadOnly contact
         let image = ctx.useAsync Api.randomImage
 
         StackPanel.create [
@@ -113,7 +113,7 @@ let contactView (contact: ITap<Contact>) =
             StackPanel.spacing 5.0
             StackPanel.children [
 
-                match image.CurrentSignal with
+                match image.Current with
                 | Deferred.Resolved bitmap ->
                     Image.create [
                         Image.source bitmap
@@ -137,7 +137,7 @@ let contactView (contact: ITap<Contact>) =
 
                 TextBlock.create [
                     TextBlock.dock Dock.Top
-                    TextBlock.text contact.CurrentSignal.FullName
+                    TextBlock.text contact.Current.FullName
                 ]
 
                 TextBlock.create [
@@ -148,7 +148,7 @@ let contactView (contact: ITap<Contact>) =
 
                 TextBlock.create [
                     TextBlock.dock Dock.Top
-                    TextBlock.text contact.CurrentSignal.Mail
+                    TextBlock.text contact.Current.Mail
                 ]
 
                 TextBlock.create [
@@ -159,22 +159,22 @@ let contactView (contact: ITap<Contact>) =
 
                 TextBlock.create [
                     TextBlock.dock Dock.Top
-                    TextBlock.text contact.CurrentSignal.Phone
+                    TextBlock.text contact.Current.Phone
                 ]
             ]
         ]
         :> IView
     )
 
-let contactDetailsView (contact: IWire<Contact option>) =
-    Component.create ($"details-{contact.CurrentSignal |> Option.map (fun i -> i.Id)}", fun ctx ->
-        let contact = ctx.useWire contact
-        let editing = ctx.usePort false
+let contactDetailsView (contact: IWritable<Contact option>) =
+    Component.create ($"details-{contact.Current |> Option.map (fun i -> i.Id)}", fun ctx ->
+        let contact = ctx.usePassedValue contact
+        let editing = ctx.useValue false
 
-        match contact.CurrentSignal with
-        | Some contact' when editing.CurrentSignal ->
+        match contact.Current with
+        | Some contact' when editing.Current ->
             Component.create ("edit-selected", fun ctx ->
-                let contact' = ctx.usePort contact'
+                let contact' = ctx.useValue contact'
 
                 StackPanel.create [
                     StackPanel.margin 10.0
@@ -193,8 +193,8 @@ let contactDetailsView (contact: IWire<Contact option>) =
                                     Button.dock Dock.Top
                                     Button.content "Save"
                                     Button.onClick (fun _ ->
-                                        editing.Send false
-                                        contact.Send (Some contact'.CurrentSignal)
+                                        editing.Set false
+                                        contact.Set (Some contact'.Current)
                                     )
                                 ]
 
@@ -202,7 +202,7 @@ let contactDetailsView (contact: IWire<Contact option>) =
                                     Button.dock Dock.Top
                                     Button.content "Cancel"
                                     Button.onClick (fun _ ->
-                                        editing.Send false
+                                        editing.Set false
                                     )
                                 ]
                             ]
@@ -214,8 +214,8 @@ let contactDetailsView (contact: IWire<Contact option>) =
 
         | Some contact' ->
             Component.create ("show-selected", fun ctx ->
-                let contact' = ctx.usePort contact'
-                let editing = ctx.useWire editing
+                let contact' = ctx.useValue contact'
+                let editing = ctx.usePassedValue editing
 
                 StackPanel.create [
                     StackPanel.margin 10.0
@@ -234,19 +234,19 @@ let contactDetailsView (contact: IWire<Contact option>) =
                                 Button.create [
                                     Button.dock Dock.Bottom
                                     Button.content "edit"
-                                    Button.isVisible (not editing.CurrentSignal)
+                                    Button.isVisible (not editing.Current)
                                     Button.onClick (fun _ ->
-                                        editing.Send true
+                                        editing.Set true
                                     )
                                 ]
 
                                 Button.create [
                                     Button.dock Dock.Bottom
                                     Button.content "delete"
-                                    Button.isVisible (not editing.CurrentSignal)
+                                    Button.isVisible (not editing.Current)
                                     Button.background "#c0392b"
                                     Button.onClick (fun _ ->
-                                        contact.Send None
+                                        contact.Set None
                                     )
                                 ]
                             ]
@@ -265,18 +265,18 @@ let contactDetailsView (contact: IWire<Contact option>) =
 
 let mainView () =
     Component (fun ctx ->
-        let contacts = ctx.useWire ContactStore.shared.Contacts
-        let selectedId = ctx.usePort (None: Guid option)
-        let filter = ctx.usePort None
+        let contacts = ctx.usePassedValue ContactStore.shared.Contacts
+        let selectedId = ctx.useValue (None: Guid option)
+        let filter = ctx.useValue None
 
         let selectedContact =
             contacts
-            |> Wire.tryFindBy (fun c -> Some c.Id) selectedId
-            |> ctx.useWire
+            |> Value.tryFindByKey (fun c -> Some c.Id) selectedId
+            |> ctx.usePassedValue
 
         let filteredContacts =
             contacts
-            |> Wire.filter filter (fun contact filter ->
+            |> Value.filter filter (fun contact filter ->
                 match filter with
                 | Some filter ->
                     contact.FullName.Contains(filter : string) ||
@@ -284,7 +284,6 @@ let mainView () =
                     contact.Phone.Contains(filter : string)
                 | None ->
                     true
-
             )
 
         DockPanel.create [
