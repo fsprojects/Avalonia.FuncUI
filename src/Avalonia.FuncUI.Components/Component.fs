@@ -1,13 +1,14 @@
 ﻿namespace Avalonia.FuncUI
 
+open System
 open Avalonia.Controls
 open Avalonia.FuncUI.Types
 open Avalonia.Styling
 open Avalonia.FuncUI.VirtualDom
 
-type Component (render: ComponentCtx -> IView) =
+type Component (render: Context -> IView) =
     inherit ContentControl ()
-    let mutable ctx = ComponentCtx ()
+    let context = new Context()
     let mutable lastViewElement : IView option = None
 
     member private this.Update (nextViewElement : IView option) : unit =
@@ -15,28 +16,36 @@ type Component (render: ComponentCtx -> IView) =
         lastViewElement <- nextViewElement
 
     member private this.Update () : unit =
-        ctx.ResetIndex ()
+        //printfn "Component.Update called"
 
-        ctx
+        context
         |> render
         |> Some
         |> this.Update
 
+        context.EffectQueue.ProcessAfterRender ()
+
     override this.OnInitialized () =
         base.OnInitialized ()
 
+        context.useDisposable (
+            context.OnRender.Subscribe (fun _ ->
+                this.Update ()
+            )
+        )
+
         this.Update ()
 
-        ctx.OnSignal.Add (fun _ ->
-            this.Update ()
-        )
+    override this.Finalize () =
+        base.Finalize ()
+        (context :> IDisposable).Dispose ()
 
     interface IStyleable with
         member this.StyleKey = typeof<ContentControl>
 
 type Component with
 
-    static member create(key: string, render: ComponentCtx -> IView) : IView<Component> =
+    static member create(key: string, render: Context -> IView) : IView<Component> =
         { View.ViewType = typeof<Component>
           View.ViewKey = ValueSome key
           View.Attrs = list.Empty

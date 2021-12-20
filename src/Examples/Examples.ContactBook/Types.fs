@@ -22,16 +22,16 @@ type Contact =
           Contact.Phone = "" }
 
     static member Random with get () =
-        let faker = Bogus.Faker(locale = "de")
+        let faker = Bogus.Faker(locale = "de").Person
 
         { Contact.Id = Guid.NewGuid ()
-          Contact.FullName = faker.Name.FullName ()
-          Contact.Mail = faker.Internet.Email ()
-          Contact.Phone = faker.Phone.Locale }
+          Contact.FullName = faker.FullName
+          Contact.Mail = faker.Email
+          Contact.Phone = faker.Phone }
 
 
 type ContactStore () =
-    let value = Value [
+    let value = State [
          for _ = 0 to 100 do
              Contact.Random
     ]

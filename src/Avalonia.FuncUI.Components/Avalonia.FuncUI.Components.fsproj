@@ -8,20 +8,18 @@
 
     <ItemGroup>
         <Compile Include="Lib\Lib.DisposableBag.fs" />
-        <Compile Include="Lib\Lib.Deferred.fs" />
-        <Compile Include="Value\Value.fs" />
-        <Compile Include="Value\Value.Adapters.fs" />
-        <Compile Include="Value\Value.Functions.fs" />
-        <Compile Include="ComponentCtx.fs" />
+        <Compile Include="Lib\Lib.Common.fs" />
+        <Compile Include="State\State.fs" />
+        <Compile Include="State\State.Adapters.fs" />
+        <Compile Include="State\State.Functions.fs" />
+        <Compile Include="Context\Context.EffectsHook.fs" />
+        <Compile Include="Context\Context.StateHook.fs" />
+        <Compile Include="Context\Context.fs" />
         <Compile Include="Component.fs" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Include="FSharp.Control.Reactive" Version="5.0.2" />
     </ItemGroup>
 
 </Project>
