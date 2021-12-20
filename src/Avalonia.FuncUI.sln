@@ -11,27 +11,31 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Elmish", "A
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj", "{2EE61E50-F492-4024-85D3-D310D05B4D72}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elmish Examples", "Elmish Examples", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.DSL", "Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj", "{B55A8DAD-ED9E-426C-A91D-E80747100E63}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.CounterApp", "Examples\Examples.CounterApp\Examples.CounterApp.fsproj", "{972EEE7D-CB1F-4A22-B10F-D7375F700A79}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.CounterApp", "Elmish Examples\Examples.CounterApp\Examples.CounterApp.fsproj", "{972EEE7D-CB1F-4A22-B10F-D7375F700A79}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.GameOfLife", "Examples\Examples.GameOfLife\Examples.GameOfLife.fsproj", "{D328F897-16D3-43CA-A746-3744DC6BA050}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.GameOfLife", "Elmish Examples\Examples.GameOfLife\Examples.GameOfLife.fsproj", "{D328F897-16D3-43CA-A746-3744DC6BA050}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{681AB0E5-A733-4CFE-872A-10B810DAF86D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControlCatalog", "ControlCatalog", "{5DB968C6-935E-41AC-A252-644B4886AF8A}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ClockApp", "Examples\Examples.ClockApp\Examples.ClockApp.fsproj", "{1401B46D-1F14-4D29-8E45-96E62D46405F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ClockApp", "Elmish Examples\Examples.ClockApp\Examples.ClockApp.fsproj", "{1401B46D-1F14-4D29-8E45-96E62D46405F}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Presso", "Examples\Examples.Presso\Examples.Presso.fsproj", "{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Presso", "Elmish Examples\Examples.Presso\Examples.Presso.fsproj", "{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.MusicPlayer", "Examples\Examples.MusicPlayer\Examples.MusicPlayer.fsproj", "{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ContactBook", "Examples\Examples.ContactBook\Examples.ContactBook.fsproj", "{B305072C-3641-4C8E-AD57-6D7B72F4586E}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.MusicPlayer", "Elmish Examples\Examples.MusicPlayer\Examples.MusicPlayer.fsproj", "{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.Components", "Avalonia.FuncUI.Components\Avalonia.FuncUI.Components.fsproj", "{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Component Examples", "Component Examples", "{F50826CE-D9BC-45CF-A110-C42225B75AD3}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Presso", "Component Examples\Examples.Presso\Examples.Presso.fsproj", "{64F427DB-02F2-499C-B4F2-25BC18F65E85}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Presso", "Component Examples\Examples.Presso\Examples.Presso.fsproj", "{42F50121-46E1-4DF7-81CE-890BDDB69613}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,14 +83,18 @@ Global
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B305072C-3641-4C8E-AD57-6D7B72F4586E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{601AD615-599C-4A1C-ABFD-F0ECEBDD3E4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64F427DB-02F2-499C-B4F2-25BC18F65E85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64F427DB-02F2-499C-B4F2-25BC18F65E85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64F427DB-02F2-499C-B4F2-25BC18F65E85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64F427DB-02F2-499C-B4F2-25BC18F65E85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42F50121-46E1-4DF7-81CE-890BDDB69613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42F50121-46E1-4DF7-81CE-890BDDB69613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42F50121-46E1-4DF7-81CE-890BDDB69613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42F50121-46E1-4DF7-81CE-890BDDB69613}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,7 +107,8 @@ Global
 		{1401B46D-1F14-4D29-8E45-96E62D46405F} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
-		{B305072C-3641-4C8E-AD57-6D7B72F4586E} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
+		{64F427DB-02F2-499C-B4F2-25BC18F65E85} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
+		{42F50121-46E1-4DF7-81CE-890BDDB69613} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
