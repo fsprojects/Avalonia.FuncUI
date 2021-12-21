@@ -32,3 +32,17 @@ module State =
 
     let subscribe (handler: 'value -> unit) (state: IWritable<'value>) : IDisposable =
         state.Subscribe handler
+
+    (* read only functions prefixed with 'read' *)
+
+    let readUnique (state: IReadable<'value>) : IReadable<'value> =
+        let uniqueWire = new UniqueValueReadOnly<'value>(state)
+        uniqueWire :> _
+
+    let readMap (mapFunc: 'a -> 'b) (value: IReadable<'a>) : IReadable<'b> =
+        new ValueMapped<'a, 'b>(value, mapFunc) :> _
+
+    let readTryFindByKey (keyPath: 'signal -> 'key) (key: IReadable<'key>) (wire: IReadable<list<'signal>>) : IReadable<'signal option> =
+        let keyedWire: IReadable<Map<'key, 'signal>> = new ReadValueMap<'signal, 'key>(wire, keyPath) :> _
+        let keyFocusedWire: IReadable<'signal option> = new ReadKeyFocusedValue<'signal, 'key>(keyedWire, key) :> _
+        keyFocusedWire

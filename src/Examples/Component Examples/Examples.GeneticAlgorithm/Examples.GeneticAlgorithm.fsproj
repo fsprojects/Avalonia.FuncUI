@@ -14,7 +14,17 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Include="Program.fs"/>
+        <Compile Include="Lib\WorldPos.fs" />
+        <Compile Include="Lib\Actors.fs" />
+        <Compile Include="Lib\World.fs" />
+        <Compile Include="Lib\WorldGeneration.fs" />
+        <Compile Include="Lib\States.fs" />
+        <Compile Include="Lib\Genetics.fs" />
+        <Compile Include="Lib\Fitness.fs" />
+        <Compile Include="Lib\Simulator.fs" />
+        <Compile Include="Lib\Population.fs" />
+        <Compile Include="Views.fs" />
+        <Compile Include="Program.fs" />
     </ItemGroup>
 
 </Project>

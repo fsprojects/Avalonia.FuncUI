@@ -1,6 +1,7 @@
 namespace Avalonia.FuncUI
 
 open System
+open Avalonia.Controls.Primitives
 open Avalonia.FuncUI
 
 type internal UniqueValueReadOnly<'value>
@@ -31,13 +32,31 @@ type internal UniqueValue<'value>
         member this.Set (newValue: 'value) =
             src.Set newValue
 
-type internal ValueMap<'value, 'key when 'key : comparison>
-  ( src: IWritable<'value list>,
+type internal ValueMapped<'a, 'b>
+  ( src: IReadable<'a>,
+    mapFunc: 'a -> 'b ) =
+
+    let mutable current: 'b = mapFunc src.Current
+
+    interface IReadable<'b> with
+        member this.InstanceId with get () = src.InstanceId
+        member this.Current with get () = current
+        member this.Subscribe (handler: 'b -> unit) =
+            src.Subscribe (fun value ->
+                current <- mapFunc value
+                handler current
+            )
+
+        member this.Dispose () =
+            ()
+
+type internal ReadValueMap<'value, 'key when 'key : comparison>
+  ( src: IReadable<'value list>,
     keyPath: 'value -> 'key ) =
 
     let disposable = new DisposableBag ()
-    let value: IWritable<_> =
-        let value = new UniqueValue<_>(src)
+    let value: IReadable<_> =
+        let value = new UniqueValueReadOnly<_>(src)
         disposable.Add value
         value :> _
 
@@ -47,7 +66,7 @@ type internal ValueMap<'value, 'key when 'key : comparison>
         |> Map.ofSeq
     let mutable current: Map<'key, 'value> = makeMap value.Current
 
-    interface IWritable<Map<'key, 'value>> with
+    interface IReadable<Map<'key, 'value>> with
         member this.InstanceId with get () = value.InstanceId
         member this.Current with get () = current
         member this.Subscribe (handler: Map<'key, 'value> -> unit) =
@@ -57,22 +76,30 @@ type internal ValueMap<'value, 'key when 'key : comparison>
                 handler current'
             )
 
+        member this.Dispose () =
+            (disposable :> IDisposable).Dispose ()
+
+type internal ValueMap<'value, 'key when 'key : comparison>
+  ( src: IWritable<'value list>,
+    keyPath: 'value -> 'key ) =
+
+    inherit ReadValueMap<'value, 'key>(src, keyPath)
+
+    interface IWritable<Map<'key, 'value>> with
+
         member this.Set (signal: Map<'key, 'value>) : unit =
             src.Current
             |> Seq.choose (fun item -> Map.tryFind (keyPath item) signal)
             |> Seq.toList
             |> src.Set
 
-        member this.Dispose () =
-            (disposable :> IDisposable).Dispose ()
-
-type internal KeyFocusedValue<'value, 'key when 'key : comparison>
-  ( src: IWritable<Map<'key, 'value>>,
+type internal ReadKeyFocusedValue<'value, 'key when 'key : comparison>
+  ( src: IReadable<Map<'key, 'value>>,
     key: IReadable<'key> ) =
 
     let disposable = new DisposableBag ()
-    let value: IWritable<_> =
-        let value = new UniqueValue<_>(src)
+    let value: IReadable<_> =
+        let value = new UniqueValueReadOnly<_>(src)
         disposable.Add value
         value :> _
 
@@ -92,13 +119,23 @@ type internal KeyFocusedValue<'value, 'key when 'key : comparison>
     do disposable.Add (key.Subscribe (ignore >> onKeyOrValueChanged))
     do disposable.Add (value.Subscribe (ignore >> onKeyOrValueChanged))
 
-    interface IWritable<'value option> with
+    interface IReadable<'value option> with
         member this.InstanceId with get () = value.InstanceId
         member this.Current with get () = current
 
         member this.Subscribe (handler: 'value option -> unit) =
             onChange.Publish.Subscribe handler
 
+        member this.Dispose () =
+            (disposable :> IDisposable).Dispose()
+
+type internal KeyFocusedValue<'value, 'key when 'key : comparison>
+  ( src: IWritable<Map<'key, 'value>>,
+    key: IReadable<'key> ) =
+
+    inherit ReadKeyFocusedValue<'value, 'key>(src, key)
+
+    interface IWritable<'value option> with
         member this.Set (signal: 'value option) : unit =
             match signal with
             | Some signal ->
@@ -109,9 +146,6 @@ type internal KeyFocusedValue<'value, 'key when 'key : comparison>
                 src.Current
                 |> Map.remove key.Current
                 |> src.Set
-
-        member this.Dispose () =
-            (disposable :> IDisposable).Dispose()
 
 type internal FilteringValueList<'value, 'filter>
   ( src: IWritable<'value list>,
