@@ -10,20 +10,20 @@ module Main =
     open Avalonia.Media
     open Avalonia.Media.Imaging
     open Avalonia.Layout
-    
+
     [<Measure>] type ml
     [<Measure>] type g
-    
+
     type BrewingMethod =
         | General
         | FrenchPress
         | PourOver
         | ColdBrew
-        
+
     type Strength =
         | Regular
         | Strong
-        
+
     let calculateCoffeeAmount (method: BrewingMethod) (strength: Strength) (water: int<ml>) : float<g> =
         let ratio : int =
             match method, strength with
@@ -35,11 +35,11 @@ module Main =
             | PourOver,    Strong  -> 15
             | ColdBrew,    Regular -> 8
             | ColdBrew,    Strong  -> 5
-            
+
         let coffee = (float water) * (1.0 / float ratio)
-            
+
         LanguagePrimitives.FloatWithMeasure<g>(coffee)
-    
+
     type State =
         { water: int<ml>
           method: BrewingMethod
@@ -61,7 +61,7 @@ module Main =
         | SetBrewingMethod method -> { state with method = method }
         | SetStrength strength -> { state with strength = strength }
         | Reset -> init
-    
+
     let waterAmountView (state: State) (dispatch: Msg -> unit) =
         DockPanel.create [
             DockPanel.dock Dock.Top
@@ -87,7 +87,7 @@ module Main =
                                 RadioButton.isChecked (state.water.Equals i)
                             ]
                     ]
-                ] 
+                ]
                 Slider.create [
                     Slider.dock Dock.Top
                     Slider.orientation Orientation.Horizontal
@@ -98,7 +98,7 @@ module Main =
                     Slider.tickFrequency 5.0
                     Slider.isSnapToTickEnabled true
                     Slider.value (float state.water)
-                    Slider.onValueChanged (fun i ->  
+                    Slider.onValueChanged (fun i ->
                         (int i)
                         |> LanguagePrimitives.Int32WithMeasure<ml>
                         |> SetWaterAmount
@@ -107,7 +107,7 @@ module Main =
                 ]
             ]
         ]
-        
+
     let brewingMethodView (state: State) (dispatch: Msg -> unit) =
         DockPanel.create [
             DockPanel.dock Dock.Top
@@ -119,9 +119,9 @@ module Main =
                     UniformGrid.children [
                         RadioButton.create [
                             RadioButton.background (
-                                let brush = "avares://Examples.Presso/Assets/general.jpeg" |> Bitmap.Create |> ImageBrush
+                                let brush = "avares://Examples.Elmish.Presso/Assets/general.jpeg" |> Bitmap.Create |> ImageBrush
                                 brush.Stretch <- Stretch.UniformToFill
-                                brush                                  
+                                brush
                             )
                             RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.General |> SetBrewingMethod |> dispatch)
@@ -132,9 +132,9 @@ module Main =
                         ]
                         RadioButton.create [
                             RadioButton.background (
-                                let brush = "avares://Examples.Presso/Assets/cold-brew.jpeg" |> Bitmap.Create |> ImageBrush
+                                let brush = "avares://Examples.Elmish.Presso/Assets/cold-brew.jpeg" |> Bitmap.Create |> ImageBrush
                                 brush.Stretch <- Stretch.UniformToFill
-                                brush                                  
+                                brush
                             )
                             RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.ColdBrew |> SetBrewingMethod |> dispatch)
@@ -145,9 +145,9 @@ module Main =
                         ]
                         RadioButton.create [
                             RadioButton.background (
-                                let brush = "avares://Examples.Presso/Assets/french-press.jpeg" |> Bitmap.Create |> ImageBrush
+                                let brush = "avares://Examples.Elmish.Presso/Assets/french-press.jpeg" |> Bitmap.Create |> ImageBrush
                                 brush.Stretch <- Stretch.UniformToFill
-                                brush                                  
+                                brush
                             )
                             RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.FrenchPress |> SetBrewingMethod |> dispatch)
@@ -158,9 +158,9 @@ module Main =
                         ]
                         RadioButton.create [
                             RadioButton.background (
-                                let brush = "avares://Examples.Presso/Assets/pour-over.jpeg" |> Bitmap.Create |> ImageBrush
+                                let brush = "avares://Examples.Elmish.Presso/Assets/pour-over.jpeg" |> Bitmap.Create |> ImageBrush
                                 brush.Stretch <- Stretch.UniformToFill
-                                brush                                  
+                                brush
                             )
                             RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                             RadioButton.onChecked (fun _ -> BrewingMethod.PourOver |> SetBrewingMethod |> dispatch)
@@ -168,19 +168,19 @@ module Main =
                             RadioButton.groupName "brewing_method"
                             RadioButton.classes [ "brewing_method" ]
                             RadioButton.isChecked (state.method.Equals BrewingMethod.PourOver)
-                        ]   
+                        ]
                     ]
                 ]
             ]
         ]
-        
+
     let strengthView (state: State) (dispatch: Msg -> unit) =
         Border.create [
             Border.dock Dock.Top
             Border.background (
-                let brush = "avares://Examples.Presso/Assets/coffee-beans.jpeg" |> Bitmap.Create |> ImageBrush
+                let brush = "avares://Examples.Elmish.Presso/Assets/coffee-beans.jpeg" |> Bitmap.Create |> ImageBrush
                 brush.Stretch <- Stretch.UniformToFill
-                brush                                  
+                brush
             )
             Border.cornerRadius 12.0
             Border.margin 5.0
@@ -221,7 +221,7 @@ module Main =
                             TextBlock.text (sprintf "%.1f g" (calculateCoffeeAmount state.method state.strength state.water))
                         ]
                     ]
-                ]                             
+                ]
             )
         ]
 
@@ -233,4 +233,4 @@ module Main =
                 brewingMethodView state dispatch
                 strengthView state dispatch
             ]
-        ]       
+        ]

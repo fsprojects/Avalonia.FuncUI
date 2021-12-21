@@ -3,6 +3,7 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Examples.ClockApp</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,9 +13,9 @@
     </ItemGroup>
     
     <ItemGroup>
-        <ProjectReference Include="..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
-        <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
-        <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
 
     <ItemGroup>

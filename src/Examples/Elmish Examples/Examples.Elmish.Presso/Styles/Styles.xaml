@@ -2,8 +2,8 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <StyleInclude Source="avares://Examples.Presso/Styles/RadioButton.xaml"/>
-    <StyleInclude Source="avares://Examples.Presso/Styles/Button.xaml"/>
+    <StyleInclude Source="avares://Examples.Elmish.Presso/Styles/RadioButton.xaml"/>
+    <StyleInclude Source="avares://Examples.Elmish.Presso/Styles/Button.xaml"/>
     
     <Style Selector="RadioButton.water">
         <Setter Property="Background" Value="#113248"/>
