@@ -25,6 +25,7 @@
         <Compile Include="Lib\Population.fs" />
         <Compile Include="Views.fs" />
         <Compile Include="Program.fs" />
+        <Content Include="License.md" />
     </ItemGroup>
 
 </Project>
