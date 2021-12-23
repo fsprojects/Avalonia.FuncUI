@@ -26,7 +26,7 @@ module CustomHooks =
 
         member this.useAsync<'signal>(init: Async<'signal>, [<CallerLineNumber>] ?identity: int) : IWritable<Deferred<'signal>> =
             let identity = Option.get identity
-            let state = this.useState (Deferred.NotStartedYet, identity)
+            let state = this.useState (Deferred.NotStartedYet, true, identity)
 
             this.useEffect (
                 handler = (fun _ ->
@@ -48,7 +48,7 @@ module CustomHooks =
                         ()
                 ),
                 triggers = [ EffectTrigger.AfterInit ],
-                identity = identity
+                callerLineNumber = identity
             )
 
             state
@@ -67,9 +67,9 @@ type Views =
         filter: IWritable<string option> ) =
 
         Component.create ("contact list", fun ctx ->
-            let contacts = ctx.usePassedStateReadOnly contacts
-            let filter = ctx.usePassedState filter
-            let selectedId = ctx.usePassedState selectedId
+            let contacts = ctx.usePassedRead contacts
+            let filter = ctx.usePassed filter
+            let selectedId = ctx.usePassed selectedId
 
             DockPanel.create [
                 DockPanel.width 300.0
@@ -121,7 +121,7 @@ type Views =
 
     static member contactEditor (contact: IWritable<Contact>) =
         Component.create ("contact-editor", fun ctx ->
-            let contact = ctx.usePassedState contact
+            let contact = ctx.usePassed contact
 
             StackPanel.create [
                 StackPanel.orientation Orientation.Vertical
@@ -165,7 +165,7 @@ type Views =
 
     static member contactView (contact: IReadable<Contact>) =
         Component.create ("contact-view", fun ctx ->
-            let contact = ctx.usePassedStateReadOnly contact
+            let contact = ctx.usePassedRead contact
             let image = ctx.useAsync Api.randomImage
 
             StackPanel.create [
@@ -311,7 +311,7 @@ type Views =
 
     static member contactDetailsView (contact: IWritable<Contact option>) =
         Component.create ($"details", fun ctx ->
-            let contact = ctx.usePassedState contact
+            let contact = ctx.usePassed contact
             let editing = ctx.useState false
 
             DockPanel.create [
@@ -356,14 +356,14 @@ type Views =
 
     static member mainView () =
         Component (fun ctx ->
-            let contacts = ctx.usePassedState ContactStore.shared.Contacts
+            let contacts = ctx.usePassed ContactStore.shared.Contacts
             let selectedId = ctx.useState (None: Guid option)
             let filter = ctx.useState (None: string option)
 
             let selectedContact =
                 contacts
                 |> State.tryFindByKey (fun c -> Some c.Id) selectedId
-                |> ctx.usePassedState
+                |> ctx.usePassed
 
             ctx.useEffect(
                 handler = (fun _ ->

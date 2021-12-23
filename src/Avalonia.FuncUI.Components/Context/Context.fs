@@ -47,8 +47,8 @@ type IComponentContext =
 
 type Context () =
     let disposables = new DisposableBag ()
-    let hooks = Dictionary<string, StateHook>()
-    let effects = Dictionary<string, EffectHook>()
+    let hooks = Dictionary<HookIdentity, StateHook>()
+    let effects = Dictionary<HookIdentity, EffectHook>()
     let effectQueue =
         let effectQueue = new EffectQueue()
         disposables.Add effectQueue

@@ -73,7 +73,7 @@ type StateHookValue (resolver: StateHookValueResolver) =
 [<Struct>]
 type StateHook =
     { /// The hooks identity is used to uniquely identify the hook in it's context.
-      Identity: string
+      Identity: HookIdentity
       /// The hooks value resolver is used to cut down the cost per render by only
       /// resolving expensive (local) values once.
       State: StateHookValue

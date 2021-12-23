@@ -12,6 +12,7 @@
         <Compile Include="State\State.fs" />
         <Compile Include="State\State.Adapters.fs" />
         <Compile Include="State\State.Functions.fs" />
+        <Compile Include="Context\Context.HookIdentity.fs" />
         <Compile Include="Context\Context.EffectsHook.fs" />
         <Compile Include="Context\Context.StateHook.fs" />
         <Compile Include="Context\Context.fs" />

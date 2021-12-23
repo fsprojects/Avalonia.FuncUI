@@ -53,7 +53,7 @@ module Main =
 
     let waterAmountView (state: IWritable<State>) =
         Component.create ("water", fun ctx ->
-            let state = ctx.usePassedState state
+            let state = ctx.usePassed state
 
             DockPanel.create [
                 DockPanel.dock Dock.Top
@@ -106,7 +106,7 @@ module Main =
 
     let brewingMethodView (state: IWritable<State>) =
         Component.create ("method", fun ctx ->
-            let state = ctx.usePassedState state
+            let state = ctx.usePassed state
 
             DockPanel.create [
                 DockPanel.dock Dock.Top
@@ -185,7 +185,7 @@ module Main =
 
     let strengthView (state: IWritable<State>) =
         Component.create ("strength", fun ctx ->
-            let state = ctx.usePassedState state
+            let state = ctx.usePassed state
 
             Border.create [
                 Border.dock Dock.Top

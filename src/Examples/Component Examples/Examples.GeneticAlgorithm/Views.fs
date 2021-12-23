@@ -133,7 +133,7 @@ type Views =
                         ||> List.map2 (fun (gene: double) (name: string) -> (name, gene))
                     )
                 )
-                |> ctx.usePassedStateReadOnly
+                |> ctx.usePassedRead
 
             StackPanel.create [
                 StackPanel.spacing 10.0
@@ -165,11 +165,11 @@ type Views =
 
     static member sidePanelView () =
         Component.create ("side-panel", fun ctx ->
-            let showHeatMap = ctx.usePassedState StateStore.shared.ShowHeatMap
-            let population = ctx.usePassedState StateStore.shared.Squirrels
-            let selectedId = ctx.usePassedState StateStore.shared.SelectedSquirrelId
-            let selectedSquirrel = ctx.usePassedState StateStore.shared.SelectedSquirrel
-            let selectedWorldIdx = ctx.usePassedState StateStore.shared.SelectedWorldResultIdx
+            let showHeatMap = ctx.usePassed StateStore.shared.ShowHeatMap
+            let population = ctx.usePassed StateStore.shared.Squirrels
+            let selectedId = ctx.usePassed StateStore.shared.SelectedSquirrelId
+            let selectedSquirrel = ctx.usePassed StateStore.shared.SelectedSquirrel
+            let selectedWorldIdx = ctx.usePassed StateStore.shared.SelectedWorldResultIdx
 
             StackPanel.create [
                 StackPanel.spacing 10.0
@@ -252,9 +252,9 @@ type Views =
 
     static member selectedGameStateView () =
         Component.create ("selected-game-state", fun ctx ->
-            let squirrel = ctx.usePassedStateReadOnly StateStore.shared.SelectedSquirrel
-            let gameState = ctx.usePassedStateReadOnly StateStore.shared.SelectedGameState
-            let showHeatMap = ctx.usePassedStateReadOnly StateStore.shared.ShowHeatMap
+            let squirrel = ctx.usePassedRead StateStore.shared.SelectedSquirrel
+            let gameState = ctx.usePassedRead StateStore.shared.SelectedGameState
+            let showHeatMap = ctx.usePassedRead StateStore.shared.ShowHeatMap
 
             match gameState.Current, squirrel.Current with
             | Some gameState, Some squirrel ->
@@ -323,8 +323,8 @@ type Views =
         )
     static member simulationView () =
         Component.create ("content-view", fun ctx ->
-            let worldResult = ctx.usePassedStateReadOnly StateStore.shared.SelectedWorldResult
-            let gameStateIdx = ctx.usePassedState StateStore.shared.SelectedGameStateIdx
+            let worldResult = ctx.usePassedRead StateStore.shared.SelectedWorldResult
+            let gameStateIdx = ctx.usePassed StateStore.shared.SelectedGameStateIdx
 
             match worldResult.Current with
             | Some worldResult ->

@@ -4,7 +4,6 @@ open System
 open Avalonia.FuncUI
 open Avalonia.Threading
 
-
 [<RequireQualifiedAccess>]
 type EffectTrigger =
     /// triggers the effect to run every time after the passed dependency has changed.
@@ -16,7 +15,7 @@ type EffectTrigger =
 
 
 type EffectHook =
-    { Identity: string
+    { Identity: HookIdentity
       Handler: unit -> IDisposable
       Triggers: EffectTrigger list }
 
