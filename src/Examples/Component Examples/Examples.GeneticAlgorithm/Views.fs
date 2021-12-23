@@ -3,7 +3,6 @@ namespace Examples.GeneticAlgorithm
 open System
 open Avalonia.Controls
 open Avalonia.Controls.Primitives
-open Avalonia.Controls.Shapes
 open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types

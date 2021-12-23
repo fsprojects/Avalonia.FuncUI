@@ -2,11 +2,12 @@
 
 open System
 open Avalonia.Controls
+open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
 open Avalonia.Styling
 open Avalonia.FuncUI.VirtualDom
 
-type Component (render: Context -> IView) =
+type Component (render: IComponentContext -> IView) =
     inherit ContentControl ()
     let context = new Context()
     let mutable lastViewElement : IView option = None
@@ -28,7 +29,7 @@ type Component (render: Context -> IView) =
     override this.OnInitialized () =
         base.OnInitialized ()
 
-        context.useDisposable (
+        (context :> IComponentContext).trackDisposable (
             context.OnRender.Subscribe (fun _ ->
                 this.Update ()
             )
@@ -45,7 +46,7 @@ type Component (render: Context -> IView) =
 
 type Component with
 
-    static member create(key: string, render: Context -> IView) : IView<Component> =
+    static member create(key: string, render: IComponentContext -> IView) : IView<Component> =
         { View.ViewType = typeof<Component>
           View.ViewKey = ValueSome key
           View.Attrs = list.Empty

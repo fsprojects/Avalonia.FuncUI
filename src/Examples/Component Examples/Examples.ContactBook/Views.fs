@@ -22,7 +22,7 @@ module CustomHooks =
         | Resolved of 't
         | Failed of exn
 
-    type Context with
+    type IComponentContext with
 
         member this.useAsync<'signal>(init: Async<'signal>, [<CallerLineNumber>] ?identity: int) : IWritable<Deferred<'signal>> =
             let identity = Option.get identity
