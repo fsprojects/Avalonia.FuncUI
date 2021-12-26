@@ -25,9 +25,11 @@ module DifferTests =
                 // don't include last attr
             ]
 
-        let delta : Delta.ViewDelta = 
+        let delta : Delta.ViewDelta =
             {
                 ViewType = typeof<TextBlock>
+                KeyDidChange = false
+                ConstructorArgs = null
                 Attrs = [
                     Delta.AttrDelta.Property {
                         Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -38,12 +40,12 @@ module DifferTests =
                         Accessor = Accessor.AvaloniaProperty TextBlock.FontStyleProperty
                         Value = None
                         DefaultValueFactory = ValueNone
-                    };                       
+                    };
                 ]
             }
 
         let result = Differ.diff(last, next)
-    
+
         Assert.Equal(delta, result)
 
         // just to make sure the types are actually comparable
@@ -61,9 +63,11 @@ module DifferTests =
                 TextBlock.text "some other text"
             ]
 
-        let delta : Delta.ViewDelta = 
+        let delta : Delta.ViewDelta =
             {
                 ViewType = typeof<TextBlock>
+                KeyDidChange = false
+                ConstructorArgs = null
                 Attrs = [
                     Delta.AttrDelta.Property {
                         Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -74,7 +78,7 @@ module DifferTests =
             }
 
         let result = Differ.diff(last, next)
-    
+
         Assert.Equal(delta, result)
 
         // just to make sure the types are actually comparable
@@ -104,9 +108,11 @@ module DifferTests =
                     )
                 ]
 
-            let delta : Delta.ViewDelta = 
+            let delta : Delta.ViewDelta =
                 {
                     ViewType = typeof<Button>
+                    KeyDidChange = false
+                    ConstructorArgs = null
                     Attrs = [
                         Delta.AttrDelta.Property {
                             Accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -118,6 +124,8 @@ module DifferTests =
                             Content = Delta.ViewContentDelta.Single
                                 ( Some {
                                     ViewType = typeof<TextBlock>
+                                    KeyDidChange = false
+                                    ConstructorArgs = null
                                     Attrs = [
                                         Delta.AttrDelta.Property {
                                             Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -137,12 +145,12 @@ module DifferTests =
                 }
 
             let result = Differ.diff(last, next)
-        
+
             Assert.Equal(delta, result)
 
             // just to make sure the types are actually comparable
             Assert.True(not (delta <> result))
-            
+
     [<Fact>]
     let ``Diff Content Multiple`` () =
             let last =
@@ -173,9 +181,11 @@ module DifferTests =
                     ]
                 ]
 
-            let delta : Delta.ViewDelta = 
+            let delta : Delta.ViewDelta =
                 {
                     ViewType = typeof<StackPanel>
+                    KeyDidChange = false
+                    ConstructorArgs = null
                     Attrs = [
                         Delta.AttrDelta.Property {
                             Accessor =  Accessor.AvaloniaProperty StackPanel.OrientationProperty
@@ -187,6 +197,8 @@ module DifferTests =
                             Content = Delta.ViewContentDelta.Multiple [
                                 {
                                     ViewType = typeof<TextBlock>
+                                    KeyDidChange = false
+                                    ConstructorArgs = null
                                     Attrs = [
                                         Delta.AttrDelta.Property {
                                             Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -202,6 +214,8 @@ module DifferTests =
                                 };
                                 {
                                     ViewType = typeof<Button>
+                                    KeyDidChange = false
+                                    ConstructorArgs = null
                                     Attrs = [
                                         Delta.AttrDelta.Property {
                                             Accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -216,12 +230,12 @@ module DifferTests =
                 }
 
             let result = Differ.diff(last, next)
-            
+
             Assert.Equal(delta, result)
 
             // just to make sure the types are actually comparable
             Assert.True(not (delta <> result))
-    
+
     [<Fact>]
     let ``Diff Content Multiple (insert item into homogenous list - tail)`` () =
             let last =
@@ -258,9 +272,11 @@ module DifferTests =
                     ]
                 ]
 
-            let delta : Delta.ViewDelta = 
+            let delta : Delta.ViewDelta =
                 {
                     ViewType = typeof<StackPanel>
+                    KeyDidChange = false
+                    ConstructorArgs = null
                     Attrs = [
                         Delta.AttrDelta.Property {
                             Accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
@@ -272,6 +288,8 @@ module DifferTests =
                             Content = Delta.ViewContentDelta.Multiple [
                                 {
                                     ViewType = typeof<CheckBox>
+                                    KeyDidChange = false
+                                    ConstructorArgs = null
                                     Attrs = [
                                         Delta.AttrDelta.Property {
                                             Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -287,6 +305,8 @@ module DifferTests =
                                 };
                                 {
                                     ViewType = typeof<CheckBox>
+                                    KeyDidChange = false
+                                    ConstructorArgs = null
                                     Attrs = [
                                         Delta.AttrDelta.Property {
                                             Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -302,6 +322,8 @@ module DifferTests =
                                 };
                                 {
                                     ViewType = typeof<CheckBox>
+                                    KeyDidChange = false
+                                    ConstructorArgs = null
                                     Attrs = [
                                         Delta.AttrDelta.Property {
                                             Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -321,7 +343,7 @@ module DifferTests =
                 }
 
             let result = Differ.diff(last, next)
-            
+
             Assert.Equal(delta, result)
 
             // just to make sure the types are actually comparable
@@ -363,9 +385,11 @@ module DifferTests =
                 ]
             ]
 
-        let delta : Delta.ViewDelta = 
+        let delta : Delta.ViewDelta =
             {
                 ViewType = typeof<StackPanel>
+                KeyDidChange = false
+                ConstructorArgs = null
                 Attrs = [
                     Delta.AttrDelta.Property {
                         Accessor = Accessor.AvaloniaProperty StackPanel.OrientationProperty
@@ -377,14 +401,20 @@ module DifferTests =
                         Content = Delta.ViewContentDelta.Multiple [
                             {
                                 ViewType = typeof<CheckBox>
+                                KeyDidChange = false
+                                ConstructorArgs = null
                                 Attrs = [  ]
-                            };                             
+                            };
                             {
                                 ViewType = typeof<CheckBox>
+                                KeyDidChange = false
+                                ConstructorArgs = null
                                 Attrs = [ ]
-                            };                         
+                            };
                             {
                                 ViewType = typeof<CheckBox>
+                                KeyDidChange = false
+                                ConstructorArgs = null
                                 Attrs = [
                                     Delta.AttrDelta.Property {
                                         Accessor = Accessor.AvaloniaProperty CheckBox.ContentProperty
@@ -404,7 +434,7 @@ module DifferTests =
             }
 
         let result = Differ.diff(last, next)
-        
+
         Assert.Equal(delta, result)
 
         // just to make sure the types are actually comparable
