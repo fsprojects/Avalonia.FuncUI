@@ -19,11 +19,11 @@ type StateHookError =
 
 [<RequireQualifiedAccess; Struct; IsReadOnly>]
 type StateHookValueResolver =
-    | Const of constant: IConnectable
-    | Lazy of factory: (unit -> IConnectable)
+    | Const of constant: IAnyReadable
+    | Lazy of factory: (unit -> IAnyReadable)
 
 type StateHookValue (resolver: StateHookValueResolver) =
-    let mutable resolved: IConnectable voption = ValueNone
+    let mutable resolved: IAnyReadable voption = ValueNone
 
     member this.Value with get () =
         match resolved with
@@ -49,7 +49,7 @@ type StateHookValue (resolver: StateHookValueResolver) =
     /// </code>
     /// </example>
     /// </summary>
-    static member Lazy (factory: unit -> IConnectable) : StateHookValue =
+    static member Lazy (factory: unit -> IAnyReadable) : StateHookValue =
         factory
         |> StateHookValueResolver.Lazy
         |> StateHookValue
@@ -64,7 +64,7 @@ type StateHookValue (resolver: StateHookValueResolver) =
     /// </code>
     /// </example>
     /// </summary>
-    static member Const (constant:  IConnectable) : StateHookValue =
+    static member Const (constant:  IAnyReadable) : StateHookValue =
         constant
         |> StateHookValueResolver.Const
         |> StateHookValue

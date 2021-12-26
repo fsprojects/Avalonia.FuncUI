@@ -30,7 +30,7 @@ module IComponentContextExtensions =
             this.useStateHook<'value>(
                 StateHook.Create (
                     identity = HookIdentity.CallerCodeLocation callerLineNumber.Value,
-                    state = StateHookValue.Lazy (fun _ -> new State<'value>(initialValue) :> IConnectable),
+                    state = StateHookValue.Lazy (fun _ -> new State<'value>(initialValue) :> IAnyReadable),
                     renderOnChange = defaultArg renderOnChange true
                 )
             ) :?> IWritable<'value>

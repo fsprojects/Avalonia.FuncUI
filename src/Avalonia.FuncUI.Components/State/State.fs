@@ -2,12 +2,30 @@ namespace Avalonia.FuncUI
 
 open System
 
-type IConnectable =
+/// Used to create a dependency graph of state values for debugging / visualization.
+[<Struct; RequireQualifiedAccess>]
+type InstanceType =
+    | Source
+    | Adapter of sources: Map<string, IAnyReadable>
+
+    static member Create (sources: (string * IAnyReadable) list) : InstanceType =
+        sources
+        |> Map.ofList
+        |> InstanceType.Adapter
+
+    static member Create (src: IAnyReadable) : InstanceType =
+        Map.empty
+        |> Map.add "src" src
+        |> InstanceType.Adapter
+
+and IAnyReadable =
     inherit IDisposable
     abstract InstanceId: Guid with get
+    abstract InstanceType: InstanceType with get
+    abstract member SubscribeAny : (obj -> unit) -> IDisposable
 
 type IReadable<'value> =
-    inherit IConnectable
+    inherit IAnyReadable
     abstract member Current: 'value with get
     abstract member Subscribe : ('value -> unit) -> IDisposable
 
@@ -22,8 +40,11 @@ type State<'value>(init: 'value) =
 
     interface IWritable<'value> with
         member this.InstanceId with get () = instanceId
+        member this.InstanceType with get () = InstanceType.Source
         member this.Current with get () = current
         member this.Subscribe (handler: 'value -> unit) =
+            onChange.Publish.Subscribe handler
+        member this.SubscribeAny (handler: obj -> unit) : IDisposable =
             onChange.Publish.Subscribe handler
         member this.Set (signal: 'value) : unit =
             current <- signal
@@ -36,24 +57,13 @@ type ReadOnlyState<'value>(init: 'value) =
 
     interface IReadable<'value> with
         member this.InstanceId with get () = instanceId
+        member this.InstanceType with get () = InstanceType.Source
         member this.Current with get () = init
         member this.Subscribe (_handler: 'value -> unit) =
             (* This is a constant value and therefore does never change. *)
             null
+        member this.SubscribeAny (handler: obj -> unit) : IDisposable =
+            (* This is a constant value and therefore does never change. *)
+            null
         member this.Dispose () =
             ()
-
-type IAnyReadable =
-    abstract member SubscribeAny : (obj -> unit) -> IDisposable
-
-type internal AnyReadable<'value>(readable: IReadable<'value>) =
-
-    interface IAnyReadable with
-        member this.SubscribeAny (handler: obj -> unit) : IDisposable =
-            readable.Subscribe handler
-
-[<AutoOpen>]
-module IReadableExtensions =
-    type IReadable<'value> with
-        member this.Any with get () : IAnyReadable =
-            AnyReadable<'value>(this) :> IAnyReadable

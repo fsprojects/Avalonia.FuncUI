@@ -379,8 +379,8 @@ type Views =
 
                 ),
                 triggers = [
-                    EffectTrigger.AfterChange selectedId.Any
-                    EffectTrigger.AfterChange selectedContact.Any
+                    EffectTrigger.AfterChange selectedId
+                    EffectTrigger.AfterChange selectedContact
                 ]
             )
 

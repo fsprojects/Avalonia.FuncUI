@@ -11,6 +11,7 @@ type internal UniqueValueReadOnly<'value>
 
     interface IReadable<'value> with
         member this.InstanceId with get () = src.InstanceId
+        member this.InstanceType with get () = InstanceType.Create src
         member this.Current with get () = current
         member this.Subscribe (handler: 'value -> unit) =
             src.Subscribe (fun value ->
@@ -19,6 +20,8 @@ type internal UniqueValueReadOnly<'value>
                     current <- value
                     handler value
             )
+        member this.SubscribeAny (handler: obj -> unit) =
+            (this :> IReadable<'value>).Subscribe handler
 
         member this.Dispose () =
             ()
@@ -40,12 +43,15 @@ type internal ValueMapped<'a, 'b>
 
     interface IReadable<'b> with
         member this.InstanceId with get () = src.InstanceId
+        member this.InstanceType with get () = InstanceType.Create src
         member this.Current with get () = current
         member this.Subscribe (handler: 'b -> unit) =
             src.Subscribe (fun value ->
                 current <- mapFunc value
                 handler current
             )
+        member this.SubscribeAny (handler: obj -> unit) =
+            (this :> IReadable<'b>).Subscribe handler
 
         member this.Dispose () =
             ()
@@ -68,6 +74,7 @@ type internal ReadValueMap<'value, 'key when 'key : comparison>
 
     interface IReadable<Map<'key, 'value>> with
         member this.InstanceId with get () = value.InstanceId
+        member this.InstanceType with get () = InstanceType.Create src
         member this.Current with get () = current
         member this.Subscribe (handler: Map<'key, 'value> -> unit) =
             value.Subscribe (fun _ ->
@@ -75,6 +82,8 @@ type internal ReadValueMap<'value, 'key when 'key : comparison>
                 current <- current'
                 handler current'
             )
+        member this.SubscribeAny (handler: obj -> unit) =
+            (this :> IReadable<_>).Subscribe handler
 
         member this.Dispose () =
             (disposable :> IDisposable).Dispose ()
@@ -121,10 +130,18 @@ type internal ReadKeyFocusedValue<'value, 'key when 'key : comparison>
 
     interface IReadable<'value option> with
         member this.InstanceId with get () = value.InstanceId
+        member this.InstanceType with get () =
+            InstanceType.Create [
+                "src", src :> IAnyReadable
+                "key", key :> IAnyReadable
+            ]
         member this.Current with get () = current
 
         member this.Subscribe (handler: 'value option -> unit) =
             onChange.Publish.Subscribe handler
+
+        member this.SubscribeAny (handler: obj -> unit) =
+            (this :> IReadable<_>).Subscribe handler
 
         member this.Dispose () =
             (disposable :> IDisposable).Dispose()
@@ -181,9 +198,16 @@ type internal FilteringValueList<'value, 'filter>
 
     interface IReadable<'value list> with
         member this.InstanceId with get () = value.InstanceId
+        member this.InstanceType with get () =
+            InstanceType.Create [
+                "src", src :> IAnyReadable
+                "filter", filter :> IAnyReadable
+            ]
         member this.Current with get () = current
         member this.Subscribe (handler: 'value list -> unit) =
             onChange.Publish.Subscribe handler
+        member this.SubscribeAny (handler: obj -> unit) =
+            (this :> IReadable<_>).Subscribe handler
         member this.Dispose () =
             (disposable :> IDisposable).Dispose()
 
@@ -193,6 +217,7 @@ type internal TraversedValue<'value, 'key when 'key : comparison>
 
     interface IWritable<'value> with
         member this.InstanceId with get () = wire.InstanceId
+        member this.InstanceType with get () = InstanceType.Create wire
         member this.Current with get () =
             wire.Current.[key]
 
@@ -202,6 +227,9 @@ type internal TraversedValue<'value, 'key when 'key : comparison>
                 | Some value -> handler value
                 | None -> ()
             )
+
+        member this.SubscribeAny (handler: obj -> unit) =
+            (this :> IReadable<_>).Subscribe handler
 
         member this.Set (signal: 'value) : unit =
             wire.Current
