@@ -407,7 +407,7 @@ type Views =
 
             let filteredContacts =
                 contacts
-                |> State.filter filter (fun contact filter ->
+                |> State.readFilter filter (fun contact filter ->
                     match filter with
                     | Some filter ->
                         contact.FullName.Contains(filter : string) ||

@@ -40,7 +40,7 @@ type DataTemplateView<'data, 'childData, 'view when 'view :> IView>
             | ValueSome expression ->
                 match item with
                 | :? 'data as data ->
-                    InstancedBinding.OneWay(ExpressionObserver.Create(data, expression), BindingPriority.Style)
+                    InstancedBinding.OneTime(expression.Compile().Invoke(data))
                 | _ -> null
 
         member this.Match (data: obj) : bool =

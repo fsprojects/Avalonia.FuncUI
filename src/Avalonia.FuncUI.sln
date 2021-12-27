@@ -41,6 +41,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.GeneticAlgorithm",
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ContactBook", "Examples\Component Examples\Examples.ContactBook\Examples.ContactBook.fsproj", "{8212649E-0ECD-49CD-BBBA-13AC0151666A}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.Diagnostics", "Avalonia.FuncUI.Diagnostics\Avalonia.FuncUI.Diagnostics.fsproj", "{01358560-224C-4675-B87E-BD35930771A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{8212649E-0ECD-49CD-BBBA-13AC0151666A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8212649E-0ECD-49CD-BBBA-13AC0151666A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8212649E-0ECD-49CD-BBBA-13AC0151666A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01358560-224C-4675-B87E-BD35930771A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01358560-224C-4675-B87E-BD35930771A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01358560-224C-4675-B87E-BD35930771A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01358560-224C-4675-B87E-BD35930771A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

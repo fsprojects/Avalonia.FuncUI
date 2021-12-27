@@ -2,15 +2,23 @@
 
 open System
 open Avalonia.Controls
+open Avalonia.Controls.Primitives
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
+open Avalonia.Media
 open Avalonia.Styling
 open Avalonia.FuncUI.VirtualDom
 
+[<AllowNullLiteral>]
 type Component (render: IComponentContext -> IView) =
     inherit ContentControl ()
     let context = new Context()
+    let componentId = Guid.Unique
+
     let mutable lastViewElement : IView option = None
+
+    member internal this.Context with get () = context
+    member internal this.ComponentId with get () = componentId
 
     member private this.Update (nextViewElement : IView option) : unit =
         VirtualDom.updateRoot (this, lastViewElement, nextViewElement)

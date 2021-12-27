@@ -157,6 +157,28 @@ type AttrBuilder<'view>() =
         AttrBuilder<'view>.CreateContent(accessor, ViewContent.Multiple multipleContent)
 
     /// <summary>
+    /// Create a Property Subscription Attribute for an Avalonia Direct Property
+    /// </summary>
+    static member CreateSubscription<'arg, 'owner when 'owner :> AvaloniaObject>(property: DirectProperty<'owner, 'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
+        // subscribe to avalonia property
+        // TODO: extract to helpers module
+        let subscribeFunc (control: IControl, _handler: 'h) =
+            let cts = new CancellationTokenSource()
+            control
+                .GetObservable(property)
+                .Subscribe(func, cts.Token)
+            cts
+
+        let attr = Attr<'view>.Subscription {
+            Name = property.Name + ".PropertySub"
+            Subscribe = subscribeFunc
+            Func = Action<_>(func)
+            FuncType = func.GetType()
+            Scope = (Option.defaultValue SubPatchOptions.Never subPatchOptions).ToScope()
+        }
+        attr :> IAttr<'view>
+
+    /// <summary>
     /// Create a Property Subscription Attribute for an Avalonia Property
     /// </summary>
     static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =

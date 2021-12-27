@@ -1,7 +1,6 @@
 namespace Avalonia.FuncUI
 
 open System
-open Avalonia.Controls.Primitives
 open Avalonia.FuncUI
 
 type internal UniqueValueReadOnly<'value>
@@ -12,6 +11,7 @@ type internal UniqueValueReadOnly<'value>
     interface IReadable<'value> with
         member this.InstanceId with get () = src.InstanceId
         member this.InstanceType with get () = InstanceType.Create src
+        member this.ValueType with get () = typeof<'value>
         member this.Current with get () = current
         member this.Subscribe (handler: 'value -> unit) =
             src.Subscribe (fun value ->
@@ -35,7 +35,7 @@ type internal UniqueValue<'value>
         member this.Set (newValue: 'value) =
             src.Set newValue
 
-type internal ValueMapped<'a, 'b>
+type internal ReadValueMapped<'a, 'b>
   ( src: IReadable<'a>,
     mapFunc: 'a -> 'b ) =
 
@@ -44,6 +44,7 @@ type internal ValueMapped<'a, 'b>
     interface IReadable<'b> with
         member this.InstanceId with get () = src.InstanceId
         member this.InstanceType with get () = InstanceType.Create src
+        member this.ValueType with get () = typeof<'b>
         member this.Current with get () = current
         member this.Subscribe (handler: 'b -> unit) =
             src.Subscribe (fun value ->
@@ -55,6 +56,17 @@ type internal ValueMapped<'a, 'b>
 
         member this.Dispose () =
             ()
+
+type internal ValueMapped<'a, 'b>
+  ( src: IWritable<'a>,
+    mapFunc: 'a -> 'b,
+    mapBackFunc: 'b -> 'a ) =
+
+    inherit ReadValueMapped<'a, 'b>(src, mapFunc)
+
+    interface IWritable<'b> with
+        member this.Set (value: 'b) : unit =
+            src.Set (mapBackFunc value)
 
 type internal ReadValueMap<'value, 'key when 'key : comparison>
   ( src: IReadable<'value list>,
@@ -75,6 +87,7 @@ type internal ReadValueMap<'value, 'key when 'key : comparison>
     interface IReadable<Map<'key, 'value>> with
         member this.InstanceId with get () = value.InstanceId
         member this.InstanceType with get () = InstanceType.Create src
+        member this.ValueType with get () = typeof<Map<'key, 'value>>
         member this.Current with get () = current
         member this.Subscribe (handler: Map<'key, 'value> -> unit) =
             value.Subscribe (fun _ ->
@@ -135,6 +148,8 @@ type internal ReadKeyFocusedValue<'value, 'key when 'key : comparison>
                 "src", src :> IAnyReadable
                 "key", key :> IAnyReadable
             ]
+        member this.ValueType with get () = typeof<'value option>
+
         member this.Current with get () = current
 
         member this.Subscribe (handler: 'value option -> unit) =
@@ -203,6 +218,7 @@ type internal FilteringValueList<'value, 'filter>
                 "src", src :> IAnyReadable
                 "filter", filter :> IAnyReadable
             ]
+        member this.ValueType with get () = typeof<'value list>
         member this.Current with get () = current
         member this.Subscribe (handler: 'value list -> unit) =
             onChange.Publish.Subscribe handler
@@ -218,8 +234,8 @@ type internal TraversedValue<'value, 'key when 'key : comparison>
     interface IWritable<'value> with
         member this.InstanceId with get () = wire.InstanceId
         member this.InstanceType with get () = InstanceType.Create wire
-        member this.Current with get () =
-            wire.Current.[key]
+        member this.ValueType with get () = typeof<'value>
+        member this.Current with get () = wire.Current.[key]
 
         member this.Subscribe (handler: 'value -> unit) =
             wire.Subscribe (fun value ->

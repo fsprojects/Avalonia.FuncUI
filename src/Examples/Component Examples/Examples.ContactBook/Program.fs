@@ -1,6 +1,7 @@
 namespace Examples.ContactBook
 
 open Avalonia
+open Avalonia.FuncUI.Diagnostics
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Components.Hosts
 open Avalonia.Controls.ApplicationLifetimes
@@ -21,6 +22,7 @@ type App() =
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
             let mainWindow = MainWindow()
+            InspectorWindow(mainWindow).Show()
             //mainWindow.Renderer.DrawDirtyRects <- true
             desktopLifetime.MainWindow <- mainWindow
         | _ -> ()

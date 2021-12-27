@@ -2,7 +2,7 @@ namespace Avalonia.FuncUI
 
 open System
 
-type DisposableBag () =
+type internal DisposableBag () =
     let items = ResizeArray<IDisposable>()
     member this.Add (item: IDisposable) =
         if item <> null then

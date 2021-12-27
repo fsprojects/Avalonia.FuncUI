@@ -1,6 +1,7 @@
 namespace Avalonia.FuncUI
 
 open System
+open System.Collections.Generic
 
 [<RequireQualifiedAccess>]
 module internal Helpers =
@@ -18,7 +19,22 @@ module internal Helpers =
             bo = null
 
 [<RequireQualifiedAccess>]
-module String =
+module internal String =
 
     let ofLines (lines: #seq<string>) : string =
         String.Join (Environment.NewLine, lines)
+
+[<RequireQualifiedAccess>]
+module internal Map =
+
+    let ofDict (items: IDictionary<'key, 'value>) : Map<'key, 'value> =
+        items
+        |> Seq.map (fun pair -> pair.Key, pair.Value)
+        |> Map.ofSeq
+
+[<AutoOpen>]
+module internal CommonExtensions =
+
+    type Guid with
+        member this.StringValue with get () = this.ToString()
+        static member Unique with get () = Guid.NewGuid()

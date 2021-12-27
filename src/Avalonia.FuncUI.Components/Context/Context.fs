@@ -2,6 +2,7 @@ namespace Avalonia.FuncUI
 
 open System
 open System.Collections.Generic
+open System.Collections.ObjectModel
 open Avalonia.FuncUI
 open Avalonia.Threading
 
@@ -59,6 +60,9 @@ type Context () =
     member internal this.EffectQueue = effectQueue
 
     member internal this.OnRender = render.Publish
+
+    member internal this.Hooks with get () = Map.ofDict hooks
+
 
     interface IComponentContext with
         member this.forceRender () =
