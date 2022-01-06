@@ -2,12 +2,11 @@
 
 open System
 open Avalonia.Controls
-open Avalonia.Controls.Primitives
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
-open Avalonia.Media
 open Avalonia.Styling
 open Avalonia.FuncUI.VirtualDom
+open Avalonia.Threading
 
 [<AllowNullLiteral>]
 type Component (render: IComponentContext -> IView) =
@@ -21,31 +20,29 @@ type Component (render: IComponentContext -> IView) =
     member internal this.Context with get () = context
     member internal this.ComponentId with get () = componentId
 
-    member private this.Update (nextViewElement : IView option) : unit =
-        // update view
-        VirtualDom.updateBorderRoot (this, lastViewElement, nextViewElement)
-        lastViewElement <- nextViewElement
-
-        let nextViewAttrs = context.ComponentAttrs
-
-        // update attrs
-        Patcher.patch (
-            this,
-            { Delta.ViewDelta.ViewType = typeof<Border>
-              Delta.ViewDelta.ConstructorArgs = null
-              Delta.ViewDelta.KeyDidChange = false
-              Delta.ViewDelta.Attrs = Differ.diffAttributes lastViewAttrs nextViewAttrs }
-        )
-
-        lastViewAttrs <- nextViewAttrs
-
     member private this.Update () : unit =
-        context
-        |> render
-        |> Some
-        |> this.Update
+        Dispatcher.UIThread.Post (fun _ ->
+            let nextViewElement = Some (render context)
 
-        context.EffectQueue.ProcessAfterRender ()
+            // update view
+            VirtualDom.updateBorderRoot (this, lastViewElement, nextViewElement)
+            lastViewElement <- nextViewElement
+
+            let nextViewAttrs = context.ComponentAttrs
+
+            // update attrs
+            Patcher.patch (
+                this,
+                { Delta.ViewDelta.ViewType = typeof<Border>
+                  Delta.ViewDelta.ConstructorArgs = null
+                  Delta.ViewDelta.KeyDidChange = false
+                  Delta.ViewDelta.Attrs = Differ.diffAttributes lastViewAttrs nextViewAttrs }
+            )
+
+            lastViewAttrs <- nextViewAttrs
+
+            context.EffectQueue.ProcessAfterRender ()
+        )
 
     override this.OnInitialized () =
         base.OnInitialized ()

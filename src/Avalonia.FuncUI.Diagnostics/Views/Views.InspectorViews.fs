@@ -127,8 +127,8 @@ type internal InspectorViews =
 
             ctx.attrs [
                 Component.dock Dock.Top
-                Border.padding 5.0
-                Border.background (
+                Component.padding 5.0
+                Component.background (
                     match selected.Current with
                     | Some _ -> "#006e59"
                     | None -> "#2c3e50"

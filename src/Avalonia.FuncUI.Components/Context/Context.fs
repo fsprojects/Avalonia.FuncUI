@@ -47,7 +47,26 @@ type IComponentContext =
     abstract useEffectHook: EffectHook -> unit
 
     /// <summary>
+    /// <para>
     /// Specify attributes for the component.
+    /// </para>
+    /// <para>
+    /// Calling <c>ctx.attrs [..]</c> does not trigger a render and only is applied when
+    /// the component is rendered.
+    /// </para>
+    /// <para>
+    /// This is useful when attributes need to be set directly on the component, for example
+    /// when using a component in a grid/dock panel.
+    ///
+    /// <example>
+    /// <code>
+    /// ctx.attrs [
+    ///     Border.dock Dock.Top
+    ///     Border.row 0
+    /// ]
+    /// </code>
+    /// </example>
+    /// </para>
     /// </summary>
     abstract attrs: IAttr<Avalonia.Controls.Border> list -> unit
 
