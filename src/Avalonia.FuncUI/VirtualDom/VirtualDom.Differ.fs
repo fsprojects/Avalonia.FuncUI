@@ -148,4 +148,5 @@ module internal rec Differ =
              { ViewType = next.ViewType
                Attrs = diffAttributes last.Attrs next.Attrs
                ConstructorArgs = next.ConstructorArgs
-               KeyDidChange = false }
+               KeyDidChange = false
+               Outlet = next.Outlet }

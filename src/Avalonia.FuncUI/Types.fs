@@ -128,6 +128,7 @@ module Types =
         abstract member ViewKey: string voption
         abstract member Attrs: IAttr list with get
         abstract member ConstructorArgs: obj array with get
+        abstract member Outlet: (IControl -> unit) voption with get
 
     type IView<'viewType> =
         inherit IView
@@ -137,8 +138,8 @@ module Types =
         { ViewType: Type
           ViewKey: string voption
           Attrs: IAttr<'viewType> list
-          ConstructorArgs: obj array }
-
+          ConstructorArgs: obj array
+          Outlet: (IControl -> unit) voption }
 
         interface IView with
             member this.ViewType =  this.ViewType
@@ -147,6 +148,7 @@ module Types =
                 this.Attrs |> List.map (fun attr -> attr :> IAttr)
 
             member this.ConstructorArgs = this.ConstructorArgs
+            member this.Outlet = this.Outlet
 
         interface IView<'viewType> with
             member this.Attrs = this.Attrs

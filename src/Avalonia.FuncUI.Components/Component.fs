@@ -36,6 +36,7 @@ type Component (render: IComponentContext -> IView) =
                 { Delta.ViewDelta.ViewType = typeof<Border>
                   Delta.ViewDelta.ConstructorArgs = null
                   Delta.ViewDelta.KeyDidChange = false
+                  Delta.ViewDelta.Outlet = ValueNone
                   Delta.ViewDelta.Attrs = Differ.diffAttributes lastViewAttrs nextViewAttrs }
             )
 
@@ -68,5 +69,6 @@ type Component with
         { View.ViewType = typeof<Component>
           View.ViewKey = ValueSome key
           View.Attrs = list.Empty
+          View.Outlet = ValueNone
           View.ConstructorArgs = [| render :> obj |] }
         :> IView<Component>

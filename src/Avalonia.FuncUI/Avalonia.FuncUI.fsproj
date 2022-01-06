@@ -33,6 +33,7 @@
     <Compile Include="Components\DataTemplateView.fs" />
     <Compile Include="Builder.fs" />
     <Compile Include="Helpers.fs" />
+    <Compile Include="View.fs" />
   </ItemGroup>
 
 </Project>

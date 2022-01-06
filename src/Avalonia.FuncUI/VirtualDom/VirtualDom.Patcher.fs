@@ -226,6 +226,10 @@ module internal rec Patcher =
                 |> Activator.CreateInstance
                 |> Utils.cast<IControl>
 
+        match viewElement.Outlet with
+        | ValueSome outlet -> outlet control
+        | ValueNone -> ()
+
         control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid()) |> ignore
         Patcher.patch (control, viewElement)
         control

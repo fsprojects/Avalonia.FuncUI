@@ -250,17 +250,6 @@ type ViewBuilder() =
         { View.ViewType = typeof<'view>
           View.ViewKey = ValueNone
           View.Attrs = attrs
-          View.ConstructorArgs = null }
-        :> IView<'view>
-
-[<AbstractClass; Sealed>]
-type KeyedView() =
-
-    static member create (key: string) (createView: IAttr<'view> list -> IView<'view>) (attrs: IAttr<'view> list) =
-        let view = createView(attrs)
-
-        { View.ViewType = typeof<'view>
-          View.ViewKey = ValueSome key
-          View.Attrs = view.Attrs
-          View.ConstructorArgs = view.ConstructorArgs }
+          View.ConstructorArgs = null
+          View.Outlet = ValueNone }
         :> IView<'view>
