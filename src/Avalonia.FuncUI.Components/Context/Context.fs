@@ -2,8 +2,8 @@ namespace Avalonia.FuncUI
 
 open System
 open System.Collections.Generic
-open System.Collections.ObjectModel
 open Avalonia.FuncUI
+open Avalonia.FuncUI.Types
 open Avalonia.Threading
 
 type IComponentContext =
@@ -46,6 +46,11 @@ type IComponentContext =
     /// </summary>
     abstract useEffectHook: EffectHook -> unit
 
+    /// <summary>
+    /// Specify attributes for the component.
+    /// </summary>
+    abstract attrs: IAttr<Avalonia.Controls.Border> list -> unit
+
 type Context () =
     let disposables = new DisposableBag ()
     let hooks = Dictionary<HookIdentity, StateHook>()
@@ -55,6 +60,8 @@ type Context () =
         disposables.Add effectQueue
         effectQueue
 
+    let mutable componentAttrs: IAttr<Avalonia.Controls.Border> list = List.empty
+
     let render = Event<unit>()
 
     member internal this.EffectQueue = effectQueue
@@ -63,6 +70,10 @@ type Context () =
 
     member internal this.Hooks with get () = Map.ofDict hooks
 
+    member internal this.ComponentAttrs with get () : IAttr list =
+        componentAttrs
+        |> Seq.cast<IAttr>
+        |> Seq.toList
 
     interface IComponentContext with
         member this.forceRender () =
@@ -122,6 +133,8 @@ type Context () =
                     | EffectTrigger.AfterInit ->
                         effectQueue.Enqueue effect
 
+        member this.attrs (attrs: IAttr<Avalonia.Controls.Border> list) : unit =
+            componentAttrs <- attrs
 
     interface IDisposable with
         member this.Dispose () =

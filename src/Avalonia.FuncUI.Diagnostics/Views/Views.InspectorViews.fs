@@ -125,55 +125,59 @@ type internal InspectorViews =
         Component.create ("menu_view", fun ctx ->
             let selected = ctx.usePassedRead InspectorState.shared.SelectedComponent
 
-            Border.create [
+            ctx.attrs [
+                Component.dock Dock.Top
                 Border.padding 5.0
-                Border.background "#006e59"
-                Border.child (
-                    DockPanel.create [
-                        DockPanel.lastChildFill true
-                        DockPanel.children [
-                            InspectorViews.modeButton ()
-
-                            Button.create [
-                                Button.dock Dock.Right
-                                Button.margin (5.0, 0.0, 0.0, 0.0)
-                                Button.isVisible selected.Current.IsSome
-                                Button.content (
-                                    StackPanel.create [
-                                        StackPanel.orientation Orientation.Horizontal
-                                        StackPanel.spacing 5.0
-                                        StackPanel.children [
-                                            IconView.create (Icons.openInNewWindow, 16)
-                                            TextBlock.create [
-                                                TextBlock.text "Details"
-                                            ]
-                                        ]
-                                    ]
-                                )
-                                Button.onClick (fun _ ->
-                                    let humanReadable =
-                                        selected.Current
-                                        |> Option.map (fun s -> s.ComponentId.HumanReadable)
-                                        |> Option.defaultValue "-"
-
-                                    let childWindow =
-                                        ChildWindow (
-                                            title = $"component {humanReadable}",
-                                            comp = (
-                                                Component (fun _ctx ->
-                                                    InspectorViews.componentDetailsView (new ReadOnlyState<ComponentRef option>(selected.Current)) :> IView
-                                                )
-                                            )
-                                        )
-
-                                    childWindow.Show ()
-                                )
-                            ]
-
-                            InspectorViews.componentListPicker ()
-                        ]
-                    ]
+                Border.background (
+                    match selected.Current with
+                    | Some _ -> "#006e59"
+                    | None -> "#2c3e50"
                 )
+            ]
+
+            DockPanel.create [
+                DockPanel.lastChildFill true
+                DockPanel.children [
+                    InspectorViews.modeButton ()
+
+                    Button.create [
+                        Button.dock Dock.Right
+                        Button.margin (5.0, 0.0, 0.0, 0.0)
+                        Button.isVisible selected.Current.IsSome
+                        Button.content (
+                            StackPanel.create [
+                                StackPanel.orientation Orientation.Horizontal
+                                StackPanel.spacing 5.0
+                                StackPanel.children [
+                                    IconView.create (Icons.openInNewWindow, 16)
+                                    TextBlock.create [
+                                        TextBlock.text "Details"
+                                    ]
+                                ]
+                            ]
+                        )
+                        Button.onClick (fun _ ->
+                            let humanReadable =
+                                selected.Current
+                                |> Option.map (fun s -> s.ComponentId.HumanReadable)
+                                |> Option.defaultValue "-"
+
+                            let childWindow =
+                                ChildWindow (
+                                    title = $"component {humanReadable}",
+                                    comp = (
+                                        Component (fun _ctx ->
+                                            InspectorViews.componentDetailsView (new ReadOnlyState<ComponentRef option>(selected.Current)) :> IView
+                                        )
+                                    )
+                                )
+
+                            childWindow.Show ()
+                        )
+                    ]
+
+                    InspectorViews.componentListPicker ()
+                ]
             ]
             :> IView
         )
@@ -199,15 +203,12 @@ type internal InspectorViews =
                 ]
             )
 
+
+
             DockPanel.create [
                 DockPanel.lastChildFill true
                 DockPanel.children [
-                    ContentControl.create [
-                        ContentControl.dock Dock.Top
-                        ContentControl.content (
-                            InspectorViews.menu ()
-                        )
-                    ]
+                    InspectorViews.menu ()
                     InspectorViews.componentDetailsView ()
                 ]
             ] :> IView

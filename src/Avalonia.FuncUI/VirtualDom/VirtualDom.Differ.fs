@@ -92,7 +92,7 @@ module internal rec Differ =
 
             | _ -> invalidOp "'next' must be of type content"
 
-    let private diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
+    let internal diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
         (* TODO: optimize. *)
 
         (* NOTE: using a map here might be actually slower
