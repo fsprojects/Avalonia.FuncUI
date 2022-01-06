@@ -85,8 +85,64 @@ module IComponentContextExtensions =
                 )
             )
 
+        /// <summary>
+        /// Attaches a effect to the component context.
+        /// <example>
+        /// <code>
+        /// let view () =
+        ///     Component (fun ctx ->
+        ///         let count = ctx.useState 0
+        ///         ctx.useEffect (
+        ///             handler = (fun _ ->
+        ///                 // do something
+        ///                 ..
+        ///                 // return a cleanup function
+        ///                 { new IDisposable with
+        ///                     method Dispose() =
+        ///                         // do something
+        ///                 }
+        ///             ),
+        ///             triggers = [
+        ///                 EffectTrigger.AfterChange count
+        ///                 EffectTrigger.AfterRender
+        ///                 EffectTrigger.AfterInit
+        ///             ]
+        ///         )
+        ///         ..
+        ///     )
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="handler">handler is called when a trigger fires.</param>
+        /// <param name="triggers">list of effect triggers</param>
+        /// <param name="callerLineNumber">Usually provided by the compiler. Needs to be unique in the components context.</param>
         member this.useEffect (handler: unit -> IDisposable, triggers: EffectTrigger list, [<CallerLineNumber>] ?callerLineNumber: int) =
             this.useEffectHook (EffectHook.Create(HookIdentity.CallerCodeLocation callerLineNumber.Value, handler, triggers))
 
+        /// <summary>
+        /// Attaches a effect to the component context.
+        /// <example>
+        /// <code>
+        /// let view () =
+        ///     Component (fun ctx ->
+        ///         let count = ctx.useState 0
+        ///         ctx.useEffect (
+        ///             handler = (fun _ ->
+        ///                 // do something
+        ///             ),
+        ///             triggers = [
+        ///                 EffectTrigger.AfterChange count
+        ///                 EffectTrigger.AfterRender
+        ///                 EffectTrigger.AfterInit
+        ///             ]
+        ///         )
+        ///         ..
+        ///     )
+        /// </code>
+        /// </example>
+        /// </summary>
+        /// <param name="handler">handler is called when a trigger fires.</param>
+        /// <param name="triggers">list of effect triggers</param>
+        /// <param name="callerLineNumber">Usually provided by the compiler. Needs to be unique in the components context.</param>
         member this.useEffect (handler: unit -> unit, triggers: EffectTrigger list, [<CallerLineNumber>] ?callerLineNumber: int) =
             this.useEffectHook (EffectHook.Create(HookIdentity.CallerCodeLocation callerLineNumber.Value, (fun _ -> handler(); null), triggers))
