@@ -43,6 +43,9 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
 
     [<Fact>]
     let ``Diff Properties (only if types match)`` () =
@@ -70,6 +73,9 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
 
     [<Fact>]
     let ``Diff Content Single`` () =
@@ -136,6 +142,9 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
 
     [<Fact>]
     let ``Diff Content Multiple`` () =
@@ -220,6 +229,9 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
 
     [<Fact>]
     let ``Diff Content Multiple (insert item into homogenous list - tail)`` () =
@@ -319,6 +331,9 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
 
     [<Fact>]
     let ``Diff Content Multiple (insert iten into homogenous list - head)`` () =
@@ -402,3 +417,6 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
