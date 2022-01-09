@@ -1,9 +1,9 @@
 namespace Avalonia.FuncUI.UnitTests.VirtualDom
 
 module DifferTests =
-    open Avalonia.FuncUI.VirtualDom
     open Avalonia.FuncUI.DSL
     open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.VirtualDom
     open Avalonia.Controls
     open Xunit
     open Avalonia.Layout
@@ -23,7 +23,7 @@ module DifferTests =
                 TextBlock.background "green" // keep the same
                 TextBlock.text "some other text" // change
                 // don't include last attr
-                ]
+            ]
 
         let delta: Delta.ViewDelta =
             { ViewType = typeof<TextBlock>
@@ -336,7 +336,7 @@ module DifferTests =
         Assert.True(not (delta <> result))
 
     [<Fact>]
-    let ``Diff Content Multiple (insert iten into homogenous list - head)`` () =
+    let ``Diff Content Multiple (insert item into homogenous list - head)`` () =
         let last =
             StackPanel.create [
                 StackPanel.orientation Orientation.Horizontal
@@ -412,6 +412,76 @@ module DifferTests =
                                                 DefaultValueFactory = ValueNone } ]
                                     Outlet = ValueNone }
                               ] } ]
+              Outlet = ValueNone }
+
+        let result = Differ.diff (last, next)
+
+        Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
+        
+    [<Fact>]
+    let ``Diff keyed views diffs attributes if key and type match`` () =
+        let last =
+            View.createWithKey "test" TextBlock.create [
+                TextBlock.background "green"
+                TextBlock.text "some text"
+                TextBlock.fontStyle FontStyle.Italic
+            ]
+
+        let next =
+            View.createWithKey "test" TextBlock.create [
+                TextBlock.background "green" // keep the same
+                TextBlock.text "some other text" // change
+                // don't include last attr
+            ]
+
+        let delta: Delta.ViewDelta =
+            { ViewType = typeof<TextBlock>
+              KeyDidChange = false
+              ConstructorArgs = null
+              Attrs =
+                  [ Delta.AttrDelta.Property
+                      { Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
+                        Value = Some("some other text" :> obj)
+                        DefaultValueFactory = ValueNone }
+                    Delta.AttrDelta.Property
+                        { Accessor = Accessor.AvaloniaProperty TextBlock.FontStyleProperty
+                          Value = None
+                          DefaultValueFactory = ValueNone } ]
+              Outlet = ValueNone }
+
+        let result = Differ.diff (last, next)
+
+        Assert.Equal(delta, result)
+        
+        // just to make sure the types are actually comparable
+        Assert.True(not (delta <> result))
+
+    [<Fact>]
+    let ``Diff keyed views overrides content if keys don't match`` () =
+        let last =
+            View.createWithKey "test" TextBlock.create [
+                TextBlock.background "green"
+                TextBlock.text "some text"
+                TextBlock.fontStyle FontStyle.Italic
+            ]    
+
+        let next =
+            View.createWithKey "another test" TextBlock.create [
+                TextBlock.text "some other text"
+            ]
+
+        let delta: Delta.ViewDelta =
+            { ViewType = typeof<TextBlock>
+              KeyDidChange = true
+              ConstructorArgs = null
+              Attrs =
+                  [ Delta.AttrDelta.Property
+                      { Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
+                        Value = Some("some other text" :> obj)
+                        DefaultValueFactory = ValueNone } ]
               Outlet = ValueNone }
 
         let result = Differ.diff (last, next)
