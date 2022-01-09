@@ -3,14 +3,14 @@
 open System
 open System.Runtime.CompilerServices
 open Avalonia
-open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI.Components
+open Avalonia.Layout
+open Avalonia.Media
+open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
-open Avalonia.Layout
 open Avalonia.FuncUI
-open Avalonia.Media
 
 type Model = 
     { 
@@ -39,8 +39,8 @@ let initModel =
 let cmp () = Component (fun ctx ->
     let model = ctx.useState (initModel, true)
 
-    let setInput input = 
-        model.Set { model with InputChordChart = input }
+    let setInputChart input = 
+        model.Set { model.Current with InputChordChart = input }
 
     Grid.create [
         Grid.rowDefinitions "20, *"
@@ -60,7 +60,7 @@ let cmp () = Component (fun ctx ->
             // Input Chord Chart
             TextBox.create [
                 TextBox.text model.Current.InputChordChart
-                TextBox.onTextChanged (fun e -> model.Set)
+                TextBox.onTextChanged (fun txt -> setInputChart txt)
             ]
 
 
