@@ -45,7 +45,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Diagnostics
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.DrawingApp", "Examples\Component Examples\Examples.DrawingApp\Examples.DrawingApp.fsproj", "{EB476DAF-C691-46B4-84FC-CA64E4C64A1A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ChordParser", "Examples\Examples.ChordParser\Examples.ChordParser.fsproj", "{6647AD03-D861-44B1-B008-501C0D4CD4DE}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ChordParser", "Examples\Component Examples\Examples.ChordParser\Examples.ChordParser.fsproj", "{C6090AC3-8560-4816-83DA-FE8736390058}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -117,10 +117,10 @@ Global
 		{EB476DAF-C691-46B4-84FC-CA64E4C64A1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB476DAF-C691-46B4-84FC-CA64E4C64A1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB476DAF-C691-46B4-84FC-CA64E4C64A1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6647AD03-D861-44B1-B008-501C0D4CD4DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6647AD03-D861-44B1-B008-501C0D4CD4DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6647AD03-D861-44B1-B008-501C0D4CD4DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6647AD03-D861-44B1-B008-501C0D4CD4DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6090AC3-8560-4816-83DA-FE8736390058}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6090AC3-8560-4816-83DA-FE8736390058}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6090AC3-8560-4816-83DA-FE8736390058}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6090AC3-8560-4816-83DA-FE8736390058}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,7 +139,7 @@ Global
 		{769FB456-1B73-4D6C-BA86-47DB484E3651} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{8212649E-0ECD-49CD-BBBA-13AC0151666A} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{EB476DAF-C691-46B4-84FC-CA64E4C64A1A} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{6647AD03-D861-44B1-B008-501C0D4CD4DE} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
+		{C6090AC3-8560-4816-83DA-FE8736390058} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
