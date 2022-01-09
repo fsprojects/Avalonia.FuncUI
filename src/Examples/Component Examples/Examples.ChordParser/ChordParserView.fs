@@ -61,6 +61,8 @@ let cmp () = Component (fun ctx ->
             TextBox.create [
                 TextBox.text model.Current.InputChordChart
                 TextBox.onTextChanged (fun txt -> setInputChart txt)
+                Grid.column 0
+                Grid.row 1
             ]
 
 

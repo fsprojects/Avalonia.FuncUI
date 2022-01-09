@@ -12,16 +12,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Avalonia.FuncUI.Components\Avalonia.FuncUI.Components.fsproj" />
-    <ProjectReference Include="..\..\Avalonia.FuncUI.Diagnostics\Avalonia.FuncUI.Diagnostics.fsproj" />
-    <ProjectReference Include="..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
-    <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
-    <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    <ProjectReference Include="..\..\..\Avalonia.FuncUI.Components\Avalonia.FuncUI.Components.fsproj" />
+    <ProjectReference Include="..\..\..\Avalonia.FuncUI.Diagnostics\Avalonia.FuncUI.Diagnostics.fsproj" />
+    <ProjectReference Include="..\..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+    <ProjectReference Include="..\..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+    <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="ChordParser">
-      <HintPath>..\..\..\..\FSharp.ChordParser\ChordParser\bin\Debug\net5.0\ChordParser.dll</HintPath>
+      <HintPath>..\..\..\..\..\FSharp.ChordParser\ChordParser\bin\Debug\net6\ChordParser.dll</HintPath>
     </Reference>
   </ItemGroup>
 
