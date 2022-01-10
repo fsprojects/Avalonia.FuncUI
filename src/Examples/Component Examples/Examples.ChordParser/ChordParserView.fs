@@ -26,8 +26,7 @@ let initModel =
     { 
         InputChordChart = 
 #if DEBUG
-            "(Bmaj7) Ooo Gustens,    you just (A#) so  (G)\n" +
-            "Dang   (Dmin7 /G) Baaad."
+            SampleCharts.autumnLeaves
 #else
             ""
 #endif
