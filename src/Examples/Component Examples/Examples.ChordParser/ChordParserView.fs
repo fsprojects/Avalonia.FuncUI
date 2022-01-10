@@ -5,6 +5,7 @@ open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
+open UseElmish
 
 type Model = 
     { 
@@ -52,8 +53,7 @@ let update msg model =
         { model with InputChordChart = chart }, Cmd.ofMsg ParseChart
 
 let cmp () = Component (fun ctx ->
-    let state = ElmishState(ctx.useState (initModel, true), update)
-    let model, dispatch = state.Model, state.Dispatch
+    let model, dispatch = useElmish (ctx.useState (initModel, true), update)
     
     Grid.create [
         Grid.rowDefinitions "20, *"
