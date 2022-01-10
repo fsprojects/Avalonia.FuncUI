@@ -147,12 +147,12 @@ module IComponentContextExtensions =
         member this.useEffect (handler: unit -> unit, triggers: EffectTrigger list, [<CallerLineNumber>] ?callerLineNumber: int) =
             this.useEffectHook (EffectHook.Create(HookIdentity.CallerCodeLocation callerLineNumber.Value, (fun _ -> handler(); null), triggers))
 
-        /// Wraps an `IWritable<'t>` to provide Elmish style updates.
+        /// Provides Elmish style updates for a writable model.
         member this.useElmish<'Model, 'Msg> (writableModel: IWritable<'Model>, update) = 
             let state = ElmishHook.ElmishState<'Model, 'Msg>(writableModel, update)
             state.Model, state.Dispatch
 
-        /// Wraps an `IWritable<'t>` to provide Elmish style updates.
+        /// Provides Elmish style updates for a model via the useState hook.
         member this.useElmish<'Model, 'Msg> (init: 'Model, update) = 
             let writableModel = this.useState (init, true)
             let state = ElmishHook.ElmishState<'Model, 'Msg>(writableModel, update)
