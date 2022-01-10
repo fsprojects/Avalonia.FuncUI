@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="State.fs" />
+    <Compile Include="ElmishState.fs" />
     <Compile Include="ChordParserView.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

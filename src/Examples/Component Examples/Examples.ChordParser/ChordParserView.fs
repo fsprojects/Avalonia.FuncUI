@@ -43,27 +43,24 @@ type Msg =
     | TransposeDown
     | SetInputChart of chart: string
 
-type State(writableModel: IWritable<Model>) = 
-    inherit BaseState<Model, Msg>(writableModel)
-
-    override this.Update msg model = 
-        match msg with
-        | ParseChart ->
-            let c = ChordParser.App.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
-            { model with OutputChordChart = c }
-        | TransposeUp ->
-            if model.Transpose < 11 
-            then { model with Transpose = model.Transpose + 1 } |> this.Update ParseChart
-            else model
-        | TransposeDown ->
-            if model.Transpose > -11 
-            then { model with Transpose = model.Transpose - 1 } |> this.Update ParseChart
-            else model
-        | SetInputChart chart -> 
-            { model with InputChordChart = chart } |> this.Update ParseChart
+let update msg model = 
+    match msg with
+    | ParseChart ->
+        let c = ChordParser.App.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
+        { model with OutputChordChart = c }, Cmd.none
+    | TransposeUp ->
+        if model.Transpose < 11 
+        then { model with Transpose = model.Transpose + 1 }, Cmd.ofMsg ParseChart
+        else model, Cmd.none
+    | TransposeDown ->
+        if model.Transpose > -11 
+        then { model with Transpose = model.Transpose - 1 }, Cmd.ofMsg ParseChart
+        else model, Cmd.none
+    | SetInputChart chart -> 
+        { model with InputChordChart = chart }, Cmd.ofMsg ParseChart
 
 let cmp () = Component (fun ctx ->
-    let state = State(ctx.useState (initModel, true))
+    let state = ElmishState(ctx.useState (initModel, true), update)
     
     Grid.create [
         Grid.rowDefinitions "20, *"
