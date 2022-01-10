@@ -18,12 +18,7 @@ type Model =
 
 let init = 
     { 
-        InputChordChart = 
-#if DEBUG
-            SampleCharts.autumnLeaves
-#else
-            ""
-#endif
+        InputChordChart = SampleCharts.autumnLeaves
         OutputChordChart = Ok ""
         Transpose = 0
         Accidental = "b"
@@ -42,7 +37,7 @@ type Msg =
 let update msg model = 
     match msg with
     | ParseChart ->
-        let c = ChordParser.App.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
+        let c = ChordParser.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
         { model with OutputChordChart = c }, Cmd.none
     | TransposeUp ->
         if model.Transpose < 11 
