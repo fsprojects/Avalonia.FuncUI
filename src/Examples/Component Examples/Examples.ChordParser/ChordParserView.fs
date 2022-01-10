@@ -60,6 +60,7 @@ let update msg model =
 
 let cmp () = Component (fun ctx ->
     let state = ElmishState(ctx.useState (initModel, true), update)
+    let model, dispatch = state.Model, state.Dispatch
     
     Grid.create [
         Grid.rowDefinitions "20, *"
@@ -78,8 +79,8 @@ let cmp () = Component (fun ctx ->
             // Row: inputs
             // Input Chord Chart
             TextBox.create [
-                TextBox.text state.Model.InputChordChart
-                TextBox.onTextChanged (fun txt -> state.Dispatch (SetInputChart txt))
+                TextBox.text model.InputChordChart
+                TextBox.onTextChanged (fun txt -> dispatch (SetInputChart txt))
                 Grid.column 0
                 Grid.row 1
             ]
@@ -94,11 +95,11 @@ let cmp () = Component (fun ctx ->
                         Button.content "▲"
                         Button.horizontalAlignment HorizontalAlignment.Stretch
                         Button.horizontalContentAlignment HorizontalAlignment.Center
-                        Button.onClick (fun e -> state.Dispatch TransposeUp)
+                        Button.onClick (fun e -> dispatch TransposeUp)
                     ]
 
                     TextBlock.create [
-                        TextBlock.text (string state.Model.Transpose)
+                        TextBlock.text (string model.Transpose)
                         TextBlock.horizontalAlignment HorizontalAlignment.Center
                     ]
 
@@ -106,7 +107,7 @@ let cmp () = Component (fun ctx ->
                         Button.content "▼"
                         Button.horizontalAlignment HorizontalAlignment.Stretch
                         Button.horizontalContentAlignment HorizontalAlignment.Center
-                        Button.onClick (fun e -> state.Dispatch TransposeDown)
+                        Button.onClick (fun e -> dispatch TransposeDown)
                     ]
                 ]
             ]
@@ -114,7 +115,7 @@ let cmp () = Component (fun ctx ->
             // Output Chord Chart
             TextBox.create [
                 TextBox.text 
-                    <|  match state.Model.OutputChordChart with
+                    <|  match model.OutputChordChart with
                         | Ok output -> output
                         | Error err -> err
                 TextBox.verticalAlignment VerticalAlignment.Stretch
