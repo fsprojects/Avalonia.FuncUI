@@ -37,28 +37,33 @@ let initModel =
         UCase = false
     }
 
+type Msg = 
+    | ParseChart
+    | TransposeUp
+    | TransposeDown
+    | SetInputChart of chart: string
+
+type State(writableModel: IWritable<Model>) = 
+    inherit BaseState<Model, Msg>(writableModel)
+
+    override this.Update msg model = 
+        match msg with
+        | ParseChart ->
+            let c = ChordParser.App.tryProcessText model.Transpose model.Accidental model.UCase model.InputChordChart
+            { model with OutputChordChart = c }
+        | TransposeUp ->
+            if model.Transpose < 11 
+            then { model with Transpose = model.Transpose + 1 } |> this.Update ParseChart
+            else model
+        | TransposeDown ->
+            if model.Transpose > -11 
+            then { model with Transpose = model.Transpose - 1 } |> this.Update ParseChart
+            else model
+        | SetInputChart chart -> 
+            { model with InputChordChart = chart } |> this.Update ParseChart
+
 let cmp () = Component (fun ctx ->
-    let model = ctx.useState (initModel, true)
-
-    let setInputChart input = 
-        model.Set { model.Current with InputChordChart = input }
-
-    let parseChart () = 
-        { model.Current with 
-            OutputChordChart = 
-                ChordParser.App.tryProcessText 
-                    model.Current.Transpose model.Current.Accidental model.Current.UCase model.Current.InputChordChart }
-        |> model.Set
-
-    let transposeUp () = 
-        if model.Current.Transpose < 11 then 
-            { model.Current with Transpose = model.Current.Transpose + 1 } |> model.Set
-            parseChart ()
-
-    let transposeDown () = 
-        if model.Current.Transpose > -11 then 
-            { model.Current with Transpose = model.Current.Transpose - 1 } |> model.Set
-            parseChart ()
+    let state = State(ctx.useState (initModel, true))
     
     Grid.create [
         Grid.rowDefinitions "20, *"
@@ -77,8 +82,8 @@ let cmp () = Component (fun ctx ->
             // Row: inputs
             // Input Chord Chart
             TextBox.create [
-                TextBox.text model.Current.InputChordChart
-                TextBox.onTextChanged (fun txt -> setInputChart txt)
+                TextBox.text state.Model.InputChordChart
+                TextBox.onTextChanged (fun txt -> state.Dispatch (SetInputChart txt))
                 Grid.column 0
                 Grid.row 1
             ]
@@ -91,19 +96,21 @@ let cmp () = Component (fun ctx ->
                 StackPanel.children [
                     Button.create [
                         Button.content "▲"
-                        Button.width 20
-                        Button.onClick (fun e -> transposeUp ())
+                        Button.horizontalAlignment HorizontalAlignment.Stretch
+                        Button.horizontalContentAlignment HorizontalAlignment.Center
+                        Button.onClick (fun e -> state.Dispatch TransposeUp)
                     ]
 
                     TextBlock.create [
-                        TextBlock.text (string model.Current.Transpose)
+                        TextBlock.text (string state.Model.Transpose)
                         TextBlock.horizontalAlignment HorizontalAlignment.Center
                     ]
 
                     Button.create [
                         Button.content "▼"
-                        Button.width 20
-                        Button.onClick (fun e -> transposeDown ())
+                        Button.horizontalAlignment HorizontalAlignment.Stretch
+                        Button.horizontalContentAlignment HorizontalAlignment.Center
+                        Button.onClick (fun e -> state.Dispatch TransposeDown)
                     ]
                 ]
             ]
@@ -111,7 +118,7 @@ let cmp () = Component (fun ctx ->
             // Output Chord Chart
             TextBox.create [
                 TextBox.text 
-                    <|  match model.Current.OutputChordChart with
+                    <|  match state.Model.OutputChordChart with
                         | Ok output -> output
                         | Error err -> err
                 TextBox.verticalAlignment VerticalAlignment.Stretch
