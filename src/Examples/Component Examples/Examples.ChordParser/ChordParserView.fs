@@ -1,17 +1,10 @@
 ﻿module Examples.ChordParser.ChordParserView
 
-open System
-open System.Runtime.CompilerServices
-open Avalonia
-open Avalonia.Controls.ApplicationLifetimes
-open Avalonia.FuncUI.Components
 open Avalonia.Layout
-open Avalonia.Media
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
-open ChordParser
 
 type Model = 
     { 
@@ -76,7 +69,6 @@ let cmp () = Component (fun ctx ->
                 Grid.column 2
             ]
 
-            // Row: inputs
             // Input Chord Chart
             TextBox.create [
                 TextBox.text model.InputChordChart
@@ -114,10 +106,10 @@ let cmp () = Component (fun ctx ->
 
             // Output Chord Chart
             TextBox.create [
-                TextBox.text 
-                    <|  match model.OutputChordChart with
-                        | Ok output -> output
-                        | Error err -> err
+                TextBox.text <|  
+                    match model.OutputChordChart with
+                    | Ok output -> output
+                    | Error err -> err
                 TextBox.verticalAlignment VerticalAlignment.Stretch
                 TextBox.isReadOnly true
                 Grid.column 2
