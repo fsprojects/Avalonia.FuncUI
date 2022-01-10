@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="UseElmish.fs" />
     <Compile Include="SampleCharts.fs" />
     <Compile Include="ChordParserView.fs" />
     <Compile Include="Program.fs" />

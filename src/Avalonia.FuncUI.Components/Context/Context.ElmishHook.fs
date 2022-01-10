@@ -1,6 +1,4 @@
-﻿module Examples.ChordParser.UseElmish
-
-open Avalonia.FuncUI
+﻿module Avalonia.FuncUI.ElmishHook
 
 type ElmishState<'Model, 'Msg>(writableModel: IWritable<'Model>, update) = 
 
@@ -22,8 +20,3 @@ and Cmd<'Msg> =
     | OfMsg of 'Msg
     static member none = Cmd<'Msg>.None
     static member ofMsg msg = Cmd<'Msg>.OfMsg msg
-
-/// Wraps a `useState` `IWritable<'t>` to provide Elmish style updates.
-let useElmish<'Model, 'Msg> (writableModel: IWritable<'Model>, update) = 
-    let state = ElmishState<'Model, 'Msg>(writableModel, update)
-    state.Model, state.Dispatch

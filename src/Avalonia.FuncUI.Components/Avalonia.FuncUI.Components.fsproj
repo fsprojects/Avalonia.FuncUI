@@ -15,6 +15,7 @@
         <Compile Include="State\State.Functions.fs" />
         <Compile Include="Context\Context.HookIdentity.fs" />
         <Compile Include="Context\Context.EffectsHook.fs" />
+        <Compile Include="Context\Context.ElmishHook.fs" />
         <Compile Include="Context\Context.StateHook.fs" />
         <Compile Include="Context\Context.fs" />
         <Compile Include="Context\Context.Hooks.fs" />
