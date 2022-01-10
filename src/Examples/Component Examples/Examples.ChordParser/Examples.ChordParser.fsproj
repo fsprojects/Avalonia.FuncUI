@@ -12,6 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FParsec" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\Avalonia.FuncUI.Components\Avalonia.FuncUI.Components.fsproj" />
     <ProjectReference Include="..\..\..\Avalonia.FuncUI.Diagnostics\Avalonia.FuncUI.Diagnostics.fsproj" />
     <ProjectReference Include="..\..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
@@ -21,7 +25,7 @@
 
   <ItemGroup>
     <Reference Include="ChordParser">
-      <HintPath>..\..\..\..\..\FSharp.ChordParser\ChordParser\bin\Debug\net6\ChordParser.dll</HintPath>
+      <HintPath>..\..\..\..\..\FSharp.ChordParser\ChordParser\bin\Debug\netstandard2.0\ChordParser.dll</HintPath>
     </Reference>
   </ItemGroup>
 

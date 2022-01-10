@@ -11,6 +11,7 @@ open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI
+open ChordParser
 
 type Model = 
     { 
@@ -42,6 +43,23 @@ let cmp () = Component (fun ctx ->
     let setInputChart input = 
         model.Set { model.Current with InputChordChart = input }
 
+    let parseChart () = 
+        { model.Current with 
+            OutputChordChart = 
+                ChordParser.App.tryProcessText 
+                    model.Current.Transpose model.Current.Accidental model.Current.UCase model.Current.InputChordChart }
+        |> model.Set
+
+    let transposeUp () = 
+        if model.Current.Transpose < 11 then 
+            { model.Current with Transpose = model.Current.Transpose + 1 } |> model.Set
+            parseChart ()
+
+    let transposeDown () = 
+        if model.Current.Transpose > -11 then 
+            { model.Current with Transpose = model.Current.Transpose - 1 } |> model.Set
+            parseChart ()
+    
     Grid.create [
         Grid.rowDefinitions "20, *"
         Grid.columnDefinitions "*, 80, *"
@@ -53,7 +71,7 @@ let cmp () = Component (fun ctx ->
             ]
             TextBlock.create [
                 TextBlock.text "Output Chord Chart"
-                Grid.column 1
+                Grid.column 2
             ]
 
             // Row: inputs
@@ -65,6 +83,42 @@ let cmp () = Component (fun ctx ->
                 Grid.row 1
             ]
 
+            // Middle Column (Settings)
+            StackPanel.create [
+                Grid.column 1
+                Grid.row 1
+
+                StackPanel.children [
+                    Button.create [
+                        Button.content "▲"
+                        Button.width 20
+                        Button.onClick (fun e -> transposeUp ())
+                    ]
+
+                    TextBlock.create [
+                        TextBlock.text (string model.Current.Transpose)
+                        TextBlock.horizontalAlignment HorizontalAlignment.Center
+                    ]
+
+                    Button.create [
+                        Button.content "▼"
+                        Button.width 20
+                        Button.onClick (fun e -> transposeDown ())
+                    ]
+                ]
+            ]
+
+            // Output Chord Chart
+            TextBox.create [
+                TextBox.text 
+                    <|  match model.Current.OutputChordChart with
+                        | Ok output -> output
+                        | Error err -> err
+                TextBox.verticalAlignment VerticalAlignment.Stretch
+                TextBox.isReadOnly true
+                Grid.column 2
+                Grid.row 1
+            ]
 
         ]
     ]
