@@ -41,6 +41,18 @@ type PlayerActions =
       onStateChange: MediaState -> unit }
 
 [<RequireQualifiedAccess>]
+module Media =
+    open LibVLCSharp.Shared
+
+    let private libvlc = lazy(new LibVLC("--verbose=2"))
+
+    let Player = lazy (new MediaPlayer(libvlc.Value))
+    
+    let Play (file: string) =
+        use media = new Media(libvlc.Value, file, FromType.FromPath)
+        Player.Value.Play media
+
+[<RequireQualifiedAccess>]
 module Menubar =
     let View onOpenFiles onOpenDirectory =
         let _view (ctx: IComponentContext) : IView =
@@ -70,18 +82,17 @@ module Menubar =
 module Playlist =
     let View (playlist: IReadable<Song[]>) (current: IReadable<Song option>) onRequestSong =
         let _view (ctx: IComponentContext) : IView =
-            ctx.attrs [ Border.dock Dock.Top ]
             let song = ctx.usePassedRead current
             let playlist = ctx.usePassedRead playlist
+            let isActive item = song |> State.readMap (fun song -> song |> Option.map (fun song -> item = song) |> Option.defaultValue false)
             StackPanel.create [
-                StackPanel.dock Dock.Top
                 StackPanel.children [
                     ItemsControl.create [
                         ItemsControl.dataItems playlist.Current
                         ItemsControl.itemTemplate (
                             DataTemplateView.create<_,_> (fun (item: Song) ->
                                 TextBlock.create [
-                                    TextBlock.classes ["plitem"]
+                                    TextBlock.classes ["plitem"; if (isActive item).Current then "isactive"]
                                     TextBlock.text item.filename
                                     TextBlock.onDoubleTapped(fun _ -> onRequestSong item)
                                     TextBlock.onKeyUp(fun event ->
@@ -103,7 +114,7 @@ module Player =
         Component.create("player", fun ctx ->
             let playState = ctx.usePassedRead playState
             let loop = ctx.usePassedRead loop
-            ctx.attrs [Border.dock Dock.Bottom]
+            ctx.attrs [Border.dock Dock.Top]
                 
             DockPanel.create [
                 DockPanel.classes [ "mediabar" ]
@@ -187,7 +198,7 @@ module Shell =
         let _view (ctx: IComponentContext) : IView =
             let _playlist = ctx.useState [||]
             
-            let playerState = ctx.useState ({ song = None; loop = Off; state = Stop }, true)
+            let playerState = ctx.useState ({ song = None; loop = All; state = Stop }, true)
 
             let playState = playerState |> State.readMap(fun s -> s.state)
             let loop = playerState |> State.readMap(fun s -> s.loop)
@@ -207,24 +218,35 @@ module Shell =
                             playerState.Set { playerState.Current with song = Some playlist.Current[index + 1] }
                     | None -> playerState.Set { playerState.Current with song = Some playlist.Current[0] }
                
+            let onPlay (song: Song) =
+                if Media.Play song.path then
+                    playerState.Set { playerState.Current with song = Some song; state = Play (Some song) }
+                else
+                    printfn "Retrying"
+                    let didPlay = Media.Play song.path
+                    printfn $"Did play: {didPlay}"
+                    playerState.Set { playerState.Current with song = Some song; state = Play (Some song) }
+
             let onNext() =
-                match song.Current with
-                | None ->
-                    playerState.Set { playerState.Current with  song = playlist.Current |> Array.tryHead }
-                | Some song ->
-                    match playlist.Current |> Array.tryFindIndex (fun s -> s = song) with
-                    | Some index ->
-                        match loop.Current with
-                        | Off ->
-                            playerState.Set { playerState.Current with song = None }
-                        | Single ->
-                            playerState.Set { playerState.Current with song = Some playlist.Current[index] }
-                        | All ->
-                            if index - 1 > 0 then
-                                playerState.Set { playerState.Current with song = Some playlist.Current[playlist.Current.Length - 1] }
-                            else
-                                playerState.Set { playerState.Current with song = Some playlist.Current[index - 1] }
-                    | None -> playerState.Set { playerState.Current with song = Some playlist.Current[0] }
+                let song =
+                    match song.Current with
+                    | None ->
+                        playlist.Current |> Array.tryHead
+                    | Some song ->
+                        match playlist.Current |> Array.tryFindIndex (fun s -> s = song) with
+                        | Some index ->
+                            match loop.Current with
+                            | Off ->
+                                None
+                            | Single ->
+                                Some playlist.Current[index]
+                            | All ->
+                                if (index + 1) > (playlist.Current.Length - 1) then
+                                    Some playlist.Current[0]
+                                else
+                                    Some playlist.Current[index + 1]
+                        | None -> Some playlist.Current[0]
+                song |> Option.iter onPlay
 
             let onLoopState (state: LoopState) =
                 let state  = 
@@ -238,9 +260,6 @@ module Shell =
             let onShuffle() =
                 playlist.Current |> shuffle |> _playlist.Set
 
-            let onPlay (song: Song) =
-                if Media.Play song.path then
-                    playerState.Set { playerState.Current with song = Some song; state = Play (Some song) }
 
             let onStop() =
                 Media.Player.Value.Stop()
@@ -285,14 +304,12 @@ module Shell =
                 | Play None ->
                     playlist.Current
                     |> Array.tryHead
-                    |> Option.map(onPlay)
-                    |> ignore
+                    |> Option.iter onPlay
                 | Stop -> onStop()
                 
             ctx.useEffect(
                 handler = (fun _ ->
                     let disposables = [
-                        Media.Player.Value.Stopped.Subscribe(fun _ -> onNext())
                         Media.Player.Value.EndReached.Subscribe(fun _ -> onNext())
                     ]
                     { new IDisposable with
@@ -313,8 +330,13 @@ module Shell =
                 DockPanel.lastChildFill false
                 DockPanel.children [
                     Menubar.View onSelectFiles onSelectDirectory
-                    Playlist.View playlist song onRequestSong
                     Player.View playState loop playerActions
+                    ScrollViewer.create [
+                        ScrollViewer.dock Dock.Bottom
+                        ScrollViewer.horizontalAlignment HorizontalAlignment.Stretch
+                        ScrollViewer.verticalContentAlignment VerticalAlignment.Stretch
+                        ScrollViewer.content(Playlist.View playlist song onRequestSong)
+                    ]
                 ]
             ]
 
