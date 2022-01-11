@@ -111,11 +111,20 @@ let cmp () = Component (fun ctx ->
 
                     // Change case
                     StackPanel.create [
+                        StackPanel.orientation Orientation.Horizontal
+                        StackPanel.horizontalAlignment HorizontalAlignment.Center
                         StackPanel.children [
                             CheckBox.create [
                                 CheckBox.isChecked model.UCase
                                 CheckBox.onChecked (fun _ -> dispatch (SetUCase true))
                                 CheckBox.onUnchecked (fun _ -> dispatch (SetUCase false))
+                            ]
+                            TextBlock.create [
+                                TextBlock.verticalAlignment VerticalAlignment.Center
+                                TextBlock.text <|
+                                    if model.UCase
+                                    then "A -> a"
+                                    else "a -> A"
                             ]
                         ]
                     ]
@@ -123,15 +132,16 @@ let cmp () = Component (fun ctx ->
                     // ♭/ ♯
                     StackPanel.create [
                         StackPanel.orientation Orientation.Horizontal
+                        StackPanel.horizontalAlignment HorizontalAlignment.Center
                         StackPanel.children [
                             RadioButton.create [
-                                RadioButton.content "♭"
+                                RadioButton.content "♭ "
                                 RadioButton.isChecked (model.Accidental = "b")
                                 RadioButton.onChecked (fun _ -> dispatch (SetAccidental "b"))
                             ]
 
                             RadioButton.create [
-                                RadioButton.content "♯"
+                                RadioButton.content "♯ "
                                 RadioButton.isChecked (model.Accidental = "#")
                                 RadioButton.onChecked (fun _ -> dispatch (SetAccidental "#"))
                             ]
