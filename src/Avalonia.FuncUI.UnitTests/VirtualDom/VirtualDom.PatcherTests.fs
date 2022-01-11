@@ -32,6 +32,7 @@ module PatcherTests =
                         DefaultValueFactory = ValueNone
                     };
                 ]
+                Outlet = ValueNone
             }
 
         let control = TextBlock()
@@ -91,6 +92,7 @@ module PatcherTests =
                         DefaultValueFactory = (fun () -> ResourceDictionary() :> obj) |> ValueSome
                     }
                 ]
+                Outlet = ValueNone
             }
 
         let control = TextBlock()
@@ -132,10 +134,12 @@ module PatcherTests =
                                          DefaultValueFactory = ValueNone
                                      };
                                  ]
+                                 Outlet = ValueNone
                              }
                          )
                      };
                  ]
+                 Outlet = ValueNone
              }
 
         let control = Button()
@@ -180,6 +184,7 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                Outlet = ValueNone
                             };
                             {
                                 ViewType = typeof<Button>
@@ -192,6 +197,7 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                Outlet = ValueNone
                             };
                             {
                                 ViewType = typeof<Button>
@@ -204,10 +210,12 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                Outlet = ValueNone
                             };
                         ]
                     };
                 ]
+                Outlet = ValueNone
             }
 
         let stackpanel = StackPanel()

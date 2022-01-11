@@ -93,6 +93,7 @@ module internal rec Delta =
                 |> List.map (fun view -> ViewDelta.From view)
                 |> ViewContentDelta.Multiple
 
+    [<CustomEquality; NoComparison>]
     type ViewDelta =
         { ViewType: Type
           Attrs: AttrDelta list
@@ -106,3 +107,13 @@ module internal rec Delta =
               ConstructorArgs = view.ConstructorArgs
               KeyDidChange = defaultArg keyDidChange false
               Outlet = view.Outlet}
+            
+        override this.Equals(other) =
+            match other with
+            | :? ViewDelta as other ->
+                this.ViewType = other.ViewType &&
+                this.Attrs = other.Attrs &&
+                this.ConstructorArgs = other.ConstructorArgs &&
+                this.KeyDidChange = other.KeyDidChange &&
+                (ValueOption.isSome this.Outlet = ValueOption.isSome other.Outlet)
+            | _ -> false
