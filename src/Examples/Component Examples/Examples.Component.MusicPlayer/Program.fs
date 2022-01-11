@@ -1,4 +1,5 @@
-namespace Examples.MusicPlayer
+﻿namespace Examples.Component.MusicPlayer
+
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI
@@ -11,12 +12,13 @@ type App() =
 
     override this.Initialize() =
         this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
-        this.Styles.Load "avares://Examples.Elmish.MusicPlayer/Styles.xaml"
+        this.Styles.Load "avares://Examples.Component.MusicPlayer/Styles.xaml"
         Core.Initialize()
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
-        | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime -> desktopLifetime.MainWindow <- Shell.ShellWindow()
+        | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
+            desktopLifetime.MainWindow <- Shell.ShellWindow()
         | _ -> ()
 
 module Program =
