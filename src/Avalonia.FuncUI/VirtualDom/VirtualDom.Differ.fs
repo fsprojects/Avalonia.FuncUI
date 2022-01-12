@@ -139,14 +139,14 @@ module internal rec Differ =
         List.ofSeq delta
 
     let diff (last: IView, next: IView) : ViewDelta =
-        // only diff attributes if viewType matches
+        // only diff attributes if viewType/viewKey matches
         if last.ViewKey <> next.ViewKey then
-             ViewDelta.From (next, true)
-         elif last.ViewType <> next.ViewType then
-             ViewDelta.From next
-         else
-             { ViewType = next.ViewType
-               Attrs = diffAttributes last.Attrs next.Attrs
-               ConstructorArgs = next.ConstructorArgs
-               KeyDidChange = false
-               Outlet = next.Outlet }
+            ViewDelta.From (next, true)
+        elif last.ViewType <> next.ViewType then
+            ViewDelta.From next
+        else
+            { ViewType = next.ViewType
+              Attrs = diffAttributes last.Attrs next.Attrs
+              ConstructorArgs = next.ConstructorArgs
+              KeyDidChange = false
+              Outlet = next.Outlet }
