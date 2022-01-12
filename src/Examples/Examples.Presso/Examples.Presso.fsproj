@@ -25,4 +25,10 @@
     <ItemGroup>
       <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Content Include="Assets\Icons\icon.ico">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 </Project>

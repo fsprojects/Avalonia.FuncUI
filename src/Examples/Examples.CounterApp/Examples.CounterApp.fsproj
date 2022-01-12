@@ -8,6 +8,9 @@
     <ItemGroup>
         <Compile Include="Counter.fs" />
         <Compile Include="Program.fs" />
+        <Content Include="Assets\Icons\icon.ico">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

@@ -2,6 +2,7 @@
 
 open System
 open Avalonia
+open Avalonia.Controls
 open Avalonia.Themes.Fluent
 open Avalonia.Threading
 open Elmish
@@ -14,7 +15,8 @@ type MainWindow() as this =
     inherit HostWindow()
     do
         base.Title <- "Clock Example"
-        
+        base.Icon <- WindowIcon("Assets\Icons\icon.ico")
+
         base.Height <- 200.0
         base.MaxHeight <- 200.0
         base.MinHeight <- 200.0

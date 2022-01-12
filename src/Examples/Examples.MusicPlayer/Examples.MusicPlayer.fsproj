@@ -19,6 +19,9 @@
         <Compile Include="Program.fs" />
         <AvaloniaResource Include="**\*.xaml" />
         <AvaloniaResource Include="Assets\Icons\**" />
+        <Content Include="Assets\Icons\icon.ico">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
     
     <ItemGroup>

@@ -2,6 +2,7 @@
 
 open System
 open Avalonia
+open Avalonia.Controls
 open Avalonia.Themes.Fluent
 open Elmish
 open Avalonia.FuncUI.Components.Hosts
@@ -14,6 +15,7 @@ type MainWindow() as this =
     inherit HostWindow()
     do
         base.Title <- "Game of Life Example"
+        base.Icon <- WindowIcon("Assets\Icons\icon.ico")
         base.Height <- 500.0
         base.Width <- 500.0
         

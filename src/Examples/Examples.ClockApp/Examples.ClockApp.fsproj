@@ -8,7 +8,10 @@
     <ItemGroup>
         <Compile Include="Clock.fs" />
         <Compile Include="Program.fs" />
-        <AvaloniaResource Include="**\*.xaml" />
+        <Content Include="Assets\Icons\icon.ico">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Folder Include="Assets\*" />
     </ItemGroup>
     
     <ItemGroup>
