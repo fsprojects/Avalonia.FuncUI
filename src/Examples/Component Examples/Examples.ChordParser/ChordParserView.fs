@@ -16,15 +16,6 @@ type Model =
         UCase: bool
     }
 
-let init = 
-    { 
-        InputChordChart = SampleCharts.autumnLeaves
-        OutputChordChart = Ok ""
-        Transpose = 0
-        Accidental = "b"
-        UCase = false
-    }
-
 type Msg = 
     | ParseChart
     | TransposeUp
@@ -33,6 +24,15 @@ type Msg =
     | SetAccidental of string
     | SetUCase of bool
     | Reset
+
+let init = 
+    { 
+        InputChordChart = SampleCharts.autumnLeaves
+        OutputChordChart = Ok ""
+        Transpose = 0
+        Accidental = "b"
+        UCase = false
+    }, Cmd.none
 
 let update msg model = 
     match msg with
@@ -54,7 +54,7 @@ let update msg model =
     | SetUCase ucase -> 
         { model with UCase = ucase }, Cmd.ofMsg ParseChart
     | Reset ->
-        init, Cmd.none
+        init
 
 let cmp () = Component (fun ctx ->
     let model, dispatch = ctx.useElmish (init, update)
@@ -153,7 +153,10 @@ let cmp () = Component (fun ctx ->
                         Button.horizontalAlignment HorizontalAlignment.Stretch
                         Button.horizontalContentAlignment HorizontalAlignment.Center
                         Button.onClick (fun _ -> dispatch Reset)
-                        Button.isEnabled (model <> init)
+                        Button.isEnabled (
+                            let initialModel, _ = init
+                            model <> initialModel
+                        )
                     ]
                 ]
             ]

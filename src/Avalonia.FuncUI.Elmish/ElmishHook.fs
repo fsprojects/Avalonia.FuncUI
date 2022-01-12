@@ -33,7 +33,21 @@ type IComponentContext with
         state.Model, state.Dispatch
 
     /// Provides Elmish style updates for a model via the useState hook.
-    member this.useElmish<'Model, 'Msg> (init: 'Model, update) = 
-        let writableModel = this.useState (init, true)
-        let state = ElmishState<'Model, 'Msg>(writableModel, update)
+    member this.useElmish<'Model, 'Msg> (init: 'Model * Cmd<'Msg>, update) = 
+        let initModel, initCmd = init
+        let writableModel = this.useState (initModel, true)
+        let state = ElmishState<'Model, 'Msg>(writableModel, update)        
+
+        match initCmd with
+        | Cmd.OfMsg msg -> 
+            this.useEffect(
+                handler = (fun _ ->
+                    state.Dispatch msg
+                ),
+                triggers = [
+                    EffectTrigger.AfterInit
+                ]
+            )
+        | _ -> ()
+        
         state.Model, state.Dispatch
