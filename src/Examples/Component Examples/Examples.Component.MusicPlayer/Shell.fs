@@ -55,8 +55,9 @@ module Media =
 [<RequireQualifiedAccess>]
 module Menubar =
     let View onOpenFiles onOpenDirectory =
-        let _view (ctx: IComponentContext) : IView =
+        Component.create("menubar", fun ctx -> 
             ctx.attrs [Border.dock Dock.Top]
+            
             Menu.create [
                 Menu.viewItems [
                     MenuItem.create [
@@ -76,7 +77,7 @@ module Menubar =
                     ]
                 ]
             ]
-        Component.create("menubar", _view)
+        )
 
 [<RequireQualifiedAccess>]
 module Playlist =
