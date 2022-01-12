@@ -2,10 +2,10 @@
 
 open Avalonia.Layout
 open Avalonia.Controls
+open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
-open Avalonia.FuncUI
-open ElmishHook
+open Avalonia.FuncUI.Elmish.ElmishHook
 
 type Model = 
     { 
