@@ -19,8 +19,8 @@
         <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
         <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
-
+    
     <ItemGroup>
-        <PackageReference Update="FSharp.Core" Version="4.7.2" />
+      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 </Project>

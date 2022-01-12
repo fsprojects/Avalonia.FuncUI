@@ -32,9 +32,6 @@
         <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
         <PackageReference Include="LibVLCSharp" Version="3.4.2" />
         <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.8.1" />
-    </ItemGroup>
-    
-    <ItemGroup>
-      <PackageReference Update="FSharp.Core" Version="4.7.2" />
+        <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 </Project>
