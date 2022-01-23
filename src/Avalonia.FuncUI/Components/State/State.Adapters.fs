@@ -16,7 +16,7 @@ type internal UniqueValueReadOnly<'value>
         member this.Subscribe (handler: 'value -> unit) =
             src.Subscribe (fun value ->
                 (* meh, we need a better equals implementation. *)
-                if not (Helpers.safeFastEquals (current, value)) then
+                if not (ComponentHelpers.safeFastEquals (current, value)) then
                     current <- value
                     handler value
             )
