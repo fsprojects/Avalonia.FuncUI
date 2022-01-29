@@ -5,7 +5,7 @@ open Avalonia.FuncUI.Diagnostics
 open System
 open Avalonia
 open Avalonia.Controls
-open Avalonia.FuncUI.Components
+open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
 open Avalonia.Layout

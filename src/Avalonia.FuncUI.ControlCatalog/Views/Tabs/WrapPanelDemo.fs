@@ -1,11 +1,11 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
 open System
+open Elmish
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.Components
+open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
-open Elmish
 open Avalonia.Layout
 open Avalonia.Media
 

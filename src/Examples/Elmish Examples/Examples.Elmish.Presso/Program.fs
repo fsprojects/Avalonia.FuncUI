@@ -6,7 +6,7 @@ open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
-open Avalonia.FuncUI.Components.Hosts
+open Avalonia.FuncUI.Hosts
 open Avalonia.Media
 
 type MainWindow() as this =

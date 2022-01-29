@@ -1,4 +1,4 @@
-﻿namespace Avalonia.FuncUI.Components
+﻿namespace Avalonia.FuncUI
 
 open System
 open Avalonia
@@ -6,9 +6,8 @@ open Avalonia.Controls
 open Avalonia.Controls.Templates
 open Avalonia.FuncUI.Library
 open Avalonia.FuncUI.Types
-open Avalonia.FuncUI.Components.Hosts
+open Avalonia.FuncUI.Hosts
 open Avalonia.Data
-open Avalonia.Data.Core
 open System.Linq.Expressions
 
 type DataTemplateView<'data, 'childData, 'view when 'view :> IView>

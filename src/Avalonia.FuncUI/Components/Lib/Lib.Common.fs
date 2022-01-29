@@ -4,7 +4,7 @@ open System
 open System.Collections.Generic
 
 [<RequireQualifiedAccess>]
-module internal Helpers =
+module internal ComponentHelpers =
 
     let safeFastEquals (a: 't, b: 't) =
         let ao: obj = a :> _

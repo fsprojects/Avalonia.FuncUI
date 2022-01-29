@@ -8,7 +8,7 @@ module Shell =
     open Avalonia.Input
     open Avalonia.Layout
     open Avalonia.FuncUI.Elmish
-    open Avalonia.FuncUI.Components.Hosts
+    open Avalonia.FuncUI.Hosts
     open Avalonia.FuncUI.DSL
     open LibVLCSharp.Shared
     open Examples.MusicPlayer

@@ -7,7 +7,7 @@ open Avalonia.Layout
 open Avalonia.Media
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.Components
+open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 
 module TickBarDemo =

@@ -1,0 +1,23 @@
+name: Build, Test and Publish release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Build & Test
+      run: dotnet test src/Avalonia.FuncUI.sln --verbosity normal
+    - name: Build for release
+      run: dotnet build src/Avalonia.FuncUI.sln -c Release
+    - name: Publish base project, DSL and Elmish NuGets (if this version was not published before)
+      run: dotnet nuget push src/**/bin/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate

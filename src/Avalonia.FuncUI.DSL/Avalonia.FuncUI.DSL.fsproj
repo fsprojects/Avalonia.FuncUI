@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard2.0</TargetFramework>
+        <TargetFramework>net5.0</TargetFramework>
         <Version>0.4.2</Version>
         <Authors>JaggerJo</Authors>
         <Product>JaggerJo.Avalonia.FuncUI.DSL</Product>
@@ -55,8 +55,6 @@
         <Compile Include="Shapes\Polygon.fs" />
         <Compile Include="Shapes\Path.fs" />
 
-        <Compile Include="Components\LazyView.fs" />
-
         <Compile Include="Calendar\Calendar.fs" />
         <Compile Include="Calendar\CalendarDatePicker.fs" />
         <Compile Include="DatePicker.fs" />
@@ -109,10 +107,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 
 </Project>

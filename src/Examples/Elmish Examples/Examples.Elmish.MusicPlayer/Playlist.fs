@@ -3,12 +3,12 @@ namespace Examples.MusicPlayer
 
 module Playlist =
     open System
+    open Elmish
     open Avalonia.Controls
     open Avalonia.Input
-    open Avalonia.FuncUI.Components
+    open Avalonia.FuncUI
     open Avalonia.FuncUI.DSL
     open Avalonia.FuncUI.Types
-    open Elmish
     open Examples.MusicPlayer
 
     type State =

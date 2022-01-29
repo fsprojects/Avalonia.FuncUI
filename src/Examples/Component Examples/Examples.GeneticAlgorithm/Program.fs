@@ -4,7 +4,7 @@ open System.Windows.Input
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Themes.Fluent
-open Avalonia.FuncUI.Components.Hosts
+open Avalonia.FuncUI.Hosts
 open Avalonia.Controls.ApplicationLifetimes
 
 type internal SimpleCommand (action) =

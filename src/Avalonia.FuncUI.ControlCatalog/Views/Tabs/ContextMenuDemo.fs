@@ -1,10 +1,10 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
+open Elmish
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.Components
+open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
-open Elmish
 
 module ContextMenuDemo =
     type State = { color: string }
