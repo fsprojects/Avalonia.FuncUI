@@ -1,12 +1,12 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
+open Elmish
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.Shapes
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.Components
+open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
-open Elmish
 open Avalonia.Media
 
 module CanvasDemo =

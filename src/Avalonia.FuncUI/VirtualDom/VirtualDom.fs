@@ -33,20 +33,54 @@ module rec VirtualDom =
                 | None -> ValueNone
             | None ->
                 match next with
-                | Some next -> ViewDelta.From (next) |> ValueSome
+                | Some next -> ViewDelta.From next |> ValueSome
                 | None -> ValueNone
 
         match root with
         | ValueSome control ->
             match delta with
             | ValueSome delta ->
-                match control.GetType() = delta.ViewType with
+                match control.GetType () = delta.ViewType && not delta.KeyDidChange with
                 | true -> Patcher.patch (control, delta)
-                | false -> host.Content <- Patcher.create (delta)
+                | false -> host.Content <- Patcher.create delta
             | ValueNone ->
                 host.Content <- null
-            
+
         | ValueNone ->
             match delta with
-            | ValueSome delta -> host.Content <- Patcher.create (delta)
+            | ValueSome delta -> host.Content <- Patcher.create delta
             | ValueNone -> host.Content <- null
+
+    // TODO: share code with updateRoot
+    let internal updateBorderRoot (host: Border, last: IView option, next: IView option) =
+        let root : IControl voption =
+            if host.Child <> null then
+                ValueSome host.Child
+            else
+                ValueNone
+
+        let delta : ViewDelta voption =
+            match last with
+            | Some last ->
+                match next with
+                | Some next -> Differ.diff (last, next) |> ValueSome
+                | None -> ValueNone
+            | None ->
+                match next with
+                | Some next -> ViewDelta.From next |> ValueSome
+                | None -> ValueNone
+
+        match root with
+        | ValueSome control ->
+            match delta with
+            | ValueSome delta ->
+                match control.GetType () = delta.ViewType && not delta.KeyDidChange with
+                | true -> Patcher.patch (control, delta)
+                | false -> host.Child <- Patcher.create delta
+            | ValueNone ->
+                host.Child <- null
+
+        | ValueNone ->
+            match delta with
+            | ValueSome delta -> host.Child <- Patcher.create delta
+            | ValueNone -> host.Child <- null

@@ -11,13 +11,15 @@ module PatcherTests =
     open Avalonia.Controls
     open Xunit
     open Avalonia.Media
-    
+
     [<Fact>]
     let ``Patch Properties`` () =
 
-        let delta : Delta.ViewDelta = 
+        let delta : Delta.ViewDelta =
             {
                 ViewType = typeof<TextBlock>
+                KeyDidChange = false
+                ConstructorArgs = null
                 Attrs = [
                     Delta.AttrDelta.Property {
                         Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -30,6 +32,7 @@ module PatcherTests =
                         DefaultValueFactory = ValueNone
                     };
                 ]
+                Outlet = ValueNone
             }
 
         let control = TextBlock()
@@ -38,12 +41,12 @@ module PatcherTests =
 
         Assert.Equal("some text", control.Text)
         Assert.Equal(14.0, control.FontSize)
-        
+
     [<Fact>]
     let ``Patch Styles, Classes or Resources`` () =
         let stylesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Styles :> obj)
-        let stylesSetter: IControl * obj -> unit = 
-            (fun (c, v) -> 
+        let stylesSetter: IControl * obj -> unit =
+            (fun (c, v) ->
                 let se = (c :?> StyledElement)
                 let s = v :?> Styles
                 se.Styles.Clear()
@@ -55,9 +58,11 @@ module PatcherTests =
         let resourcesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Resources :> obj)
         let resourcesSetter: IControl * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Resources <- v :?> IResourceDictionary)
 
-        let delta : Delta.ViewDelta = 
+        let delta : Delta.ViewDelta =
             {
                 ViewType = typeof<TextBlock>
+                KeyDidChange = false
+                ConstructorArgs = null
                 Attrs = [
                     Delta.AttrDelta.Property {
                         Accessor = Accessor.InstanceProperty {
@@ -87,6 +92,7 @@ module PatcherTests =
                         DefaultValueFactory = (fun () -> ResourceDictionary() :> obj) |> ValueSome
                     }
                 ]
+                Outlet = ValueNone
             }
 
         let control = TextBlock()
@@ -103,15 +109,19 @@ module PatcherTests =
     [<Fact>]
     let ``Patch Content Single`` () =
 
-        let delta : Delta.ViewDelta = 
+        let delta : Delta.ViewDelta =
              {
                  ViewType = typeof<Button>
+                 KeyDidChange = false
+                 ConstructorArgs = null
                  Attrs = [
                      Delta.AttrDelta.Content {
                          Accessor = Accessor.AvaloniaProperty Button.ContentProperty
                          Content = Delta.ViewContentDelta.Single
                              ( Some {
                                  ViewType = typeof<TextBlock>
+                                 KeyDidChange = false
+                                 ConstructorArgs = null
                                  Attrs = [
                                      Delta.AttrDelta.Property {
                                          Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -124,10 +134,12 @@ module PatcherTests =
                                          DefaultValueFactory = ValueNone
                                      };
                                  ]
+                                 Outlet = ValueNone
                              }
                          )
                      };
                  ]
+                 Outlet = ValueNone
              }
 
         let control = Button()
@@ -135,7 +147,7 @@ module PatcherTests =
         Patcher.patch (control, delta)
 
         Assert.IsType(typeof<TextBlock>,  control.Content)
-        
+
         let textblock = control.Content :?> TextBlock
 
         Assert.Equal("some text", textblock.Text)
@@ -143,9 +155,11 @@ module PatcherTests =
 
     [<Fact>]
     let ``Patch Content Multiple`` () =
-        let delta : Delta.ViewDelta = 
+        let delta : Delta.ViewDelta =
             {
                 ViewType = typeof<StackPanel>
+                KeyDidChange = false
+                ConstructorArgs = null
                 Attrs = [
                     Delta.AttrDelta.Content {
                         Accessor = Accessor.InstanceProperty {
@@ -156,6 +170,8 @@ module PatcherTests =
                         Content = Delta.ViewContentDelta.Multiple [
                             {
                                 ViewType = typeof<TextBlock>
+                                KeyDidChange = false
+                                ConstructorArgs = null
                                 Attrs = [
                                     Delta.AttrDelta.Property {
                                         Accessor = Accessor.AvaloniaProperty TextBlock.TextProperty
@@ -168,9 +184,12 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                Outlet = ValueNone
                             };
                             {
                                 ViewType = typeof<Button>
+                                KeyDidChange = false
+                                ConstructorArgs = null
                                 Attrs = [
                                     Delta.AttrDelta.Property {
                                         Accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -178,9 +197,12 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                Outlet = ValueNone
                             };
                             {
                                 ViewType = typeof<Button>
+                                KeyDidChange = false
+                                ConstructorArgs = null
                                 Attrs = [
                                     Delta.AttrDelta.Property {
                                         Accessor = Accessor.AvaloniaProperty Button.BackgroundProperty
@@ -188,10 +210,12 @@ module PatcherTests =
                                         DefaultValueFactory = ValueNone
                                     };
                                 ]
+                                Outlet = ValueNone
                             };
                         ]
                     };
                 ]
+                Outlet = ValueNone
             }
 
         let stackpanel = StackPanel()
@@ -199,9 +223,9 @@ module PatcherTests =
         stackpanel.Children.Add(TextBlock())
         stackpanel.Children.Add(Button())
 
-        // should be replaced by patcher      
+        // should be replaced by patcher
         stackpanel.Children.Add(TextBlock())
-        
+
         // should be removed by patcher
         stackpanel.Children.Add(Button())
 

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Version>0.4.0</Version>
     <Authors>JaggerJo</Authors>
     <Product>JaggerJo.Avalonia.FuncUI.Elmish</Product>
@@ -15,12 +15,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="ElmishHook.fs" />
     <Compile Include="Library.fs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Elmish" Version="3.1.0" />
-    <PackageReference Update="FSharp.Core" Version="4.7.2" />
   </ItemGroup>
 
   <ItemGroup>

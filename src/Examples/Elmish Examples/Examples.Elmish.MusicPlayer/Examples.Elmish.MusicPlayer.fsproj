@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>Examples.MusicPlayer</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md" />
+        <Compile Include="Icons.fs" />
+        <Compile Include="Types.fs" />
+        <Compile Include="Songs.fs" />
+        <Compile Include="PlayerLib.fs" />
+        <Compile Include="Dialogs.fs" />
+        <Compile Include="Extensions.fs" />
+        <Compile Include="Playlist.fs" />
+        <Compile Include="Player.fs" />
+        <Compile Include="Shell.fs" />
+        <Compile Include="Program.fs" />
+        <AvaloniaResource Include="**\*.xaml" />
+        <AvaloniaResource Include="Assets\Icons\**" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0" />
+        <PackageReference Include="VideoLAN.LibVLC.Mac" Version="3.1.3.1" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+        <PackageReference Include="LibVLCSharp" Version="3.4.2" />
+        <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.8.1" />
+        <PackageReference Update="FSharp.Core" Version="4.7.2" />
+    </ItemGroup>
+</Project>

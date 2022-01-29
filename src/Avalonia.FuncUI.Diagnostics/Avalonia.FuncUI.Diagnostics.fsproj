@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <WarnOn>3390;$(WarnOn)</WarnOn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Lib\Lib.Common.fs" />
+        <Compile Include="Lib\Lib.Reflector.fs" />
+        <Compile Include="Lib\Lib.ComponentAdorner.fs" />
+        <Compile Include="Lib\Lib.HumanReadableGuid.fs" />
+        <Compile Include="Lib\Lib.Icons.fs" />
+        <Compile Include="InspectorState.fs" />
+        <Compile Include="Views\Views.ChildWindow.fs" />
+        <Compile Include="Views\Views.StateHookViews.fs" />
+        <Compile Include="Views\Views.InspectorViews.fs" />
+        <Compile Include="Library.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+      <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    </ItemGroup>
+
+</Project>

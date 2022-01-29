@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0</TargetFramework>
+        <WarnOn>3390;$(WarnOn)</WarnOn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+        <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Include="Lib\WorldPos.fs" />
+        <Compile Include="Lib\Actors.fs" />
+        <Compile Include="Lib\World.fs" />
+        <Compile Include="Lib\WorldGeneration.fs" />
+        <Compile Include="Lib\States.fs" />
+        <Compile Include="Lib\Genetics.fs" />
+        <Compile Include="Lib\Fitness.fs" />
+        <Compile Include="Lib\Simulator.fs" />
+        <Compile Include="Lib\Population.fs" />
+        <Compile Include="Views.fs" />
+        <Compile Include="Program.fs" />
+        <Content Include="License.md" />
+    </ItemGroup>
+
+</Project>
