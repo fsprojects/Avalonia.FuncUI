@@ -1,7 +1,7 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog
 
 open Avalonia
-open Avalonia.FuncUI.Components.Hosts
+open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI.Elmish
 open Avalonia.Themes.Fluent
 open Elmish

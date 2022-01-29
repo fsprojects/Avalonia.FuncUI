@@ -5,7 +5,7 @@ open Avalonia
 open Avalonia.Themes.Fluent
 open Avalonia.Threading
 open Elmish
-open Avalonia.FuncUI.Components.Hosts
+open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open Avalonia.Controls.ApplicationLifetimes

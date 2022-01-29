@@ -5,7 +5,7 @@ open Avalonia.Layout
 open Elmish
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.Components
+open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 
 module TextBoxDemo =

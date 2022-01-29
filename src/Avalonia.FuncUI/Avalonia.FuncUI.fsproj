@@ -38,10 +38,9 @@
     <Compile Include="Components\Context\Context.fs" />
     <Compile Include="Components\Context\Context.Hooks.fs" />
     <Compile Include="Components\Component.fs" />
-    <Compile Include="Components\Hosts.fs" />
-    <Compile Include="Components\Lazy.fs" />
-    <Compile Include="Components\DataTemplateView.fs" />
     <Compile Include="Builder.fs" />
+    <Compile Include="Hosts.fs" />
+    <Compile Include="DataTemplateView.fs" />
     <Compile Include="Helpers.fs" />
     <Compile Include="View.fs" />
   </ItemGroup>

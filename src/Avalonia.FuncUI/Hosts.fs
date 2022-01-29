@@ -1,4 +1,4 @@
-﻿namespace Avalonia.FuncUI.Components.Hosts
+﻿namespace Avalonia.FuncUI.Hosts
 
 open Avalonia.Controls
 open Avalonia.Styling

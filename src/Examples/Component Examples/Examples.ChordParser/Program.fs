@@ -3,7 +3,7 @@
 open Avalonia
 open Avalonia.FuncUI.Diagnostics
 open Avalonia.Themes.Fluent
-open Avalonia.FuncUI.Components.Hosts
+open Avalonia.FuncUI.Hosts
 open Avalonia.Controls.ApplicationLifetimes
 
 type MainWindow() =
