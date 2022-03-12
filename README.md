@@ -14,26 +14,26 @@
 *(Application was created using Avalonia.FuncUI!)*
 
 ## About
-This library allows you to write cross-platform GUI Applications entirely in F# - No XAML, but either a declarative Elm-like DSL or a React/Sutil inspired component-oriented way.
-
-MVU (Model-View-Update) architecture support is built in, and bindings to use it with Elmish are also ready to use.
+This library allows you to write cross-platform GUI Applications entirely in F# - No XAML, but either using React/Sutil inspired components or a declarative Elm-like DSL with MVU (Model-View-Update) architecture support and Elmish bindings built-in.
 
 ## Getting started
 
 - 🧱[Templates](https://github.com/AvaloniaCommunity/Avalonia.FuncUI.ProjectTemplates)
 
-- 📓[Examples](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/tree/master/src/Examples)
+- 📓[Examples](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples)
 
 - 📚[Documentation](https://avaloniacommunity.github.io/Avalonia.FuncUI.Docs/)
 
 ## Contributing
 Please contribute to this library through issue reports, pull requests, code reviews, documentation, and discussion. 
 
-## Example using components
-Below is the code of a simple counter app using the component library:
+## Examples
+### Example using components
+A simple counter made with the component library:
 
 ``` f#
 module Counter =
+
     let view =
         Component
             (fun ctx ->
@@ -58,8 +58,10 @@ module Counter =
                 ])
 ```
 
-## Example using Elmish
-Below is the code of a simple counter app (using the `Avalonia.FuncUI.Elmish` package):
+This and more examples using the component library in the [Components Examples folder](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples/Component%20Examples).
+
+### Example using Elmish
+The same counter as above but using the `Avalonia.FuncUI.Elmish` package:
 
 ```f#
 module Counter =
@@ -99,6 +101,8 @@ module Counter =
             ]
         ]    
 ```
+
+This and more examples using Elmish in the [Elmish Examples folder](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples/Elmish%20Examples)
 
 # Maintainer(s)
 
