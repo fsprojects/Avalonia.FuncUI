@@ -14,7 +14,9 @@
 *(Application was created using Avalonia.FuncUI!)*
 
 ## About
-This library allows you to write cross-platform GUI Applications entirely in F# - No XAML, but a declarative Elm-like DSL. MVU (Model-View-Update) architecture support is built in, and bindings to use it with Elmish are also ready to use.
+This library allows you to write cross-platform GUI Applications entirely in F# - No XAML, but either a declarative Elm-like DSL or a React/Sutil inspired component-oriented way.
+
+MVU (Model-View-Update) architecture support is built in, and bindings to use it with Elmish are also ready to use.
 
 ## Getting started
 
@@ -27,8 +29,37 @@ This library allows you to write cross-platform GUI Applications entirely in F# 
 ## Contributing
 Please contribute to this library through issue reports, pull requests, code reviews, documentation, and discussion. 
 
-## Example
-Below is the code of a simple counter app (using the Avalonia.FuncUI.Elmish package).
+## Example using components
+Below is the code of a simple counter app using the component library:
+
+``` f#
+module Counter =
+    let view =
+        Component
+            (fun ctx ->
+                let state = ctx.useState 0
+    
+                DockPanel.create [
+                    DockPanel.children [
+                        Button.create [
+                            Button.onClick (fun _ -> state.Current - 1 |> state.Set)
+                            Button.content "click to decrement"
+                        ]
+                        Button.create [
+                            Button.onClick (fun _ -> state.Current + 1 |> state.Set)
+                            Button.content "click to increment"
+                        ]
+                        ]
+                        TextBlock.create [
+                            TextBlock.dock Dock.Top
+                            TextBlock.text (string state.Current)
+                        ]
+                    ]
+                ])
+```
+
+## Example using Elmish
+Below is the code of a simple counter app (using the `Avalonia.FuncUI.Elmish` package):
 
 ```f#
 module Counter =
