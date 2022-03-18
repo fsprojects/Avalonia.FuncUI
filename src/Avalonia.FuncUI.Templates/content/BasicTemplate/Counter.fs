@@ -14,15 +14,15 @@ module Counter =
                 DockPanel.horizontalAlignment HorizontalAlignment.Center
                 DockPanel.children [
                     Button.create [
-                        Button.width 45
+                        Button.width 64
                         Button.horizontalAlignment HorizontalAlignment.Center
                         Button.horizontalContentAlignment HorizontalAlignment.Center
-                        Button.content "reset"
+                        Button.content "Reset"
                         Button.onClick (fun _ -> state.Set 0)
                         Button.dock Dock.Bottom
                     ]
                     Button.create [
-                        Button.width 45
+                        Button.width 64
                         Button.horizontalAlignment HorizontalAlignment.Center
                         Button.horizontalContentAlignment HorizontalAlignment.Center
                         Button.content "-"
@@ -30,7 +30,7 @@ module Counter =
                         Button.dock Dock.Bottom
                     ]
                     Button.create [
-                        Button.width 45
+                        Button.width 64
                         Button.horizontalAlignment HorizontalAlignment.Center
                         Button.horizontalContentAlignment HorizontalAlignment.Center
                         Button.content "+"

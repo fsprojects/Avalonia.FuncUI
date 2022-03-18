@@ -13,7 +13,7 @@ open Avalonia.FuncUI.Hosts
 type MainWindow() as this =
     inherit HostWindow()
     do
-        base.Title <- "BasicTemplate"
+        base.Title <- "BasicMvuTemplate"
         base.Width <- 400.0
         base.Height <- 400.0
         

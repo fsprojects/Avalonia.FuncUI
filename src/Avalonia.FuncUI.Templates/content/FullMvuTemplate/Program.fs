@@ -1,9 +1,10 @@
-namespace FullTemplate
+namespace FullMvuTemplate
 
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI
 open Avalonia.Themes.Fluent
+
 
 /// This is your application you can ose the initialize method to load styles
 /// or handle Life Cycle events of your application
@@ -12,7 +13,7 @@ type App() =
 
     override this.Initialize() =
         this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
-        this.Styles.Load "avares://FullTemplate/Styles.xaml"
+        this.Styles.Load "avares://FullMvuTemplate/Styles.xaml"
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
