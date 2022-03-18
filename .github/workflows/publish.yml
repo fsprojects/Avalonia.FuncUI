@@ -17,6 +17,8 @@ jobs:
         dotnet-version: 6.0.x
     - name: Build & Test
       run: dotnet test src/Avalonia.FuncUI.sln --verbosity normal
+    - name: Install WASM workload
+      run: dotnet workload install wasm-tools
     - name: Build for release
       run: dotnet build src/Avalonia.FuncUI.sln -c Release
     - name: Publish base project, DSL and Elmish NuGets (if this version was not published before)
