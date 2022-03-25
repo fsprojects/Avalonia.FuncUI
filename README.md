@@ -18,7 +18,7 @@ This library allows you to write cross-platform GUI Applications entirely in F# 
 
 ## Getting started
 
-- 🧱[Templates](https://github.com/AvaloniaCommunity/Avalonia.FuncUI.ProjectTemplates)
+- 🧱[Templates](./src/Avalonia.FuncUI.Templates)
 
 - 📓[Examples](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples)
 
