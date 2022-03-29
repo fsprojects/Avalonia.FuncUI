@@ -58,7 +58,7 @@ dotnet new funcui.full.mvu -n NewApp
 All templates in both Components and Elmish flavors should create the same result:
 
 ```
-dotnet run NewApp
+dotnet run
 ```
 
 ![](img/NewApp_screenshot.png)
