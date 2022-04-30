@@ -51,6 +51,8 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.CounterApp", "Exam
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Templates", "Avalonia.FuncUI.Templates\Avalonia.FuncUI.Templates.fsproj", "{A0158F2D-0EA1-4D4B-9958-D3A364FC1C36}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.StyledComponents", "Examples\Component Examples\Examples.StyledComponents\Examples.StyledComponents.fsproj", "{3F1EA1AA-3564-4966-88D5-FA68A141F0B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{A0158F2D-0EA1-4D4B-9958-D3A364FC1C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0158F2D-0EA1-4D4B-9958-D3A364FC1C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0158F2D-0EA1-4D4B-9958-D3A364FC1C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F1EA1AA-3564-4966-88D5-FA68A141F0B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F1EA1AA-3564-4966-88D5-FA68A141F0B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F1EA1AA-3564-4966-88D5-FA68A141F0B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F1EA1AA-3564-4966-88D5-FA68A141F0B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -154,6 +160,7 @@ Global
 		{BF5DC7CC-7ABF-40AB-97DD-6774C17FE005} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{57D0AF41-5482-47FC-B75A-51FADD2FFEBD} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{5CC37986-D6E0-438B-B895-BC82DFD22307} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
+		{3F1EA1AA-3564-4966-88D5-FA68A141F0B9} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
