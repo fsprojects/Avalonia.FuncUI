@@ -1,10 +1,12 @@
 ﻿namespace Examples.StyledComponents
 
+open System
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Controls.Presenters
 open Avalonia.Controls.Shapes
+open Avalonia.Controls.Templates
 open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI.Types
 open Avalonia.Layout
@@ -31,6 +33,28 @@ type Views =
                     buttonOutlet.Current.Styles.Add(
                         let style = Style(fun selector -> selector.OfType<Button>())
                         style.Setters.Add(Setter(Button.BackgroundProperty, Brushes.Green))
+                        
+                        let template: IControlTemplate =
+                            FuncControlTemplate(
+                                Func<ITemplatedControl, INameScope, IControl>(fun templated scope ->
+                                    let templated: Button = templated :?> Button
+                                    
+                                    let border = ContentPresenter()
+                                    
+                                    border.Bind(ContentPresenter.BackgroundProperty, templated.GetObservable(Button.BackgroundProperty))
+                                    border.Bind(ContentPresenter.ContentProperty, templated.GetObservable(Button.ContentProperty))
+                                    border.Bind(ContentPresenter.CornerRadiusProperty, templated.GetObservable(Button.CornerRadiusProperty))
+                                    border.Bind(ContentPresenter.VerticalContentAlignmentProperty, templated.GetObservable(Button.VerticalContentAlignmentProperty))
+                                    border.Bind(ContentPresenter.HorizontalContentAlignmentProperty, templated.GetObservable(Button.HorizontalContentAlignmentProperty))
+                                    border.Bind(ContentPresenter.PaddingProperty, templated.GetObservable(Button.PaddingProperty))
+                                    
+                                    
+                                    border
+                                )
+                             )
+                        
+                        
+                        style.Setters.Add(Setter(Button.TemplateProperty, template))
                         style
                     )
                     
@@ -39,9 +63,9 @@ type Views =
                             selector
                                 .OfType<Button>()
                                 .Class(":pointerover")
-                                .Template()
-                                .OfType<ContentPresenter>()
-                                .Name("PART_ContentPresenter")
+                                //.Template()
+                                //.OfType<ContentPresenter>()
+                                //.Name("PART_ContentPresenter")
                          )
                         style.Setters.Add(Setter(Button.BackgroundProperty, Brushes.Red))
                         style.Setters.Add(Setter(Button.RenderTransformProperty, RotateTransform(5.0)))
@@ -58,6 +82,10 @@ type Views =
             View.createWithOutlet buttonOutlet.Set Button.create [
                 Button.verticalAlignment VerticalAlignment.Stretch
                 Button.horizontalAlignment HorizontalAlignment.Stretch
+                Button.verticalContentAlignment VerticalAlignment.Center
+                Button.horizontalContentAlignment HorizontalAlignment.Center
+                Button.cornerRadius 50
+                Button.content "Hello World!"
                 //Button.styles styles
             ] :> IView
         )
