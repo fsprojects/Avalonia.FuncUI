@@ -202,13 +202,3 @@ type App() =
 
         | :? ISingleViewApplicationLifetime as single ->
             single.MainView <- Views.main ()
-
-//module Program =
-//
-//    [<EntryPoint>]
-//    let main(args: string[]) =
-//        AppBuilder
-//            .Configure<App>()
-//            .UsePlatformDetect()
-//            .UseSkia()
-//            .StartWithClassicDesktopLifetime(args)

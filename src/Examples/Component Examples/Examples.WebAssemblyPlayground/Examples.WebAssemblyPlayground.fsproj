@@ -27,15 +27,15 @@
         <Compile Include="Startup.fs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.12" />
-        <PackageReference Include="Avalonia.Web.Blazor" Version="0.10.11" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
+        <PackageReference Include="Avalonia.Web.Blazor" Version="0.10.13" />
 
-        <PackageReference Include="Bolero" Version="0.*" />
-        <PackageReference Include="Bolero.Build" Version="0.*" />
-        <PackageReference Include="Bolero.HotReload" Version="0.*" />
+        <PackageReference Include="Bolero" Version="0.20.12" />
+        <PackageReference Include="Bolero.Build" Version="0.20.12" />
+        <PackageReference Include="Bolero.HotReload" Version="0.20.4" />
 
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.4" PrivateAssets="all" />
     </ItemGroup>
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\css\index.css" />
