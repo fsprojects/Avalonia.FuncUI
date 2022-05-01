@@ -68,6 +68,18 @@ module TemplatedControl =
         static member padding<'t when 't :> TemplatedControl>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
             Thickness(left, top, right, bottom) |> TemplatedControl.padding 
 
+        static member cornerRadius<'t when 't :> TemplatedControl>(value: CornerRadius) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<CornerRadius>(TemplatedControl.CornerRadiusProperty, value, ValueNone)
+            
+        static member cornerRadius<'t when 't :> TemplatedControl>(value: float) : IAttr<'t> =
+            CornerRadius(value) |> TemplatedControl.cornerRadius
+            
+        static member cornerRadius<'t when 't :> TemplatedControl>(horizontal: float, vertical: float) : IAttr<'t> =
+            CornerRadius(horizontal, vertical) |> TemplatedControl.cornerRadius
+            
+        static member cornerRadius<'t when 't :> TemplatedControl>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
+            CornerRadius(left, top, right, bottom) |> TemplatedControl.cornerRadius 
+
         static member template<'t when 't :> TemplatedControl>(value: IControlTemplate) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IControlTemplate>(TemplatedControl.TemplateProperty, value, ValueNone)  
         
