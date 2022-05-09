@@ -5,25 +5,24 @@
         <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>Examples.Presso</RootNamespace>
     </PropertyGroup>
-    
+
     <ItemGroup>
         <AvaloniaResource Include="**\*.xaml" />
         <AvaloniaResource Include="Assets\*" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <Compile Include="Lib\Library.fs" />
         <Compile Include="Main.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
-    
+
     <ItemGroup>
         <ProjectReference Include="..\..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
         <ProjectReference Include="..\..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
         <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <PackageReference Update="FSharp.Core" Version="4.7.2" />
     </ItemGroup>
 </Project>
