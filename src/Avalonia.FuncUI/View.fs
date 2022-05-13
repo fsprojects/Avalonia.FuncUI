@@ -19,7 +19,7 @@ type View () =
         let view = createView(attrs)
 
         { View.ViewType = typeof<'view>
-          View.ViewKey = ValueNone
+          View.ViewKey = view.ViewKey
           View.Attrs = view.Attrs
           View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = ValueSome (fun control -> outlet (control :?> 'view)) }
@@ -34,7 +34,14 @@ type View () =
 
     static member withOutlet (outlet: 'view -> unit) (view: IView<'view>) : IView<'view> =
         { View.ViewType = view.ViewType
-          View.ViewKey = ValueNone
+          View.ViewKey = view.ViewKey
           View.Attrs = view.Attrs
           View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = ValueSome (fun control -> outlet (control :?> 'view)) }
+        
+    static member withConstructorArgs (constructorArgs: obj array) (view: IView<'view>) : IView<'view> =
+        { View.ViewType = view.ViewType
+          View.ViewKey = view.ViewKey
+          View.Attrs = view.Attrs
+          View.ConstructorArgs = constructorArgs
+          View.Outlet = view.Outlet }
