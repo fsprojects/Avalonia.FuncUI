@@ -42,11 +42,11 @@ type Components =
             DockPanel.create [
                 DockPanel.children [
                     Button.create [
-                        Button.onClick (fun _ -> state.Current - 1 |> state.Set)
+                        Button.onClick (fun _ -> state.Set(state.Current - 1))
                         Button.content "click to decrement"
                     ]
                     Button.create [
-                        Button.onClick (fun _ -> state.Current + 1 |> state.Set)
+                        Button.onClick (fun _ -> state.Set(state.Current + 1))
                         Button.content "click to increment"
                     ]
                     ]
