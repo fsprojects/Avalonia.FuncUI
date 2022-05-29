@@ -34,30 +34,29 @@ Please contribute to this library through issue reports, pull requests, code rev
 A simple counter made with the component library:
 
 ``` f#
-module Counter =
-
-    let view =
-        Component
-            (fun ctx ->
-                let state = ctx.useState 0
+type Components =
+    static member Counter () =
+        Component (fun ctx ->
+            let state = ctx.useState 0
     
-                DockPanel.create [
-                    DockPanel.children [
-                        Button.create [
-                            Button.onClick (fun _ -> state.Current - 1 |> state.Set)
-                            Button.content "click to decrement"
-                        ]
-                        Button.create [
-                            Button.onClick (fun _ -> state.Current + 1 |> state.Set)
-                            Button.content "click to increment"
-                        ]
-                        ]
-                        TextBlock.create [
-                            TextBlock.dock Dock.Top
-                            TextBlock.text (string state.Current)
-                        ]
+            DockPanel.create [
+                DockPanel.children [
+                    Button.create [
+                        Button.onClick (fun _ -> state.Current - 1 |> state.Set)
+                        Button.content "click to decrement"
                     ]
-                ])
+                    Button.create [
+                        Button.onClick (fun _ -> state.Current + 1 |> state.Set)
+                        Button.content "click to increment"
+                    ]
+                    ]
+                    TextBlock.create [
+                        TextBlock.dock Dock.Top
+                        TextBlock.text (string state.Current)
+                    ]
+                ]
+            ]
+        )
 ```
 
 This and more examples using the component library in the [Components Examples folder](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples/Component%20Examples).
