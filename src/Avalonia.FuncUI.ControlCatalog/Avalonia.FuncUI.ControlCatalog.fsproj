@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,7 +27,7 @@
         <Compile Include="Views\Tabs\TickBarDemo.fs" />
         <Compile Include="Views\Tabs\WindowMenuDemo.fs" />
         <Compile Include="Views\MainView.fs" />
-        <AvaloniaResource Include="**\*.xaml" />        
+        <AvaloniaResource Include="**\*.xaml" />
         <Compile Include="Main.fs" />
     </ItemGroup>
 
