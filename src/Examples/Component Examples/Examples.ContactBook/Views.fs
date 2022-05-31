@@ -2,6 +2,7 @@ namespace Examples.ContactBook
 
 open System
 open System.Runtime.CompilerServices
+open System.Timers
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
@@ -53,6 +54,42 @@ module CustomHooks =
 
             state
 
+    type IComponentContext with
+
+        member inline ctx.useDeferred<'a>(outer: IWritable<'a>, delay: int, [<CallerLineNumber>] ?lineNumber: int) =
+            let inner = ctx.useState (outer.Current, identity = $"line: {lineNumber} - inner state")
+
+            ctx.useEffect (
+                handler = (fun _ ->
+                    inner.Set outer.Current
+                ),
+                triggers = [ EffectTrigger.AfterChange outer ],
+                identity = $"line: {lineNumber} - outer sync effect"
+            )
+
+            let timer = ctx.useState (
+                initialValue = (
+                    let timer = new Timer(Interval = delay, AutoReset = false)
+                    timer.Elapsed.Add (fun _ ->
+                        outer.Set inner.Current
+                    )
+                    timer
+                ),
+                renderOnChange = false,
+                identity = $"line: {lineNumber} - timer state"
+            )
+
+            ctx.useEffect (
+                handler = (fun _ ->
+                    timer.Current.Stop()
+                    timer.Current.Start()
+                ),
+                triggers = [ EffectTrigger.AfterChange inner ],
+                identity = $"line: {lineNumber} - inner sync effect"
+            )
+
+            inner
+
 [<RequireQualifiedAccess>]
 type EditContactResult =
     | Cancel
@@ -69,12 +106,15 @@ type Views =
         Component.create ("contact list", fun ctx ->
             let contacts = ctx.usePassedRead contacts
             let filter = ctx.usePassed filter
+            let filterDeferred = ctx.useDeferred (filter, 1_000)
             let selectedId = ctx.usePassed selectedId
 
             DockPanel.create [
                 DockPanel.width 300.0
                 DockPanel.lastChildFill true
                 DockPanel.children [
+
+
                     TextBox.create [
                         TextBox.dock Dock.Top
                         TextBox.watermark "search.."
@@ -84,6 +124,20 @@ type Views =
                                 if String.IsNullOrEmpty text
                                 then filter.Set None
                                 else filter.Set (Some text)
+                            else
+                                ()
+                        )
+                    ]
+
+                    TextBox.create [
+                        TextBox.dock Dock.Top
+                        TextBox.watermark "search deferred.."
+                        TextBox.text (Option.defaultValue String.Empty filterDeferred.Current)
+                        TextBox.onTextChanged (fun text ->
+                            if Some text <> filterDeferred.Current then
+                                if String.IsNullOrEmpty text
+                                then filterDeferred.Set None
+                                else filterDeferred.Set (Some text)
                             else
                                 ()
                         )
