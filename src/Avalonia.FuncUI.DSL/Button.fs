@@ -39,21 +39,3 @@ module Button =
 
         static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func, ?subPatchOptions = subPatchOptions)
-
-        static member cornerRadius<'t when 't :> Button>(value: CornerRadius) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<CornerRadius>(Button.CornerRadiusProperty, value, ValueNone)
-
-        static member cornerRadius<'t when 't :> Button>(value: float) : IAttr<'t> =
-            value
-            |> CornerRadius
-            |> Button.cornerRadius
-
-        static member cornerRadius<'t when 't :> Button>(horizontal: float, vertical: float) : IAttr<'t> =
-            (horizontal, vertical)
-            |> CornerRadius
-            |> Button.cornerRadius
-
-        static member cornerRadius<'t when 't :> Button>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
-            (left, top, right, bottom)
-            |> CornerRadius
-            |> Button.cornerRadius

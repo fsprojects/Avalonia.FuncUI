@@ -84,21 +84,3 @@ module TextBox =
 
         static member watermark<'t when 't :> TextBox>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(TextBox.WatermarkProperty, value, ValueNone)
-
-        static member cornerRadius<'t when 't :> TextBox>(value: CornerRadius) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<CornerRadius>(TextBox.CornerRadiusProperty, value, ValueNone)
-
-        static member cornerRadius<'t when 't :> TextBox>(value: float) : IAttr<'t> =
-            value
-            |> CornerRadius
-            |> TextBox.cornerRadius
-
-        static member cornerRadius<'t when 't :> TextBox>(horizontal: float, vertical: float) : IAttr<'t> =
-            (horizontal, vertical)
-            |> CornerRadius
-            |> TextBox.cornerRadius
-
-        static member cornerRadius<'t when 't :> TextBox>(left: float, top: float, right: float, bottom: float) : IAttr<'t> =
-            (left, top, right, bottom)
-            |> CornerRadius
-            |> TextBox.cornerRadius

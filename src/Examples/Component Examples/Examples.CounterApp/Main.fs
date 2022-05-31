@@ -5,12 +5,12 @@ module Main =
     open Avalonia.FuncUI
     open Avalonia.FuncUI.DSL
     open Avalonia.Layout
-    
+
     let view =
         Component
             (fun ctx ->
                 let state = ctx.useState 0
-    
+
                 DockPanel.create [
                     DockPanel.children [
                         Button.create [
