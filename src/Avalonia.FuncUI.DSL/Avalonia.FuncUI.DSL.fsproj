@@ -62,6 +62,7 @@
 
         <Compile Include="ItemsControl.fs" />
         <Compile Include="ContentControl.fs" />
+        <Compile Include="TransitioningContentControl.fs" />
         <Compile Include="AutoCompleteBox.fs" />
         <Compile Include="Button.fs" />
         <Compile Include="ToggleButton.fs" />

@@ -4,6 +4,7 @@ open System
 open System.Runtime.CompilerServices
 open System.Timers
 open Avalonia
+open Avalonia.Animation
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI
@@ -371,38 +372,45 @@ type Views =
             DockPanel.create [
                 DockPanel.dock Dock.Top
                 DockPanel.lastChildFill true
+                DockPanel.clipToBounds true
                 DockPanel.children [
                     TextBlock.create [
                         TextBox.dock Dock.Top
                         TextBlock.text $"{contact.Current}"
                     ]
 
-                    match contact.Current with
-                    | Some value when editing.Current ->
-                        Views.contactDetailsEditView (
-                            contact = value,
-                            callback = (fun result ->
-                                match result with
-                                | EditContactResult.Cancel ->
-                                    editing.Set false
-                                | EditContactResult.Update newValue ->
-                                    contact.Set (Some newValue)
-                                    editing.Set false
-                            )
-                        )
+                    TransitioningContentControl.create [
+                        TransitioningContentControl.pageTransition (CrossFade(TimeSpan.FromMilliseconds 300.0))
+                        TransitioningContentControl.content (
+                            match contact.Current with
+                            | Some value when editing.Current ->
+                                Views.contactDetailsEditView (
+                                    contact = value,
+                                    callback = (fun result ->
+                                        match result with
+                                        | EditContactResult.Cancel ->
+                                            editing.Set false
+                                        | EditContactResult.Update newValue ->
+                                            contact.Set (Some newValue)
+                                            editing.Set false
+                                    )
+                                )
 
-                    | Some value ->
-                        Views.contactDetailsReadOnlyView (
-                            contact = value,
-                            onEdit = (fun _ -> editing.Set true),
-                            onDelete = (fun _ -> contact.Set None)
+                            | Some value ->
+                                Views.contactDetailsReadOnlyView (
+                                    contact = value,
+                                    onEdit = (fun _ -> editing.Set true),
+                                    onDelete = (fun _ -> contact.Set None)
+                                )
+                            | None ->
+                                TextBlock.create [
+                                    DockPanel.dock Dock.Top
+                                    TextBlock.dock Dock.Right
+                                    TextBlock.text "-"
+                                ] :> IView
                         )
-                    | None ->
-                        TextBlock.create [
-                            DockPanel.dock Dock.Top
-                            TextBlock.dock Dock.Right
-                            TextBlock.text "-"
-                        ] :> IView
+                    ]
+
                 ]
             ] :> IView
 
