@@ -15,8 +15,8 @@
     <ItemGroup>
         <PackageReference Include="Avalonia.Desktop" Version="0.10.15" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.15" />
-        <PackageReference Include="JaggerJo.Avalonia.FuncUI" Version="0.5.2" />
-        <PackageReference Include="JaggerJo.Avalonia.FuncUI.DSL" Version="0.5.2" />
-        <PackageReference Include="JaggerJo.Avalonia.FuncUI.Elmish" Version="0.5.2" />
+        <PackageReference Include="JaggerJo.Avalonia.FuncUI" Version="0.5.3" />
+        <PackageReference Include="JaggerJo.Avalonia.FuncUI.DSL" Version="0.5.3" />
+        <PackageReference Include="JaggerJo.Avalonia.FuncUI.Elmish" Version="0.5.3" />
     </ItemGroup>
 </Project>
