@@ -49,7 +49,6 @@ type Components =
                         Button.onClick (fun _ -> state.Set(state.Current + 1))
                         Button.content "click to increment"
                     ]
-                    ]
                     TextBlock.create [
                         TextBlock.dock Dock.Top
                         TextBlock.text (string state.Current)
