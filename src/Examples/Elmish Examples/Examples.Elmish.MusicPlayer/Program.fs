@@ -11,7 +11,7 @@ type App() =
 
     override this.Initialize() =
         this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
-        this.Styles.Load "avares://Examples.MusicPlayer/Styles.xaml"
+        this.Styles.Load "avares://Examples.Elmish.MusicPlayer/Styles.xaml"
         Core.Initialize()
 
     override this.OnFrameworkInitializationCompleted() =

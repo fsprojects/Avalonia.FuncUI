@@ -155,12 +155,12 @@ module Shell =
                     MenuItem.viewItems [
                         MenuItem.create [
                             MenuItem.header "Select Files"
-                            MenuItem.icon (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/file-multiple-dark.png")
+                            MenuItem.icon (Image.FromString "avares://Examples.Elmish.MusicPlayer/Assets/Icons/file-multiple-dark.png")
                             MenuItem.onClick (fun _ -> dispatch OpenFiles)
                         ]
                         MenuItem.create [
                             MenuItem.header "Select Folder"
-                            MenuItem.icon (Image.FromString "avares://Examples.MusicPlayer/Assets/Icons/folder-music-dark.png")
+                            MenuItem.icon (Image.FromString "avares://Examples.Elmish.MusicPlayer/Assets/Icons/folder-music-dark.png")
                             MenuItem.onClick (fun _ -> dispatch OpenFolder)
                         ]
                     ]
