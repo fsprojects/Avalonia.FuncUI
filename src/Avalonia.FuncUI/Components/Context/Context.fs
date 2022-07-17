@@ -6,22 +6,7 @@ open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
 open Avalonia.Threading
 
-type IComponentContext =
-
-    /// <summary>
-    /// Forces the component to be re-rendered.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// Components actually only get re-rendered if the component content changed - and
-    /// even then only the content that is actually different from the previous render
-    /// will get patched.
-    /// </para>
-    /// <para>
-    /// To ensure a full re-render the component key needs to be changed.
-    /// </para>
-    /// </remarks>
-    abstract forceRender: unit -> unit
+type IComponentContextCore =
 
     /// <summary>
     /// <para>
@@ -45,6 +30,24 @@ type IComponentContext =
     /// (used by extension methods that add the default effect hooks)
     /// </summary>
     abstract useEffectHook: EffectHook -> unit
+
+type IComponentContext =
+    inherit IComponentContextCore
+
+    /// <summary>
+    /// Forces the component to be re-rendered.
+    /// </summary>
+    /// <remarks>
+    /// <para>
+    /// Components actually only get re-rendered if the component content changed - and
+    /// even then only the content that is actually different from the previous render
+    /// will get patched.
+    /// </para>
+    /// <para>
+    /// To ensure a full re-render the component key needs to be changed.
+    /// </para>
+    /// </remarks>
+    abstract forceRender: unit -> unit
 
     /// <summary>
     /// <para>

@@ -26,70 +26,70 @@ module CustomHooks =
 
     type IComponentContext with
 
-        member this.useAsync<'signal>(init: Async<'signal>, [<CallerLineNumber>] ?identity: int) : IWritable<Deferred<'signal>> =
-            let identity = Option.get identity
-            let state = this.useState (Deferred.NotStartedYet, true, identity)
+        member ctx.useAsync<'signal>(init: Async<'signal>, [<CallerLineNumber>] ?identity: int) : IWritable<Deferred<'signal>> =
+            ctx.useGrouped (identity.Value, fun ctx ->
+                let state = ctx.useState (Deferred.NotStartedYet, true)
 
-            this.useEffect (
-                handler = (fun _ ->
-                    match state.Current with
-                    | Deferred.NotStartedYet ->
-                        state.Set Deferred.Pending
+                ctx.useEffect (
+                    handler = (fun _ ->
+                        match state.Current with
+                        | Deferred.NotStartedYet ->
+                            state.Set Deferred.Pending
 
-                        Async.StartImmediate (
-                            async {
-                                let! result = Async.Catch init
+                            Async.StartImmediate (
+                                async {
+                                    let! result = Async.Catch init
 
-                                match result with
-                                | Choice1Of2 value -> state.Set (Deferred.Resolved value)
-                                | Choice2Of2 exn -> state.Set (Deferred.Failed exn)
-                            }
-                        )
+                                    match result with
+                                    | Choice1Of2 value -> state.Set (Deferred.Resolved value)
+                                    | Choice2Of2 exn -> state.Set (Deferred.Failed exn)
+                                }
+                            )
 
-                    | _ ->
-                        ()
-                ),
-                triggers = [ EffectTrigger.AfterInit ],
-                callerLineNumber = identity
+                        | _ ->
+                            ()
+                    ),
+                    triggers = [ EffectTrigger.AfterInit ]
+                )
+
+                state
             )
 
-            state
 
     type IComponentContext with
 
         member inline ctx.useDeferred<'a>(outer: IWritable<'a>, delay: int, [<CallerLineNumber>] ?lineNumber: int) =
-            let inner = ctx.useState (outer.Current, identity = $"line: {lineNumber} - inner state")
+            ctx.useGrouped (lineNumber.Value, fun ctx ->
+                let inner = ctx.useState (outer.Current)
 
-            ctx.useEffect (
-                handler = (fun _ ->
-                    inner.Set outer.Current
-                ),
-                triggers = [ EffectTrigger.AfterChange outer ],
-                identity = $"line: {lineNumber} - outer sync effect"
+                ctx.useEffect (
+                    handler = (fun _ ->
+                        inner.Set outer.Current
+                    ),
+                    triggers = [ EffectTrigger.AfterChange outer ]
+                )
+
+                let timer = ctx.useState (
+                    initialValue = (
+                        let timer = new Timer(Interval = delay, AutoReset = false)
+                        timer.Elapsed.Add (fun _ ->
+                            outer.Set inner.Current
+                        )
+                        timer
+                    ),
+                    renderOnChange = false
+                )
+
+                ctx.useEffect (
+                    handler = (fun _ ->
+                        timer.Current.Stop()
+                        timer.Current.Start()
+                    ),
+                    triggers = [ EffectTrigger.AfterChange inner ]
+                )
+
+                inner
             )
-
-            let timer = ctx.useState (
-                initialValue = (
-                    let timer = new Timer(Interval = delay, AutoReset = false)
-                    timer.Elapsed.Add (fun _ ->
-                        outer.Set inner.Current
-                    )
-                    timer
-                ),
-                renderOnChange = false,
-                identity = $"line: {lineNumber} - timer state"
-            )
-
-            ctx.useEffect (
-                handler = (fun _ ->
-                    timer.Current.Stop()
-                    timer.Current.Start()
-                ),
-                triggers = [ EffectTrigger.AfterChange inner ],
-                identity = $"line: {lineNumber} - inner sync effect"
-            )
-
-            inner
 
 [<RequireQualifiedAccess>]
 type EditContactResult =

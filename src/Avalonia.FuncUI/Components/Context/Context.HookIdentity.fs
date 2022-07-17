@@ -3,8 +3,10 @@ namespace Avalonia.FuncUI
 
 [<RequireQualifiedAccess; Struct>]
 type HookIdentity =
+
     /// Line number of the hooks caller
     | CallerCodeLocation of line: int
+
     /// <summary>
     /// String identity of the hook (provided explicitly or is implicitly composed)
     /// </summary>
@@ -14,7 +16,14 @@ type HookIdentity =
     /// </remarks>
     | StringIdentity of identity: string
 
-    override this.ToString () =
+    member this.StringValue =
         match this with
-        | CallerCodeLocation line -> $"Line: {line}"
+        | CallerCodeLocation line -> $"L%i{line}"
         | HookIdentity.StringIdentity identity -> identity
+
+    member this.WithPrefix (prefix: string) : HookIdentity =
+        HookIdentity.StringIdentity $"%s{prefix}.{this.StringValue}"
+
+    override this.ToString () =
+        this.StringValue
+

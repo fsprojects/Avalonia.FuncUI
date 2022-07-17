@@ -37,6 +37,7 @@
     <Compile Include="Components\Context\Context.EffectsHook.fs" />
     <Compile Include="Components\Context\Context.StateHook.fs" />
     <Compile Include="Components\Context\Context.fs" />
+    <Compile Include="Components\Context\Context.Group.fs" />
     <Compile Include="Components\Context\Context.Hooks.fs" />
     <Compile Include="Components\Component.fs" />
     <Compile Include="Builder.fs" />
