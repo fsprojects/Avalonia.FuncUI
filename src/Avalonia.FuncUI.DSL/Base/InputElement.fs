@@ -35,11 +35,11 @@ module InputElement =
         static member onTextInput<'t when 't :> InputElement>(func: TextInputEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<TextInputEventArgs>(InputElement.TextInputEvent, func, ?subPatchOptions = subPatchOptions)
             
-        static member onPointerEnter<'t when 't :> InputElement>(func: PointerEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(InputElement.PointerEnterEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onPointerEntered<'t when 't :> InputElement>(func: PointerEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(InputElement.PointerEnteredEvent, func, ?subPatchOptions = subPatchOptions)
             
-        static member onPointerLeave<'t when 't :> InputElement>(func: PointerEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(InputElement.PointerLeaveEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onPointerExited<'t when 't :> InputElement>(func: PointerEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(InputElement.PointerExitedEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onPointerMoved<'t when 't :> InputElement>(func: PointerEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(InputElement.PointerMovedEvent, func, ?subPatchOptions = subPatchOptions)
@@ -56,8 +56,8 @@ module InputElement =
         static member onPointerWheelChanged<'t when 't :> InputElement>(func: PointerWheelEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<PointerWheelEventArgs>(InputElement.PointerWheelChangedEvent, func, ?subPatchOptions = subPatchOptions)
             
-        static member onTapped<'t when 't :> InputElement>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(InputElement.TappedEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onTapped<'t when 't :> InputElement>(func: TappedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<TappedEventArgs>(InputElement.TappedEvent, func, ?subPatchOptions = subPatchOptions)
             
-        static member onDoubleTapped<'t when 't :> InputElement>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(InputElement.DoubleTappedEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onDoubleTapped<'t when 't :> InputElement>(func: TappedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<TappedEventArgs>(InputElement.DoubleTappedEvent, func, ?subPatchOptions = subPatchOptions)

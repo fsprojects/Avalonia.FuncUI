@@ -1,5 +1,6 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
+open System
 open Elmish
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
@@ -8,13 +9,13 @@ open Avalonia.FuncUI.Elmish
 
 module NumericUpDownDemo =
 
-    type State = { count : double }
+    type State = { count : Nullable<decimal> }
 
-    let init = { count = 0.0 }
+    let init = { count = Nullable 0m }
 
     type Msg =
     | Reset
-    | Set of double
+    | Set of Nullable<decimal>
 
     let update (msg: Msg) (state: State) : State =
         match msg with
@@ -28,24 +29,24 @@ module NumericUpDownDemo =
                 NumericUpDown.create [
                     NumericUpDown.value state.count
                     NumericUpDown.onValueChanged (fun value -> value |> Set |> dispatch)
-                    NumericUpDown.increment 0.25
-                    NumericUpDown.minimum 0.0
-                    NumericUpDown.maximum 1.0
+                    NumericUpDown.increment 0.25m
+                    NumericUpDown.minimum 0.0m
+                    NumericUpDown.maximum 1.0m
                     NumericUpDown.clipValueToMinMax false
                 ]
                 NumericUpDown.create [
                     NumericUpDown.value state.count
                     NumericUpDown.onValueChanged (fun value -> value |> Set |> dispatch)
-                    NumericUpDown.increment 0.25
-                    NumericUpDown.minimum 0.0
-                    NumericUpDown.maximum 1.0
+                    NumericUpDown.increment 0.25m
+                    NumericUpDown.minimum 0.0m
+                    NumericUpDown.maximum 1.0m
                     NumericUpDown.clipValueToMinMax false
                     NumericUpDown.buttonSpinnerLocation Location.Left
                 ]
                 NumericUpDown.create [
                     NumericUpDown.value state.count
                     NumericUpDown.onValueChanged (fun value -> value |> Set |> dispatch)
-                    NumericUpDown.increment 0.25
+                    NumericUpDown.increment 0.25m
                 ]
             ]
         ]

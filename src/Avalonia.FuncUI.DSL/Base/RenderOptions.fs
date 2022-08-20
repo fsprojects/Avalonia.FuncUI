@@ -4,7 +4,7 @@ namespace Avalonia.FuncUI.DSL
 module RenderOptions =  
     open Avalonia.Controls
     open Avalonia.Media
-    open Avalonia.Visuals.Media.Imaging
+    open Avalonia.Media.Imaging
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     

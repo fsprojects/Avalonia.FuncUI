@@ -92,7 +92,6 @@
         <Compile Include="Separator.fs" />
         <Compile Include="Slider.fs" />
         <Compile Include="SplitView.fs" />
-        <Compile Include="DrawingPresenter.fs" />
         <Compile Include="Expander.fs" />
         <Compile Include="Spinner.fs" />
         <Compile Include="LayoutTransformControl.fs" />

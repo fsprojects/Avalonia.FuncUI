@@ -25,8 +25,8 @@ module Popup =
         static member isOpen<'t when 't :> Popup>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Popup.IsOpenProperty, value, ValueNone)
             
-        static member staysOpen<'t when 't :> Popup>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Popup.StaysOpenProperty, value, ValueNone)
+        static member isLightDismissEnabled<'t when 't :> Popup>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(Popup.IsLightDismissEnabledProperty, value, ValueNone)
             
         static member topmost<'t when 't :> Popup>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Popup.TopmostProperty, value, ValueNone)
