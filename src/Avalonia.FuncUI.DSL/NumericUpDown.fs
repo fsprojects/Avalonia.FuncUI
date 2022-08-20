@@ -43,26 +43,26 @@ module NumericUpDown =
         /// <summary>
         /// Sets the culture info used for formatting
         /// </summary>
-        static member cultureInfo<'t when 't :> NumericUpDown>(value: CultureInfo) : IAttr<'t> =
-            let getter : ('t -> CultureInfo) = (fun control -> control.CultureInfo)
-            let setter : ('t * CultureInfo -> unit) = (fun (control, value) -> control.CultureInfo <- value)
+        static member numberFormat<'t when 't :> NumericUpDown>(value: NumberFormatInfo) : IAttr<'t> =
+            let getter : ('t -> NumberFormatInfo) = (fun control -> control.NumberFormat)
+            let setter : ('t * NumberFormatInfo -> unit) = (fun (control, value) -> control.NumberFormat <- value)
 
-            AttrBuilder<'t>.CreateProperty<CultureInfo>("CultureInfo", value, ValueSome getter, ValueSome setter, ValueNone)
+            AttrBuilder<'t>.CreateProperty<NumberFormatInfo>("NumberFormat", value, ValueSome getter, ValueSome setter, ValueNone)
 
         static member formatString<'t when 't :> NumericUpDown>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(NumericUpDown.FormatStringProperty, value, ValueNone)
 
-        static member increment<'t when 't :> NumericUpDown>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(NumericUpDown.IncrementProperty, value, ValueNone)
+        static member increment<'t when 't :> NumericUpDown>(value: decimal) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<decimal>(NumericUpDown.IncrementProperty, value, ValueNone)
 
         static member isReadOnly<'t when 't :> NumericUpDown>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(NumericUpDown.IsReadOnlyProperty, value, ValueNone)
 
-        static member minimum<'t when 't :> NumericUpDown>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(NumericUpDown.MinimumProperty, value, ValueNone)
+        static member minimum<'t when 't :> NumericUpDown>(value: decimal) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<decimal>(NumericUpDown.MinimumProperty, value, ValueNone)
 
-        static member maximum<'t when 't :> NumericUpDown>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(NumericUpDown.MaximumProperty, value, ValueNone)
+        static member maximum<'t when 't :> NumericUpDown>(value: decimal) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<decimal>(NumericUpDown.MaximumProperty, value, ValueNone)
 
         static member parsingNumberStyle<'t when 't :> NumericUpDown>(value: NumberStyles) : IAttr<'t> =
             let getter : ('t -> NumberStyles) = (fun control -> control.ParsingNumberStyle)
@@ -79,14 +79,14 @@ module NumericUpDown =
         static member onTextChanged<'t when 't :> NumericUpDown>(func: string -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<string>(NumericUpDown.TextProperty, func, ?subPatchOptions = subPatchOptions)
 
-        static member value<'t when 't :> NumericUpDown>(value: double) : IAttr<'t> =
-            let getter : ('t -> double) = (fun control -> control.Value)
-            let setter : ('t * double -> unit) = (fun (control, value) -> control.Value <- value)
+        static member value<'t when 't :> NumericUpDown>(value: System.Nullable<decimal>) : IAttr<'t> =
+            let getter : ('t -> System.Nullable<decimal>) = (fun control -> control.Value)
+            let setter : ('t * System.Nullable<decimal> -> unit) = (fun (control, value) -> control.Value <- value)
 
-            AttrBuilder<'t>.CreateProperty<double>("Value", value, ValueSome getter, ValueSome setter, ValueNone)
+            AttrBuilder<'t>.CreateProperty<System.Nullable<decimal>>("Value", value, ValueSome getter, ValueSome setter, ValueNone)
 
-        static member onValueChanged<'t when 't :> NumericUpDown>(func: double -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<double>(NumericUpDown.ValueProperty, func, ?subPatchOptions = subPatchOptions)
+        static member onValueChanged<'t when 't :> NumericUpDown>(func: System.Nullable<decimal> -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<System.Nullable<decimal>>(NumericUpDown.ValueProperty, func, ?subPatchOptions = subPatchOptions)
 
         static member watermark<'t when 't :> NumericUpDown>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(NumericUpDown.WatermarkProperty, value, ValueNone)
