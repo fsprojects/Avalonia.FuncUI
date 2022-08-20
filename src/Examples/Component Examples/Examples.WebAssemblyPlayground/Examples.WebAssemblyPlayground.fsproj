@@ -27,8 +27,9 @@
         <Compile Include="Startup.fs" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.13" />
-        <PackageReference Include="Avalonia.Web.Blazor" Version="0.10.13" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Web.Blazor" Version="$(AvaloniaVersion)" />
 
         <PackageReference Include="Bolero" Version="0.20.12" />
         <PackageReference Include="Bolero.Build" Version="0.20.12" />
