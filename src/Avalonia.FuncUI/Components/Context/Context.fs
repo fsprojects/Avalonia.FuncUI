@@ -35,16 +35,113 @@ type IComponentContext =
     abstract trackDisposable: IDisposable -> unit
 
     /// <summary>
-    /// Extension point to register state hooks to the component context.
-    /// (used by extension methods that add the default state hooks)
+    /// Attaches a value to the component context.
+    /// <example>
+    /// <code>
+    /// Component (fun ctx ->
+    ///     let count = ctx.useState 42
+    ///     ..
+    ///     // id will have the same value during the whole component lifetime. (unless changed via 'id.Set ..')
+    ///     let id = ctx.useState (Guid.NewGuid())
+    ///     ..
+    /// )
+    /// </code>
+    /// </example>
     /// </summary>
-    abstract useStateHook: StateHook -> IReadable<'value>
+    /// <param name="initialValue">value should not change during the component lifetime.</param>
+    /// <param name="renderOnChange">re-render component on change (default: true).</param>
+    abstract useState<'value> : initialValue: 'value * ?renderOnChange: bool -> IWritable<'value>
 
     /// <summary>
-    /// Extension point to register effect hooks to the component context.
-    /// (used by extension methods that add the default effect hooks)
+    /// Attaches a passed <c>IWritable&lt;'value&gt;</c> value to the component context.
+    /// <example>
+    /// <code>
+    /// let countView (count: IWritable&lt;int&gt;) =
+    ///     Component (fun ctx ->
+    ///         // attach passed writable value to the component context
+    ///         let count = ctx.usePassed (count)
+    ///         ..
+    ///     )
+    /// </code>
+    /// </example>
     /// </summary>
-    abstract useEffectHook: EffectHook -> unit
+    /// <param name="value">value should not change during the component lifetime.</param>
+    abstract usePassed<'value> : value: IWritable<'value> * ?renderOnChange: bool -> IWritable<'value>
+
+    /// <summary>
+    /// Attaches a passed <c>IReadable&lt;'value&gt;</c> value to the component context.
+    /// <example>
+    /// <code>
+    /// let countView (count: IReadable&lt;int&gt;) =
+    ///     Component (fun ctx ->
+    ///         // attach passed readable value to the component context
+    ///         let count = ctx.usePassedRead count
+    ///         ..
+    ///     )
+    /// </code>
+    /// </example>
+    /// </summary>
+    /// <param name="value">value should not change during the component lifetime.</param>
+    /// <param name="renderOnChange">re-render component on change (default: true).</param>
+    abstract usePassedRead<'value> : value: IReadable<'value> * ?renderOnChange: bool -> IReadable<'value>
+
+    /// <summary>
+    /// Attaches a effect to the component context.
+    /// <example>
+    /// <code>
+    /// let view () =
+    ///     Component (fun ctx ->
+    ///         let count = ctx.useState 0
+    ///         ctx.useEffect (
+    ///             handler = (fun _ ->
+    ///                 // do something
+    ///                 ..
+    ///                 // return a cleanup function
+    ///                 { new IDisposable with
+    ///                     method Dispose() =
+    ///                         // do something
+    ///                 }
+    ///             ),
+    ///             triggers = [
+    ///                 EffectTrigger.AfterChange count
+    ///                 EffectTrigger.AfterRender
+    ///                 EffectTrigger.AfterInit
+    ///             ]
+    ///         )
+    ///         ..
+    ///     )
+    /// </code>
+    /// </example>
+    /// </summary>
+    /// <param name="handler">handler is called when a trigger fires.</param>
+    /// <param name="triggers">list of effect triggers</param>
+    abstract useEffect: handler: (unit -> IDisposable) * triggers: EffectTrigger list -> unit
+
+    /// <summary>
+    /// Attaches a effect to the component context.
+    /// <example>
+    /// <code>
+    /// let view () =
+    ///     Component (fun ctx ->
+    ///         let count = ctx.useState 0
+    ///         ctx.useEffect (
+    ///             handler = (fun _ ->
+    ///                 // do something
+    ///             ),
+    ///             triggers = [
+    ///                 EffectTrigger.AfterChange count
+    ///                 EffectTrigger.AfterRender
+    ///                 EffectTrigger.AfterInit
+    ///             ]
+    ///         )
+    ///         ..
+    ///     )
+    /// </code>
+    /// </example>
+    /// </summary>
+    /// <param name="handler">handler is called when a trigger fires.</param>
+    /// <param name="triggers">list of effect triggers</param>
+    abstract useEffect: handler: (unit ->  unit) * triggers: EffectTrigger list -> unit
 
     /// <summary>
     /// <para>
@@ -72,14 +169,21 @@ type IComponentContext =
 
 type Context () =
     let disposables = new DisposableBag ()
-    let hooks = Dictionary<HookIdentity, StateHook>()
-    let effects = Dictionary<HookIdentity, EffectHook>()
+    let hooks = Dictionary<int, StateHook>()
+    let effects = Dictionary<int, EffectHook>()
     let effectQueue =
         let effectQueue = new EffectQueue()
         disposables.Add effectQueue
         effectQueue
 
     let mutable componentAttrs: IAttr<Avalonia.Controls.Border> list = List.empty
+
+    let mutable callingIndex = 0
+
+    let incrementCallingIndex (func: unit -> 't) : 't =
+        let result = func ()
+        callingIndex <- callingIndex + 1
+        result
 
     let render = Event<unit>()
 
@@ -94,14 +198,11 @@ type Context () =
         |> Seq.cast<IAttr>
         |> Seq.toList
 
-    interface IComponentContext with
-        member this.forceRender () =
-            render.Trigger ()
+    member internal this.AfterRender () =
+        callingIndex <- 0
 
-        member this.trackDisposable (item: IDisposable) : unit =
-            disposables.Add item
-
-        member this.useStateHook<'value>(stateHook: StateHook) : IReadable<'value> =
+    member private this.useStateHook<'value>(stateHook: StateHook) : IReadable<'value> =
+        incrementCallingIndex (fun () ->
             match hooks.TryGetValue stateHook.Identity with
             | true, known ->
                 known.State.Value :?> IReadable<'value>
@@ -124,8 +225,10 @@ type Context () =
                     )
 
                 state
+        )
 
-        member this.useEffectHook (effect: EffectHook) : unit =
+    member private this.useEffectHook (effect: EffectHook) : unit =
+        incrementCallingIndex (fun () ->
             match effects.TryGetValue effect.Identity with
             | true, _ ->
                 for trigger in effect.Triggers do
@@ -151,9 +254,62 @@ type Context () =
 
                     | EffectTrigger.AfterInit ->
                         effectQueue.Enqueue effect
+        )
+
+    interface IComponentContext with
+        member this.forceRender () =
+            render.Trigger ()
+
+        member this.trackDisposable (item: IDisposable) : unit =
+            disposables.Add item
 
         member this.attrs (attrs: IAttr<Avalonia.Controls.Border> list) : unit =
             componentAttrs <- attrs
+
+        member this.useEffect (effect: unit -> IDisposable, triggers: EffectTrigger list) : unit =
+            this.useEffectHook (
+                EffectHook.Create(
+                    identity = callingIndex,
+                    effect = effect,
+                    triggers = triggers
+                )
+            )
+
+        member this.useEffect (effect: unit -> unit, triggers: EffectTrigger list) : unit =
+            this.useEffectHook (
+                EffectHook.Create(
+                    identity = callingIndex,
+                    effect = (fun _ -> effect(); null),
+                    triggers = triggers
+                )
+            )
+
+        member this.usePassed(value: IWritable<'t>, ?renderOnChange: bool) =
+            this.useStateHook<'value>(
+                StateHook.Create (
+                    identity = callingIndex,
+                    state = StateHookValue.Const value,
+                    renderOnChange = defaultArg renderOnChange true
+                )
+            ) :?> IWritable<'value>
+
+        member this.usePassedRead(value: IReadable<'t>, ?renderOnChange: bool) =
+            this.useStateHook<'value>(
+                StateHook.Create (
+                    identity = callingIndex,
+                    state = StateHookValue.Const value,
+                    renderOnChange = defaultArg renderOnChange true
+                )
+            )
+
+        member this.useState(initialValue: 't, ?renderOnChange: bool) =
+            this.useStateHook<'value>(
+                StateHook.Create (
+                    identity = callingIndex,
+                    state = StateHookValue.Lazy (fun _ -> new State<'value>(initialValue) :> IAnyReadable),
+                    renderOnChange = defaultArg renderOnChange true
+                )
+            ) :?> IWritable<'value>
 
     interface IDisposable with
         member this.Dispose () =
