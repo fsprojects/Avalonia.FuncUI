@@ -13,17 +13,19 @@ type EffectTrigger =
     /// triggers the effect to run every time after the component is rendered.
     | AfterRender
 
-
 type EffectHook =
-    { Identity: HookIdentity
+    { /// The hooks identity is used to uniquely identify the hook in it's context.
+      /// The identity is determined by the calling order of the hooks.
+      Identity: int
+      /// The function to call when the hook is triggered.
       Handler: unit -> IDisposable
+      /// Triggers that the effect is listening for.
       Triggers: EffectTrigger list }
 
     static member Create (identity, effect, triggers) =
         { EffectHook.Identity = identity
           EffectHook.Handler = effect
           EffectHook.Triggers = triggers }
-
 
 type internal EffectQueue () =
     let sync = obj ()

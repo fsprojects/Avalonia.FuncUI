@@ -24,6 +24,9 @@ type Component (render: IComponentContext -> IView) =
         Dispatcher.UIThread.Post (fun _ ->
             let nextViewElement = Some (render context)
 
+            // reset internal context counter
+            context.AfterRender ()
+
             // update view
             VirtualDom.updateBorderRoot (this, lastViewElement, nextViewElement)
             lastViewElement <- nextViewElement

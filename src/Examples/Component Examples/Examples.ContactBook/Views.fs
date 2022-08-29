@@ -26,9 +26,8 @@ module CustomHooks =
 
     type IComponentContext with
 
-        member this.useAsync<'signal>(init: Async<'signal>, [<CallerLineNumber>] ?identity: int) : IWritable<Deferred<'signal>> =
-            let identity = Option.get identity
-            let state = this.useState (Deferred.NotStartedYet, true, identity)
+        member this.useAsync<'signal>(init: Async<'signal>) : IWritable<Deferred<'signal>> =
+            let state = this.useState (Deferred.NotStartedYet, true)
 
             this.useEffect (
                 handler = (fun _ ->
@@ -49,23 +48,21 @@ module CustomHooks =
                     | _ ->
                         ()
                 ),
-                triggers = [ EffectTrigger.AfterInit ],
-                callerLineNumber = identity
+                triggers = [ EffectTrigger.AfterInit ]
             )
 
             state
 
     type IComponentContext with
 
-        member inline ctx.useDeferred<'a>(outer: IWritable<'a>, delay: int, [<CallerLineNumber>] ?lineNumber: int) =
-            let inner = ctx.useState (outer.Current, identity = $"line: {lineNumber} - inner state")
+        member inline ctx.useDeferred<'a>(outer: IWritable<'a>, delay: int) =
+            let inner = ctx.useState (outer.Current)
 
             ctx.useEffect (
                 handler = (fun _ ->
                     inner.Set outer.Current
                 ),
-                triggers = [ EffectTrigger.AfterChange outer ],
-                identity = $"line: {lineNumber} - outer sync effect"
+                triggers = [ EffectTrigger.AfterChange outer ]
             )
 
             let timer = ctx.useState (
@@ -76,8 +73,7 @@ module CustomHooks =
                     )
                     timer
                 ),
-                renderOnChange = false,
-                identity = $"line: {lineNumber} - timer state"
+                renderOnChange = false
             )
 
             ctx.useEffect (
@@ -85,8 +81,7 @@ module CustomHooks =
                     timer.Current.Stop()
                     timer.Current.Start()
                 ),
-                triggers = [ EffectTrigger.AfterChange inner ],
-                identity = $"line: {lineNumber} - inner sync effect"
+                triggers = [ EffectTrigger.AfterChange inner ]
             )
 
             inner
