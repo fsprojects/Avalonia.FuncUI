@@ -102,7 +102,7 @@
         <Compile Include="ToolTip.fs" />
         <Compile Include="TabControl.fs" />
         <Compile Include="TabItem.fs" />
-		<Compile Include="TickBar.fs" />
+        <Compile Include="TickBar.fs" />
         <Compile Include="Viewbox.fs" />
     </ItemGroup>
 
