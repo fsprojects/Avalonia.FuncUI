@@ -15,7 +15,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="TickBar.fs" />
         <Compile Include="Base\Layoutable.fs" />
         <Compile Include="Base\Visual.fs" />
         <Compile Include="Base\InputElement.fs" />
@@ -97,11 +96,13 @@
         <Compile Include="LayoutTransformControl.fs" />
         <Compile Include="TextBlock.fs" />
         <Compile Include="TextBox.fs" />
+        <Compile Include="MaskedTextBox.fs" />
         <Compile Include="TreeView.fs" />
         <Compile Include="TreeViewItem.fs" />
         <Compile Include="ToolTip.fs" />
         <Compile Include="TabControl.fs" />
         <Compile Include="TabItem.fs" />
+		<Compile Include="TickBar.fs" />
         <Compile Include="Viewbox.fs" />
     </ItemGroup>
 
