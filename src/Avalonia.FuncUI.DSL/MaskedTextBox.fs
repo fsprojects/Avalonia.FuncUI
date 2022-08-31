@@ -1,13 +1,8 @@
 ﻿namespace Avalonia.FuncUI.DSL
 
-open Avalonia
-
 [<AutoOpen>]
 module MaskedTextBox =
     open Avalonia.Controls
-    open Avalonia.Layout
-    open Avalonia.Media.Immutable
-    open Avalonia.Media
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
