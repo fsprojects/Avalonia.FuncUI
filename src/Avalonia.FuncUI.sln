@@ -13,8 +13,6 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCata
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.Elmish", "Examples.Elmish", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.DSL", "Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj", "{B55A8DAD-ED9E-426C-A91D-E80747100E63}"
-EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.CounterApp", "Examples\Elmish Examples\Examples.Elmish.CounterApp\Examples.Elmish.CounterApp.fsproj", "{972EEE7D-CB1F-4A22-B10F-D7375F700A79}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.GameOfLife", "Examples\Elmish Examples\Examples.Elmish.GameOfLife\Examples.Elmish.GameOfLife.fsproj", "{D328F897-16D3-43CA-A746-3744DC6BA050}"
@@ -79,10 +77,6 @@ Global
 		{2EE61E50-F492-4024-85D3-D310D05B4D72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2EE61E50-F492-4024-85D3-D310D05B4D72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2EE61E50-F492-4024-85D3-D310D05B4D72}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B55A8DAD-ED9E-426C-A91D-E80747100E63}.Release|Any CPU.Build.0 = Release|Any CPU
 		{972EEE7D-CB1F-4A22-B10F-D7375F700A79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{972EEE7D-CB1F-4A22-B10F-D7375F700A79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{972EEE7D-CB1F-4A22-B10F-D7375F700A79}.Release|Any CPU.ActiveCfg = Release|Any CPU

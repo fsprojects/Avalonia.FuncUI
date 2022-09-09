@@ -44,7 +44,6 @@
       <_ContentIncludedByDefault Remove="wwwroot\index.html" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Avalonia.FuncUI.DSL\Avalonia.FuncUI.DSL.fsproj" />
       <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
 </Project>
