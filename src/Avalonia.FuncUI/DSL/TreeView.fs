@@ -6,7 +6,7 @@ module TreeView =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-   
+
     let create (attrs: IAttr<TreeView> list): IView<TreeView> =
         ViewBuilder.Create<TreeView>(attrs)
 
@@ -17,18 +17,30 @@ module TreeView =
         /// </summary>
         static member autoScrollToSelectedItem<'t when 't :> TreeView>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(TreeView.AutoScrollToSelectedItemProperty, value, ValueNone)
-        
+
         /// <summary>
         /// Sets the selected items.
         /// </summary>
         static member selectedItem<'t when 't :> TreeView>(value: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(TreeView.SelectedItemProperty, value, ValueNone)
-         
+
         /// <summary>
-        /// Sets the selected item.
+        /// Subscribes to changes in the SelectedItem property.
+        /// </summary>
+        static member onSelectedItemChanged<'t when 't :> TreeView>(func: obj -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<obj>(TreeView.SelectedItemProperty, func, ?subPatchOptions = subPatchOptions)
+
+        /// <summary>
+        /// Sets the selected items.
         /// </summary>
         static member selectedItems<'t when 't :> TreeView>(value: IList) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IList>(TreeView.SelectedItemsProperty, value, ValueNone)
+
+        /// <summary>
+        /// Subscribes to changes in the SelectedItems property.
+        /// </summary>
+        static member onSelectedItemsChanged<'t when 't :> TreeView>(func: IList -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<IList>(TreeView.SelectedItemsProperty, func, ?subPatchOptions = subPatchOptions)
 
         /// <summary>
         /// Sets the selection mode.
