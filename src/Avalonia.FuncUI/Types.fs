@@ -1,5 +1,6 @@
 ﻿namespace rec Avalonia.FuncUI
 
+open Avalonia
 open Avalonia.Controls
 open System
 open System.Reactive.Linq
@@ -10,8 +11,8 @@ module Types =
     [<CustomEquality; NoComparison>]
     type PropertyAccessor =
         { Name: string
-          Getter: (IControl -> obj) voption
-          Setter: (IControl * obj -> unit) voption }
+          Getter: (IAvaloniaObject -> obj) voption
+          Setter: (IAvaloniaObject * obj -> unit) voption }
 
         override this.Equals (other: obj) : bool =
             match other with

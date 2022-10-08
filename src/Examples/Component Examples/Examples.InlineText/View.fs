@@ -14,25 +14,12 @@ module View =
         Component (fun ctx ->
             let colorMode = ctx.useState 0
 
-            let inlineItem =
-                let x = Run("Inline")
-                let brush =
-                    if colorMode.Current = 0 then
-                        0x0ffB2474Du
-                    else
-                        0x0ff47B2A6u
-                    |> Color.FromUInt32
-                    |> ImmutableSolidColorBrush
-                
-                x.Background <- brush
-                x
-
             StackPanel.create [
                 StackPanel.verticalAlignment VerticalAlignment.Center
                 StackPanel.horizontalAlignment HorizontalAlignment.Center
                 StackPanel.children [
                     Button.create [
-                        Button.content "Flip color!"
+                        Button.content "Invert color!"
                         Button.onClick (fun _ ->
                             if colorMode.Current = 0 then
                                 colorMode.Set 1
@@ -44,8 +31,19 @@ module View =
                         RichTextBlock.fontSize 48.0
                         RichTextBlock.horizontalAlignment HorizontalAlignment.Center
                         RichTextBlock.inlines [
-                            Run("You") :> Inline
-                            inlineItem
+                            Run.create [
+                                Run.text "You"
+                            ]
+                            Run.create [
+                                Run.text "Inline"
+                                if colorMode.Current = 0 then
+                                    0x0ffB2474Du
+                                else
+                                    0x0ff47B2A6u
+                                |> Color.FromUInt32
+                                |> ImmutableSolidColorBrush
+                                |> Run.background
+                            ]
                         ]
                     ]
                 ]

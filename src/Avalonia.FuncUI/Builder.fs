@@ -30,15 +30,15 @@ open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Library
 
 module private Helpers =
-    let wrappedGetter<'view, 'value>(func: 'view -> 'value) : IControl -> obj =
-        let wrapper (control: IControl) : obj =
+    let wrappedGetter<'view, 'value>(func: 'view -> 'value) : IAvaloniaObject -> obj =
+        let wrapper (control: IAvaloniaObject) : obj =
             let view = control :> obj :?> 'view
             let value = func view
             value :> obj
         wrapper
 
-    let wrappedSetter<'view, 'value>(func: 'view * 'value -> unit) : IControl * obj -> unit =
-        let wrapper (control: IControl, value: obj) : unit =
+    let wrappedSetter<'view, 'value>(func: 'view * 'value -> unit) : IAvaloniaObject * obj -> unit =
+        let wrapper (control: IAvaloniaObject, value: obj) : unit =
             let view = control :> obj :?> 'view
             let value = value :?> 'value
             func(view, value)

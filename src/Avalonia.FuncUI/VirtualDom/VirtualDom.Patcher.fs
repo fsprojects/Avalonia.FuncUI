@@ -46,7 +46,7 @@ module internal rec Patcher =
                 value.Cancel()
                 subscriptions.TryRemove(attr.UniqueName) |> ignore
 
-    let private patchProperty (view: IControl) (attr: PropertyDelta) : unit =
+    let internal patchProperty (view: IAvaloniaObject) (attr: PropertyDelta) : unit =
         match attr.Accessor with
         | Accessor.AvaloniaProperty avaloniaProperty ->
             match attr.Value with
