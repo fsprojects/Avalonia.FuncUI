@@ -1,14 +1,14 @@
 ﻿namespace Examples.InlineText
 
-open Avalonia.FuncUI.DSL
-open Avalonia.Media
-open Avalonia.Media.Immutable
-
 module View =
-    open Avalonia.Controls
-    open Avalonia.Controls.Documents
+    open Avalonia.FuncUI.DSL
+    open Avalonia.FuncUI.Types
     open Avalonia.FuncUI
+    open Avalonia.Controls
     open Avalonia.Layout
+    open Avalonia.Media
+    open Avalonia.Media.Immutable
+    open Avalonia.Controls.Documents
 
     let view =
         Component (fun ctx ->
@@ -33,7 +33,7 @@ module View =
                         RichTextBlock.inlines [
                             Run.create [
                                 Run.text "You"
-                            ]
+                            ] :> IInline
                             Run.create [
                                 Run.text "Inline"
                                 if colorMode.Current = 0 then

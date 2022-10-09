@@ -1,5 +1,6 @@
 namespace Avalonia.FuncUI.DSL
 
+
 [<AutoOpen>]
 module RichTextBlock =  
     open Avalonia.Controls
@@ -14,10 +15,5 @@ module RichTextBlock =
         static member inlines<'t when 't :> RichTextBlock>(value: InlineCollection) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<InlineCollection>(RichTextBlock.InlinesProperty, value, ValueNone)
             
-        static member inlines<'t when 't :> RichTextBlock>(values: Inline list) : IAttr<'t> =
-            let inlineCollection =
-                let collection = InlineCollection()
-                values |> List.iter collection.Add
-                collection
-            
-            inlineCollection |> RichTextBlock.inlines
+        static member inlines<'t when 't :> RichTextBlock>(values: IInline list) : IAttr<'t> =
+            AttrBuilder<'t>.CreateInlineProperty(RichTextBlock.InlinesProperty, values)

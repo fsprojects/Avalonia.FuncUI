@@ -1,8 +1,7 @@
 namespace Avalonia.FuncUI.VirtualDom
 
-open System.Collections.Generic
 open Avalonia.FuncUI.Types
-open Delta
+open Avalonia.FuncUI.VirtualDom.Delta
 
 module internal rec Differ =
     let private update (last: IAttr) (next: IAttr) : AttrDelta =
@@ -21,6 +20,9 @@ module internal rec Differ =
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
 
+        | Inlines' inlineElement ->
+            AttrDelta.Inline (InlineDelta.From inlineElement)
+        
         | _ -> failwithf "no update operation is defined for '%A' next" next
 
     let private reset (last: IAttr) : AttrDelta =

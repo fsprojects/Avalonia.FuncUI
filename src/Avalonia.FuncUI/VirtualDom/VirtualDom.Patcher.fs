@@ -5,6 +5,7 @@ module internal rec Patcher =
     open System.Collections
     open System.Collections.Concurrent
     open Avalonia.Controls
+    open Avalonia.Controls.Documents
     open Avalonia
     open Avalonia.FuncUI.VirtualDom.Delta
     open Avalonia.FuncUI.Library
@@ -207,6 +208,24 @@ module internal rec Patcher =
             patchContentSingle view attr.Accessor single
         | ViewContentDelta.Multiple multiple ->
             patchContentMultiple view attr.Accessor multiple
+            
+    let private patchInline (view: IControl) (attr: InlineDelta) : unit =
+        let inlineCollection = InlineCollection()
+        
+        attr.Inlines
+        |> List.iter (fun (element, deltas) ->
+            (* Path all properties from the inline element. *)
+            deltas
+            |> List.iter (function
+                | AttrDelta.Property property -> patchProperty element property
+                | _ -> failwith "Only properties are supported in inline elements"   
+            )
+            
+            inlineCollection.Add element
+        )
+        
+        (* Update the host property. TODO: Is this really needed once we set them initially? *)
+        view.SetValue(attr.HostAccessor, inlineCollection) |> ignore
 
     let patch (view: IControl, viewElement: ViewDelta) : unit =
         for attr in viewElement.Attrs do
@@ -214,6 +233,7 @@ module internal rec Patcher =
             | AttrDelta.Property property -> patchProperty view property
             | AttrDelta.Content content -> patchContent view content
             | AttrDelta.Subscription subscription -> patchSubscription view subscription
+            | AttrDelta.Inline inlineElement -> patchInline view inlineElement
 
     let create (viewElement: ViewDelta) : IControl =
         let control =

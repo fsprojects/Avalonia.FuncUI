@@ -242,6 +242,16 @@ type AttrBuilder<'view>() =
         }
 
         attr :> IAttr<'view>
+        
+    /// <summary>
+    /// Creates an attribute with a list of inlines to be applied to a control.
+    /// </summary>
+    /// <param name="inlines">List of inlines to be applied.</param>
+    static member CreateInlineProperty(property: AvaloniaProperty, inlines: IInline list) : IAttr<'inlineType> =
+        Attr<'inlineType>.Inline {
+            HostAccessor = property
+            Inlines = inlines
+        }
 
 [<AbstractClass; Sealed>]
 type ViewBuilder() =
@@ -252,4 +262,13 @@ type ViewBuilder() =
           View.Attrs = attrs
           View.ConstructorArgs = null
           View.Outlet = ValueNone }
-        :> IView<'view>
+
+[<AbstractClass; Sealed>]
+type InlineBuilder() =
+
+    static member Create<'inlineType>(attrs: IAttr<'inlineType> list) : IInline =
+        { Inline.InlineElement =
+            typeof<'inlineType>
+            |> Activator.CreateInstance
+            |> Utils.cast<Avalonia.Controls.Documents.Inline>
+          Inline.Attrs = attrs }

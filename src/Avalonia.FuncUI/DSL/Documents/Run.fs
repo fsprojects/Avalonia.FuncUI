@@ -1,27 +1,14 @@
 namespace Avalonia.FuncUI.DSL
 
-open Avalonia.FuncUI.VirtualDom
-open Avalonia.FuncUI.VirtualDom.Delta
-open Avalonia.Media
-
 [<AutoOpen>]
 module Run =  
-    open Avalonia.Controls.Documents
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
+    open Avalonia.Media
+    open Avalonia.Controls.Documents
 
-    let create (attrs: IAttr<Run> list): Inline =
-        let run = Run()
-        
-        attrs
-        |> List.choose (fun attr ->
-            match attr.Property with
-            | Some prop -> PropertyDelta.From prop |> Some
-            | None -> None
-        )
-        |> List.iter (Patcher.patchProperty run)
-        
-        run
+    let create (attrs: IAttr<Run> list): IInline =
+        InlineBuilder.Create<Run>(attrs)
     
     type Run with
         static member text<'t when 't :> Run>(value: string) : IAttr<'t> =

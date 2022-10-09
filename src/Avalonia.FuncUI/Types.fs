@@ -3,7 +3,6 @@
 open Avalonia
 open Avalonia.Controls
 open System
-open System.Reactive.Linq
 open System.Threading
 
 module Types =
@@ -78,11 +77,23 @@ module Types =
         override this.GetHashCode () =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
 
+    /// <summary>
+    /// Defines an inline element with the accessor to the property inside the
+    /// control that contains the element itself and the properties of the inline
+    /// element that we are modifying.
+    /// </summary>
+    type Inlines =
+        { /// Reference to the accessor that allows us to modify the host's property that contains the inlines.
+          HostAccessor: AvaloniaProperty
+          /// Reference to all the inlines inside of a host with their attributes.
+          Inlines: IInline list }
+    
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
+        abstract member Inlines : Inlines option
 
     type IAttr<'viewType> =
         inherit IAttr
@@ -91,6 +102,7 @@ module Types =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
+        | Inline of Inlines
 
         interface IAttr<'viewType>
 
@@ -108,6 +120,8 @@ module Types =
                     | Accessor.InstanceProperty p -> p.Name
 
                 | Subscription subscription -> subscription.Name
+                
+                | Inline inlines -> inlines.HostAccessor.Name
 
             member this.Property =
                 match this with
@@ -123,6 +137,11 @@ module Types =
                 match this with
                 | Subscription value -> Some value
                 | _ -> None
+                
+            member this.Inlines =
+                match this with
+                | Inline value -> Some value
+                | _ -> None
 
     type IView =
         abstract member ViewType: Type with get
@@ -135,6 +154,13 @@ module Types =
         inherit IView
         abstract member Attrs: IAttr<'viewType> list with get
 
+    type IInline =
+        abstract member InlineElement: Avalonia.Controls.Documents.Inline with get
+        abstract member Attrs: IAttr list with get
+        
+    type IInline<'inlineType> =
+        abstract member Attrs: IAttr<'inlineType> list with get
+    
     type View<'viewType> =
         { ViewType: Type
           ViewKey: string voption
@@ -154,6 +180,17 @@ module Types =
         interface IView<'viewType> with
             member this.Attrs = this.Attrs
 
+    type Inline<'inlineType> =
+        { InlineElement: Avalonia.Controls.Documents.Inline
+          Attrs: IAttr<'inlineType> list }
+        
+        interface IInline with
+            member this.InlineElement = this.InlineElement
+            member this.Attrs =
+                this.Attrs |> List.map (fun attr -> attr :> IAttr)
+                
+        interface IInline<'inlineType> with
+            member this.Attrs = this.Attrs
 
     // TODO: maybe move active patterns to Virtual DON Misc
 
@@ -165,3 +202,7 @@ module Types =
 
     let internal (|Subscription'|_|) (attr: IAttr)  =
         attr.Subscription
+        
+    let internal (|Inlines'|_|) (attr: IAttr) =
+        attr.Inlines
+    
