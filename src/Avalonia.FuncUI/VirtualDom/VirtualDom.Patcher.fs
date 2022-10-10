@@ -209,24 +209,6 @@ module internal rec Patcher =
         | ViewContentDelta.Multiple multiple ->
             patchContentMultiple view attr.Accessor multiple
             
-    let private patchInline (view: IAvaloniaObject) (attr: InlineDelta) : unit =
-        let inlineCollection = InlineCollection()
-        
-        attr.Inlines
-        |> List.iter (fun (element, deltas) ->
-            (* Path all properties from the inline element. *)
-            deltas
-            |> List.iter (function
-                | AttrDelta.Property property -> patchProperty element property
-                | _ -> failwith "Only properties are supported in inline elements"   
-            )
-            
-            inlineCollection.Add element
-        )
-        
-        (* Update the host property. TODO: Is this really needed once we set them initially? *)
-        view.SetValue(attr.HostAccessor, inlineCollection) |> ignore
-
     let patch (view: IAvaloniaObject, viewElement: ViewDelta) : unit =
         for attr in viewElement.Attrs do
             match attr with
@@ -237,7 +219,6 @@ module internal rec Patcher =
                 | :? IControl as control -> 
                     patchSubscription control subscription
                 | _ -> failwith "Only controls can have subscriptions"
-            | AttrDelta.Inline inlineElement -> patchInline view inlineElement
 
     let create (viewElement: ViewDelta) : IAvaloniaObject =
         let control =

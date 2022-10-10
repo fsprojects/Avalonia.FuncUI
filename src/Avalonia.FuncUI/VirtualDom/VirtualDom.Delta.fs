@@ -13,14 +13,12 @@ module internal rec Delta =
         | Property of PropertyDelta
         | Content of ContentDelta
         | Subscription of SubscriptionDelta
-        | Inline of InlineDelta
 
         static member From (attr: IAttr) : AttrDelta =
             match attr with
             | Property' property -> Property (PropertyDelta.From property)
             | Content' content -> Content (ContentDelta.From content)
             | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
-            | Inlines' inlineElement -> Inline (InlineDelta.From inlineElement)
             | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
 
 
@@ -76,21 +74,6 @@ module internal rec Delta =
             { Accessor = content.Accessor;
               Content = ViewContentDelta.From content.Content }
             
-    type InlineDelta =
-        { HostAccessor: Avalonia.AvaloniaProperty
-          Inlines: (Avalonia.Controls.Documents.Inline * AttrDelta list) list }
-        
-        static member From (inlineElement: Inlines) : InlineDelta =
-            { HostAccessor = inlineElement.HostAccessor
-              Inlines =
-                  inlineElement.Inlines
-                 |> List.map (fun inl ->
-                     let deltas =
-                         inl.Attrs
-                         |> List.map AttrDelta.From
-                     
-                     (inl.InlineElement, deltas)) }
-
     type ViewContentDelta =
         | Single of ViewDelta option
         | Multiple of ViewDelta list

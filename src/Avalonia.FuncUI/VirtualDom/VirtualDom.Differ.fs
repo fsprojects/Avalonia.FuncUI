@@ -20,9 +20,6 @@ module internal rec Differ =
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
 
-        | Inlines' inlineElement ->
-            AttrDelta.Inline (InlineDelta.From inlineElement)
-        
         | _ -> failwithf "no update operation is defined for '%A' next" next
 
     let private reset (last: IAttr) : AttrDelta =
