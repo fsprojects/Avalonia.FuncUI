@@ -162,7 +162,7 @@ type AttrBuilder<'view>() =
     static member CreateSubscription<'arg, 'owner when 'owner :> AvaloniaObject>(property: DirectProperty<'owner, 'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: IControl, _handler: 'h) =
+        let subscribeFunc (control: IAvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
             control
                 .GetObservable(property)
@@ -184,7 +184,7 @@ type AttrBuilder<'view>() =
     static member CreateSubscription<'arg>(property: AvaloniaProperty<'arg>, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'view> =
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: IControl, _handler: 'h) =
+        let subscribeFunc (control: IAvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
             control
                 .GetObservable(property)
@@ -225,10 +225,10 @@ type AttrBuilder<'view>() =
     /// <summary>
     /// Create a Event Subscription Attribute for a .Net Event
     /// </summary>
-    static member CreateSubscription<'arg>(name: string, factory: IControl * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) =
+    static member CreateSubscription<'arg>(name: string, factory: IAvaloniaObject * ('arg -> unit) * CancellationToken -> unit, func: 'arg -> unit, ?subPatchOptions: SubPatchOptions) =
         // TODO: extract to helpers module
         // subscribe to event
-        let subscribeFunc (control: IControl, _handler: 'h) =
+        let subscribeFunc (control: IAvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
             factory(control, func, cts.Token)
             cts

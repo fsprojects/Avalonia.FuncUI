@@ -82,7 +82,7 @@ module internal rec Patcher =
             | ValueSome setter -> setter (view, value)
             | ValueNone _ -> failwithf "instance property ('%s') has no setter. " instanceProperty.Name
 
-    let private patchContentMultiple (view: IControl) (accessor: Accessor) (delta: ViewDelta list) : unit =
+    let private patchContentMultiple (view: IAvaloniaObject) (accessor: Accessor) (delta: ViewDelta list) : unit =
         (* often lists only have a get accessor *)
         let patch_IList (collection: IList) : unit =
             if List.isEmpty delta then
@@ -96,7 +96,7 @@ module internal rec Patcher =
                         if shouldPatch item viewElement then
                             // patch
                             match item with
-                            | :? IControl as control -> patch(control, viewElement)
+                            | :? IAvaloniaObject as control -> patch(control, viewElement)
                             | _ ->
                                 // replace
                                 let newItem = Patcher.create viewElement
@@ -161,7 +161,7 @@ module internal rec Patcher =
             let setter = Some (fun obj -> view.SetValue(property, obj) |> ignore)
             patch (getter, setter)
 
-    let private patchContentSingle (view: IControl) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
+    let private patchContentSingle (view: IAvaloniaObject) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
 
         let patch_avalonia (property: AvaloniaProperty) =
             match viewElement with
@@ -169,7 +169,7 @@ module internal rec Patcher =
                 let value = view.GetValue(property)
 
                 if shouldPatch value viewElement then
-                    Patcher.patch(value :?> IControl, viewElement)
+                    Patcher.patch(value :?> IAvaloniaObject, viewElement)
                 else
                     let createdControl = Patcher.create viewElement
                     view.SetValue(property, createdControl)
@@ -186,7 +186,7 @@ module internal rec Patcher =
                     | _ -> failwith "Property Accessor needs a getter"
 
                 if shouldPatch value viewElement then
-                    Patcher.patch(value :?> IControl, viewElement)
+                    Patcher.patch(value :?> IAvaloniaObject, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
 
@@ -202,14 +202,14 @@ module internal rec Patcher =
         | Accessor.InstanceProperty instanceProperty -> patch_instance instanceProperty
         | Accessor.AvaloniaProperty property -> patch_avalonia property
 
-    let private patchContent (view: IControl) (attr: ContentDelta) : unit =
+    let private patchContent (view: IAvaloniaObject) (attr: ContentDelta) : unit =
         match attr.Content with
         | ViewContentDelta.Single single ->
             patchContentSingle view attr.Accessor single
         | ViewContentDelta.Multiple multiple ->
             patchContentMultiple view attr.Accessor multiple
             
-    let private patchInline (view: IControl) (attr: InlineDelta) : unit =
+    let private patchInline (view: IAvaloniaObject) (attr: InlineDelta) : unit =
         let inlineCollection = InlineCollection()
         
         attr.Inlines
@@ -227,24 +227,28 @@ module internal rec Patcher =
         (* Update the host property. TODO: Is this really needed once we set them initially? *)
         view.SetValue(attr.HostAccessor, inlineCollection) |> ignore
 
-    let patch (view: IControl, viewElement: ViewDelta) : unit =
+    let patch (view: IAvaloniaObject, viewElement: ViewDelta) : unit =
         for attr in viewElement.Attrs do
             match attr with
             | AttrDelta.Property property -> patchProperty view property
             | AttrDelta.Content content -> patchContent view content
-            | AttrDelta.Subscription subscription -> patchSubscription view subscription
+            | AttrDelta.Subscription subscription ->
+                match view with
+                | :? IControl as control -> 
+                    patchSubscription control subscription
+                | _ -> failwith "Only controls can have subscriptions"
             | AttrDelta.Inline inlineElement -> patchInline view inlineElement
 
-    let create (viewElement: ViewDelta) : IControl =
+    let create (viewElement: ViewDelta) : IAvaloniaObject =
         let control =
             if viewElement.ConstructorArgs <> null && viewElement.ConstructorArgs.Length > 0 then
                 (viewElement.ViewType, viewElement.ConstructorArgs)
                 |> Activator.CreateInstance
-                |> Utils.cast<IControl>
+                |> Utils.cast<IAvaloniaObject>
             else
                 viewElement.ViewType
                 |> Activator.CreateInstance
-                |> Utils.cast<IControl>
+                |> Utils.cast<IAvaloniaObject>
 
         match viewElement.Outlet with
         | ValueSome outlet -> outlet control

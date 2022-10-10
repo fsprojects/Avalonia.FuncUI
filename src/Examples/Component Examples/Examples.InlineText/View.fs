@@ -33,7 +33,7 @@ module View =
                         RichTextBlock.inlines [
                             Run.create [
                                 Run.text "You"
-                            ] :> IInline
+                            ] :> IView
                             Run.create [
                                 Run.text "Inline"
                                 if colorMode.Current = 0 then

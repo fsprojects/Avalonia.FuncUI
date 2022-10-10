@@ -4,6 +4,7 @@ open Avalonia
 open Avalonia.Controls
 open System
 open System.Threading
+open Avalonia.Interactivity
 
 module Types =
 
@@ -61,7 +62,7 @@ module Types =
     [<CustomEquality; NoComparison>]
     type Subscription =
         { Name: string
-          Subscribe:  IControl * Delegate -> CancellationTokenSource
+          Subscribe: IControl  * Delegate -> CancellationTokenSource
           Func: Delegate
           FuncType: Type
           Scope: obj }
@@ -148,7 +149,7 @@ module Types =
         abstract member ViewKey: string voption
         abstract member Attrs: IAttr list with get
         abstract member ConstructorArgs: obj array with get
-        abstract member Outlet: (IControl -> unit) voption with get
+        abstract member Outlet: (IAvaloniaObject -> unit) voption with get
 
     type IView<'viewType> =
         inherit IView
@@ -166,7 +167,7 @@ module Types =
           ViewKey: string voption
           Attrs: IAttr<'viewType> list
           ConstructorArgs: obj array
-          Outlet: (IControl -> unit) voption }
+          Outlet: (IAvaloniaObject-> unit) voption }
 
         interface IView with
             member this.ViewType =  this.ViewType

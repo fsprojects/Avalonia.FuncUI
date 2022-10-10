@@ -7,8 +7,8 @@ module Run =
     open Avalonia.Media
     open Avalonia.Controls.Documents
 
-    let create (attrs: IAttr<Run> list): IInline =
-        InlineBuilder.Create<Run>(attrs)
+    let create (attrs: IAttr<Run> list): IView<Run> =
+        ViewBuilder.Create(attrs)
     
     type Run with
         static member text<'t when 't :> Run>(value: string) : IAttr<'t> =
