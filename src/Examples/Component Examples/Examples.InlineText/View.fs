@@ -44,6 +44,21 @@ module View =
                                 |> ImmutableSolidColorBrush
                                 |> Run.background
                             ]
+                            
+                            LineBreak.simple
+                            
+                            Span.create [
+                                Span.inlines [
+                                    Bold.simple "Oh, so bold!" :> IView
+                                    LineBreak.simple
+                                    
+                                    Italic.simple "Although, "
+                                    Run.create [
+                                        Run.text "I always wanted to be "
+                                    ]
+                                    Underline.simple "underlined"
+                                ]
+                            ]
                         ]
                     ]
                 ]

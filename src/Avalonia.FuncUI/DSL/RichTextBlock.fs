@@ -15,6 +15,6 @@ module RichTextBlock =
         static member inlines<'t when 't :> RichTextBlock>(value: InlineCollection) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<InlineCollection>(RichTextBlock.InlinesProperty, value, ValueNone)
             
-        static member inlines<'t when 't :> RichTextBlock>(values: IView list (* TODO: Should this view IView<Inline>? *)) : IAttr<'t> =
+        static member inlines<'t when 't :> RichTextBlock>(values: IView list (* TODO: Change to IView<Inline> *)) : IAttr<'t> =
             let getter : ('t -> obj) = (fun control -> control.Inlines :> obj)
             AttrBuilder<'t>.CreateContentMultiple("Inlines", ValueSome getter, ValueNone, values)

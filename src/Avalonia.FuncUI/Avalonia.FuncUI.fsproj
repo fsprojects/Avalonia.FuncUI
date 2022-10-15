@@ -82,6 +82,11 @@
     <Compile Include="DSL\Calendar\Calendar.fs" />
     <Compile Include="DSL\Calendar\CalendarDatePicker.fs" />
     <Compile Include="DSL\Documents\Run.fs" />
+    <Compile Include="DSL\Documents\Span.fs" />
+    <Compile Include="DSL\Documents\Bold.fs" />
+    <Compile Include="DSL\Documents\LineBreak.fs" />
+    <Compile Include="DSL\Documents\Italic.fs" />
+    <Compile Include="DSL\Documents\Underline.fs" />
     <Compile Include="DSL\DatePicker.fs" />
     <Compile Include="DSL\TimePicker.fs" />
     <Compile Include="DSL\ItemsControl.fs" />
