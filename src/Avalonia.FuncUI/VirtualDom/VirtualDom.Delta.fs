@@ -3,6 +3,8 @@ namespace Avalonia.FuncUI.VirtualDom
 open System
 open System.Threading
 
+open Avalonia
+open Avalonia.Controls
 open Avalonia.FuncUI.Types
 
 module internal rec Delta =
@@ -45,7 +47,7 @@ module internal rec Delta =
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
         { Name: string
-          Subscribe: Avalonia.Controls.IControl * Delegate -> CancellationTokenSource
+          Subscribe: IControl * Delegate -> CancellationTokenSource
           Func: Delegate option }
 
         override this.Equals (other: obj) : bool =
@@ -64,14 +66,14 @@ module internal rec Delta =
 
         member this.UniqueName = this.Name
 
-    type  ContentDelta =
+    type ContentDelta =
         { Accessor: Accessor
           Content: ViewContentDelta }
 
         static member From (content: Content) : ContentDelta =
             { Accessor = content.Accessor;
               Content = ViewContentDelta.From content.Content }
-
+            
     type ViewContentDelta =
         | Single of ViewDelta option
         | Multiple of ViewDelta list
@@ -99,7 +101,7 @@ module internal rec Delta =
           Attrs: AttrDelta list
           ConstructorArgs: obj array
           KeyDidChange: bool
-          Outlet: (Avalonia.Controls.IControl -> unit) voption }
+          Outlet: (Avalonia.IAvaloniaObject -> unit) voption }
 
         static member From (view: IView, ?keyDidChange: bool) : ViewDelta =
             { ViewType = view.ViewType

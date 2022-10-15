@@ -44,19 +44,19 @@ module PatcherTests =
 
     [<Fact>]
     let ``Patch Styles, Classes or Resources`` () =
-        let stylesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Styles :> obj)
-        let stylesSetter: IControl * obj -> unit =
+        let stylesGetter: IAvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Styles :> obj)
+        let stylesSetter: IAvaloniaObject * obj -> unit =
             (fun (c, v) ->
                 let se = (c :?> StyledElement)
                 let s = v :?> Styles
                 se.Styles.Clear()
                 se.Styles.AddRange(s))
 
-        let classesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Classes :> obj)
-        let classesSetter: IControl * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Classes <- v :?> Classes)
+        let classesGetter: IAvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Classes :> obj)
+        let classesSetter: IAvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Classes <- v :?> Classes)
 
-        let resourcesGetter: IControl -> obj = (fun c -> (c :?> StyledElement).Resources :> obj)
-        let resourcesSetter: IControl * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Resources <- v :?> IResourceDictionary)
+        let resourcesGetter: IAvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Resources :> obj)
+        let resourcesSetter: IAvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Resources <- v :?> IResourceDictionary)
 
         let delta : Delta.ViewDelta =
             {

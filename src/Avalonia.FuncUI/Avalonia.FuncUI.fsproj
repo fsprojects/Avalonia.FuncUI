@@ -65,6 +65,7 @@
     <Compile Include="DSL\Primitives\Thumb.fs" />
     <Compile Include="DSL\Primitives\AccessText.fs" />
     <Compile Include="DSL\Primitives\ScrollBar.fs" />
+    <Compile Include="DSL\Primitives\TextElement.fs" />
     <Compile Include="DSL\Panels\Canvas.fs" />
     <Compile Include="DSL\Panels\DockPanel.fs" />
     <Compile Include="DSL\Panels\Grid.fs" />
@@ -80,6 +81,12 @@
     <Compile Include="DSL\Shapes\Path.fs" />
     <Compile Include="DSL\Calendar\Calendar.fs" />
     <Compile Include="DSL\Calendar\CalendarDatePicker.fs" />
+    <Compile Include="DSL\Documents\Run.fs" />
+    <Compile Include="DSL\Documents\Span.fs" />
+    <Compile Include="DSL\Documents\Bold.fs" />
+    <Compile Include="DSL\Documents\LineBreak.fs" />
+    <Compile Include="DSL\Documents\Italic.fs" />
+    <Compile Include="DSL\Documents\Underline.fs" />
     <Compile Include="DSL\DatePicker.fs" />
     <Compile Include="DSL\TimePicker.fs" />
     <Compile Include="DSL\ItemsControl.fs" />
@@ -127,6 +134,7 @@
     <Compile Include="DSL\TabItem.fs" />
     <Compile Include="DSL\TickBar.fs" />
     <Compile Include="DSL\Viewbox.fs" />
+    <Compile Include="DSL\RichTextBlock.fs" />
   </ItemGroup>
 
 </Project>

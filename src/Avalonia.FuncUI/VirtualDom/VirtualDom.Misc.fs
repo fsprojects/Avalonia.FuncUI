@@ -19,16 +19,16 @@ type ViewMetaData() =
 
     static member ViewSubscriptionsProperty = viewSubscriptions
 
-    static member GetViewId(control: IControl) : Guid =
+    static member GetViewId(control: IAvaloniaObject) : Guid =
         control.GetValue(ViewMetaData.ViewIdProperty)
 
-    static member SetViewId(control: IControl, value: Guid) : unit =
+    static member SetViewId(control: IAvaloniaObject, value: Guid) : unit =
         control.SetValue(ViewMetaData.ViewIdProperty, value) |> ignore
 
-    static member GetViewSubscriptions(control: IControl) : ConcurrentDictionary<_, _> =
+    static member GetViewSubscriptions(control: IAvaloniaObject) : ConcurrentDictionary<_, _> =
         control.GetValue(ViewMetaData.ViewSubscriptionsProperty)
 
-    static member SetViewSubscriptions(control: IControl, value) : unit =
+    static member SetViewSubscriptions(control: IAvaloniaObject, value) : unit =
         control.SetValue(ViewMetaData.ViewSubscriptionsProperty, value) |> ignore
 
 

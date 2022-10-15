@@ -35,7 +35,6 @@ module internal Extensions =
 
     type IInteractive with
         member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent<'args>) : IObservable<'args> =
-
             let sub = Func<IObserver<'args>, IDisposable>(fun observer ->
                 // push new update to subscribers
                 let handler = EventHandler<'args>(fun _ e ->

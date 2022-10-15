@@ -1,8 +1,8 @@
 ﻿namespace rec Avalonia.FuncUI
 
+open Avalonia
 open Avalonia.Controls
 open System
-open System.Reactive.Linq
 open System.Threading
 
 module Types =
@@ -10,8 +10,8 @@ module Types =
     [<CustomEquality; NoComparison>]
     type PropertyAccessor =
         { Name: string
-          Getter: (IControl -> obj) voption
-          Setter: (IControl * obj -> unit) voption }
+          Getter: (IAvaloniaObject -> obj) voption
+          Setter: (IAvaloniaObject * obj -> unit) voption }
 
         override this.Equals (other: obj) : bool =
             match other with
@@ -61,7 +61,7 @@ module Types =
     [<CustomEquality; NoComparison>]
     type Subscription =
         { Name: string
-          Subscribe:  IControl * Delegate -> CancellationTokenSource
+          Subscribe: IControl  * Delegate -> CancellationTokenSource
           Func: Delegate
           FuncType: Type
           Scope: obj }
@@ -76,7 +76,7 @@ module Types =
 
         override this.GetHashCode () =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
-
+    
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
@@ -128,7 +128,7 @@ module Types =
         abstract member ViewKey: string voption
         abstract member Attrs: IAttr list with get
         abstract member ConstructorArgs: obj array with get
-        abstract member Outlet: (IControl -> unit) voption with get
+        abstract member Outlet: (IAvaloniaObject -> unit) voption with get
 
     type IView<'viewType> =
         inherit IView
@@ -139,7 +139,7 @@ module Types =
           ViewKey: string voption
           Attrs: IAttr<'viewType> list
           ConstructorArgs: obj array
-          Outlet: (IControl -> unit) voption }
+          Outlet: (IAvaloniaObject-> unit) voption }
 
         interface IView with
             member this.ViewType =  this.ViewType
@@ -153,7 +153,6 @@ module Types =
         interface IView<'viewType> with
             member this.Attrs = this.Attrs
 
-
     // TODO: maybe move active patterns to Virtual DON Misc
 
     let internal (|Property'|_|) (attr: IAttr)  =
@@ -164,3 +163,4 @@ module Types =
 
     let internal (|Subscription'|_|) (attr: IAttr)  =
         attr.Subscription
+    

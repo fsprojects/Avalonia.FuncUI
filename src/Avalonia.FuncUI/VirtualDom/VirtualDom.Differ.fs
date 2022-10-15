@@ -1,8 +1,7 @@
 namespace Avalonia.FuncUI.VirtualDom
 
-open System.Collections.Generic
 open Avalonia.FuncUI.Types
-open Delta
+open Avalonia.FuncUI.VirtualDom.Delta
 
 module internal rec Differ =
     let private update (last: IAttr) (next: IAttr) : AttrDelta =
