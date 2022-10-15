@@ -10,7 +10,7 @@ module rec VirtualDom =
     let create (view: IView) : IControl =
         view
         |> ViewDelta.From
-        |> Patcher.create :?> IControl (* TODO: Can we remove this cast? *)
+        |> Patcher.create :?> IControl
 
     let update (root: IControl, last: IView, next: IView) : unit =
         let delta = Differ.diff(last, next)
@@ -76,11 +76,11 @@ module rec VirtualDom =
             | ValueSome delta ->
                 match control.GetType () = delta.ViewType && not delta.KeyDidChange with
                 | true -> Patcher.patch (control, delta)
-                | false -> host.Child <- (Patcher.create delta) :?> IControl (* TODO: Can we remove this cast? *)
+                | false -> host.Child <- (Patcher.create delta) :?> IControl
             | ValueNone ->
                 host.Child <- null
 
         | ValueNone ->
             match delta with
-            | ValueSome delta -> host.Child <- (Patcher.create delta) :?> IControl (* TODO: Can we remove this cast? *)
+            | ValueSome delta -> host.Child <- (Patcher.create delta) :?> IControl
             | ValueNone -> host.Child <- null
