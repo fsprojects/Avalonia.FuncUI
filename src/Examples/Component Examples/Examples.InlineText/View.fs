@@ -10,6 +10,9 @@ module View =
     open Avalonia.Media.Immutable
     open Avalonia.Controls.Documents
 
+    let private redBrush = 0x0ffB2474Du |> Color.FromUInt32 |> ImmutableSolidColorBrush
+    let private blueBrush = 0x0ff47B2A6u |> Color.FromUInt32 |> ImmutableSolidColorBrush
+    
     let view =
         Component (fun ctx ->
             let colorMode = ctx.useState 0
@@ -37,11 +40,9 @@ module View =
                             Run.create [
                                 Run.text "Inline"
                                 if colorMode.Current = 0 then
-                                    0x0ffB2474Du
+                                    redBrush   
                                 else
-                                    0x0ff47B2A6u
-                                |> Color.FromUInt32
-                                |> ImmutableSolidColorBrush
+                                    blueBrush
                                 |> Run.background
                             ]
                             
