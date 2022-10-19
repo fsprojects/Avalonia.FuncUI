@@ -6,7 +6,7 @@
         <WarnOn>3390;$(WarnOn)</WarnOn>
         <Version>$(FuncUIVersion)</Version>
         <Authors>JaggerJo</Authors>
-        <Product>aggerJo.Avalonia.FuncUI.Diagnostics</Product>
+        <Product>JaggerJo.Avalonia.FuncUI.Diagnostics</Product>
         <PackageId>JaggerJo.Avalonia.FuncUI.Diagnostics</PackageId>
         <PackageProjectUrl>https://github.com/FuncUI/Avalonia.FuncUI</PackageProjectUrl>
         <RepositoryUrl>https://github.com/FuncUI/Avalonia.FuncUI</RepositoryUrl>
