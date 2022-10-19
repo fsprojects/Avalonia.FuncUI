@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <Version>0.5.3</Version>
+    <Version>$(FuncUIVersion)</Version>
     <Authors>JaggerJo</Authors>
     <Product>JaggerJo.Avalonia.FuncUI.Elmish</Product>
     <PackageId>JaggerJo.Avalonia.FuncUI.Elmish</PackageId>
@@ -11,7 +11,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
     <Title>Avalonia FuncUI Elmish</Title>
-    <PackageVersion>0.5.3</PackageVersion>
+    <PackageVersion>$(FuncUIVersion)</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
