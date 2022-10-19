@@ -4,6 +4,16 @@
         <TargetFramework>net6.0</TargetFramework>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <WarnOn>3390;$(WarnOn)</WarnOn>
+        <Version>$(FuncUIVersion)</Version>
+        <Authors>JaggerJo</Authors>
+        <Product>aggerJo.Avalonia.FuncUI.Diagnostics</Product>
+        <PackageId>JaggerJo.Avalonia.FuncUI.Diagnostics</PackageId>
+        <PackageProjectUrl>https://github.com/FuncUI/Avalonia.FuncUI</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/FuncUI/Avalonia.FuncUI</RepositoryUrl>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
+        <Title>Avalonia FuncUI Diagnostics</Title>
+        <PackageVersion>$(FuncUIVersion)</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
