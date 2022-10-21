@@ -34,9 +34,7 @@ module View =
                         RichTextBlock.fontSize 48.0
                         RichTextBlock.horizontalAlignment HorizontalAlignment.Center
                         RichTextBlock.inlines [
-                            Run.create [
-                                Run.text "You"
-                            ] :> IView
+                            Run.simple "You" :> IView
                             Run.create [
                                 Run.text "Inline"
                                 if colorMode.Current = 0 then
