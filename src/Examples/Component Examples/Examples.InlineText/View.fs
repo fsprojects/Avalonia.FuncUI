@@ -34,9 +34,7 @@ module View =
                         RichTextBlock.fontSize 48.0
                         RichTextBlock.horizontalAlignment HorizontalAlignment.Center
                         RichTextBlock.inlines [
-                            Run.create [
-                                Run.text "You"
-                            ] :> IView
+                            Run.createText "You" :> IView
                             Run.create [
                                 Run.text "Inline"
                                 if colorMode.Current = 0 then
@@ -50,14 +48,14 @@ module View =
                             
                             Span.create [
                                 Span.inlines [
-                                    Bold.simple "Oh, so bold!" :> IView
+                                    Bold.createText "Oh, so bold!" :> IView
                                     LineBreak.simple
                                     
-                                    Italic.simple "Although, "
+                                    Italic.createText "Although, "
                                     Run.create [
                                         Run.text "I always wanted to be "
                                     ]
-                                    Underline.simple "underlined"
+                                    Underline.createText "underlined"
                                 ]
                             ]
                         ]

@@ -9,7 +9,7 @@ module Underline =
     let create (attrs: IAttr<Underline> list): IView<Underline> =
         ViewBuilder.Create(attrs)
         
-    let simple (text: string): IView<Underline> =
+    let createText (text: string): IView<Underline> =
         ViewBuilder.Create([
             Underline.inlines [
                 Run.create [

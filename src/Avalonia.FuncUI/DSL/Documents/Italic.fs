@@ -9,7 +9,7 @@ module Italic =
     let create (attrs: IAttr<Italic> list): IView<Italic> =
         ViewBuilder.Create(attrs)
         
-    let simple (text: string): IView<Italic> =
+    let createText (text: string): IView<Italic> =
         ViewBuilder.Create([
             Italic.inlines [
                 Run.create [

@@ -11,3 +11,5 @@ module Run =
     type Run with
         static member text<'t when 't :> Run>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(Run.TextProperty, value, ValueNone)
+
+    let createText (text: string) : IView<Run> = ViewBuilder.Create([ Run.text text ])
