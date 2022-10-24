@@ -12,4 +12,4 @@ module Run =
         static member text<'t when 't :> Run>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(Run.TextProperty, value, ValueNone)
 
-    let simple (text: string) : IView<Run> = ViewBuilder.Create([ Run.text text ])
+    let createText (text: string) : IView<Run> = ViewBuilder.Create([ Run.text text ])

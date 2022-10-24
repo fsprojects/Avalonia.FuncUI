@@ -10,7 +10,7 @@ module Bold =
     let create (attrs: IAttr<Bold> list): IView<Bold> =
         ViewBuilder.Create(attrs)
         
-    let simple (text: string): IView<Bold> =
+    let createText (text: string): IView<Bold> =
         ViewBuilder.Create([
             Bold.inlines [
                 Run.create [
