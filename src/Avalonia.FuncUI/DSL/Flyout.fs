@@ -47,19 +47,3 @@ module Flyout =
                 control.FlyoutPresenterClasses.AddRange(value))
             
             AttrBuilder<'t>.CreateProperty<string list>("FlyoutPresenterClasses", value, ValueSome getter, ValueSome setter, ValueNone)
-            
-    type Button with
-    
-        /// <summary>
-        /// A value for flyout view placement for button.
-        /// </summary>
-        static member flyout<'t when 't :> Button>(value: IView option) : IAttr<'t> =
-            AttrBuilder<'t>.CreateContentSingle(Button.FlyoutProperty, value)
-    
-        /// <summary>
-        /// A value for flyout view placement for button.
-        /// </summary>
-        static member flyout<'t when 't :> Button>(value: IView) : IAttr<'t> =
-            value
-            |> Some
-            |> Button.flyout
