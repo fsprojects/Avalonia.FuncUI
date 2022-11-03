@@ -102,5 +102,9 @@ module MainView =
                     TabItem.header "TickBar Demo"
                     TabItem.content (ViewBuilder.Create<TickBarDemo.Host>([]))
                 ]
+                TabItem.create [
+                    TabItem.header "Flyout Demo"
+                    TabItem.content (ViewBuilder.Create<FlyoutDemo.Host>([]))
+                ]
             ]
         ]
