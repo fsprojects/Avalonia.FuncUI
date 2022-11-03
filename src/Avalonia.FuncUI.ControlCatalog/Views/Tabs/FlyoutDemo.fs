@@ -95,6 +95,23 @@ module FlyoutDemo =
                         ]
                     )
                 ]
+                
+                Button.create [
+                    Button.content "Click me to see menu flyout"
+                    Button.flyout (
+                        MenuFlyout.create [
+                            MenuFlyout.placement state.placement
+                            MenuFlyout.showMode state.showMode
+                            MenuFlyout.dataItems [
+                                "We"
+                                "are"
+                                "items"
+                                "of"
+                                "MenuFlyout"
+                            ]
+                        ]
+                    )
+                ]
             ]
         ]
     
