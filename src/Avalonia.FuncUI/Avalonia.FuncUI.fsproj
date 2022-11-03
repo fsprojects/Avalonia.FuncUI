@@ -89,6 +89,7 @@
     <Compile Include="DSL\Documents\Underline.fs" />
     <Compile Include="DSL\DatePicker.fs" />
     <Compile Include="DSL\TimePicker.fs" />
+    <Compile Include="DSL\Flyout.fs" />
     <Compile Include="DSL\ItemsControl.fs" />
     <Compile Include="DSL\ContentControl.fs" />
     <Compile Include="DSL\TransitioningContentControl.fs" />
