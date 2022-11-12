@@ -54,23 +54,31 @@ module DatePickerDemo =
         Grid.create [
             Grid.rowDefinitions "Auto, *"
             Grid.children [
-                DatePicker.create [
+                StackPanel.create [
                     Grid.row 0
 
-                    DatePicker.dayVisible state.isDayVisible
-                    DatePicker.monthVisible state.isMonthVisible
-                    DatePicker.yearVisible state.isYearVisible
+                    StackPanel.children [
+                        TextBlock.create [
+                            TextBlock.text state.header
+                        ]
 
-                    DatePicker.dayFormat state.dayFormat
-                    DatePicker.monthFormat state.monthFormat
-                    DatePicker.yearFormat state.yearFormat
+                        DatePicker.create [
 
-                    DatePicker.header state.header
-                    DatePicker.selectedDate state.date
+                            DatePicker.dayVisible state.isDayVisible
+                            DatePicker.monthVisible state.isMonthVisible
+                            DatePicker.yearVisible state.isYearVisible
 
-                    DatePicker.onSelectedDateChanged (
-                        Msg.SetDate >> dispatch
-                    )
+                            DatePicker.dayFormat state.dayFormat
+                            DatePicker.monthFormat state.monthFormat
+                            DatePicker.yearFormat state.yearFormat
+
+                            DatePicker.selectedDate state.date
+
+                            DatePicker.onSelectedDateChanged (
+                                Msg.SetDate >> dispatch
+                            )
+                        ]
+                    ]
                 ]
                 
                 StackPanel.create [
