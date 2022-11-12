@@ -135,7 +135,7 @@
     <Compile Include="DSL\TabItem.fs" />
     <Compile Include="DSL\TickBar.fs" />
     <Compile Include="DSL\Viewbox.fs" />
-    <Compile Include="DSL\RichTextBlock.fs" />
+    <Compile Include="DSL\SelectableTextBlock.fs" />
   </ItemGroup>
 
 </Project>
