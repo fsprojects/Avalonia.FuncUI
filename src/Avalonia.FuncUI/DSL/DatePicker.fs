@@ -49,9 +49,4 @@ module DatePicker =
         static member maxYear<'t when 't :> DatePicker>(value: DateTimeOffset) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTimeOffset>(DatePicker.MaxYearProperty, value, ValueNone)
 
-        static member header<'t when 't :> DatePicker>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(DatePicker.HeaderProperty, value, ValueNone)
-        
-        static member headerTemplate<'t when 't :> DatePicker>(template: IDataTemplate) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IDataTemplate>(DatePicker.HeaderTemplateProperty, template, ValueNone)
         

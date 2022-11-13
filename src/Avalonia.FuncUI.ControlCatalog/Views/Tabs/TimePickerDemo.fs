@@ -38,11 +38,14 @@ module TimePickerDemo =
         StackPanel.create [
             StackPanel.spacing 7.0
             StackPanel.children [
+                TextBlock.create [
+                    TextBlock.text state.header
+                ]
+
                 TimePicker.create [
                     TimePicker.clockIdentifier state.clockIdentifier
                     TimePicker.minuteIncrement state.minuteIncrement
 
-                    TimePicker.header state.header
                     TimePicker.selectedTime state.time
 
                     TimePicker.onSelectedTimeChanged (
