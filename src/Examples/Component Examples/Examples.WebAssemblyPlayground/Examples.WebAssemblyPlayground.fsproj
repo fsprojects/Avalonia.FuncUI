@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
+        <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
         <Nullable>enable</Nullable>
         <!--Temporal hack that fixes compilation in VS-->
         <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
@@ -35,8 +36,8 @@
         <PackageReference Include="Bolero.Build" Version="0.20.12" />
         <PackageReference Include="Bolero.HotReload" Version="0.20.4" />
 
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.4" />
-        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.4" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.0" PrivateAssets="all" />
     </ItemGroup>
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\css\index.css" />

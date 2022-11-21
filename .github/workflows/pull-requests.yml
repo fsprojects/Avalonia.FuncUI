@@ -14,7 +14,9 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 6.0.x
+        dotnet-version: |
+          6.0.x
+          7.0.x
     - name: Restore dependencies
       run: dotnet restore src/Avalonia.FuncUI.sln
     - name: Build

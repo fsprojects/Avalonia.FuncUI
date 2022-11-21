@@ -5,6 +5,7 @@ open Avalonia.Media.Immutable
 module TextBlock =  
     open Avalonia
     open Avalonia.Controls
+    open Avalonia.Controls.Documents
     open Avalonia.Media    
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
@@ -40,6 +41,13 @@ module TextBlock =
             
         static member foreground<'t when 't :> TextBlock>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> TextBlock.foreground
+
+        static member inlines<'t when 't :> TextBlock>(value: InlineCollection) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<InlineCollection>(TextBlock.InlinesProperty, value, ValueNone)
+            
+        static member inlines<'t when 't :> TextBlock>(values: IView list (* TODO: Change to IView<Inline> *)) : IAttr<'t> =
+            let getter : ('t -> obj) = (fun control -> control.Inlines :> obj)
+            AttrBuilder<'t>.CreateContentMultiple("Inlines", ValueSome getter, ValueNone, values)
 
         static member lineHeight<'t when 't :> TextBlock>(value: float) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<float>(TextBlock.LineHeightProperty, value, ValueNone)

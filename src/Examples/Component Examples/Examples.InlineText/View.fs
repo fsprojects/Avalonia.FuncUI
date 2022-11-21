@@ -29,11 +29,11 @@ module View =
                             else
                                 colorMode.Set 0)
                     ]
-                    RichTextBlock.create [
-                        RichTextBlock.dock Dock.Top
-                        RichTextBlock.fontSize 48.0
-                        RichTextBlock.horizontalAlignment HorizontalAlignment.Center
-                        RichTextBlock.inlines [
+                    SelectableTextBlock.create [
+                        SelectableTextBlock.dock Dock.Top
+                        SelectableTextBlock.fontSize 48.0
+                        SelectableTextBlock.horizontalAlignment HorizontalAlignment.Center
+                        SelectableTextBlock.inlines [
                             Run.createText "You" :> IView
                             Run.create [
                                 Run.text "Inline"
