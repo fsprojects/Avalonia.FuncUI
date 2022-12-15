@@ -167,7 +167,12 @@ type IComponentContext =
     /// </summary>
     abstract attrs: IAttr<Avalonia.Controls.Border> list -> unit
 
-type Context () =
+    /// <summary>
+    /// The underlying Avalonia control.
+    /// </summary>
+    abstract control: Avalonia.Controls.Border
+
+type Context (componentControl: Avalonia.Controls.Border) =
     let disposables = new DisposableBag ()
     let hooks = Dictionary<int, StateHook>()
     let effects = Dictionary<int, EffectHook>()
@@ -310,6 +315,8 @@ type Context () =
                     renderOnChange = defaultArg renderOnChange true
                 )
             ) :?> IWritable<'value>
+
+        member this.control = componentControl
 
     interface IDisposable with
         member this.Dispose () =
