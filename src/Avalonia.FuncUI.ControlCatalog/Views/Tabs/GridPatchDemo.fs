@@ -37,7 +37,8 @@ module GridPatchDemo =
                     yield
                         match state.orientation with
                         | Orientation.Horizontal -> Grid.rowDefinitions "*, *"
-                        | Orientation.Vertical -> Grid.columnDefinitions "*, *"
+                        | Orientation.Vertical
+                        | _ -> Grid.columnDefinitions "*, *"
                     
                     yield Grid.showGridLines true
                     yield Grid.children [
@@ -49,7 +50,8 @@ module GridPatchDemo =
                             yield
                                 match state.orientation with
                                 | Orientation.Horizontal -> Border.row 1
-                                | Orientation.Vertical -> Border.column 1
+                                | Orientation.Vertical
+                                | _ -> Border.column 1
                         ]
                     ]
                 ]
