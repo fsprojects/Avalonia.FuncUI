@@ -119,3 +119,6 @@ module internal rec Delta =
                 this.KeyDidChange = other.KeyDidChange &&
                 (ValueOption.isSome this.Outlet = ValueOption.isSome other.Outlet)
             | _ -> false
+            
+        override this.GetHashCode() =
+            HashCode.Combine(this.ViewType, this.Attrs, this.ConstructorArgs, this.KeyDidChange, ValueOption.isSome this.Outlet)
