@@ -5,7 +5,6 @@ open Elmish
 open Avalonia.Controls
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 
 module TimePickerDemo =

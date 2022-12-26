@@ -7,8 +7,6 @@ module TransitioningContentControl =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-    open Avalonia.Controls.Templates
-    open Avalonia.Layout
 
     let create (attrs : IAttr<TransitioningContentControl> list) : IView<TransitioningContentControl> =
         ViewBuilder.Create<TransitioningContentControl>(attrs)

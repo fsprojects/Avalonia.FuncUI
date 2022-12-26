@@ -1,7 +1,5 @@
 namespace Avalonia.FuncUI.DSL
 
-open Avalonia
-
 [<AutoOpen>]
 module TextBox =
     open Avalonia.Controls

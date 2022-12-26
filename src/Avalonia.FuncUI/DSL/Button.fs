@@ -1,7 +1,5 @@
 namespace Avalonia.FuncUI.DSL
 
-open Avalonia
-
 [<AutoOpen>]
 module Button =
     open System.Windows.Input
