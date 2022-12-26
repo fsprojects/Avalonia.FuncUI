@@ -4,6 +4,7 @@ namespace Avalonia.FuncUI.DSL
 module Visual =  
     open Avalonia
     open Avalonia.Media
+    open Avalonia.FuncUI
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
             
@@ -25,7 +26,7 @@ module Visual =
             AttrBuilder<'t>.CreateProperty<IBrush>(Visual.OpacityMaskProperty, value, ValueNone)
 
         static member renderTransform<'t when 't :> Visual>(transform: ITransform) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ITransform>(Visual.RenderTransformProperty, transform, ValueNone)
+            AttrBuilder<'t>.CreateProperty<ITransform>(Visual.RenderTransformProperty, transform, ValueSome EqualityComparers.compareTransforms)
     
         static member renderTransformOrigin<'t when 't :> Visual>(origin: RelativePoint) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<RelativePoint>(Visual.RenderTransformOriginProperty, origin, ValueNone)
