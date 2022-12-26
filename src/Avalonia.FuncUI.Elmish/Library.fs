@@ -19,10 +19,10 @@ module Program =
         let stateRef = ref None
         let setState state dispatch =
             // create new view and update the host only if new model is not equal to a prev one
-            let stateDiffers = (Some state).Equals(!stateRef) |> not
+            let stateDiffers = (Some state).Equals(stateRef.Value) |> not
             
             if stateDiffers then
-                stateRef := Some state
+                stateRef.Value <- Some state
                 let view = ((Program.view program) state dispatch)
                 host.Update (Some (view :> IView))
 
