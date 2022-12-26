@@ -1,13 +1,10 @@
 ﻿namespace Examples.Presso
 
-open Elmish
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
-open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.Hosts
-open Avalonia.Media
 
 type MainWindow() as this =
     inherit HostWindow()
