@@ -101,7 +101,7 @@ type ReadOnlyState<'value>(init: 'value) =
         member this.Subscribe (_handler: 'value -> unit) =
             (* This is a constant value and therefore does never change. *)
             null
-        member this.SubscribeAny (handler: obj -> unit) : IDisposable =
+        member this.SubscribeAny (_handler: obj -> unit) : IDisposable =
             (* This is a constant value and therefore does never change. *)
             null
         member this.Dispose () =
