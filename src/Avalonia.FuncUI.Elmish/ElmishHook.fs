@@ -9,18 +9,19 @@ type Cmd<'Msg> =
         static member none = Cmd<'Msg>.None
         static member ofMsg msg = Cmd<'Msg>.OfMsg msg
 
-type ElmishState<'Model, 'Msg>(writableModel: IWritable<'Model>, update) = 
+type ElmishState<'Model, 'Msg>(writableModel: IWritable<'Model>, update) =
+    
+    let rec updateRecursive (msg: 'Msg) (model: 'Model) =
+        let model, cmd = update msg model
+        match cmd with
+        | Cmd.None -> model
+        | Cmd.OfMsg msg -> updateRecursive msg model
 
     member this.Model = writableModel.Current
 
     member this.Dispatch (msg: 'Msg) =
-        let model, msg = this.Update msg writableModel.Current
-        match msg with
-        | Cmd.None -> 
-            writableModel.Set model
-        | Cmd.OfMsg cmdMsg -> 
-            let model2, msg2 = this.Update cmdMsg model
-            writableModel.Set model2
+        let model = updateRecursive msg writableModel.Current
+        writableModel.Set model
 
     member this.Update : 'Msg -> 'Model -> 'Model * Cmd<'Msg> = update
 
