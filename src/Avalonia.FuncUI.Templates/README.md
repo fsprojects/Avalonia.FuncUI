@@ -21,7 +21,7 @@ This template only contains a simple view and no extra resources that serve as a
 a basic app.
 
 ```
-dotnet new funcui.basic -n NewApp
+dotnet new funcUI.basic -n NewApp
 ```
 
 ### Create a new full App
@@ -30,7 +30,7 @@ This template contains a more complex example with a `Style.xaml` file and other
 applications.
 
 ```
-dotnet new funcui.full -n NewApp
+dotnet new funcUI.full -n NewApp
 ```
 
 ### Using Elmish
