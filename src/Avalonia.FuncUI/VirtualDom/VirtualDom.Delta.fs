@@ -47,7 +47,7 @@ module internal rec Delta =
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
         { Name: string
-          Subscribe: IControl * Delegate -> CancellationTokenSource
+          Subscribe: Control * Delegate -> CancellationTokenSource
           Func: Delegate option }
 
         override this.Equals (other: obj) : bool =

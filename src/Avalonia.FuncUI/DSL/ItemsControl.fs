@@ -19,8 +19,8 @@ module ItemsControl =
         static member dataItems<'t when 't :> ItemsControl>(data: IEnumerable) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IEnumerable>(ItemsControl.ItemsProperty, data, ValueNone)
 
-        static member itemsPanel<'t when 't :> ItemsControl>(value: ITemplate<IPanel>) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ITemplate<IPanel>>(ItemsControl.ItemsPanelProperty, value, ValueNone)
+        static member itemsPanel<'t when 't :> ItemsControl>(value: ITemplate<Panel>) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<ITemplate<Panel>>(ItemsControl.ItemsPanelProperty, value, ValueNone)
 
         static member itemTemplate<'t when 't :> ItemsControl>(value: IDataTemplate) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(ItemsControl.ItemTemplateProperty, value, ValueNone)

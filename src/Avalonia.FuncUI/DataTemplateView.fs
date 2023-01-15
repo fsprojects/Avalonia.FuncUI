@@ -48,7 +48,7 @@ type DataTemplateView<'data, 'childData, 'view when 'view :> IView>
             | :? 'data, ValueNone -> true
             | _ -> false
 
-        member this.Build (_data: obj) : IControl =
+        member this.Build (_data: obj) : Control =
             let host = HostControl()
 
             let update (data: 'data) : unit =
@@ -63,7 +63,7 @@ type DataTemplateView<'data, 'childData, 'view when 'view :> IView>
                     | _ -> ()
                 ), this) |> ignore
 
-            host :> IControl
+            host :> Control
 
 type DataTemplateView<'data, 'view when 'view :> IView> =
     /// <summary>

@@ -44,19 +44,19 @@ module PatcherTests =
 
     [<Fact>]
     let ``Patch Styles, Classes or Resources`` () =
-        let stylesGetter: IAvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Styles :> obj)
-        let stylesSetter: IAvaloniaObject * obj -> unit =
+        let stylesGetter: AvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Styles :> obj)
+        let stylesSetter: AvaloniaObject * obj -> unit =
             (fun (c, v) ->
                 let se = (c :?> StyledElement)
                 let s = v :?> Styles
                 se.Styles.Clear()
                 se.Styles.AddRange(s))
 
-        let classesGetter: IAvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Classes :> obj)
-        let classesSetter: IAvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Classes <- v :?> Classes)
+        let classesGetter: AvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Classes :> obj)
+        let classesSetter: AvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Classes <- v :?> Classes)
 
-        let resourcesGetter: IAvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Resources :> obj)
-        let resourcesSetter: IAvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Resources <- v :?> IResourceDictionary)
+        let resourcesGetter: AvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Resources :> obj)
+        let resourcesSetter: AvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Resources <- v :?> IResourceDictionary)
 
         let delta : Delta.ViewDelta =
             {
@@ -240,8 +240,8 @@ module PatcherTests =
 
         Assert.IsType(typeof<Button>,  stackpanel.Children.[1])
         let button = stackpanel.Children.[1] :?> Button
-        Assert.Equal(SolidColorBrush.Parse("red").ToImmutable(), button.Background)
+        Assert.Equal(SolidColorBrush.Parse("red").ToImmutable() :> IBrush, button.Background)
 
         Assert.IsType(typeof<Button>,  stackpanel.Children.[2])
         let button = stackpanel.Children.[2] :?> Button
-        Assert.Equal(SolidColorBrush.Parse("green").ToImmutable(), button.Background)
+        Assert.Equal(SolidColorBrush.Parse("green").ToImmutable() :> IBrush, button.Background)

@@ -10,8 +10,8 @@ module Types =
     [<CustomEquality; NoComparison>]
     type PropertyAccessor =
         { Name: string
-          Getter: (IAvaloniaObject -> obj) voption
-          Setter: (IAvaloniaObject * obj -> unit) voption }
+          Getter: (AvaloniaObject -> obj) voption
+          Setter: (AvaloniaObject * obj -> unit) voption }
 
         override this.Equals (other: obj) : bool =
             match other with
@@ -61,7 +61,7 @@ module Types =
     [<CustomEquality; NoComparison>]
     type Subscription =
         { Name: string
-          Subscribe: IControl  * Delegate -> CancellationTokenSource
+          Subscribe: Control  * Delegate -> CancellationTokenSource
           Func: Delegate
           FuncType: Type
           Scope: obj }
@@ -128,7 +128,7 @@ module Types =
         abstract member ViewKey: string voption
         abstract member Attrs: IAttr list with get
         abstract member ConstructorArgs: obj array with get
-        abstract member Outlet: (IAvaloniaObject -> unit) voption with get
+        abstract member Outlet: (AvaloniaObject -> unit) voption with get
 
     type IView<'viewType> =
         inherit IView
@@ -139,7 +139,7 @@ module Types =
           ViewKey: string voption
           Attrs: IAttr<'viewType> list
           ConstructorArgs: obj array
-          Outlet: (IAvaloniaObject-> unit) voption }
+          Outlet: (AvaloniaObject-> unit) voption }
 
         interface IView with
             member this.ViewType =  this.ViewType

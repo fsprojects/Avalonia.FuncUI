@@ -33,7 +33,7 @@ module internal Extensions =
         member this.SubscribeWeakly(callback: 'a -> unit, target) =
             Observable.subscribeWeakly(this, callback, target)
 
-    type IInteractive with
+    type Interactive with
         member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent<'args>) : IObservable<'args> =
             let sub = Func<IObserver<'args>, IDisposable>(fun observer ->
                 // push new update to subscribers
