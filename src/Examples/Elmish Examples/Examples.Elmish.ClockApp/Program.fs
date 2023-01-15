@@ -50,7 +50,7 @@ type MainWindow() as this =
         |> Program.withHost this
         |> Program.withSubscription subscriptions
         |> Program.withConsoleTrace
-        |> Program.runWithAvaloniaSyncDispatch ()
+        |> Program.run
         
 type App() =
     inherit Application()
