@@ -11,7 +11,7 @@ module NumericUpDownDemo =
 
     type State = { count : Nullable<decimal> }
 
-    let init = { count = Nullable 0m }
+    let init () = { count = Nullable 0m }
 
     type Msg =
     | Reset
@@ -19,7 +19,7 @@ module NumericUpDownDemo =
 
     let update (msg: Msg) (state: State) : State =
         match msg with
-        | Reset -> init
+        | Reset -> init ()
         | Set value -> { state with count = value }
 
     let view (state: State) (dispatch) =
@@ -54,7 +54,7 @@ module NumericUpDownDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
-            |> Program.run
+            |> Program.runWith ()

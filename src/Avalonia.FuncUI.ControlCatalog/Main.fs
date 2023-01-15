@@ -33,10 +33,10 @@ type App() =
             let mainWindow = MainWindow()
             desktopLifetime.MainWindow <- mainWindow
             
-            Elmish.Program.mkSimple (fun () -> MainView.init) MainView.update MainView.view
+            Elmish.Program.mkSimple MainView.init MainView.update MainView.view
             |> Program.withHost mainWindow
             |> Program.withConsoleTrace
-            |> Program.run
+            |> Program.runWith ()
         | _ -> ()
 
 module Program =

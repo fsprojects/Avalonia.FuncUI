@@ -11,7 +11,7 @@ open Avalonia.FuncUI.Elmish
 module TextBoxDemo =
     type State = { watermark: string }
 
-    let init = { watermark = "" }
+    let init () = { watermark = "" }
 
     type Msg =
     | SetWatermark of string
@@ -46,10 +46,10 @@ module TextBoxDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
-            |> Program.run
+            |> Program.runWith ()
         
         
         

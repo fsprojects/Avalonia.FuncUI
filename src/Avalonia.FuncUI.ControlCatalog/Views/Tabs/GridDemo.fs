@@ -12,7 +12,7 @@ module GridDemo =
         { cellWidth: int
           cellHeight: int }
 
-    let init =
+    let init () =
         { cellWidth = 100
           cellHeight = 200 }
 
@@ -63,10 +63,10 @@ module GridDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
-            |> Program.run
+            |> Program.runWith ()
         
         
         

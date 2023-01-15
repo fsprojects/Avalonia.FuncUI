@@ -9,7 +9,7 @@ open Avalonia.FuncUI.Elmish
 
 module GridPatchDemo =
     type State = { orientation: Orientation }
-    let init = { orientation = Orientation.Horizontal }
+    let init () = { orientation = Orientation.Horizontal }
 
     type Msg = Toggle
 
@@ -59,10 +59,10 @@ module GridPatchDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
-            |> Program.run
+            |> Program.runWith ()
         
         
         

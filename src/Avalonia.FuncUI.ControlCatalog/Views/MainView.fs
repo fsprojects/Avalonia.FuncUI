@@ -10,7 +10,7 @@ module MainView =
         dataTemplateState : DataTemplateDemo.State
     }
 
-    let init = {
+    let init () = {
         dataTemplateState = DataTemplateDemo.init
     }
 

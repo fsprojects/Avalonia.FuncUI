@@ -16,7 +16,7 @@ module CalendarDatePickerDemo =
         customFormat: string
         selectedFormat: CalendarDatePickerFormat }
 
-    let init = 
+    let init () = 
         { date = Nullable(DateTime.Today)
           watermark = ""
           customFormat = ""
@@ -81,10 +81,10 @@ module CalendarDatePickerDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
-            |> Program.run
+            |> Program.runWith ()
         
         
         
