@@ -32,8 +32,16 @@ type MainWindow() as this =
                 DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 1000.0) |> ignore
                 Disposable.none
 
+            let onClosedSub (dispatch: Clock.Msg -> unit) =
+                this.Closed.Subscribe(fun e ->
+                    printfn "The window has been closed."
+                )
+                |> ignore
+                Disposable.none
+
             [ 
                 [ nameof timerSub ], timerSub
+                [ nameof onClosedSub ], onClosedSub
             ]
         
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
