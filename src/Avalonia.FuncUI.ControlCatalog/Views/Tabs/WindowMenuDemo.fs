@@ -50,5 +50,5 @@ module WindowMenuDemo =
             Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
-            |> Program.runWith ()
+            |> Program.run
         

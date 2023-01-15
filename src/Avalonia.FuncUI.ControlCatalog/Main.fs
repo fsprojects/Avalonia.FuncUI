@@ -36,7 +36,7 @@ type App() =
             Elmish.Program.mkSimple MainView.init MainView.update MainView.view
             |> Program.withHost mainWindow
             |> Program.withConsoleTrace
-            |> Program.runWith ()
+            |> Program.run
         | _ -> ()
 
 module Program =
