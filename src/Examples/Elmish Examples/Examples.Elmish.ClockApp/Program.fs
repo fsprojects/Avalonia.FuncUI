@@ -23,7 +23,7 @@ type MainWindow() as this =
         base.MaxWidth <- 200.0
         base.MinWidth <- 200.0
       
-        let subscriptions (_state: Clock.State) =
+        let subscriptions (_state: Clock.State) : Sub<Clock.Msg> =
             let timerSub (dispatch: Clock.Msg -> unit) =
                 let invoke() =
                     DateTime.Now |> Clock.Msg.Tick |> dispatch
@@ -34,7 +34,7 @@ type MainWindow() as this =
 
             [ 
                 [ nameof timerSub ], timerSub
-            ] : Sub<Clock.Msg>
+            ]
         
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
