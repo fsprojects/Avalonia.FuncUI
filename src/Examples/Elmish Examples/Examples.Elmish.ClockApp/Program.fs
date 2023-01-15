@@ -23,8 +23,8 @@ type MainWindow() as this =
         base.MaxWidth <- 200.0
         base.MinWidth <- 200.0
       
-        let timerSub (_state: Clock.State) =
-            let sub (dispatch: Clock.Msg -> unit) =
+        let subscriptions (_state: Clock.State) =
+            let timerSub (dispatch: Clock.Msg -> unit) =
                 let invoke() =
                     DateTime.Now |> Clock.Msg.Tick |> dispatch
                     true
@@ -32,13 +32,15 @@ type MainWindow() as this =
                 DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 1000.0) |> ignore
                 Disposable.none
 
-            [ ["timerSub"], sub ] : Sub<Clock.Msg>
+            [ 
+                [ nameof timerSub ], timerSub
+            ] : Sub<Clock.Msg>
         
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         Elmish.Program.mkSimple Clock.init Clock.update Clock.view
         |> Program.withHost this
-        |> Program.withSubscription timerSub
+        |> Program.withSubscription subscriptions
         |> Program.withConsoleTrace
         |> Program.runWithAvaloniaSyncDispatch ()
         
