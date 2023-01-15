@@ -2,7 +2,7 @@ namespace Examples.WebAssemblyPlayground
 
 open System
 open System.Net.Http
-open Avalonia.Web.Blazor
+open Avalonia.Browser.Blazor
 open Bolero
 open Bolero.Html
 open Microsoft.AspNetCore.Components.WebAssembly.Hosting

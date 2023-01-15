@@ -193,7 +193,7 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Light))
+        this.Styles.Add (FluentTheme(Mode = FluentThemeMode.Light))
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
