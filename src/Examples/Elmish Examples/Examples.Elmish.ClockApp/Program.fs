@@ -35,11 +35,11 @@ type MainWindow() as this =
         
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
-        Elmish.Program.mkSimple (fun () -> Clock.init) Clock.update Clock.view
+        Elmish.Program.mkSimple Clock.init Clock.update Clock.view
         |> Program.withHost this
         |> Program.withSubscription timer
         |> Program.withConsoleTrace
-        |> Program.run
+        |> Program.runWithAvaloniaSyncDispatch ()
         
 type App() =
     inherit Application()

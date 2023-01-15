@@ -8,7 +8,7 @@ module Clock =
     open Avalonia.Controls.Shapes
     
     type State = { time : DateTime }
-    let init = { time = DateTime.Now }
+    let init () = { time = DateTime.Now }
 
     type Msg = Tick of DateTime
 

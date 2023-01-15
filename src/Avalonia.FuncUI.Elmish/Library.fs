@@ -6,15 +6,7 @@ open Avalonia.FuncUI.Types
 open Avalonia.Threading
 
 module Program =
-
-    let private syncDispatch (dispatch: Dispatch<'msg>) : Dispatch<'msg> =
-        fun msg ->
-            let checkAccess = Dispatcher.UIThread.CheckAccess()
-            if checkAccess then
-                dispatch msg
-            else
-                Dispatcher.UIThread.Post (fun () -> dispatch msg)
-
+    
     let withHost (host : IViewHost) (program : Program<'arg, 'model, 'msg, #IView>) =
         let stateRef = ref None
         let setState state dispatch =
@@ -28,4 +20,14 @@ module Program =
 
         program
         |> Program.withSetState setState
-        |> Program.withSyncDispatch syncDispatch
+
+    /// Starts the program loop. Ensures that all view changes from non-UI threads are synchronized via the Avalonia Dispatcher.
+    let runWithAvaloniaSyncDispatch (arg: 'arg) (program : Program<'arg, 'model, 'msg, #IView>) = 
+        
+        // Syncs view changes from non-UI threads through the Avalonia dispatcher.
+        let syncDispatch (dispatch: Dispatch<'msg>) (msg: 'msg) =
+            if Dispatcher.UIThread.CheckAccess() // Is this already on the UI thread?
+            then dispatch msg
+            else Dispatcher.UIThread.Post (fun () -> dispatch msg)
+
+        Program.runWithDispatch syncDispatch arg program
