@@ -23,8 +23,7 @@ type MainWindow() as this =
                     Board.Evolve |> Main.BoardMsg |> dispatch
                     true
                     
-                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 100.0) |> ignore
-                Disposable.none
+                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 100.0)
                 
             [ 
                 [ nameof timerSub ], timerSub

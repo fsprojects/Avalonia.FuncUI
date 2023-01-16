@@ -31,14 +31,3 @@ module Program =
             else Dispatcher.UIThread.Post (fun () -> dispatch msg)
 
         Program.runWithDispatch syncDispatch arg program
-
-
-module Disposable = 
-    
-    /// Creates an IDisposable with the given dispose fn.
-    let create dispose =
-        { new System.IDisposable with 
-            member this.Dispose() = dispose() }
-
-    /// Creates an IDisposable to does nothing on Dispose.
-    let none = create id

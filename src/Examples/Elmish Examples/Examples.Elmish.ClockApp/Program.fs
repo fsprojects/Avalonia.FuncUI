@@ -29,15 +29,12 @@ type MainWindow() as this =
                     DateTime.Now |> Clock.Msg.Tick |> dispatch
                     true
                     
-                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 1000.0) |> ignore
-                Disposable.none
+                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 1000.0)
 
             let onClosedSub (dispatch: Clock.Msg -> unit) =
                 this.Closed.Subscribe(fun e ->
                     printfn "The window has been closed."
                 )
-                |> ignore
-                Disposable.none
 
             [ 
                 [ nameof timerSub ], timerSub

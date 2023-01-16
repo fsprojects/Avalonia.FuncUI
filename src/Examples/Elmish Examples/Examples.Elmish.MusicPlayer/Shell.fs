@@ -36,35 +36,28 @@ module Shell =
         | LengthChanged of int64
 
     module Subs =
-        let playing (player: MediaPlayer) dispatch =
-            player.Playing.Subscribe(fun _ -> dispatch Playing) |> ignore
-            Disposable.none
-
-        let paused (player: MediaPlayer) dispatch =
-            player.Paused.Subscribe(fun _ -> dispatch Paused) |> ignore
-            Disposable.none
-
-        let stopped (player: MediaPlayer) dispatch =
-            player.Stopped.Subscribe(fun _ -> dispatch Stopped) |> ignore
-            Disposable.none
-
-        let ended (player: MediaPlayer) dispatch =
-            player.EndReached.Subscribe(fun _ -> dispatch Ended) |> ignore
-            Disposable.none
-
-        let timeChanged (player: MediaPlayer) dispatch =
-            player.TimeChanged.Subscribe(fun args -> dispatch (TimeChanged args.Time)) |> ignore
-            Disposable.none
-
-        let chapterChanged (player: MediaPlayer) dispatch =
-            player.ChapterChanged.Subscribe(fun args -> dispatch (ChapterChanged args.Chapter)) |> ignore
-            Disposable.none
-
-        let lengthChanged (player: MediaPlayer) dispatch =
-            player.LengthChanged.Subscribe(fun args -> dispatch (LengthChanged args.Length)) |> ignore
-            Disposable.none
-
         let registerSubscriptions (player: MediaPlayer) (state: State) =
+            let playing (player: MediaPlayer) dispatch =
+                player.Playing.Subscribe(fun _ -> dispatch Playing)
+
+            let paused (player: MediaPlayer) dispatch =
+                player.Paused.Subscribe(fun _ -> dispatch Paused)
+
+            let stopped (player: MediaPlayer) dispatch =
+                player.Stopped.Subscribe(fun _ -> dispatch Stopped)
+
+            let ended (player: MediaPlayer) dispatch =
+                player.EndReached.Subscribe(fun _ -> dispatch Ended)
+
+            let timeChanged (player: MediaPlayer) dispatch =
+                player.TimeChanged.Subscribe(fun args -> dispatch (TimeChanged args.Time))
+
+            let chapterChanged (player: MediaPlayer) dispatch =
+                player.ChapterChanged.Subscribe(fun args -> dispatch (ChapterChanged args.Chapter))
+
+            let lengthChanged (player: MediaPlayer) dispatch =
+                player.LengthChanged.Subscribe(fun args -> dispatch (LengthChanged args.Length))
+
             [
                 [ nameof playing ], playing player
                 [ nameof paused ], paused player
