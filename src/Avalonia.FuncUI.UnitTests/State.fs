@@ -72,6 +72,7 @@ module StateTests =
 
         Assert.Equal (2, callsToAlice.Count)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 99 }, Seq.last callsToAlice)
+        Assert.Equal ({ Account.Name = "Alice"; Balance = 99 }, aliceWire.Current)
 
         Assert.Equal (1, callsToBob.Count)
         Assert.Equal ({ Account.Name = "Bob"; Balance = 0 }, Seq.last callsToBob)
@@ -84,6 +85,7 @@ module StateTests =
 
         Assert.Equal (3, callsToAlice.Count)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 101 }, Seq.last callsToAlice)
+        Assert.Equal ({ Account.Name = "Alice"; Balance = 101 }, aliceWire.Current)
 
         Assert.Equal (2, callsToBob.Count)
         Assert.Equal ({ Account.Name = "Bob"; Balance = 0 }, Seq.last callsToBob)
@@ -94,6 +96,7 @@ module StateTests =
 
         Assert.Equal (4, callsToAlice.Count)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 102 }, Seq.last callsToAlice)
+        Assert.Equal ({ Account.Name = "Alice"; Balance = 102 }, aliceWire.Current)
 
         Assert.Equal (3, callsToBob.Count)
         Assert.Equal ({ Account.Name = "Bob"; Balance = 0 }, Seq.last callsToBob)
