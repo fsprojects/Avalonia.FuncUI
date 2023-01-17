@@ -36,41 +36,43 @@ module Shell =
         | LengthChanged of int64
 
     module Subs =
-        let playing (player: MediaPlayer) =
-            let sub dispatch = player.Playing.Subscribe(fun _ -> dispatch Playing) |> ignore
-            Cmd.ofSub sub
+        let registerSubscriptions (player: MediaPlayer) (state: State) =
+            let playing (player: MediaPlayer) dispatch =
+                player.Playing.Subscribe(fun _ -> dispatch Playing)
 
-        let paused (player: MediaPlayer) =
-            let sub dispatch = player.Paused.Subscribe(fun _ -> dispatch Paused) |> ignore
-            Cmd.ofSub sub
+            let paused (player: MediaPlayer) dispatch =
+                player.Paused.Subscribe(fun _ -> dispatch Paused)
 
-        let stoped (player: MediaPlayer) =
-            let sub dispatch = player.Stopped.Subscribe(fun _ -> dispatch Stopped) |> ignore
-            Cmd.ofSub sub
+            let stopped (player: MediaPlayer) dispatch =
+                player.Stopped.Subscribe(fun _ -> dispatch Stopped)
 
-        let ended (player: MediaPlayer) =
-            let sub dispatch = player.EndReached.Subscribe(fun _ -> dispatch Ended) |> ignore
-            Cmd.ofSub sub
+            let ended (player: MediaPlayer) dispatch =
+                player.EndReached.Subscribe(fun _ -> dispatch Ended)
 
-        let timechanged (player: MediaPlayer) =
-            let sub dispatch = player.TimeChanged.Subscribe(fun args -> dispatch (TimeChanged args.Time)) |> ignore
-            Cmd.ofSub sub
+            let timeChanged (player: MediaPlayer) dispatch =
+                player.TimeChanged.Subscribe(fun args -> dispatch (TimeChanged args.Time))
 
-        let chapterchanged (player: MediaPlayer) =
-            let sub dispatch =
-                player.ChapterChanged.Subscribe(fun args -> dispatch (ChapterChanged args.Chapter)) |> ignore
-            Cmd.ofSub sub
+            let chapterChanged (player: MediaPlayer) dispatch =
+                player.ChapterChanged.Subscribe(fun args -> dispatch (ChapterChanged args.Chapter))
 
-        let lengthchanged (player: MediaPlayer) =
-            let sub dispatch =
-                player.LengthChanged.Subscribe(fun args -> dispatch (LengthChanged args.Length)) |> ignore
-            Cmd.ofSub sub
+            let lengthChanged (player: MediaPlayer) dispatch =
+                player.LengthChanged.Subscribe(fun args -> dispatch (LengthChanged args.Length))
+
+            [
+                [ nameof playing ], playing player
+                [ nameof paused ], paused player
+                [ nameof stopped ], stopped player
+                [ nameof ended ], ended player
+                [ nameof timeChanged ], timeChanged player
+                [ nameof chapterChanged ], chapterChanged player
+                [ nameof lengthChanged ], lengthChanged player
+            ]
 
 
-    let init =
+    let init () =
         { title = "Music Player in F# :)"
           playerState = Player.init
-          playlistState = Playlist.init }
+          playlistState = Playlist.init }, Cmd.none
 
     (* here we use these functions to handle which kind of actions we need to take
        in case one of our children sends an external message 
@@ -194,7 +196,6 @@ module Shell =
             //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
             //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
             let player = PlayerLib.getEmptyPlayer
-            let init _ = init, Cmd.none
 #if DEBUG
             this.AttachDevTools(KeyGesture(Key.F12))
 #endif
@@ -203,14 +204,8 @@ module Shell =
             
             Program.mkProgram init updateWithServices view
             |> Program.withHost this
-            |> Program.withSubscription (fun _ -> Subs.playing player)
-            |> Program.withSubscription (fun _ -> Subs.paused player)
-            |> Program.withSubscription (fun _ -> Subs.stoped player)
-            |> Program.withSubscription (fun _ -> Subs.ended player)
-            |> Program.withSubscription (fun _ -> Subs.timechanged player)
-            |> Program.withSubscription (fun _ -> Subs.lengthchanged player)
-            |> Program.withSubscription (fun _ -> Subs.chapterchanged player)
+            |> Program.withSubscription (Subs.registerSubscriptions player)
 #if DEBUG
             |> Program.withConsoleTrace
 #endif
-            |> Program.run
+            |> Program.runWithAvaloniaSyncDispatch ()

@@ -15,7 +15,7 @@ module TimePickerDemo =
         minuteIncrement: int
         clockIdentifier: string }
 
-    let init = 
+    let init () = 
         { time = Nullable(DateTime.Today.TimeOfDay)
           header = "Header"
           minuteIncrement = 1
@@ -105,7 +105,7 @@ module TimePickerDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

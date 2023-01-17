@@ -20,7 +20,7 @@ module TickBarDemo =
         placement : TickBarPlacement
         isDirectionReversed : bool }
 
-    let init = 
+    let init () = 
         { min = 0.0
           max = 50.0
           color = Colors.LightGreen
@@ -251,7 +251,7 @@ module TickBarDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

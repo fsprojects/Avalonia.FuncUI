@@ -20,7 +20,7 @@ module SplitViewDemo =
         displayMode: SplitViewDisplayMode
         paneBackground: Color }
 
-    let init = 
+    let init () = 
         { isPaneOpen = true
           useLightDismissOverlayMode = false
           panePlacement = SplitViewPanePlacement.Left
@@ -268,7 +268,7 @@ module SplitViewDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

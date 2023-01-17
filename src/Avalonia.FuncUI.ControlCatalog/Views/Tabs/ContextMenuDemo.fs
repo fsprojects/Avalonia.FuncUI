@@ -9,7 +9,7 @@ open Avalonia.FuncUI.Elmish
 module ContextMenuDemo =
     type State = { color: string }
 
-    let init = { color = "gray" }
+    let init () = { color = "gray" }
 
     type Msg =
     | SetColor of string
@@ -46,7 +46,7 @@ module ContextMenuDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

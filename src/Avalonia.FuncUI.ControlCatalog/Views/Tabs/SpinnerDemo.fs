@@ -16,7 +16,7 @@ module SpinnerDemo =
           verticalOffset: float
           showDelay: int }
 
-    let init =
+    let init () =
         { isOpen = true
           tip = "This is the ToolTip";
           placement = PlacementMode.Pointer;
@@ -96,7 +96,7 @@ module SpinnerDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

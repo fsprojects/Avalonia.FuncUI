@@ -12,7 +12,7 @@ open Avalonia.Media
 module CanvasDemo =
     type State = { itemCount: int }
 
-    let init = { itemCount = 100 }
+    let init () = { itemCount = 100 }
 
     type Msg =
     | SetCount of int
@@ -96,7 +96,7 @@ module CanvasDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run
