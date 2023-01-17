@@ -104,7 +104,7 @@ module Shell =
             | Player.ExternalMsg.Shuffle -> Cmd.ofMsg (PlaylistMsg(Playlist.Msg.Shuffle))
             | Player.ExternalMsg.SetLoopState loopstate -> Cmd.ofMsg (PlaylistMsg(Playlist.Msg.SetLoopState loopstate))
 
-    let update (msg: Msg) (state: State) (window: HostWindow) (player: MediaPlayer) =
+    let update (window: HostWindow) (player: MediaPlayer) (msg: Msg) (state: State) =
         match msg with
         | PlayerMsg playermsg ->
             let s, cmd, external = Player.update playermsg state.playerState player
@@ -199,10 +199,7 @@ module Shell =
 #if DEBUG
             this.AttachDevTools(KeyGesture(Key.F12))
 #endif
-            let updateWithServices (msg: Msg) (state: State) =
-                update msg state this player
-            
-            Program.mkProgram init updateWithServices view
+            Program.mkProgram init (update this player) view
             |> Program.withHost this
             |> Program.withSubscription (Subs.registerSubscriptions player)
 #if DEBUG

@@ -23,7 +23,7 @@ type MainWindow() as this =
         this.AttachDevTools(KeyGesture(Key.F12))
 #endif
 
-        Elmish.Program.mkSimple (fun () -> Counter.init) Counter.update Counter.view
+        Elmish.Program.mkSimple Counter.init Counter.update Counter.view
         |> Program.withHost this
 #if DEBUG
         |> Program.withConsoleTrace

@@ -15,7 +15,7 @@ module WrapPanelDemo =
           itemHeight: float
           orientation: Orientation }
 
-    let init =
+    let init() =
         { itemWidth = 100.0
           itemHeight = 200.0
           orientation = Orientation.Horizontal}
@@ -92,7 +92,7 @@ module WrapPanelDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

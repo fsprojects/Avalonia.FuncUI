@@ -7,7 +7,7 @@ module Counter =
     open Avalonia.Layout
     
     type State = { count : int }
-    let init = { count = 0 }
+    let init() = { count = 0 }
 
     type Msg = Increment | Decrement | Reset
 
@@ -15,7 +15,7 @@ module Counter =
         match msg with
         | Increment -> { state with count = state.count + 1 }
         | Decrement -> { state with count = state.count - 1 }
-        | Reset -> init
+        | Reset -> init()
     
     let view (state: State) (dispatch) =
         DockPanel.create [

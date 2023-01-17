@@ -11,7 +11,7 @@ module MainView =
     }
 
     let init () = {
-        dataTemplateState = DataTemplateDemo.init
+        dataTemplateState = DataTemplateDemo.init()
     }
 
     type Msg =

@@ -19,7 +19,7 @@ type MainWindow() as this =
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
 
-        Elmish.Program.mkSimple (fun () -> Main.init) Main.update Main.view
+        Elmish.Program.mkSimple Main.init Main.update Main.view
         |> Program.withHost this
         |> Program.withConsoleTrace
         |> Program.run
