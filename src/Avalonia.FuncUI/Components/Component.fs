@@ -9,9 +9,9 @@ open Avalonia.FuncUI.VirtualDom
 open Avalonia.Threading
 
 [<AllowNullLiteral>]
-type Component (render: IComponentContext -> IView) =
+type Component (render: IComponentContext -> IView) as this =
     inherit Border ()
-    let context = new Context()
+    let context = new Context(this)
     let componentId = Guid.Unique
 
     let mutable lastViewElement : IView option = None
