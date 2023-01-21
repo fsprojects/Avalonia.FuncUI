@@ -62,8 +62,8 @@ let private mkProgram() =
     Program.mkProgram init update noView
 
 let cmp () = Component (fun ctx ->
-    //let model, dispatch = ctx.useElmish(init, update)
-    let model, dispatch = ctx.useRealElmish(mkProgram, ())
+    let model, dispatch = ctx.useElmish(mkProgram)
+    //let model, dispatch = ctx.useElmish(init, update) // Simple alternative if no subscriptions are needed
     
     Grid.create [
         Grid.rowDefinitions "20, *"
