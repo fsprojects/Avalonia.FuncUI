@@ -1,5 +1,7 @@
 ﻿module Examples.ChordParser.ChordParserView
 
+open Elmish
+open Avalonia.FuncUI.Elmish
 open Avalonia.Layout
 open Avalonia.Controls
 open Avalonia.FuncUI
@@ -56,8 +58,12 @@ let update msg model =
     | Reset ->
         init()
 
+let private mkProgram() = 
+    Program.mkProgram init update noView
+
 let cmp () = Component (fun ctx ->
-    let model, dispatch = ctx.useElmish(init, update)
+    //let model, dispatch = ctx.useElmish(init, update)
+    let model, dispatch = ctx.useRealElmish(mkProgram, ())
     
     Grid.create [
         Grid.rowDefinitions "20, *"
