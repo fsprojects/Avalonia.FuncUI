@@ -1,22 +1,34 @@
 ﻿module Avalonia.FuncUI.Elmish.ElmishHook
 
 open Avalonia.FuncUI
+open Avalonia.Threading
 
 [<RequireQualifiedAccess>]
 type Cmd<'Msg> = 
+    private
         | None
         | OfMsg of 'Msg
-        static member none = Cmd<'Msg>.None
-        static member ofMsg msg = Cmd<'Msg>.OfMsg msg
+        | OfAsyncMsg of Async<'Msg>
+
+[<RequireQualifiedAccess>]
+module Cmd = 
+    let none = Cmd<'Msg>.None
+    let ofMsg msg = Cmd<'Msg>.OfMsg msg
+    let ofAsyncMsg (asyncMsg: Async<'Msg>) = Cmd<'Msg>.OfAsyncMsg asyncMsg
 
 type ElmishState<'Model, 'Msg>(writableModel: IWritable<'Model>, update) =
     
+    let queue = new System.Collections.Generic.Queue<Async<'Msg>>()
+
     let rec updateRecursive (msg: 'Msg) (model: 'Model) =
         let model, cmd = update msg model
         match cmd with
         | Cmd.None -> model
         | Cmd.OfMsg msg -> updateRecursive msg model
-
+        | Cmd.OfAsyncMsg task -> 
+            queue.Enqueue(task)
+            model
+    
     member this.Model = writableModel.Current
 
     member this.Dispatch (msg: 'Msg) =
@@ -25,6 +37,7 @@ type ElmishState<'Model, 'Msg>(writableModel: IWritable<'Model>, update) =
 
     member this.Update : 'Msg -> 'Model -> 'Model * Cmd<'Msg> = update
 
+    member this.AsyncMessages = queue
 
 type IComponentContext with
     
@@ -39,17 +52,27 @@ type IComponentContext with
         let writableModel = this.useState (initModel, true)
         let state = ElmishState<'Model, 'Msg>(writableModel, update)        
 
+        // Check for init msg
         match initCmd with
         | Cmd.OfMsg msg -> 
             this.useEffect(
-                handler = (fun _ ->
-                    state.Dispatch msg
-                ),
-                triggers = [
-                    EffectTrigger.AfterInit
-                ]
+                fun _ -> state.Dispatch msg
+                , [ EffectTrigger.AfterInit ]
             )
         | _ -> ()
+
+        // Check for async msg
+        this.useEffect(
+            fun _ -> 
+                let hasAsyncMsg, asyncMsg = state.AsyncMessages.TryDequeue()
+                if hasAsyncMsg then
+                    async {
+                        let! msg = asyncMsg
+                        state.Dispatch msg
+                    }
+                    |> Async.StartImmediate
+            , [ EffectTrigger.AfterChange writableModel ]
+        )
         
         state.Model, state.Dispatch
 
