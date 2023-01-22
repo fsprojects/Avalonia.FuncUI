@@ -22,7 +22,7 @@ type App() =
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
             let mainWindow = MainWindow()
-            InspectorWindow(mainWindow).Show()
+            //InspectorWindow(mainWindow).Show()
             //mainWindow.Renderer.DrawDirtyRects <- true
             desktopLifetime.MainWindow <- mainWindow
         | _ -> ()

@@ -3,7 +3,7 @@
 open Avalonia.FuncUI
 open Elmish
 
-type ElmishState<'model, 'msg, 'arg>(mkProgram : unit -> Program<'arg, 'model, 'msg, unit>, arg: 'arg) =
+type ElmishState<'model, 'msg, 'arg>(mkProgram : unit -> Program<'arg, 'model, 'msg, unit>, arg: 'arg, setModel) =
     let program = mkProgram()
 
     let mutable state, cmd =
@@ -12,10 +12,9 @@ type ElmishState<'model, 'msg, 'arg>(mkProgram : unit -> Program<'arg, 'model, '
 
     let setState model dispatch =
         let oldModel = fst state
-        state <- model, dispatch
         if not (obj.ReferenceEquals(model, oldModel)) then
-            ()
-            // sync
+            state <- model, dispatch
+            setModel model
     do  
         program
         |> Program.withSetState setState
@@ -28,21 +27,54 @@ let noView = (fun _ _ -> ())
 
 type IComponentContext with
     
-    member this.useElmish<'arg, 'model, 'msg> (mkProgram : unit -> Program<'arg, 'model, 'msg, unit>, arg: 'arg) =
-        let elmishState = this.useState (ElmishState(mkProgram, arg))
+    member this.useElmish<'arg, 'model, 'msg> 
+        (
+            init : 'arg -> 'model * Cmd<'msg>, 
+            update: 'msg -> 'model -> 'model * Cmd<'msg>, 
+            arg: 'arg, 
+            mapProgram: Program<'arg, 'model, 'msg, unit> -> Program<'arg, 'model, 'msg, unit>
+        ) =
         
-        elmishState.Current.Model, (fun msg -> 
-            elmishState.Current.Dispatch msg
-            elmishState.Set elmishState.Current
+        let elmishStateRef = ref None
+        let writableModel = this.useState(init arg |> fst, true)
+
+        // Start Elmish loop
+        this.useEffect(
+            fun () -> 
+                let mkProgram() = 
+                    Program.mkProgram init update noView
+                    |> mapProgram
+
+                let setModel model = 
+                    writableModel.Set model
+
+                let es = ElmishState(mkProgram, arg, setModel)
+                elmishStateRef := Some es
+            , [ EffectTrigger.AfterInit ]
         )
+        
+        let dispatch map = 
+            elmishStateRef.Value 
+            |> Option.iter (fun es -> es.Dispatch map)
 
-    member this.useElmish<'model, 'msg> (mkProgram : unit -> Program<unit, 'model, 'msg, unit>) =
-        this.useElmish(mkProgram, ())
+        writableModel.Current, dispatch
 
-    member this.useElmish<'arg, 'model, 'msg> (init : 'arg -> 'model * Cmd<'msg>, update: 'msg -> 'model -> 'model * Cmd<'msg>, arg: 'arg) =
-        let mkProgram() = Program.mkProgram init update noView
-        this.useElmish(mkProgram, arg)
+    member this.useElmish<'arg, 'model, 'msg> 
+        (
+            init : 'arg -> 'model * Cmd<'msg>, 
+            update: 'msg -> 'model -> 'model * Cmd<'msg>, 
+            arg: 'arg
+        ) =
 
-    member this.useElmish<'model, 'msg> (init : unit -> 'model * Cmd<'msg>, update: 'msg -> 'model -> 'model * Cmd<'msg>) =
-        let mkProgram() = Program.mkProgram init update noView
-        this.useElmish(mkProgram, ())
+        this.useElmish(init, update, arg, id)
+
+    //member this.useElmish<'model, 'msg> (mkProgram : unit -> Program<unit, 'model, 'msg, unit>) =
+    //    this.useElmish(mkProgram, ())
+
+    //member this.useElmish<'arg, 'model, 'msg> (init : 'arg -> 'model * Cmd<'msg>, update: 'msg -> 'model -> 'model * Cmd<'msg>, arg: 'arg) =
+    //    let mkProgram() = Program.mkProgram init update noView
+    //    this.useElmish(mkProgram, arg)
+
+    //member this.useElmish<'model, 'msg> (init : unit -> 'model * Cmd<'msg>, update: 'msg -> 'model -> 'model * Cmd<'msg>) =
+    //    let mkProgram() = Program.mkProgram init update noView
+    //    this.useElmish(mkProgram, ())
