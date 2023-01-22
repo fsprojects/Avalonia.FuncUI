@@ -3,6 +3,7 @@
 open Avalonia.FuncUI
 open Elmish
 
+/// Starts an Elmish loop and provides a Dispatch method that calls the given setModel fn.
 type ElmishState<'model, 'msg, 'arg>(mkProgram : unit -> Program<'arg, 'model, 'msg, unit>, arg: 'arg, setModel) =
     let program = mkProgram()
 
@@ -40,14 +41,11 @@ type IComponentContext with
         this.useEffect(
             fun () -> 
                 let mkProgram() = 
-                    Program.mkProgram (fun () -> writableModel.Current, Cmd.none) update ignoreView
+                    let init() = writableModel.Current, Cmd.none
+                    Program.mkProgram init update ignoreView
                     |> mapProgram
 
-                let setModel model = 
-                    writableModel.Set model
-
-                let es = ElmishState(mkProgram, (), setModel)
-                elmishStateRef := Some es
+                elmishStateRef := ElmishState(mkProgram, (), writableModel.Set) |> Some
             , [ EffectTrigger.AfterInit ]
         )
         
@@ -85,11 +83,7 @@ type IComponentContext with
                     Program.mkProgram init update ignoreView
                     |> mapProgram
 
-                let setModel model = 
-                    writableModel.Set model
-
-                let es = ElmishState(mkProgram, initArg, setModel)
-                elmishStateRef := Some es
+                elmishStateRef := ElmishState(mkProgram, initArg, writableModel.Set) |> Some
             , [ EffectTrigger.AfterInit ]
         )
         
