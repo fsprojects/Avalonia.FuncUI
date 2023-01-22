@@ -10,7 +10,7 @@ type MainWindow() =
     inherit HostWindow()
     do
         base.Title <- "Chord Parser"
-        base.Content <- ChordParserView.cmp ()
+        base.Content <- ChordParserView.view ()
 
 type App() =
     inherit Application()

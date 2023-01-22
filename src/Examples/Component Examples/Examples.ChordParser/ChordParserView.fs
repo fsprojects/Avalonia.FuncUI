@@ -67,17 +67,14 @@ let update msg model =
 
 let private subscriptions (model: Model) : Sub<Msg> =
     let timerSub (dispatch: Msg -> unit) =
-        let invoke() =
-            dispatch Msg.SetTime
-            true
-                    
-        DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 1000.0)
+        let invoke() = dispatch Msg.SetTime; true
+        DispatcherTimer.Run(invoke, TimeSpan.FromMilliseconds 1000.0)
 
     [ 
         [ nameof timerSub ], timerSub
     ]
 
-let cmp () = Component (fun ctx ->
+let view () = Component (fun ctx ->
     let model, dispatch = ctx.useElmish(init, update, (), Program.withSubscription subscriptions)
     //let model, dispatch = ctx.useElmish(init, update, ()) // if no subscriptions are needed
     
