@@ -71,7 +71,9 @@ let private subscriptions (model: Model) : Sub<Msg> =
         DispatcherTimer.Run(invoke, TimeSpan.FromMilliseconds 1000.0)
 
     [ 
-        [ nameof timerSub ], timerSub
+        // Dynamically start or stop (Dispose) subscription
+        if model.Transpose = 0 then 
+            [ nameof timerSub ], timerSub
     ]
 
 let view () = Component (fun ctx ->
