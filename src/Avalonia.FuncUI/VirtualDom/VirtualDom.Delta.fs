@@ -101,7 +101,7 @@ module internal rec Delta =
           Attrs: AttrDelta list
           ConstructorArgs: obj array
           KeyDidChange: bool
-          Outlet: (IAvaloniaObject -> unit) voption }
+          Outlet: (AvaloniaObject -> unit) voption }
 
         static member From (view: IView, ?keyDidChange: bool) : ViewDelta =
             { ViewType = view.ViewType
