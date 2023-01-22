@@ -1,11 +1,15 @@
 ﻿module Examples.ChordParser.ChordParserView
 
+open Elmish
+open System
+open Avalonia.FuncUI.Elmish
 open Avalonia.Layout
 open Avalonia.Controls
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Elmish.ElmishHook
+open Avalonia.Threading
 
 type Model = 
     { 
@@ -14,6 +18,7 @@ type Model =
         Transpose: int
         Accidental: string
         UCase: bool
+        Time: DateTime
     }
 
 type Msg = 
@@ -24,15 +29,17 @@ type Msg =
     | SetAccidental of string
     | SetUCase of bool
     | Reset
+    | SetTime
 
-let init = 
+let init() = 
     { 
         InputChordChart = SampleCharts.autumnLeaves
         OutputChordChart = Ok ""
         Transpose = 0
         Accidental = "b"
         UCase = false
-    }, Cmd.none
+        Time = DateTime.Now
+    }, Cmd.ofMsg ParseChart
 
 let update msg model = 
     match msg with
@@ -54,10 +61,24 @@ let update msg model =
     | SetUCase ucase -> 
         { model with UCase = ucase }, Cmd.ofMsg ParseChart
     | Reset ->
-        init
+        init()
+    | SetTime ->
+        { model with Time = DateTime.Now }, Cmd.none 
 
-let cmp () = Component (fun ctx ->
-    let model, dispatch = ctx.useElmish (init, update)
+let private subscriptions (model: Model) : Sub<Msg> =
+    let timerSub (dispatch: Msg -> unit) =
+        let invoke() = dispatch Msg.SetTime; true
+        DispatcherTimer.Run(invoke, TimeSpan.FromMilliseconds 1000.0)
+
+    [ 
+        // Dynamically start or stop (Dispose) subscription
+        if model.Transpose = 0 then 
+            [ nameof timerSub ], timerSub
+    ]
+
+let view () = Component (fun ctx ->
+    let model, dispatch = ctx.useElmish(init, update, (), Program.withSubscription subscriptions)
+    //let model, dispatch = ctx.useElmish(init, update, ()) // if no subscriptions are needed
     
     Grid.create [
         Grid.rowDefinitions "20, *"
@@ -69,7 +90,7 @@ let cmp () = Component (fun ctx ->
                 Grid.column 0
             ]
             TextBlock.create [
-                TextBlock.text "Output Chord Chart"
+                TextBlock.text $"Output Chord Chart - TIME: {model.Time}"
                 Grid.column 2
             ]
 
@@ -154,7 +175,7 @@ let cmp () = Component (fun ctx ->
                         Button.horizontalContentAlignment HorizontalAlignment.Center
                         Button.onClick (fun _ -> dispatch Reset)
                         Button.isEnabled (
-                            let initialModel, _ = init
+                            let initialModel, _ = init()
                             model <> initialModel
                         )
                     ]

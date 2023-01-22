@@ -24,7 +24,7 @@ module About =
 
     type Msg = OpenUrl of Links
 
-    let init = { noop = false }, Cmd.none
+    let init() = { noop = false }, Cmd.none
 
 
     let update (msg: Msg) (state: State) =

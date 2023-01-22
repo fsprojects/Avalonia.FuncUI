@@ -29,7 +29,7 @@ module DataTemplateDemo =
         Selected : Product option
     }
 
-    let init = {
+    let init() = {
         Products = [ 0 .. 500 ] |> List.map (fun _ -> Product.Random())
         Selected = None
     }
@@ -41,7 +41,7 @@ module DataTemplateDemo =
 
     let update (msg: Msg) (state: State) : State =
         match msg with
-        | Reset -> init
+        | Reset -> init()
         | Remove guid ->
             { state with
                 Products = state.Products |> List.filter (fun person -> person.Id <> guid)

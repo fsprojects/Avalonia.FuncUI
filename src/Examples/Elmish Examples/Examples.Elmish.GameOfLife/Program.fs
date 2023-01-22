@@ -32,7 +32,7 @@ type MainWindow() as this =
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         
-        Elmish.Program.mkProgram Main.initialState Main.update Main.view
+        Elmish.Program.mkProgram Main.init Main.update Main.view
         |> Program.withHost this
         |> Program.withSubscription subscriptions
         |> Program.run
