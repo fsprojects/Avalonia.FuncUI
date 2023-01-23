@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
     <AvaloniaVersion>11.0.0-preview4</AvaloniaVersion>
-    <FuncUIVersion>0.6.0-preview6</FuncUIVersion>
+    <FuncUIVersion>0.6.0-preview6.1</FuncUIVersion>
   </PropertyGroup>
 </Project>

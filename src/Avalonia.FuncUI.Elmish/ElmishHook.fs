@@ -35,22 +35,25 @@ type IComponentContext with
             mapProgram: Program<unit, 'model, 'msg, unit> -> Program<unit, 'model, 'msg, unit>
         ) =
         
-        let elmishStateRef = ref None
+        let elmishState = this.useState(None, false)
 
         // Start Elmish loop
         this.useEffect(
             fun () -> 
                 let mkProgram() = 
                     let init() = writableModel.Current, Cmd.none
-                    Program.mkProgram init update ignoreView
+                    Program.mkProgram init update ignoreView 
                     |> mapProgram
 
-                elmishStateRef := ElmishState(mkProgram, (), writableModel.Set) |> Some
+                ElmishState(mkProgram, (), writableModel.Set) 
+                |> Some 
+                |> elmishState.Set
+
             , [ EffectTrigger.AfterInit ]
         )
         
         let dispatch map = 
-            elmishStateRef.Value 
+            elmishState.Current
             |> Option.iter (fun es -> es.Dispatch map)
 
         writableModel.Current, dispatch
@@ -73,7 +76,7 @@ type IComponentContext with
             mapProgram: Program<'arg, 'model, 'msg, unit> -> Program<'arg, 'model, 'msg, unit>
         ) =
         
-        let elmishStateRef = ref None
+        let elmishState = this.useState(None, false)
         let writableModel = this.useState(init initArg |> fst, true)
 
         // Start Elmish loop
@@ -83,12 +86,15 @@ type IComponentContext with
                     Program.mkProgram init update ignoreView
                     |> mapProgram
 
-                elmishStateRef := ElmishState(mkProgram, initArg, writableModel.Set) |> Some
+                ElmishState(mkProgram, initArg, writableModel.Set) 
+                |> Some 
+                |> elmishState.Set
+
             , [ EffectTrigger.AfterInit ]
         )
         
         let dispatch map = 
-            elmishStateRef.Value 
+            elmishState.Current
             |> Option.iter (fun es -> es.Dispatch map)
 
         writableModel.Current, dispatch
