@@ -27,7 +27,6 @@ module internal Utils =
 module internal Extensions =
     open Avalonia.Interactivity
     open System
-    open System.Reactive.Linq
 
     type IObservable<'a> with
         member this.SubscribeWeakly(callback: 'a -> unit, target) =
@@ -45,4 +44,5 @@ module internal Extensions =
                 this.AddDisposableHandler(routedEvent, handler, routedEvent.RoutingStrategies)
             )
             
-            Observable.Create(sub)
+            { new IObservable<'args>
+              with member this.Subscribe(observer: IObserver<'args>) = sub.Invoke(observer) }
