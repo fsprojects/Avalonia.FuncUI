@@ -27,14 +27,15 @@ let ignoreView = (fun _ _ -> ())
 
 type IComponentContext with
 
-    /// Starts an Elmish loop using an existing IWritable.
+    /// Starts an Elmish loop with an existing IWritable.
     member this.useElmish<'model, 'msg> 
         (
             writableModel: IWritable<'model>, 
             update: 'msg -> 'model -> 'model * Cmd<'msg>, 
-            mapProgram: Program<unit, 'model, 'msg, unit> -> Program<unit, 'model, 'msg, unit>
+            ?mapProgram: Program<unit, 'model, 'msg, unit> -> Program<unit, 'model, 'msg, unit>
         ) =
         
+        let mapProgram = defaultArg mapProgram id
         let elmishState = this.useState(None, false)
 
         // Start Elmish loop
@@ -57,25 +58,18 @@ type IComponentContext with
             |> Option.iter (fun es -> es.Dispatch map)
 
         writableModel.Current, dispatch
-
-    /// Starts an Elmish loop using an existing IWritable.
-    member this.useElmish<'model, 'msg> 
-        (
-            writableModel: IWritable<'model>, 
-            update: 'msg -> 'model -> 'model * Cmd<'msg>
-        ) =
-
-        this.useElmish(writableModel, update, id)
     
-    /// Starts an Elmish loop.
+    /// Starts an Elmish loop with an init arg.
     member this.useElmish<'arg, 'model, 'msg> 
         (
             init : 'arg -> 'model * Cmd<'msg>, 
             update: 'msg -> 'model -> 'model * Cmd<'msg>, 
             initArg: 'arg, 
-            mapProgram: Program<'arg, 'model, 'msg, unit> -> Program<'arg, 'model, 'msg, unit>
+            ?mapProgram: Program<'arg, 'model, 'msg, unit> -> Program<'arg, 'model, 'msg, unit>
         ) =
         
+        let mapProgram = mapProgram |> Option.defaultValue id
+
         let elmishState = this.useState(None, false)
         let writableModel = this.useState(init initArg |> fst, true)
 
@@ -100,11 +94,12 @@ type IComponentContext with
         writableModel.Current, dispatch
 
     /// Starts an Elmish loop.
-    member this.useElmish<'arg, 'model, 'msg> 
+    member this.useElmish<'model, 'msg> 
         (
-            init : 'arg -> 'model * Cmd<'msg>, 
+            init : unit -> 'model * Cmd<'msg>, 
             update: 'msg -> 'model -> 'model * Cmd<'msg>, 
-            initArg: 'arg
+            ?mapProgram: Program<unit, 'model, 'msg, unit> -> Program<unit, 'model, 'msg, unit>
         ) =
 
-        this.useElmish(init, update, initArg, id)
+        let mapProgram = defaultArg mapProgram id
+        this.useElmish(init, update, (), mapProgram)
