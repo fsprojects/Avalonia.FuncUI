@@ -6,7 +6,6 @@ open Avalonia.Controls.Presenters
 open Elmish
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open Avalonia.Styling
 

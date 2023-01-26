@@ -66,6 +66,7 @@ type IComponentContext =
     /// </example>
     /// </summary>
     /// <param name="value">value should not change during the component lifetime.</param>
+    /// <param name="renderOnChange">re-render component on change (default: true).</param>
     abstract usePassed<'value> : value: IWritable<'value> * ?renderOnChange: bool -> IWritable<'value>
 
     /// <summary>

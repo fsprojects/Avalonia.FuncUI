@@ -1,7 +1,5 @@
 namespace Avalonia.FuncUI.DSL
 
-open System.Collections
-
 [<AutoOpen>]
 module SelectingItemsControl =
     open Avalonia.Controls.Primitives

@@ -2,10 +2,8 @@ namespace Avalonia.FuncUI.Diagnostics
 
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Diagnostics
-open System
 open Avalonia
 open Avalonia.Controls
-open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
 open Avalonia.Layout
@@ -80,7 +78,7 @@ type internal StateHookViews =
         )
 
     static member private stateHookSourcesView (hook: StateHook) =
-        Component.create ("state_hook_sources", fun ctx ->
+        Component.create ("state_hook_sources", fun _ctx ->
             TreeView.create [
                 TreeView.itemTemplate (
                     DataTemplateView<_>.create (
@@ -157,7 +155,7 @@ type internal StateHookViews =
         )
 
     static member stateHookDetailsView (hook: StateHook) =
-        Component.create ($"state_hook_detail_view_{hook.Identity}", fun ctx ->
+        Component.create ($"state_hook_detail_view_{hook.Identity}", fun _ctx ->
             StackPanel.create [
                 StackPanel.spacing 10.0
                 StackPanel.children [
@@ -184,7 +182,7 @@ type internal StateHookViews =
         )
 
     static member stateHookView (hook: StateHook) =
-        Component.create ($"state_hook_detail_view_{hook.Identity}", fun ctx ->
+        Component.create ($"state_hook_detail_view_{hook.Identity}", fun _ctx ->
             Border.create [
                 Border.padding 5.0
                 Border.child (

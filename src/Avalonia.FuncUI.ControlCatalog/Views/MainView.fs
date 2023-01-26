@@ -21,7 +21,7 @@ module MainView =
         match msg with
         | DataTemplateDemoMsg msg -> { state with dataTemplateState = DataTemplateDemo.update msg state.dataTemplateState }
 
-    let view (state: CounterState) (dispatch) =
+    let view (state: CounterState) dispatch =
         TabControl.create [
             TabControl.tabStripPlacement Dock.Left
             TabControl.viewItems [
