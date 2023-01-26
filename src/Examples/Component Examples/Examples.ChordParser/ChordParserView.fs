@@ -77,8 +77,8 @@ let private subscriptions (model: Model) : Sub<Msg> =
     ]
 
 let view () = Component (fun ctx ->
-    let model, dispatch = ctx.useElmish(init, update, (), Program.withSubscription subscriptions)
-    //let model, dispatch = ctx.useElmish(init, update, ()) // if no subscriptions are needed
+    let model, dispatch = ctx.useElmish(init, update, Program.withSubscription subscriptions)
+    //let model, dispatch = ctx.useElmish(init, update) // if no subscriptions are needed
     
     Grid.create [
         Grid.rowDefinitions "20, *"
