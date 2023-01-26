@@ -10,7 +10,7 @@ open Avalonia.Media
 type IconView =
 
     static member create (drawing: Drawing, size: int) : IView =
-        Component.create ($"icon_{drawing.GetHashCode()}", fun ctx ->
+        Component.create ($"icon_{drawing.GetHashCode()}", fun _ctx ->
             let vectorImage = DrawingImage(drawing)
 
             Image.create [

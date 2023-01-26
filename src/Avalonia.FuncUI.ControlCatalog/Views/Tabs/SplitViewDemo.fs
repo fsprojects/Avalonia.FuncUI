@@ -6,7 +6,6 @@ open Avalonia.Layout
 open Avalonia.Media
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open System
 

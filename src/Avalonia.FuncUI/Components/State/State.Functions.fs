@@ -2,7 +2,6 @@ namespace Avalonia.FuncUI
 
 open System
 open Avalonia.FuncUI
-open Microsoft.FSharp.Quotations
 
 [<RequireQualifiedAccess>]
 module State =

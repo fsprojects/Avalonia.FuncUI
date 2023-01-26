@@ -5,7 +5,6 @@ module internal rec Patcher =
     open System.Collections
     open System.Collections.Concurrent
     open Avalonia.Controls
-    open Avalonia.Controls.Documents
     open Avalonia
     open Avalonia.FuncUI.VirtualDom.Delta
     open Avalonia.FuncUI.Library

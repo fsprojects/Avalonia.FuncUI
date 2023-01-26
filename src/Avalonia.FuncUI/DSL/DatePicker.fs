@@ -4,7 +4,6 @@
 module DatePicker =
     open System
     open Avalonia.Controls
-    open Avalonia.Controls.Templates
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     

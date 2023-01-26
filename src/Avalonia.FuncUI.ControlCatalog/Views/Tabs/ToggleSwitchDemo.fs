@@ -1,6 +1,5 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
-open System
 open Elmish
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
