@@ -4,6 +4,7 @@
 module LayoutTransformControl =
     open Avalonia.Media
     open Avalonia.Controls
+    open Avalonia.FuncUI
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
    
@@ -12,7 +13,7 @@ module LayoutTransformControl =
 
     type LayoutTransformControl with
         static member layoutTransform<'t when 't :> LayoutTransformControl>(value: ITransform) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ITransform>(LayoutTransformControl.LayoutTransformProperty, value, ValueNone)
+            AttrBuilder<'t>.CreateProperty<ITransform>(LayoutTransformControl.LayoutTransformProperty, value, ValueSome EqualityComparers.compareTransforms)
             
         static member useRenderTransform<'t when 't :> LayoutTransformControl>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(LayoutTransformControl.UseRenderTransformProperty, value, ValueNone)
