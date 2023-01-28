@@ -6,14 +6,14 @@ module Carousel =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-    
-    let create (attrs: IAttr<Carousel> list): IView<Carousel> =
+
+    let create (attrs: Attr<Carousel> list): IView<Carousel> =
         ViewBuilder.Create<Carousel>(attrs)
-     
+
     type Carousel with
 
-        static member isVirtualized<'t when 't :> Carousel>(value: bool) : IAttr<'t> =
+        static member isVirtualized<'t when 't :> Carousel>(value: bool) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Carousel.IsVirtualizedProperty, value, ValueNone)
-        
-        static member pageTransition<'t when 't :> Carousel>(transition: IPageTransition) : IAttr<'t> =
+
+        static member pageTransition<'t when 't :> Carousel>(transition: IPageTransition) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<IPageTransition>(Carousel.PageTransitionProperty, transition, ValueNone)

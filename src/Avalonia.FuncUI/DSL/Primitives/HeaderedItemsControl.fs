@@ -5,20 +5,20 @@ module HeaderedItemsControl =
     open Avalonia.Controls.Primitives
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-    
-    let create (attrs: IAttr<HeaderedItemsControl> list): IView<HeaderedItemsControl> =
+
+    let create (attrs: Attr<HeaderedItemsControl> list): IView<HeaderedItemsControl> =
         ViewBuilder.Create<HeaderedItemsControl>(attrs)
-            
+
     type HeaderedItemsControl with
-    
-        static member header<'t when 't :> HeaderedItemsControl>(text: string) : IAttr<'t> =
+
+        static member header<'t when 't :> HeaderedItemsControl>(text: string) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(HeaderedItemsControl.HeaderProperty, text, ValueNone)
-            
-        static member header<'t when 't :> HeaderedItemsControl>(value: obj) : IAttr<'t> =
+
+        static member header<'t when 't :> HeaderedItemsControl>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(HeaderedItemsControl.HeaderProperty, value, ValueNone)
-            
-        static member header<'t when 't :> HeaderedItemsControl>(value: IView option) : IAttr<'t> =
+
+        static member header<'t when 't :> HeaderedItemsControl>(value: IView option) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(HeaderedItemsControl.HeaderProperty, value)
-            
-        static member header<'t when 't :> HeaderedItemsControl>(value: IView) : IAttr<'t> =
+
+        static member header<'t when 't :> HeaderedItemsControl>(value: IView) : Attr<'t> =
             value |> Some |> HeaderedItemsControl.header

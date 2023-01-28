@@ -1,6 +1,7 @@
 namespace Avalonia.FuncUI.VirtualDom
 
 open System
+open System.Runtime.CompilerServices
 open System.Threading
 
 open Avalonia
@@ -9,10 +10,11 @@ open Avalonia.FuncUI.Types
 
 module internal rec Delta =
 
+    [<Struct; IsReadOnly>]
     type AttrDelta =
-        | Property of PropertyDelta
-        | Content of ContentDelta
-        | Subscription of SubscriptionDelta
+        | Property of property: PropertyDelta
+        | Content of content: ContentDelta
+        | Subscription of subscription: SubscriptionDelta
 
         static member From (attr: IAttr) : AttrDelta =
             match attr with
@@ -22,7 +24,7 @@ module internal rec Delta =
             | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
 
 
-    [<CustomEquality; NoComparison>]
+    [<Struct; IsReadOnly; CustomEquality; NoComparison>]
     type PropertyDelta =
         { Accessor: Accessor
           Value: obj option
@@ -44,7 +46,7 @@ module internal rec Delta =
             (this.Accessor, this.Value).GetHashCode()
 
 
-    [<CustomEquality; NoComparison>]
+    [<Struct; IsReadOnly; CustomEquality; NoComparison>]
     type SubscriptionDelta =
         { Name: string
           Subscribe: IControl * Delegate -> CancellationTokenSource
@@ -66,6 +68,7 @@ module internal rec Delta =
 
         member this.UniqueName = this.Name
 
+    [<Struct; IsReadOnly>]
     type ContentDelta =
         { Accessor: Accessor
           Content: ViewContentDelta }
@@ -73,10 +76,11 @@ module internal rec Delta =
         static member From (content: Content) : ContentDelta =
             { Accessor = content.Accessor;
               Content = ViewContentDelta.From content.Content }
-            
+
+    [<Struct; IsReadOnly>]
     type ViewContentDelta =
-        | Single of ViewDelta option
-        | Multiple of ViewDelta list
+        | Single of single: ViewDelta option
+        | Multiple of multiple: ViewDelta list
 
         static member From (viewContent: ViewContent) : ViewContentDelta =
             match viewContent with
@@ -95,7 +99,7 @@ module internal rec Delta =
                 |> List.map (fun view -> ViewDelta.From view)
                 |> ViewContentDelta.Multiple
 
-    [<CustomEquality; NoComparison>]
+    [<Struct; IsReadOnly; CustomEquality; NoComparison>]
     type ViewDelta =
         { ViewType: Type
           Attrs: AttrDelta list
@@ -109,7 +113,7 @@ module internal rec Delta =
               ConstructorArgs = view.ConstructorArgs
               KeyDidChange = defaultArg keyDidChange false
               Outlet = view.Outlet}
-            
+
         override this.Equals(other) =
             match other with
             | :? ViewDelta as other ->

@@ -6,14 +6,14 @@ module Path =
     open Avalonia.Controls.Shapes
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
-    
-    let create (attrs: IAttr<Path> list): IView<Path> =
+
+    let create (attrs: Attr<Path> list): IView<Path> =
         ViewBuilder.Create<Path>(attrs)
-     
+
     type Path with
 
-        static member data<'t when 't :> Path>(geometry: Geometry) : IAttr<'t> =
+        static member data<'t when 't :> Path>(geometry: Geometry) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<Geometry>(Path.DataProperty, geometry, ValueNone)
-            
-        static member data<'t when 't :> Path>(data: string) : IAttr<'t> =
+
+        static member data<'t when 't :> Path>(data: string) : Attr<'t> =
             data |> Geometry.Parse |> Path.data

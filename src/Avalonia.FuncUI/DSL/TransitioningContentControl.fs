@@ -10,13 +10,13 @@ module TransitioningContentControl =
     open Avalonia.Controls.Templates
     open Avalonia.Layout
 
-    let create (attrs : IAttr<TransitioningContentControl> list) : IView<TransitioningContentControl> =
+    let create (attrs : Attr<TransitioningContentControl> list) : IView<TransitioningContentControl> =
         ViewBuilder.Create<TransitioningContentControl>(attrs)
 
     type TransitioningContentControl with
 
-        static member currentContent<'t when 't :> TransitioningContentControl>(value: obj) : IAttr<'t> =
+        static member currentContent<'t when 't :> TransitioningContentControl>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(TransitioningContentControl.CurrentContentProperty, value, ValueNone)
 
-        static member pageTransition<'t when 't :> TransitioningContentControl>(transition: IPageTransition) : IAttr<'t> =
+        static member pageTransition<'t when 't :> TransitioningContentControl>(transition: IPageTransition) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<IPageTransition>(TransitioningContentControl.PageTransitionProperty, transition, ValueNone)

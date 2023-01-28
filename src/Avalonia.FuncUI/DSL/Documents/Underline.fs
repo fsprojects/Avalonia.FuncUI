@@ -1,14 +1,14 @@
 namespace Avalonia.FuncUI.DSL
 
 [<AutoOpen>]
-module Underline =  
+module Underline =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
     open Avalonia.Controls.Documents
 
-    let create (attrs: IAttr<Underline> list): IView<Underline> =
+    let create (attrs: Attr<Underline> list): IView<Underline> =
         ViewBuilder.Create(attrs)
-        
+
     let createText (text: string): IView<Underline> =
         ViewBuilder.Create([
             Underline.inlines [

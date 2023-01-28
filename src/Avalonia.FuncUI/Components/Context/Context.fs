@@ -165,7 +165,7 @@ type IComponentContext =
     /// </example>
     /// </para>
     /// </summary>
-    abstract attrs: IAttr<Avalonia.Controls.Border> list -> unit
+    abstract attrs: Attr<Avalonia.Controls.Border> list -> unit
 
 type Context () =
     let disposables = new DisposableBag ()
@@ -176,7 +176,7 @@ type Context () =
         disposables.Add effectQueue
         effectQueue
 
-    let mutable componentAttrs: IAttr<Avalonia.Controls.Border> list = List.empty
+    let mutable componentAttrs: Attr<Avalonia.Controls.Border> list = List.empty
 
     let mutable callingIndex = 0
 
@@ -263,7 +263,7 @@ type Context () =
         member this.trackDisposable (item: IDisposable) : unit =
             disposables.Add item
 
-        member this.attrs (attrs: IAttr<Avalonia.Controls.Border> list) : unit =
+        member this.attrs (attrs: Attr<Avalonia.Controls.Border> list) : unit =
             componentAttrs <- attrs
 
         member this.useEffect (effect: unit -> IDisposable, triggers: EffectTrigger list) : unit =

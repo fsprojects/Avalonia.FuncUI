@@ -5,8 +5,8 @@ module Separator =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-   
-    let create (attrs: IAttr<Separator> list): IView<Separator> =
+
+    let create (attrs: Attr<Separator> list): IView<Separator> =
         ViewBuilder.Create<Separator>(attrs)
 
     type Separator with

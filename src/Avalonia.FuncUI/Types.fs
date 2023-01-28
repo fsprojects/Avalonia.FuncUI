@@ -1,5 +1,6 @@
 ﻿namespace rec Avalonia.FuncUI
 
+open System.Runtime.CompilerServices
 open Avalonia
 open Avalonia.Controls
 open System
@@ -7,7 +8,7 @@ open System.Threading
 
 module Types =
 
-    [<CustomEquality; NoComparison>]
+    [<Struct; IsReadOnly; CustomEquality; NoComparison>]
     type PropertyAccessor =
         { Name: string
           Getter: (IAvaloniaObject -> obj) voption
@@ -21,11 +22,12 @@ module Types =
         override this.GetHashCode () =
             this.Name.GetHashCode()
 
+    [<Struct; IsReadOnly>]
     type Accessor =
-        | InstanceProperty of PropertyAccessor
-        | AvaloniaProperty of Avalonia.AvaloniaProperty
+        | InstanceProperty of instanceProperty: PropertyAccessor
+        | AvaloniaProperty of avaloniaProperty: Avalonia.AvaloniaProperty
 
-    [<CustomEquality; NoComparison>]
+    [<Struct; IsReadOnly; CustomEquality; NoComparison>]
     type Property =
         { Accessor: Accessor
           Value: obj
@@ -50,15 +52,17 @@ module Types =
         override this.GetHashCode () =
             (this.Accessor, this.Value).GetHashCode()
 
+    [<Struct; IsReadOnly>]
     type Content =
         { Accessor: Accessor
           Content: ViewContent }
 
+    [<Struct; IsReadOnly>]
     type ViewContent =
-        | Single of IView option
-        | Multiple of IView list
+        | Single of single: IView option
+        | Multiple of multiple: IView list
 
-    [<CustomEquality; NoComparison>]
+    [<Struct; IsReadOnly; CustomEquality; NoComparison>]
     type Subscription =
         { Name: string
           Subscribe: IControl  * Delegate -> CancellationTokenSource
@@ -76,22 +80,18 @@ module Types =
 
         override this.GetHashCode () =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
-    
+
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
 
-    type IAttr<'viewType> =
-        inherit IAttr
-
+    [<Struct; IsReadOnly>]
     type Attr<'viewType> =
-        | Property of Property
-        | Content of Content
-        | Subscription of Subscription
-
-        interface IAttr<'viewType>
+        | Property of property: Property
+        | Content of content: Content
+        | Subscription of subscription: Subscription
 
         interface IAttr with
             member this.UniqueName =
@@ -132,12 +132,13 @@ module Types =
 
     type IView<'viewType> =
         inherit IView
-        abstract member Attrs: IAttr<'viewType> list with get
+        abstract member Attrs: Attr<'viewType> list with get
 
+    [<Struct; IsReadOnly>]
     type View<'viewType> =
         { ViewType: Type
           ViewKey: string voption
-          Attrs: IAttr<'viewType> list
+          Attrs: Attr<'viewType> list
           ConstructorArgs: obj array
           Outlet: (IAvaloniaObject-> unit) voption }
 
@@ -163,4 +164,3 @@ module Types =
 
     let internal (|Subscription'|_|) (attr: IAttr)  =
         attr.Subscription
-    

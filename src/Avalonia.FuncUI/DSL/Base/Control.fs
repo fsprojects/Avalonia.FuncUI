@@ -8,18 +8,18 @@ module Control =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: IAttr<Control> list): IView<Control> =
+    let create (attrs: Attr<Control> list): IView<Control> =
         ViewBuilder.Create<Control>(attrs)
 
     type Control with
 
-        static member focusAdorner<'t, 'c when 't :> Control and 'c :> IControl>(value: ITemplate<'c>) : IAttr<'t> =
+        static member focusAdorner<'t, 'c when 't :> Control and 'c :> IControl>(value: ITemplate<'c>) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<ITemplate<'c>>(Control.FocusAdornerProperty, value, ValueNone)
 
-        static member tag<'t when 't :> Control>(value: obj) : IAttr<'t> =
+        static member tag<'t when 't :> Control>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(Control.TagProperty, value, ValueNone)
 
-        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu> option) : IAttr<'t> =
+        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu> option) : Attr<'t> =
             let view =
                 match menuView with
                 | Some view -> Some (view :> IView)
@@ -28,9 +28,9 @@ module Control =
             // TODO: think about exposing less generic IView<'c>
             AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, view)
 
-        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu>) : IAttr<'t> =
+        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu>) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, Some (menuView :> IView))
 
-        static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : IAttr<'t> =
+        static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<ContextMenu>(Control.ContextMenuProperty, menu, ValueNone)
 

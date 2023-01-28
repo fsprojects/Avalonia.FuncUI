@@ -5,7 +5,7 @@ open Avalonia.FuncUI.Types
 [<AbstractClass; Sealed>]
 type View () =
 
-    static member createWithKey (key: string) (createView: IAttr<'view> list -> IView<'view>) (attrs: IAttr<'view> list) =
+    static member createWithKey (key: string) (createView: Attr<'view> list -> IView<'view>) (attrs: Attr<'view> list) =
         let view = createView(attrs)
 
         { View.ViewType = typeof<'view>
@@ -15,7 +15,7 @@ type View () =
           View.Outlet = ValueNone }
         :> IView<'view>
 
-    static member createWithOutlet (outlet: 'view -> unit) (createView: IAttr<'view> list -> IView<'view>) (attrs: IAttr<'view> list) =
+    static member createWithOutlet (outlet: 'view -> unit) (createView: Attr<'view> list -> IView<'view>) (attrs: Attr<'view> list) =
         let view = createView(attrs)
 
         { View.ViewType = typeof<'view>
@@ -38,7 +38,7 @@ type View () =
           View.Attrs = view.Attrs
           View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = ValueSome (fun control -> outlet (control :?> 'view)) }
-        
+
     static member withConstructorArgs (constructorArgs: obj array) (view: IView<'view>) : IView<'view> =
         { View.ViewType = view.ViewType
           View.ViewKey = view.ViewKey

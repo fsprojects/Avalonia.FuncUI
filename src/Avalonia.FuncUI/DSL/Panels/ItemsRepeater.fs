@@ -7,16 +7,16 @@ module ItemsRepeater =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     open Avalonia.Controls.Templates
-    
-    let create (attrs : IAttr<ItemsRepeater> list): IView<ItemsRepeater> =
+
+    let create (attrs : Attr<ItemsRepeater> list): IView<ItemsRepeater> =
         ViewBuilder.Create<ItemsRepeater>(attrs)
-        
-    type ItemsRepeater with        
-        static member viewItems<'t when 't :> ItemsRepeater>(views: List<IView>): IAttr<'t> =
+
+    type ItemsRepeater with
+        static member viewItems<'t when 't :> ItemsRepeater>(views: List<IView>): Attr<'t> =
             AttrBuilder<'t>.CreateContentMultiple(ItemsRepeater.ItemsProperty, views)
-        
-        static member dataItems<'t when 't :> ItemsRepeater>(data : IEnumerable): IAttr<'t> =
+
+        static member dataItems<'t when 't :> ItemsRepeater>(data : IEnumerable): Attr<'t> =
             AttrBuilder<'t>.CreateProperty<IEnumerable>(ItemsRepeater.ItemsProperty, data, ValueNone)
-            
-        static member itemTemplate<'t when 't :> ItemsRepeater>(value : IDataTemplate): IAttr<'t> =
+
+        static member itemTemplate<'t when 't :> ItemsRepeater>(value : IDataTemplate): Attr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(ItemsRepeater.ItemTemplateProperty, value, ValueNone)

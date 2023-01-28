@@ -7,7 +7,7 @@ module TreeView =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: IAttr<TreeView> list): IView<TreeView> =
+    let create (attrs: Attr<TreeView> list): IView<TreeView> =
         ViewBuilder.Create<TreeView>(attrs)
 
     type TreeView with
@@ -15,13 +15,13 @@ module TreeView =
         /// <summary>
         /// Sets a value indicating whether to automatically scroll to newly selected items.
         /// </summary>
-        static member autoScrollToSelectedItem<'t when 't :> TreeView>(value: bool) : IAttr<'t> =
+        static member autoScrollToSelectedItem<'t when 't :> TreeView>(value: bool) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(TreeView.AutoScrollToSelectedItemProperty, value, ValueNone)
 
         /// <summary>
         /// Sets the selected items.
         /// </summary>
-        static member selectedItem<'t when 't :> TreeView>(value: obj) : IAttr<'t> =
+        static member selectedItem<'t when 't :> TreeView>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(TreeView.SelectedItemProperty, value, ValueNone)
 
         /// <summary>
@@ -33,7 +33,7 @@ module TreeView =
         /// <summary>
         /// Sets the selected items.
         /// </summary>
-        static member selectedItems<'t when 't :> TreeView>(value: IList) : IAttr<'t> =
+        static member selectedItems<'t when 't :> TreeView>(value: IList) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<IList>(TreeView.SelectedItemsProperty, value, ValueNone)
 
         /// <summary>
@@ -45,5 +45,5 @@ module TreeView =
         /// <summary>
         /// Sets the selection mode.
         /// </summary>
-        static member selectionMode<'t when 't :> TreeView>(value: SelectionMode) : IAttr<'t> =
+        static member selectionMode<'t when 't :> TreeView>(value: SelectionMode) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<SelectionMode>(TreeView.SelectionModeProperty, value, ValueNone)
