@@ -17,7 +17,7 @@ module HeaderedContentControl =
         static member header<'t when 't :> HeaderedContentControl>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(HeaderedContentControl.HeaderProperty, value, ValueNone)
 
-        static member header<'t when 't :> HeaderedContentControl>(value: IView option) : Attr<'t> =
+        static member header<'t when 't :> HeaderedContentControl>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(HeaderedContentControl.HeaderProperty, value)
 
         static member header<'t when 't :> HeaderedContentControl>(value: IView) : Attr<'t> =

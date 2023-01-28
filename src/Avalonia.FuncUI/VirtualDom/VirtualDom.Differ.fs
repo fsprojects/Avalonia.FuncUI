@@ -4,7 +4,8 @@ open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom.Delta
 
 module internal rec Differ =
-    let private update (last: IAttr) (next: IAttr) : AttrDelta =
+
+    let private update(last: #IAttr) (next: #IAttr) : AttrDelta =
         match next with
         | Property' property ->
             AttrDelta.Property
@@ -22,7 +23,7 @@ module internal rec Differ =
 
         | _ -> failwithf "no update operation is defined for '%A' next" next
 
-    let private reset (last: IAttr) : AttrDelta =
+    let private reset (last: #IAttr) : AttrDelta =
         match last with
         | Property' property ->
             AttrDelta.Property
@@ -33,7 +34,7 @@ module internal rec Differ =
         | Content' content ->
             let empty =
                 match content.Content with
-                | ViewContent.Single _ -> ViewContentDelta.Single None
+                | ViewContent.Single _ -> ViewContentDelta.Single ValueNone
                 | ViewContent.Multiple _ -> ViewContentDelta.Multiple []
 
             AttrDelta.Content
@@ -48,23 +49,23 @@ module internal rec Differ =
 
         | _ -> failwithf "no reset operation is defined for last '%A'" last
 
-    let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
+    let private diffContentSingle (last: #IView voption) (next: #IView voption) : ViewDelta voption =
         match next with
-        | Some next ->
+        | ValueSome next ->
             match last with
-            | Some last -> Some (Differ.diff(last, next))
-            | None -> Some (ViewDelta.From next)
-        | None -> None
+            | ValueSome last -> ValueSome (Differ.diff(last, next))
+            | ValueNone -> ValueSome (ViewDelta.From next)
+        | ValueNone -> ValueNone
 
-    let private diffContentMultiple (lastList: IView list) (nextList: IView list) : ViewDelta list =
+    let private diffContentMultiple (lastList: #IView list) (nextList: #IView list) : ViewDelta list =
         nextList |> List.mapi (fun index next ->
             if index + 1 <= lastList.Length then
-                Differ.diff(lastList.[index], nextList.[index])
+                Differ.diff(lastList[index], nextList[index])
             else
                 ViewDelta.From next
         )
 
-    let private diffContent (last: IAttr) (next: IAttr) : ViewContentDelta =
+    let private diffContent (last: #IAttr) (next: #IAttr) : ViewContentDelta =
             match next with
             | Content' nextContent ->
                 match last with
@@ -77,7 +78,7 @@ module internal rec Differ =
                         | ViewContent.Single lastSingleContent ->
                             ViewContentDelta.Single (diffContentSingle lastSingleContent nextSingleContent)
                         | _ ->
-                            ViewContentDelta.Single None
+                            ViewContentDelta.Single ValueNone
 
                     // Multiple Content
                     | ViewContent.Multiple nextMultipleContent ->

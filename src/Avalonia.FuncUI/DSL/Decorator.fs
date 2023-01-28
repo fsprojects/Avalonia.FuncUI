@@ -15,11 +15,11 @@ module Decorator =
         static member child<'t when 't :> Decorator>(value: IControl) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty(Decorator.ChildProperty, value, ValueNone)
 
-        static member child<'t when 't :> Decorator>(value: IView option) : Attr<'t> =
+        static member child<'t when 't :> Decorator>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Decorator.ChildProperty, value)
 
         static member child<'t when 't :> Decorator>(value: IView) : Attr<'t> =
-            value |> Some |> Decorator.child
+            value |> ValueSome |> Decorator.child
 
         static member padding<'t when 't :> Decorator>(value: Thickness) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<Thickness>(Decorator.PaddingProperty, value, ValueNone)

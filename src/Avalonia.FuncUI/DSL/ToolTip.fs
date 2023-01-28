@@ -32,14 +32,14 @@ module ToolTip =
         /// <summary>
         /// The content to be displayed in the control's tooltip.
         /// </summary>
-        static member tip<'t when 't :> Control>(value: IView option) : Attr<'t> =
+        static member tip<'t when 't :> Control>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(ToolTip.TipProperty, value)
 
         /// <summary>
         /// The content to be displayed in the control's tooltip.
         /// </summary>
         static member tip<'t when 't :> Control>(value: IView) : Attr<'t> =
-            value |> Some |> ToolTip.tip
+            value |> ValueSome |> ToolTip.tip
 
         /// <summary>
         /// A value indicating how the tool tip is positioned.

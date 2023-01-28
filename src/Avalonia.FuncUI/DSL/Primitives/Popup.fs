@@ -16,11 +16,11 @@ module Popup =
 
     type Popup with
 
-        static member child<'t when 't :> Popup>(value: IView option) : Attr<'t> =
+        static member child<'t when 't :> Popup>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Popup.ChildProperty, value)
 
         static member child<'t when 't :> Popup>(value: IView) : Attr<'t> =
-            value |> Some |> Popup.child
+            value |> ValueSome |> Popup.child
 
         static member isOpen<'t when 't :> Popup>(value: bool) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Popup.IsOpenProperty, value, ValueNone)

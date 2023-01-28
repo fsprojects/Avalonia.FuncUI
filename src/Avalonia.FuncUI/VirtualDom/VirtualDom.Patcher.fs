@@ -12,12 +12,12 @@ module internal rec Patcher =
     open Avalonia.FuncUI.Types
     open System.Threading
 
-    let private shouldPatch (value: obj) (viewElement: ViewDelta) =
+    let private shouldPatch (value: obj, viewElement: ViewDelta) =
          value <> null
          && value.GetType() = viewElement.ViewType
          && not viewElement.KeyDidChange
 
-    let private patchSubscription (view: IControl) (attr: SubscriptionDelta) : unit =
+    let private patchSubscription (view: IControl, attr: SubscriptionDelta) : unit =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
             | null ->
@@ -47,7 +47,7 @@ module internal rec Patcher =
                 value.Cancel()
                 subscriptions.TryRemove(attr.UniqueName) |> ignore
 
-    let internal patchProperty (view: IAvaloniaObject) (attr: PropertyDelta) : unit =
+    let internal patchProperty (view: IAvaloniaObject, attr: PropertyDelta) : unit =
         match attr.Accessor with
         | Accessor.AvaloniaProperty avaloniaProperty ->
             match attr.Value with
@@ -82,7 +82,7 @@ module internal rec Patcher =
             | ValueSome setter -> setter (view, value)
             | ValueNone _ -> failwithf "instance property ('%s') has no setter. " instanceProperty.Name
 
-    let private patchContentMultiple (view: IAvaloniaObject) (accessor: Accessor) (delta: ViewDelta list) : unit =
+    let private patchContentMultiple (view: IAvaloniaObject, accessor: Accessor, delta: ViewDelta list) : unit =
         (* often lists only have a get accessor *)
         let patch_IList (collection: IList) : unit =
             if List.isEmpty delta then
@@ -93,7 +93,7 @@ module internal rec Patcher =
                     if index + 1 <= collection.Count then
                         let item = collection.[index]
 
-                        if shouldPatch item viewElement then
+                        if shouldPatch (item, viewElement) then
                             // patch
                             match item with
                             | :? IAvaloniaObject as control -> patch(control, viewElement)
@@ -161,31 +161,31 @@ module internal rec Patcher =
             let setter = Some (fun obj -> view.SetValue(property, obj) |> ignore)
             patch (getter, setter)
 
-    let private patchContentSingle (view: IAvaloniaObject) (accessor: Accessor) (viewElement: ViewDelta option) : unit =
+    let private patchContentSingle (view: IAvaloniaObject, accessor: Accessor, viewElement: ViewDelta voption) : unit =
 
         let patch_avalonia (property: AvaloniaProperty) =
             match viewElement with
-            | Some viewElement ->
+            | ValueSome viewElement ->
                 let value = view.GetValue(property)
 
-                if shouldPatch value viewElement then
+                if shouldPatch (value, viewElement) then
                     Patcher.patch(value :?> IAvaloniaObject, viewElement)
                 else
                     let createdControl = Patcher.create viewElement
                     view.SetValue(property, createdControl)
                     |> ignore
-            | None ->
+            | ValueNone ->
                 view.ClearValue(property)
 
         let patch_instance (property: PropertyAccessor) =
             match viewElement with
-            | Some viewElement ->
+            | ValueSome viewElement ->
                 let value =
                     match property.Getter with
                     | ValueSome getter -> getter(view)
                     | _ -> failwith "Property Accessor needs a getter"
 
-                if shouldPatch value viewElement then
+                if shouldPatch (value, viewElement) then
                     Patcher.patch(value :?> IAvaloniaObject, viewElement)
                 else
                     let createdControl = Patcher.create(viewElement)
@@ -193,7 +193,7 @@ module internal rec Patcher =
                     match property.Setter with
                     | ValueSome setter -> setter(view, createdControl)
                     | _ -> failwith "Property Accessor needs a setter"
-            | None ->
+            | ValueNone ->
                 match property.Setter with
                 | ValueSome setter -> setter(view, null)
                 | _ -> failwith "Property Accessor needs a setter"
@@ -202,22 +202,22 @@ module internal rec Patcher =
         | Accessor.InstanceProperty instanceProperty -> patch_instance instanceProperty
         | Accessor.AvaloniaProperty property -> patch_avalonia property
 
-    let private patchContent (view: IAvaloniaObject) (attr: ContentDelta) : unit =
+    let private patchContent (view: IAvaloniaObject, attr: ContentDelta) : unit =
         match attr.Content with
         | ViewContentDelta.Single single ->
-            patchContentSingle view attr.Accessor single
+            patchContentSingle (view, attr.Accessor, single)
         | ViewContentDelta.Multiple multiple ->
-            patchContentMultiple view attr.Accessor multiple
-            
+            patchContentMultiple (view, attr.Accessor, multiple)
+
     let patch (view: IAvaloniaObject, viewElement: ViewDelta) : unit =
         for attr in viewElement.Attrs do
             match attr with
-            | AttrDelta.Property property -> patchProperty view property
-            | AttrDelta.Content content -> patchContent view content
+            | AttrDelta.Property property -> patchProperty (view, property)
+            | AttrDelta.Content content -> patchContent (view, content)
             | AttrDelta.Subscription subscription ->
                 match view with
-                | :? IControl as control -> 
-                    patchSubscription control subscription
+                | :? IControl as control ->
+                    patchSubscription (control, subscription)
                 | _ -> failwith "Only controls can have subscriptions"
 
     let create (viewElement: ViewDelta) : IAvaloniaObject =

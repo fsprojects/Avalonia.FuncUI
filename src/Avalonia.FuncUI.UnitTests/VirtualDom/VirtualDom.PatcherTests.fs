@@ -118,7 +118,7 @@ module PatcherTests =
                      Delta.AttrDelta.Content {
                          Accessor = Accessor.AvaloniaProperty Button.ContentProperty
                          Content = Delta.ViewContentDelta.Single
-                             ( Some {
+                             ( ValueSome {
                                  ViewType = typeof<TextBlock>
                                  KeyDidChange = false
                                  ConstructorArgs = null

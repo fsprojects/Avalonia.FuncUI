@@ -16,7 +16,7 @@ module HeaderedSelectingItemsControl =
         static member header<'t when 't :> HeaderedSelectingItemsControl>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(HeaderedSelectingItemsControl.HeaderProperty, value, ValueNone)
 
-        static member header<'t when 't :> HeaderedSelectingItemsControl>(value: IView option) : Attr<'t> =
+        static member header<'t when 't :> HeaderedSelectingItemsControl>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(HeaderedSelectingItemsControl.HeaderProperty, value)
 
         static member header<'t when 't :> HeaderedSelectingItemsControl>(value: IView) : Attr<'t> =

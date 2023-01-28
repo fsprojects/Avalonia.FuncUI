@@ -58,8 +58,8 @@ module Border =
         static member boxShadow<'t when 't :> Border>(value: BoxShadow) : Attr<'t> =
             value |> BoxShadows |> Border.boxShadows
 
-        static member child<'t when 't :> Border>(value: IView option) : Attr<'t> =
+        static member child<'t when 't :> Border>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Border.ChildProperty, value)
 
         static member child<'t when 't :> Border>(value: IView) : Attr<'t> =
-            value |> Some |> Border.child
+            value |> ValueSome |> Border.child

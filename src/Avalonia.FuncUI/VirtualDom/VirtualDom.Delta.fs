@@ -78,19 +78,19 @@ module internal rec Delta =
 
     [<Struct; IsReadOnly>]
     type ViewContentDelta =
-        | Single of single: ViewDelta option
+        | Single of single: ViewDelta voption
         | Multiple of multiple: ViewDelta list
 
         static member From (viewContent: ViewContent) : ViewContentDelta =
             match viewContent with
             | ViewContent.Single single ->
                 match single with
-                | Some view ->
+                | ValueSome view ->
                     (ViewDelta.From view)
-                    |> Some
+                    |> ValueSome
                     |> ViewContentDelta.Single
-                | None ->
-                    None
+                | ValueNone ->
+                    ValueNone
                     |> ViewContentDelta.Single
 
             | ViewContent.Multiple multiple ->

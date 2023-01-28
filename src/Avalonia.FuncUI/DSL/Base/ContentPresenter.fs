@@ -57,17 +57,17 @@ module ContentPresenter =
         static member cornerRadius<'t when 't :> ContentPresenter>(left: float, top: float, right: float, bottom: float) : Attr<'t> =
             CornerRadius(left, right, top, bottom) |> ContentPresenter.cornerRadius
 
-        static member child<'t when 't :> ContentPresenter>(value: IView option) : Attr<'t> =
+        static member child<'t when 't :> ContentPresenter>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(ContentPresenter.ChildProperty, value)
 
         static member child<'t when 't :> ContentPresenter>(value: IView) : Attr<'t> =
-            value |> Some |> ContentPresenter.child
+            value |> ValueSome |> ContentPresenter.child
 
-        static member content<'t when 't :> ContentPresenter>(value: IView option) : Attr<'t> =
+        static member content<'t when 't :> ContentPresenter>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(ContentPresenter.ContentProperty, value)
 
         static member content<'t when 't :> ContentPresenter>(value: IView) : Attr<'t> =
-            value |> Some |> ContentPresenter.content
+            value |> ValueSome |> ContentPresenter.content
 
         static member contentTemplate<'t when 't :> ContentPresenter>(template: IDataTemplate) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(ContentPresenter.ContentTemplateProperty, template, ValueNone)

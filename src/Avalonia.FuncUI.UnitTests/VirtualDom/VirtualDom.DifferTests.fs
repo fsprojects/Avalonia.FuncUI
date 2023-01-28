@@ -43,7 +43,7 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
@@ -73,7 +73,7 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
@@ -122,7 +122,7 @@ module DifferTests =
                         { Accessor = Accessor.AvaloniaProperty Button.ContentProperty
                           Content =
                               Delta.ViewContentDelta.Single(
-                                  Some
+                                  ValueSome
                                       { ViewType = typeof<TextBlock>
                                         KeyDidChange = false
                                         ConstructorArgs = null
@@ -142,7 +142,7 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
@@ -229,7 +229,7 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
@@ -331,7 +331,7 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
@@ -417,10 +417,10 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
-        
+
     [<Fact>]
     let ``Diff keyed views diffs attributes if key and type match`` () =
         let last =
@@ -455,7 +455,7 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
@@ -466,7 +466,7 @@ module DifferTests =
                 TextBlock.background "green"
                 TextBlock.text "some text"
                 TextBlock.fontStyle FontStyle.Italic
-            ]    
+            ]
 
         let next =
             View.createWithKey "another test" TextBlock.create [
@@ -487,6 +487,6 @@ module DifferTests =
         let result = Differ.diff (last, next)
 
         Assert.Equal(delta, result)
-        
+
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))

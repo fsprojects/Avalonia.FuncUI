@@ -19,17 +19,17 @@ module Control =
         static member tag<'t when 't :> Control>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(Control.TagProperty, value, ValueNone)
 
-        static member contextMenu<'t when 't :> Control>(menuView: View<ContextMenu> option) : Attr<'t> =
+        static member contextMenu<'t when 't :> Control>(menuView: View<ContextMenu> voption) : Attr<'t> =
             let view =
                 match menuView with
-                | Some view -> Some (view :> IView)
-                | None -> None
+                | ValueSome view -> ValueSome (view :> IView)
+                | ValueNone -> ValueNone
 
             // TODO: think about exposing less generic View<'c>
             AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, view)
 
         static member contextMenu<'t when 't :> Control>(menuView: View<ContextMenu>) : Attr<'t> =
-            AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, Some (menuView :> IView))
+            AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, ValueSome (menuView :> IView))
 
         static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<ContextMenu>(Control.ContextMenuProperty, menu, ValueNone)

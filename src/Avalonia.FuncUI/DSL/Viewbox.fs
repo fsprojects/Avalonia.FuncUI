@@ -27,11 +27,11 @@ module Viewbox =
         /// <summary>
         /// Sets the child of the Viewbox
         /// </summary>
-        static member child<'t when 't :> Viewbox>(value: IView option) : Attr<'t> =
+        static member child<'t when 't :> Viewbox>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Viewbox.ChildProperty, value)
 
         /// <summary>
         /// Sets the child of the Viewbox
         /// </summary>
         static member child<'t when 't :> Viewbox>(value: IView) : Attr<'t> =
-            value |> Some |> Viewbox.child
+            value |> ValueSome |> Viewbox.child

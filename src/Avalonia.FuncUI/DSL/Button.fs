@@ -40,10 +40,10 @@ module Button =
         static member onClick<'t when 't :> Button>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Button.ClickEvent, func, ?subPatchOptions = subPatchOptions)
 
-        static member flyout<'t when 't :> Button>(value: IView option) : Attr<'t> =
+        static member flyout<'t when 't :> Button>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Button.FlyoutProperty, value)
 
         static member flyout<'t when 't :> Button>(value: IView) : Attr<'t> =
             value
-            |> Some
+            |> ValueSome
             |> Button.flyout

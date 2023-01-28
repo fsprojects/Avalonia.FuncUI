@@ -13,11 +13,11 @@ module SplitView =
 
     type SplitView with
 
-        static member content<'t when 't :> SplitView>(value: IView option) : Attr<'t> =
+        static member content<'t when 't :> SplitView>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(SplitView.ContentProperty, value)
 
         static member content<'t when 't :> SplitView>(value: IView) : Attr<'t> =
-            value |> Some |> SplitView.content
+            value |> ValueSome |> SplitView.content
 
         static member compactPaneLengthProperty<'t when 't :> SplitView>(value: float) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<float>(SplitView.CompactPaneLengthProperty, value, ValueNone)
@@ -43,11 +43,11 @@ module SplitView =
         static member panePlacement<'t when 't :> SplitView>(value: SplitViewPanePlacement) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<SplitViewPanePlacement>(SplitView.PanePlacementProperty, value, ValueNone)
 
-        static member pane<'t when 't :> SplitView>(value: IView option) : Attr<'t> =
+        static member pane<'t when 't :> SplitView>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(SplitView.PaneProperty, value)
 
         static member pane<'t when 't :> SplitView>(value: IView) : Attr<'t> =
-            value |> Some |> SplitView.pane
+            value |> ValueSome |> SplitView.pane
 
         static member useLightDismissOverlayMode<'t when 't :> SplitView>(value: bool) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(SplitView.UseLightDismissOverlayModeProperty, value, ValueNone)

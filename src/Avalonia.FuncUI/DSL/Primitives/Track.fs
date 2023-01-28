@@ -40,8 +40,8 @@ module Track =
         static member thumb<'t when 't :> Track>(value: View<Thumb> voption) : Attr<'t> =
             let value =
                 match value with
-                | ValueSome view -> Some (view :> IView)
-                | ValueNone -> None
+                | ValueSome view -> ValueSome (view :> IView)
+                | ValueNone -> ValueNone
 
             AttrBuilder<'t>.CreateContentSingle(Track.ThumbProperty, value)
 
@@ -57,8 +57,8 @@ module Track =
         static member increaseButton<'t when 't :> Track>(value: View<Button> voption) : Attr<'t> =
             let value =
                 match value with
-                | ValueSome view -> Some (view :> IView)
-                | ValueNone -> None
+                | ValueSome view -> ValueSome (view :> IView)
+                | ValueNone -> ValueNone
 
             AttrBuilder<'t>.CreateContentSingle(Track.IncreaseButtonProperty, value)
 
@@ -71,8 +71,8 @@ module Track =
         static member decreaseButton<'t when 't :> Track>(value: View<Button> voption) : Attr<'t> =
             let value =
                 match value with
-                | ValueSome view -> Some (view :> IView)
-                | ValueNone -> None
+                | ValueSome view -> ValueSome (view :> IView)
+                | ValueNone -> ValueNone
 
             AttrBuilder<'t>.CreateContentSingle(Track.DecreaseButtonProperty, value)
 

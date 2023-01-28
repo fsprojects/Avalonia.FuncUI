@@ -27,12 +27,12 @@ module Flyout =
             AttrBuilder<'t>.CreateProperty<FlyoutShowMode>(FlyoutBase.ShowModeProperty, value, ValueNone)
 
     type Flyout with
-        static member content<'t when 't :> Flyout>(value: IView option) : Attr<'t> =
+        static member content<'t when 't :> Flyout>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Flyout.ContentProperty, value)
 
         static member content<'t when 't :> Flyout>(value: IView) : Attr<'t> =
             value
-            |> Some
+            |> ValueSome
             |> Flyout.content
 
         /// <summary>

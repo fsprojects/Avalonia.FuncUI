@@ -18,7 +18,7 @@ module ContentControl =
         static member content<'t when 't :> ContentControl>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(ContentControl.ContentProperty, value, ValueNone)
 
-        static member content<'t when 't :> ContentControl>(value: IView option) : Attr<'t> =
+        static member content<'t when 't :> ContentControl>(value: IView voption) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(ContentControl.ContentProperty, value)
 
         static member content<'t when 't :> ContentControl>(value: IView) : Attr<'t> =

@@ -59,7 +59,7 @@ module Types =
 
     [<Struct; IsReadOnly>]
     type ViewContent =
-        | Single of single: IView option
+        | Single of single: IView voption
         | Multiple of multiple: IView list
 
     [<Struct; IsReadOnly; CustomEquality; NoComparison>]

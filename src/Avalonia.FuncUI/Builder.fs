@@ -112,13 +112,13 @@ type AttrBuilder<'view>() =
     /// <summary>
     /// Create a Single Content Attribute for an Avalonia Property
     /// </summary>
-    static member CreateContentSingle(property: AvaloniaProperty, singleContent: IView option) : Attr<'view> =
+    static member CreateContentSingle(property: AvaloniaProperty, singleContent: IView voption) : Attr<'view> =
         AttrBuilder<'view>.CreateContent(Accessor.AvaloniaProperty property, ViewContent.Single singleContent)
 
     /// <summary>
     /// Create a Single Content Attribute for an instance (non Avalonia) Property
     /// </summary>
-    static member CreateContentSingle(name: string, getter, setter, singleContent: IView option) : Attr<'view> =
+    static member CreateContentSingle(name: string, getter, setter, singleContent: IView voption) : Attr<'view> =
         let accessor = Accessor.InstanceProperty {
             Name = name
             Getter =
