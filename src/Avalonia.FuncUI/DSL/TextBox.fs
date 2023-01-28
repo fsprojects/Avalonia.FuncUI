@@ -11,7 +11,7 @@ module TextBox =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<TextBox> list): IView<TextBox> =
+    let create (attrs: Attr<TextBox> list): View<TextBox> =
         ViewBuilder.Create<TextBox>(attrs)
 
     type TextBox with

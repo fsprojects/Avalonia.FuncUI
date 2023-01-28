@@ -7,7 +7,7 @@ module Expander =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Expander> list): IView<Expander> =
+    let create (attrs: Attr<Expander> list): View<Expander> =
         ViewBuilder.Create<Expander>(attrs)
 
     type Expander with

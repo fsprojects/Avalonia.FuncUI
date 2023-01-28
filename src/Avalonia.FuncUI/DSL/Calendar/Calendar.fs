@@ -11,7 +11,7 @@ module Calendar =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Calendar> list): IView<Calendar> =
+    let create (attrs: Attr<Calendar> list): View<Calendar> =
         ViewBuilder.Create<Calendar>(attrs)
 
     type Calendar with

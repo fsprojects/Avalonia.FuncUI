@@ -6,7 +6,7 @@ module ContextMenu =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<ContextMenu> list): IView<ContextMenu> =
+    let create (attrs: Attr<ContextMenu> list): View<ContextMenu> =
         ViewBuilder.Create<ContextMenu>(attrs)
 
     type ContextMenu with

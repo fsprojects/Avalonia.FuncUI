@@ -7,7 +7,7 @@ module ProgressBar =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<ProgressBar> list): IView<ProgressBar> =
+    let create (attrs: Attr<ProgressBar> list): View<ProgressBar> =
         ViewBuilder.Create<ProgressBar>(attrs)
 
     type ProgressBar with

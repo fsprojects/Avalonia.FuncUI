@@ -7,7 +7,7 @@ module LayoutTransformControl =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<LayoutTransformControl> list): IView<LayoutTransformControl> =
+    let create (attrs: Attr<LayoutTransformControl> list): View<LayoutTransformControl> =
         ViewBuilder.Create<LayoutTransformControl>(attrs)
 
     type LayoutTransformControl with

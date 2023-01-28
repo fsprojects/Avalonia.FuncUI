@@ -8,7 +8,7 @@ module Polygon =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Polygon> list): IView<Polygon> =
+    let create (attrs: Attr<Polygon> list): View<Polygon> =
         ViewBuilder.Create<Polygon>(attrs)
 
     type Polygon with

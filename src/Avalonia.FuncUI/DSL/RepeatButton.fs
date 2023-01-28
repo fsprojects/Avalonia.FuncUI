@@ -6,7 +6,7 @@ module RepeatButton =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<RepeatButton> list): IView<RepeatButton> =
+    let create (attrs: Attr<RepeatButton> list): View<RepeatButton> =
         ViewBuilder.Create<RepeatButton>(attrs)
 
     type RepeatButton with

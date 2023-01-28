@@ -6,7 +6,7 @@ module ButtonSpinner =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<ButtonSpinner> list): IView<ButtonSpinner> =
+    let create (attrs: Attr<ButtonSpinner> list): View<ButtonSpinner> =
         ViewBuilder.Create<ButtonSpinner>(attrs)
 
     type ButtonSpinner with

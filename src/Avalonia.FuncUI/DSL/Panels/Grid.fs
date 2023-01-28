@@ -6,7 +6,7 @@ module Grid =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Grid> list): IView<Grid> =
+    let create (attrs: Attr<Grid> list): View<Grid> =
         ViewBuilder.Create<Grid>(attrs)
 
     module private Internals =

@@ -6,7 +6,7 @@ module Canvas =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Canvas> list): IView<Canvas> =
+    let create (attrs: Attr<Canvas> list): View<Canvas> =
         ViewBuilder.Create<Canvas>(attrs)
 
     type Control with

@@ -6,10 +6,10 @@ module Italic =
     open Avalonia.FuncUI.Types
     open Avalonia.Controls.Documents
 
-    let create (attrs: Attr<Italic> list): IView<Italic> =
+    let create (attrs: Attr<Italic> list): View<Italic> =
         ViewBuilder.Create(attrs)
 
-    let createText (text: string): IView<Italic> =
+    let createText (text: string): View<Italic> =
         ViewBuilder.Create([
             Italic.inlines [
                 Run.create [

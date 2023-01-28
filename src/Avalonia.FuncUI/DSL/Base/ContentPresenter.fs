@@ -11,7 +11,7 @@ module ContentPresenter =
     open Avalonia.Media
     open Avalonia.Media.Immutable
 
-    let create (attrs: Attr<ContentPresenter> list): IView<ContentPresenter> =
+    let create (attrs: Attr<ContentPresenter> list): View<ContentPresenter> =
         ViewBuilder.Create<ContentPresenter>(attrs)
 
     type ContentPresenter with

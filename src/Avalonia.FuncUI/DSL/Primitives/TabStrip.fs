@@ -6,7 +6,7 @@ module TabStrip =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<TabStrip> list): IView<TabStrip> =
+    let create (attrs: Attr<TabStrip> list): View<TabStrip> =
         ViewBuilder.Create<TabStrip>(attrs)
 
     type TabStrip with

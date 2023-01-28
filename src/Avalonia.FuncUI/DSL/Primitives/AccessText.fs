@@ -7,7 +7,7 @@ module AccessText =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<AccessText> list): IView<AccessText> =
+    let create (attrs: Attr<AccessText> list): View<AccessText> =
         ViewBuilder.Create<AccessText>(attrs)
 
     type Control with

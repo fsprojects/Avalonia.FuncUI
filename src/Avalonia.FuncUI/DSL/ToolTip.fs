@@ -6,7 +6,7 @@ module ToolTip =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<ToolTip> list): IView<ToolTip> =
+    let create (attrs: Attr<ToolTip> list): View<ToolTip> =
         ViewBuilder.Create<ToolTip>(attrs)
 
     type Control with

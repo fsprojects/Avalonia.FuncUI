@@ -9,7 +9,7 @@ module Flyout =
     open Avalonia.FuncUI.Builder
     open Avalonia.Controls.Primitives
 
-    let create (attrs: Attr<Flyout> list): IView<Flyout> =
+    let create (attrs: Attr<Flyout> list): View<Flyout> =
         ViewBuilder.Create<Flyout>(attrs)
 
     type FlyoutBase with
@@ -54,7 +54,7 @@ module MenuFlyout =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<MenuFlyout> list): IView<MenuFlyout> =
+    let create (attrs: Attr<MenuFlyout> list): View<MenuFlyout> =
         ViewBuilder.Create<MenuFlyout>(attrs)
 
     type MenuFlyout with

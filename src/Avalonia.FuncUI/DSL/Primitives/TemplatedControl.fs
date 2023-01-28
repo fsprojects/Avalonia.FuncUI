@@ -10,7 +10,7 @@ module TemplatedControl =
     open Avalonia.Controls.Primitives
     open Avalonia.Controls.Templates
 
-    let create (attrs: Attr<TemplatedControl> list): IView<TemplatedControl> =
+    let create (attrs: Attr<TemplatedControl> list): View<TemplatedControl> =
         ViewBuilder.Create<TemplatedControl>(attrs)
 
     type TemplatedControl with

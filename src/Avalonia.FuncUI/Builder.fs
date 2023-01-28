@@ -2,7 +2,8 @@ namespace Avalonia.FuncUI.DSL
 
 open System
 
-type [<Struct>] SubPatchOptions =
+[<Struct>]
+type SubPatchOptions =
     /// Always updates the subscription. This should be used if you can't explicitly express your outer dependencies.
     | Always
     /// Never updates the subscription. This should be used most of the time. Use this if you don't depend on outer dependencies.
@@ -239,7 +240,7 @@ type AttrBuilder<'view>() =
 [<AbstractClass; Sealed>]
 type ViewBuilder() =
 
-    static member Create<'view>(attrs: Attr<'view> list) : IView<'view> =
+    static member Create<'view>(attrs: Attr<'view> list) : View<'view> =
         { View.ViewType = typeof<'view>
           View.ViewKey = ValueNone
           View.Attrs = attrs

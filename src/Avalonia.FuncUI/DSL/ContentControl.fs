@@ -8,7 +8,7 @@ module ContentControl =
     open Avalonia.Controls.Templates
     open Avalonia.Layout
 
-    let create (attrs : Attr<ContentControl> list) : IView<ContentControl> =
+    let create (attrs : Attr<ContentControl> list) : View<ContentControl> =
         ViewBuilder.Create<ContentControl>(attrs)
 
     type ContentControl with

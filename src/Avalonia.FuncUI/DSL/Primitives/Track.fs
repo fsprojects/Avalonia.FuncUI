@@ -8,7 +8,7 @@ module Track =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Track> list): IView<Track> =
+    let create (attrs: Attr<Track> list): View<Track> =
         ViewBuilder.Create<Track>(attrs)
 
     type Track with
@@ -37,7 +37,7 @@ module Track =
         static member thumb<'t when 't :> Track>(value: Thumb) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<Thumb>(Track.ThumbProperty, value, ValueNone)
 
-        static member thumb<'t when 't :> Track>(value: IView<Thumb> voption) : Attr<'t> =
+        static member thumb<'t when 't :> Track>(value: View<Thumb> voption) : Attr<'t> =
             let value =
                 match value with
                 | ValueSome view -> Some (view :> IView)
@@ -45,7 +45,7 @@ module Track =
 
             AttrBuilder<'t>.CreateContentSingle(Track.ThumbProperty, value)
 
-        static member thumb<'t when 't :> Track>(value: IView<Thumb>) : Attr<'t> =
+        static member thumb<'t when 't :> Track>(value: View<Thumb>) : Attr<'t> =
             value |> ValueSome |> Track.thumb
 
         static member ignoreThumbDragProperty<'t when 't :> Track>(value: bool) : Attr<'t> =
@@ -54,7 +54,7 @@ module Track =
         static member increaseButton<'t when 't :> Track>(value: Button) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<Button>(Track.IncreaseButtonProperty, value, ValueNone)
 
-        static member increaseButton<'t when 't :> Track>(value: IView<Button> voption) : Attr<'t> =
+        static member increaseButton<'t when 't :> Track>(value: View<Button> voption) : Attr<'t> =
             let value =
                 match value with
                 | ValueSome view -> Some (view :> IView)
@@ -62,13 +62,13 @@ module Track =
 
             AttrBuilder<'t>.CreateContentSingle(Track.IncreaseButtonProperty, value)
 
-        static member increaseButton<'t when 't :> Track>(value: IView<Button>) : Attr<'t> =
+        static member increaseButton<'t when 't :> Track>(value: View<Button>) : Attr<'t> =
             value |> ValueSome |> Track.increaseButton
 
         static member decreaseButton<'t when 't :> Track>(value: Button) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<Button>(Track.DecreaseButtonProperty, value, ValueNone)
 
-        static member decreaseButton<'t when 't :> Track>(value: IView<Button> voption) : Attr<'t> =
+        static member decreaseButton<'t when 't :> Track>(value: View<Button> voption) : Attr<'t> =
             let value =
                 match value with
                 | ValueSome view -> Some (view :> IView)
@@ -76,5 +76,5 @@ module Track =
 
             AttrBuilder<'t>.CreateContentSingle(Track.DecreaseButtonProperty, value)
 
-        static member decreaseButton<'t when 't :> Track>(value: IView<Button>) : Attr<'t> =
+        static member decreaseButton<'t when 't :> Track>(value: View<Button>) : Attr<'t> =
             value |> ValueSome |> Track.decreaseButton

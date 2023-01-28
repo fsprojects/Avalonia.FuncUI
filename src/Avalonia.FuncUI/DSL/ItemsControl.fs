@@ -8,7 +8,7 @@ module ItemsControl =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<ItemsControl> list): IView<ItemsControl> =
+    let create (attrs: Attr<ItemsControl> list): View<ItemsControl> =
         ViewBuilder.Create<ItemsControl>(attrs)
 
     type ItemsControl with

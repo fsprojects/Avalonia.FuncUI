@@ -10,7 +10,7 @@ module AutoCompleteBox =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<AutoCompleteBox> list): IView<AutoCompleteBox> =
+    let create (attrs: Attr<AutoCompleteBox> list): View<AutoCompleteBox> =
         ViewBuilder.Create<AutoCompleteBox>(attrs)
 
     type AutoCompleteBox with

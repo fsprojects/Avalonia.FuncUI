@@ -10,7 +10,7 @@ module TextBlock =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<TextBlock> list): IView<TextBlock> =
+    let create (attrs: Attr<TextBlock> list): View<TextBlock> =
         ViewBuilder.Create<TextBlock>(attrs)
 
     type TextBlock with
@@ -45,7 +45,7 @@ module TextBlock =
         static member inlines<'t when 't :> TextBlock>(value: InlineCollection) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<InlineCollection>(TextBlock.InlinesProperty, value, ValueNone)
 
-        static member inlines<'t when 't :> TextBlock>(values: IView list (* TODO: Change to IView<Inline> *)) : Attr<'t> =
+        static member inlines<'t when 't :> TextBlock>(values: IView list (* TODO: Change to View<Inline> *)) : Attr<'t> =
             let getter : ('t -> obj) = (fun control -> control.Inlines :> obj)
             AttrBuilder<'t>.CreateContentMultiple("Inlines", ValueSome getter, ValueNone, values)
 

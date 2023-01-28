@@ -11,7 +11,7 @@ module Button =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Button> list): IView<Button> =
+    let create (attrs: Attr<Button> list): View<Button> =
         ViewBuilder.Create<Button>(attrs)
 
     type Button with

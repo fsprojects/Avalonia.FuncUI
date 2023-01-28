@@ -10,7 +10,7 @@ module TransitioningContentControl =
     open Avalonia.Controls.Templates
     open Avalonia.Layout
 
-    let create (attrs : Attr<TransitioningContentControl> list) : IView<TransitioningContentControl> =
+    let create (attrs : Attr<TransitioningContentControl> list) : View<TransitioningContentControl> =
         ViewBuilder.Create<TransitioningContentControl>(attrs)
 
     type TransitioningContentControl with

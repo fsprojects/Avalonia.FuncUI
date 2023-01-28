@@ -6,7 +6,7 @@ module DockPanel =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<DockPanel> list): IView<DockPanel> =
+    let create (attrs: Attr<DockPanel> list): View<DockPanel> =
         ViewBuilder.Create<DockPanel>(attrs)
 
     type Control with

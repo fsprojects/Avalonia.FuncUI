@@ -7,7 +7,7 @@ module Viewbox =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Viewbox> list): IView<Viewbox> =
+    let create (attrs: Attr<Viewbox> list): View<Viewbox> =
         ViewBuilder.Create<Viewbox>(attrs)
 
     type Viewbox with

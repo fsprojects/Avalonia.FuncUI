@@ -7,7 +7,7 @@ module WrapPanel =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<WrapPanel> list): IView<WrapPanel> =
+    let create (attrs: Attr<WrapPanel> list): View<WrapPanel> =
         ViewBuilder.Create<WrapPanel>(attrs)
 
     type WrapPanel with

@@ -9,7 +9,7 @@ module ToggleSwitch =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<ToggleSwitch> list): IView<ToggleSwitch> =
+    let create (attrs: Attr<ToggleSwitch> list): View<ToggleSwitch> =
         ViewBuilder.Create<ToggleSwitch>(attrs)
 
     type ToggleSwitch with

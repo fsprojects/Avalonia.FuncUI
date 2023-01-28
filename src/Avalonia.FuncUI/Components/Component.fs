@@ -68,10 +68,9 @@ type Component (render: IComponentContext -> IView) =
 
 type Component with
 
-    static member create(key: string, render: IComponentContext -> IView) : IView<Component> =
+    static member create(key: string, render: IComponentContext -> IView) : View<Component> =
         { View.ViewType = typeof<Component>
           View.ViewKey = ValueSome key
           View.Attrs = list.Empty
           View.Outlet = ValueNone
           View.ConstructorArgs = [| render :> obj |] }
-        :> IView<Component>

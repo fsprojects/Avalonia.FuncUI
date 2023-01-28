@@ -7,7 +7,7 @@ module Path =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Path> list): IView<Path> =
+    let create (attrs: Attr<Path> list): View<Path> =
         ViewBuilder.Create<Path>(attrs)
 
     type Path with

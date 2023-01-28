@@ -8,7 +8,7 @@ module SplitView =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<SplitView> list): IView<SplitView> =
+    let create (attrs: Attr<SplitView> list): View<SplitView> =
         ViewBuilder.Create<SplitView>(attrs)
 
     type SplitView with

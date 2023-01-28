@@ -8,7 +8,7 @@ module DatePicker =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<DatePicker> list): IView<DatePicker> =
+    let create (attrs: Attr<DatePicker> list): View<DatePicker> =
         ViewBuilder.Create<DatePicker>(attrs)
 
     type DatePicker with

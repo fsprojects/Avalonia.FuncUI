@@ -6,7 +6,7 @@ module HeaderedSelectingItemsControl =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<HeaderedSelectingItemsControl> list): IView<HeaderedSelectingItemsControl> =
+    let create (attrs: Attr<HeaderedSelectingItemsControl> list): View<HeaderedSelectingItemsControl> =
         ViewBuilder.Create<HeaderedSelectingItemsControl>(attrs)
 
     type HeaderedSelectingItemsControl with

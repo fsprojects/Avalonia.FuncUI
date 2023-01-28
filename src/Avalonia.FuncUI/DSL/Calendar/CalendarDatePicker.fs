@@ -7,7 +7,7 @@ module CalendarDatePicker =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<CalendarDatePicker> list): IView<CalendarDatePicker> =
+    let create (attrs: Attr<CalendarDatePicker> list): View<CalendarDatePicker> =
         ViewBuilder.Create<CalendarDatePicker>(attrs)
 
     type CalendarDatePicker with

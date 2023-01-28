@@ -7,7 +7,7 @@ module Thumb =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Thumb> list): IView<Thumb> =
+    let create (attrs: Attr<Thumb> list): View<Thumb> =
         ViewBuilder.Create<Thumb>(attrs)
 
     type Thumb with

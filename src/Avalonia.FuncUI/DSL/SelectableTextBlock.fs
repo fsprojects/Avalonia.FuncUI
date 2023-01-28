@@ -7,5 +7,5 @@ module SelectableTextBlock =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<SelectableTextBlock> list): IView<SelectableTextBlock> =
+    let create (attrs: Attr<SelectableTextBlock> list): View<SelectableTextBlock> =
         ViewBuilder.Create<SelectableTextBlock>(attrs)

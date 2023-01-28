@@ -4,7 +4,6 @@ open System
 open System.Runtime.CompilerServices
 open System.Threading
 
-open Avalonia
 open Avalonia.Controls
 open Avalonia.FuncUI.Types
 
@@ -123,3 +122,6 @@ module internal rec Delta =
                 this.KeyDidChange = other.KeyDidChange &&
                 (ValueOption.isSome this.Outlet = ValueOption.isSome other.Outlet)
             | _ -> false
+
+        override this.GetHashCode() =
+            struct(this.ViewType, this.Attrs, this.ConstructorArgs, this.KeyDidChange).GetHashCode()

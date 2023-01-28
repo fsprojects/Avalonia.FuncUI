@@ -8,7 +8,7 @@ module Polyline =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Polyline> list): IView<Polyline> =
+    let create (attrs: Attr<Polyline> list): View<Polyline> =
         ViewBuilder.Create<Polyline>(attrs)
 
     type Polyline with

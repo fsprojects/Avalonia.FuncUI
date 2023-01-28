@@ -8,7 +8,7 @@ module Control =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Control> list): IView<Control> =
+    let create (attrs: Attr<Control> list): View<Control> =
         ViewBuilder.Create<Control>(attrs)
 
     type Control with
@@ -19,16 +19,16 @@ module Control =
         static member tag<'t when 't :> Control>(value: obj) : Attr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(Control.TagProperty, value, ValueNone)
 
-        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu> option) : Attr<'t> =
+        static member contextMenu<'t when 't :> Control>(menuView: View<ContextMenu> option) : Attr<'t> =
             let view =
                 match menuView with
                 | Some view -> Some (view :> IView)
                 | None -> None
 
-            // TODO: think about exposing less generic IView<'c>
+            // TODO: think about exposing less generic View<'c>
             AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, view)
 
-        static member contextMenu<'t when 't :> Control>(menuView: IView<ContextMenu>) : Attr<'t> =
+        static member contextMenu<'t when 't :> Control>(menuView: View<ContextMenu>) : Attr<'t> =
             AttrBuilder<'t>.CreateContentSingle(Control.ContextMenuProperty, Some (menuView :> IView))
 
         static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : Attr<'t> =

@@ -7,7 +7,7 @@ module Image =
     open Avalonia.FuncUI.Types
     open Avalonia.Media
 
-    let create (attrs: Attr<Image> list): IView<Image> =
+    let create (attrs: Attr<Image> list): View<Image> =
         ViewBuilder.Create<Image>(attrs)
 
     type Image with

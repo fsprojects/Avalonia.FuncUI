@@ -6,7 +6,7 @@ module Spinner =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Spinner> list): IView<Spinner> =
+    let create (attrs: Attr<Spinner> list): View<Spinner> =
         ViewBuilder.Create<Spinner>(attrs)
 
     type Spinner with

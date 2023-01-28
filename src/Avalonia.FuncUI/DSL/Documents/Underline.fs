@@ -6,10 +6,10 @@ module Underline =
     open Avalonia.FuncUI.Types
     open Avalonia.Controls.Documents
 
-    let create (attrs: Attr<Underline> list): IView<Underline> =
+    let create (attrs: Attr<Underline> list): View<Underline> =
         ViewBuilder.Create(attrs)
 
-    let createText (text: string): IView<Underline> =
+    let createText (text: string): View<Underline> =
         ViewBuilder.Create([
             Underline.inlines [
                 Run.create [

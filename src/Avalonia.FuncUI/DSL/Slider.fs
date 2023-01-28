@@ -8,7 +8,7 @@ module Slider =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Slider> list): IView<Slider> =
+    let create (attrs: Attr<Slider> list): View<Slider> =
         ViewBuilder.Create<Slider>(attrs)
 
     type Slider with

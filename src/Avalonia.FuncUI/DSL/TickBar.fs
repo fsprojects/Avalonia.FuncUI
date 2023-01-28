@@ -11,7 +11,7 @@ module TickBar =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<TickBar> list): IView<TickBar> =
+    let create (attrs: Attr<TickBar> list): View<TickBar> =
         ViewBuilder.Create<TickBar>(attrs)
 
     type TickBar with

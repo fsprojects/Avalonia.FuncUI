@@ -6,7 +6,7 @@ module Menu =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Menu> list): IView<Menu> =
+    let create (attrs: Attr<Menu> list): View<Menu> =
         ViewBuilder.Create<Menu>(attrs)
 
     type Menu with

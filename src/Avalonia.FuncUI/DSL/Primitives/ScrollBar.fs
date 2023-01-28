@@ -7,7 +7,7 @@ module ScrollBar =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<ScrollBar> list): IView<ScrollBar> =
+    let create (attrs: Attr<ScrollBar> list): View<ScrollBar> =
         ViewBuilder.Create<ScrollBar>(attrs)
 
     type ScrollBar with

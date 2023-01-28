@@ -6,5 +6,5 @@ module Ellipse =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Ellipse> list): IView<Ellipse> =
+    let create (attrs: Attr<Ellipse> list): View<Ellipse> =
         ViewBuilder.Create<Ellipse>(attrs)

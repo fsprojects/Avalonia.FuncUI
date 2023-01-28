@@ -6,7 +6,7 @@ module UniformGrid =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<UniformGrid> list): IView<UniformGrid> =
+    let create (attrs: Attr<UniformGrid> list): View<UniformGrid> =
         ViewBuilder.Create<UniformGrid>(attrs)
 
     type UniformGrid with

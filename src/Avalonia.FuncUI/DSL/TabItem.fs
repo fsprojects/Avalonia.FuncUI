@@ -6,7 +6,7 @@ module TabItem =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<TabItem> list): IView<TabItem> =
+    let create (attrs: Attr<TabItem> list): View<TabItem> =
         ViewBuilder.Create<TabItem>(attrs)
 
     type TabItem with

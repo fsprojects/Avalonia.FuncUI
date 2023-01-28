@@ -6,9 +6,9 @@ module LineBreak =
     open Avalonia.FuncUI.Types
     open Avalonia.Controls.Documents
 
-    let create (attrs: Attr<LineBreak> list): IView<LineBreak> =
+    let create (attrs: Attr<LineBreak> list): View<LineBreak> =
         ViewBuilder.Create(attrs)
 
     /// Creates a simple line-break with no attributes.
-    let simple : IView<LineBreak> =
+    let simple : View<LineBreak> =
         create([])

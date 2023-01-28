@@ -7,7 +7,7 @@ module TreeView =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<TreeView> list): IView<TreeView> =
+    let create (attrs: Attr<TreeView> list): View<TreeView> =
         ViewBuilder.Create<TreeView>(attrs)
 
     type TreeView with

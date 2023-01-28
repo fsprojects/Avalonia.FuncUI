@@ -6,7 +6,7 @@ module GridSplitter =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<GridSplitter> list): IView<GridSplitter> =
+    let create (attrs: Attr<GridSplitter> list): View<GridSplitter> =
         ViewBuilder.Create<GridSplitter>(attrs)
 
     type GridSplitter with

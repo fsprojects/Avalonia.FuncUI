@@ -7,7 +7,7 @@ module Decorator =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<Decorator> list): IView<Decorator> =
+    let create (attrs: Attr<Decorator> list): View<Decorator> =
         ViewBuilder.Create<Decorator>(attrs)
 
     type Decorator with

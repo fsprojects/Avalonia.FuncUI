@@ -8,7 +8,7 @@ module ItemsRepeater =
     open Avalonia.FuncUI.Builder
     open Avalonia.Controls.Templates
 
-    let create (attrs : Attr<ItemsRepeater> list): IView<ItemsRepeater> =
+    let create (attrs : Attr<ItemsRepeater> list): View<ItemsRepeater> =
         ViewBuilder.Create<ItemsRepeater>(attrs)
 
     type ItemsRepeater with

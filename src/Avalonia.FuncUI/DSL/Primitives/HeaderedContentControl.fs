@@ -7,7 +7,7 @@ module HeaderedContentControl =
     open Avalonia.FuncUI.Builder
     open Avalonia.Controls.Templates
 
-    let create (attrs: Attr<HeaderedContentControl> list): IView<HeaderedContentControl> =
+    let create (attrs: Attr<HeaderedContentControl> list): View<HeaderedContentControl> =
         ViewBuilder.Create<HeaderedContentControl>(attrs)
 
     type HeaderedContentControl with

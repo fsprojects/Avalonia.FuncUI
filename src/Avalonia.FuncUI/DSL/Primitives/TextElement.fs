@@ -9,7 +9,7 @@ module TextElement =
     open Avalonia.FuncUI.Builder
     open Avalonia.Media
 
-    let create (attrs: Attr<TextElement> list): IView<TextElement> =
+    let create (attrs: Attr<TextElement> list): View<TextElement> =
         ViewBuilder.Create<TextElement>(attrs)
 
     type TextElement with

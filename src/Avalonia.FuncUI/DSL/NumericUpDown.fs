@@ -8,7 +8,7 @@ module NumericUpDown =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<NumericUpDown> list): IView<NumericUpDown> =
+    let create (attrs: Attr<NumericUpDown> list): View<NumericUpDown> =
         ViewBuilder.Create<NumericUpDown>(attrs)
 
     type NumericUpDown with

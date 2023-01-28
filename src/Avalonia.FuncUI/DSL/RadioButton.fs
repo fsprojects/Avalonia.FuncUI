@@ -6,7 +6,7 @@ module RadioButton =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<RadioButton> list): IView<RadioButton> =
+    let create (attrs: Attr<RadioButton> list): View<RadioButton> =
         ViewBuilder.Create<RadioButton>(attrs)
 
     type RadioButton with

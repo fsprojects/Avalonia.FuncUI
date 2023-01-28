@@ -11,7 +11,7 @@ module Popup =
     open Avalonia.FuncUI.Types
     open System
 
-    let create (attrs: Attr<Popup> list): IView<Popup> =
+    let create (attrs: Attr<Popup> list): View<Popup> =
         ViewBuilder.Create<Popup>(attrs)
 
     type Popup with

@@ -8,7 +8,7 @@ module TimePicker =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<TimePicker> list): IView<TimePicker> =
+    let create (attrs: Attr<TimePicker> list): View<TimePicker> =
         ViewBuilder.Create<TimePicker>(attrs)
 
     type TimePicker with

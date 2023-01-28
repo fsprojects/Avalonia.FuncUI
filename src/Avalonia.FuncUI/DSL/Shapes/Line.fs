@@ -7,7 +7,7 @@ module Line =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<Line> list): IView<Line> =
+    let create (attrs: Attr<Line> list): View<Line> =
         ViewBuilder.Create<Line>(attrs)
 
     type Line with

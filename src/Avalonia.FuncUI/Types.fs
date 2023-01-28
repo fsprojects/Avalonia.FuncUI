@@ -130,10 +130,6 @@ module Types =
         abstract member ConstructorArgs: obj array with get
         abstract member Outlet: (IAvaloniaObject -> unit) voption with get
 
-    type IView<'viewType> =
-        inherit IView
-        abstract member Attrs: Attr<'viewType> list with get
-
     [<Struct; IsReadOnly>]
     type View<'viewType> =
         { ViewType: Type
@@ -150,9 +146,6 @@ module Types =
 
             member this.ConstructorArgs = this.ConstructorArgs
             member this.Outlet = this.Outlet
-
-        interface IView<'viewType> with
-            member this.Attrs = this.Attrs
 
     // TODO: maybe move active patterns to Virtual DON Misc
 

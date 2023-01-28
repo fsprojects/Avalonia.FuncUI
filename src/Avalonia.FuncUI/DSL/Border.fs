@@ -9,7 +9,7 @@ module Border =
     open Avalonia.Media
     open Avalonia.Media.Immutable
 
-    let create (attrs: Attr<Border> list): IView<Border> =
+    let create (attrs: Attr<Border> list): View<Border> =
         ViewBuilder.Create<Border>(attrs)
 
     type Border with

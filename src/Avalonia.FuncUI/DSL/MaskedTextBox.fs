@@ -6,10 +6,10 @@ module MaskedTextBox =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    let create (attrs: Attr<MaskedTextBox> list): IView<MaskedTextBox> =
+    let create (attrs: Attr<MaskedTextBox> list): View<MaskedTextBox> =
         ViewBuilder.Create<MaskedTextBox> attrs
 
-    let createFromProvider (provider: System.ComponentModel.MaskedTextProvider) (attrs: Attr<MaskedTextBox> list): IView<MaskedTextBox> =
+    let createFromProvider (provider: System.ComponentModel.MaskedTextProvider) (attrs: Attr<MaskedTextBox> list): View<MaskedTextBox> =
         ViewBuilder.Create<MaskedTextBox> attrs
         |> View.withConstructorArgs [|provider|]
 

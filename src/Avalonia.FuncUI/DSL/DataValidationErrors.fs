@@ -8,7 +8,7 @@ module DataValidationErrors =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
-    let create (attrs: Attr<DataValidationErrors> list): IView<DataValidationErrors> =
+    let create (attrs: Attr<DataValidationErrors> list): View<DataValidationErrors> =
         ViewBuilder.Create<DataValidationErrors>(attrs)
 
     type Control with
