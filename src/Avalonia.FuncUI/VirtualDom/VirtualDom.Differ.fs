@@ -5,7 +5,7 @@ open Avalonia.FuncUI.VirtualDom.Delta
 
 module internal rec Differ =
 
-    let private update(last: #IAttr) (next: #IAttr) : AttrDelta =
+    let private update (last: #IAttr, next: #IAttr) : AttrDelta =
         match next with
         | Property' property ->
             AttrDelta.Property
@@ -16,7 +16,7 @@ module internal rec Differ =
         | Content' content ->
             AttrDelta.Content
                 { Accessor = content.Accessor;
-                  Content = Differ.diffContent last next }
+                  Content = Differ.diffContent (last, next) }
 
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
@@ -49,7 +49,7 @@ module internal rec Differ =
 
         | _ -> failwithf "no reset operation is defined for last '%A'" last
 
-    let private diffContentSingle (last: #IView voption) (next: #IView voption) : ViewDelta voption =
+    let private diffContentSingle (last: #IView voption, next: #IView voption) : ViewDelta voption =
         match next with
         | ValueSome next ->
             match last with
@@ -57,7 +57,7 @@ module internal rec Differ =
             | ValueNone -> ValueSome (ViewDelta.From next)
         | ValueNone -> ValueNone
 
-    let private diffContentMultiple (lastList: #IView list) (nextList: #IView list) : ViewDelta list =
+    let private diffContentMultiple (lastList: #IView list, nextList: #IView list) : ViewDelta list =
         nextList |> List.mapi (fun index next ->
             if index + 1 <= lastList.Length then
                 Differ.diff(lastList[index], nextList[index])
@@ -65,7 +65,7 @@ module internal rec Differ =
                 ViewDelta.From next
         )
 
-    let private diffContent (last: #IAttr) (next: #IAttr) : ViewContentDelta =
+    let private diffContent (last: #IAttr, next: #IAttr) : ViewContentDelta =
             match next with
             | Content' nextContent ->
                 match last with
@@ -76,7 +76,7 @@ module internal rec Differ =
                     | ViewContent.Single nextSingleContent ->
                         match lastContent.Content with
                         | ViewContent.Single lastSingleContent ->
-                            ViewContentDelta.Single (diffContentSingle lastSingleContent nextSingleContent)
+                            ViewContentDelta.Single (diffContentSingle (lastSingleContent, nextSingleContent))
                         | _ ->
                             ViewContentDelta.Single ValueNone
 
@@ -84,15 +84,15 @@ module internal rec Differ =
                     | ViewContent.Multiple nextMultipleContent ->
                         match lastContent.Content with
                         | ViewContent.Multiple lastMultipleContent ->
-                            ViewContentDelta.Multiple (diffContentMultiple lastMultipleContent nextMultipleContent)
+                            ViewContentDelta.Multiple (diffContentMultiple (lastMultipleContent, nextMultipleContent))
                         | _ ->
-                            ViewContentDelta.Multiple (diffContentMultiple [] nextMultipleContent)
+                            ViewContentDelta.Multiple (diffContentMultiple(List.empty, nextMultipleContent))
 
                 | _ -> invalidOp "'last' must be of type content"
 
             | _ -> invalidOp "'next' must be of type content"
 
-    let internal diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
+    let internal diffAttributes (lastAttrs: IAttr list, nextAttrs: IAttr list) : AttrDelta list =
         (* TODO: optimize. *)
 
         (* NOTE: using a map here might be actually slower
@@ -118,7 +118,7 @@ module internal rec Differ =
 
             (* attribute is still there, but it's value changed. -> update value *)
             | Some nextAttr when not (nextAttr.Equals lastAttr) ->
-                let attrDelta = update lastAttr nextAttr
+                let attrDelta = update (lastAttr, nextAttr)
                 delta.Add attrDelta
 
             (* attribute is still there. It hasn't changed -> do nothing *)
@@ -146,7 +146,7 @@ module internal rec Differ =
             ViewDelta.From next
         else
             { ViewType = next.ViewType
-              Attrs = diffAttributes last.Attrs next.Attrs
+              Attrs = diffAttributes (last.Attrs, next.Attrs)
               ConstructorArgs = next.ConstructorArgs
               KeyDidChange = false
               Outlet = next.Outlet }
