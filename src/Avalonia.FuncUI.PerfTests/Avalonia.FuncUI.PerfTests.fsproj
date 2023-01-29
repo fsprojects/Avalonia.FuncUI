@@ -24,6 +24,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Program.fs" />
+        <Content Include="results.md" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
