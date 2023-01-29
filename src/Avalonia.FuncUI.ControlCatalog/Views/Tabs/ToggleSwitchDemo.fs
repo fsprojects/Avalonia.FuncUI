@@ -1,6 +1,5 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog.Views
 
-open System
 open Elmish
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
@@ -30,7 +29,7 @@ module ToggleSwitchDemo =
     type Host() as this =
         inherit Hosts.HostControl()
         do
-            Elmish.Program.mkSimple (fun () -> ()) update view
+            Elmish.Program.mkSimple id update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

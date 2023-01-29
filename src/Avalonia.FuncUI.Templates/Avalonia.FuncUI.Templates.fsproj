@@ -9,11 +9,11 @@
     <Description>Templates for Avalonia.FuncUI</Description>
     <PackageTags>dotnet-new;templates;avalonia;funcui;mvu</PackageTags>
     <TargetFramework>netstandard2.0</TargetFramework>
-  
+
     <IncludeContentInPack>true</IncludeContentInPack>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <ContentTargetFolders>content</ContentTargetFolders>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackOnBuild>true</PackOnBuild>
   </PropertyGroup>
 

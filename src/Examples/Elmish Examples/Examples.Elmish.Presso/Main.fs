@@ -44,7 +44,7 @@ module Main =
         { water: int<ml>
           method: BrewingMethod
           strength: Strength }
-    let init =
+    let init() =
         { water = 500<ml>
           method = General
           strength = Regular }
@@ -60,7 +60,7 @@ module Main =
         | SetWaterAmount ml -> { state with water = ml }
         | SetBrewingMethod method -> { state with method = method }
         | SetStrength strength -> { state with strength = strength }
-        | Reset -> init
+        | Reset -> init()
 
     let waterAmountView (state: State) (dispatch: Msg -> unit) =
         DockPanel.create [

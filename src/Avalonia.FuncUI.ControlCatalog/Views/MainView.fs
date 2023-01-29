@@ -10,8 +10,8 @@ module MainView =
         dataTemplateState : DataTemplateDemo.State
     }
 
-    let init = {
-        dataTemplateState = DataTemplateDemo.init
+    let init () = {
+        dataTemplateState = DataTemplateDemo.init()
     }
 
     type Msg =
@@ -21,7 +21,7 @@ module MainView =
         match msg with
         | DataTemplateDemoMsg msg -> { state with dataTemplateState = DataTemplateDemo.update msg state.dataTemplateState }
 
-    let view (state: CounterState) (dispatch) =
+    let view (state: CounterState) dispatch =
         TabControl.create [
             TabControl.tabStripPlacement Dock.Left
             TabControl.viewItems [

@@ -66,6 +66,7 @@ type IComponentContext =
     /// </example>
     /// </summary>
     /// <param name="value">value should not change during the component lifetime.</param>
+    /// <param name="renderOnChange">re-render component on change (default: true).</param>
     abstract usePassed<'value> : value: IWritable<'value> * ?renderOnChange: bool -> IWritable<'value>
 
     /// <summary>
@@ -167,7 +168,12 @@ type IComponentContext =
     /// </summary>
     abstract attrs: Attr<Avalonia.Controls.Border> list -> unit
 
-type Context () =
+    /// <summary>
+    /// The underlying Avalonia control.
+    /// </summary>
+    abstract control: Avalonia.Controls.Border
+
+type Context (componentControl: Avalonia.Controls.Border) =
     let disposables = new DisposableBag ()
     let hooks = Dictionary<int, StateHook>()
     let effects = Dictionary<int, EffectHook>()
@@ -310,6 +316,8 @@ type Context () =
                     renderOnChange = defaultArg renderOnChange true
                 )
             ) :?> IWritable<'value>
+
+        member this.control = componentControl
 
     interface IDisposable with
         member this.Dispose () =

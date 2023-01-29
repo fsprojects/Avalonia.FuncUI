@@ -17,22 +17,24 @@ type MainWindow() as this =
         base.Height <- 500.0
         base.Width <- 500.0
         
-        let timer (_state: Main.State) =
-            let sub (dispatch: Main.Msg -> unit) =
+        let subscriptions (_state: Main.State) =
+            let timerSub (dispatch: Main.Msg -> unit) =
                 let invoke() =
                     Board.Evolve |> Main.BoardMsg |> dispatch
                     true
                     
-                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 100.0) |> ignore
+                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 100.0)
                 
-            Cmd.ofSub sub
+            [ 
+                [ nameof timerSub ], timerSub
+            ]
                 
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         
-        Elmish.Program.mkProgram Main.initialState Main.update Main.view
+        Elmish.Program.mkProgram Main.init Main.update Main.view
         |> Program.withHost this
-        |> Program.withSubscription timer
+        |> Program.withSubscription subscriptions
         |> Program.run
         
 type App() =

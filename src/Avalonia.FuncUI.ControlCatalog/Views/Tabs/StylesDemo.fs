@@ -6,14 +6,13 @@ open Avalonia.Controls.Presenters
 open Elmish
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI
 open Avalonia.FuncUI.Elmish
 open Avalonia.Styling
 
 module StylesDemo =
     type State = { color: string }
 
-    let init = { color = "gray" }
+    let init () = { color = "gray" }
 
     type Msg =
     | SetColor of string
@@ -63,7 +62,7 @@ module StylesDemo =
         do
             this.Styles.Load "avares://Avalonia.FuncUI.ControlCatalog/Views/Tabs/Styles.xaml"
             
-            Elmish.Program.mkSimple (fun () -> init) update view
+            Elmish.Program.mkSimple init update view
             |> Program.withHost this
             |> Program.withConsoleTrace
             |> Program.run

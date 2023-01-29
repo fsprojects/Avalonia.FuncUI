@@ -23,21 +23,29 @@ type MainWindow() as this =
         base.MaxWidth <- 200.0
         base.MinWidth <- 200.0
       
-        let timer (_state: Clock.State) =
-            let sub (dispatch: Clock.Msg -> unit) =
+        let subscriptions (_state: Clock.State) : Sub<Clock.Msg> =
+            let timerSub (dispatch: Clock.Msg -> unit) =
                 let invoke() =
                     DateTime.Now |> Clock.Msg.Tick |> dispatch
                     true
                     
-                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 1000.0) |> ignore
-                
-            Cmd.ofSub sub
+                DispatcherTimer.Run(Func<bool>(invoke), TimeSpan.FromMilliseconds 1000.0)
+
+            let onClosedSub (dispatch: Clock.Msg -> unit) =
+                this.Closed.Subscribe(fun e ->
+                    printfn "The window has been closed."
+                )
+
+            [ 
+                [ nameof timerSub ], timerSub
+                [ nameof onClosedSub ], onClosedSub
+            ]
         
         //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
-        Elmish.Program.mkSimple (fun () -> Clock.init) Clock.update Clock.view
+        Elmish.Program.mkSimple Clock.init Clock.update Clock.view
         |> Program.withHost this
-        |> Program.withSubscription timer
+        |> Program.withSubscription subscriptions
         |> Program.withConsoleTrace
         |> Program.run
         

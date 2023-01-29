@@ -1,7 +1,5 @@
 namespace Avalonia.FuncUI.DSL
 
-open Avalonia.FuncUI.VirtualDom
-
 [<AutoOpen>]
 module Control =
     open Avalonia.Controls

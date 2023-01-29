@@ -10,7 +10,7 @@ module Main =
         { board : BoardMatrix
           evolutionRunning : bool }
         
-    let initialState() =
+    let init() =
         { board = BoardMatrix.constructBasic(50, 50)
           evolutionRunning = false }, Cmd.none
 

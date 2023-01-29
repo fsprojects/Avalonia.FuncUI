@@ -6,7 +6,7 @@ open Avalonia.FuncUI
 open Avalonia.Media
 open Avalonia.Media.Immutable
 
-type internal ComponentHighlightAdorner (adornedElement: Component) as this =
+type internal ComponentHighlightAdorner (adornedElement: Component) =
     inherit Control ()
 
     override this.Render (ctx: DrawingContext) =

@@ -24,9 +24,9 @@ module Shell =
         | AboutMsg of About.Msg
         | CounterMsg of Counter.Msg
 
-    let init =
-        let aboutState, aboutCmd = About.init
-        let counterState = Counter.init
+    let init() =
+        let aboutState, aboutCmd = About.init()
+        let counterState = Counter.init()
         { aboutState = aboutState; counterState = counterState },
         /// If your children controls don't emit any commands
         /// in the init function, you can just return Cmd.none
@@ -83,7 +83,7 @@ module Shell =
             this.AttachDevTools(KeyGesture(Key.F12))
 #endif
 
-            Elmish.Program.mkProgram (fun () -> init) update view
+            Elmish.Program.mkProgram init update view
             |> Program.withHost this
 #if DEBUG
             |> Program.withConsoleTrace

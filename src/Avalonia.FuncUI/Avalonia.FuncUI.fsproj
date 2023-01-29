@@ -12,6 +12,7 @@
     <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
     <Title>Avalonia FuncUI</Title>
     <PackageVersion>$(FuncUIVersion)</PackageVersion>
+    <Description>Develop cross-plattform MVU GUI Applications using F# and Avalonia!</Description>
   </PropertyGroup>
 
   <ItemGroup>

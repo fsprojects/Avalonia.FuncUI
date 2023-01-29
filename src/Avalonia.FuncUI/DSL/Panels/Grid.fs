@@ -45,7 +45,7 @@ module Grid =
                             a.MaxHeight = b.MaxHeight &&
                             a.SharedSizeGroup = b.SharedSizeGroup
 
-                        member this.GetHashCode (a) =
+                        member this.GetHashCode a =
                             (a.Height, a.MinHeight, a.MaxHeight, a.SharedSizeGroup).GetHashCode()
                 }
 
