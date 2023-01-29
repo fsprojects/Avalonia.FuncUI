@@ -10,10 +10,10 @@
     <PackageProjectUrl>https://github.com/FuncUI/Avalonia.FuncUI</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FuncUI/Avalonia.FuncUI</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
     <Title>Avalonia FuncUI</Title>
     <PackageVersion>$(FuncUIVersion)</PackageVersion>
     <Description>Develop cross-plattform MVU GUI Applications using F# and Avalonia!</Description>
+    <PackageIcon>nuget_icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -138,6 +138,13 @@
     <Compile Include="DSL\TickBar.fs" />
     <Compile Include="DSL\Viewbox.fs" />
     <Compile Include="DSL\SelectableTextBlock.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\github\img\nuget_icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

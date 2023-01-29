@@ -10,14 +10,21 @@
     <PackageProjectUrl>https://github.com/FuncUI/Avalonia.FuncUI</PackageProjectUrl>
     <RepositoryUrl>https://github.com/FuncUI/Avalonia.FuncUI</RepositoryUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIconUrl>https://github.com/FuncUI/Avalonia.FuncUI/blob/master/github/img/nuget_icon.png?raw=true</PackageIconUrl>
     <Title>Avalonia FuncUI Elmish</Title>
     <PackageVersion>$(FuncUIVersion)</PackageVersion>
+    <PackageIcon>nuget_icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="ElmishHook.fs" />
     <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\github\img\nuget_icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
