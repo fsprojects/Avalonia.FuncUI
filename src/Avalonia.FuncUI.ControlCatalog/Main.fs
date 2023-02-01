@@ -16,7 +16,7 @@ type MainWindow() as this =
         base.Height <- 600.0
         base.Width <- 800.0
 
-        this.VisualRoot.Renderer.DrawFps <- true
+        this.VisualRoot.Renderer.Diagnostics.DebugOverlays <- Avalonia.Rendering.RendererDebugOverlays.Fps
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         ()
         
@@ -24,8 +24,9 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Add (FluentTheme(Mode = FluentThemeMode.Dark))
+        this.Styles.Add (FluentTheme())
         this.Styles.Load "avares://Avalonia.FuncUI.ControlCatalog/Styles/TabControl.xaml"
+        this.RequestedThemeVariant <- Styling.ThemeVariant.Dark
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with

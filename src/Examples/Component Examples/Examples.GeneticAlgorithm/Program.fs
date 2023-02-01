@@ -54,7 +54,8 @@ type App() =
 
 
     override this.Initialize() =
-        this.Styles.Add (FluentTheme(Mode = FluentThemeMode.Dark))
+        this.Styles.Add (FluentTheme())
+        this.RequestedThemeVariant <- Styling.ThemeVariant.Dark
 
     override this.OnFrameworkInitializationCompleted() =
         this.Name <- "Genetic Algorithm Example"
