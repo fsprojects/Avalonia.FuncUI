@@ -1,5 +1,6 @@
 ﻿namespace Examples.Presso
 
+open Avalonia.Controls
 open Elmish
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
@@ -13,6 +14,7 @@ type MainWindow() as this =
     inherit HostWindow()
     do
         base.Title <- "Presso"
+        base.Icon <- WindowIcon("Assets\Icons\icon.ico")
         base.Width <- 500.0
         base.Height <- 500.0
 

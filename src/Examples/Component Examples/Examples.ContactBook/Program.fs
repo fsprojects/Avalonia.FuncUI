@@ -5,11 +5,13 @@ open Avalonia.FuncUI.Diagnostics
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.Controls
 
 type MainWindow() =
     inherit HostWindow()
     do
         base.Title <- "Contact List Example"
+        base.Icon <- WindowIcon("Assets\Icons\icon.ico")
         base.Content <- Views.mainView ()
 
 type App() =

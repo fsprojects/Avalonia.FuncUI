@@ -15,6 +15,9 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="Assets\Icons\icon.ico">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <Compile Include="Api.fs" />
         <Compile Include="Types.fs" />
         <Compile Include="Views.fs" />

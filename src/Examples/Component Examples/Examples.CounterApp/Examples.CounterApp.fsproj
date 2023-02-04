@@ -8,6 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Content Include="Assets\Icons\icon.ico">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <Compile Include="Main.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>

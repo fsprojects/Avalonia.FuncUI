@@ -1,6 +1,7 @@
 ﻿namespace Examples.CounterApp
 
 open Avalonia
+open Avalonia.Controls
 open Avalonia.Themes.Fluent
 open Elmish
 open Avalonia.FuncUI.Hosts
@@ -12,6 +13,7 @@ type MainWindow() as this =
     inherit HostWindow()
     do
         base.Title <- "Counter Example"
+        base.Icon <- WindowIcon("Assets\Icons\icon.ico")
         base.Height <- 400.0
         base.Width <- 400.0    
       

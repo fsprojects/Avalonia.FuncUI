@@ -26,4 +26,10 @@
 
     <ItemGroup>
     </ItemGroup>
+    
+    <ItemGroup>
+      <Content Include="Assets\Icons\icon.ico">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
 </Project>
