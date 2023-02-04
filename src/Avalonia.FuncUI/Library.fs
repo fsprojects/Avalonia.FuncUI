@@ -27,10 +27,15 @@ module internal Utils =
 module internal Extensions =
     open Avalonia.Interactivity
     open System
+    open System.Threading
 
     type IObservable<'a> with
         member this.SubscribeWeakly(callback: 'a -> unit, target) =
             Observable.subscribeWeakly(this, callback, target)
+
+        member this.Subscribe (callback: 'a -> unit, token: CancellationToken) =
+            let disposable = Observable.subscribe callback this
+            token.Register(fun () -> disposable.Dispose()) |> ignore
 
     type Interactive with
         member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent<'args>) : IObservable<'args> =
