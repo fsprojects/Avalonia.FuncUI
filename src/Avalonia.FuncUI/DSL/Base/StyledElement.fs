@@ -43,3 +43,26 @@ module StyledElement =
             let factory = fun () -> ResourceDictionary() :> IResourceDictionary
             
             AttrBuilder<'t>.CreateProperty<IResourceDictionary>("Resources", value, ValueSome getter, ValueSome setter, ValueNone, factory)
+            
+        // Attached properties related to text input
+        
+        static member contentType<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.ContentTypeProperty, value, ValueNone)
+            
+        static member returnKeyType<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.ReturnKeyTypeProperty, value, ValueNone)
+            
+        static member multiline<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.MultilineProperty, value, ValueNone)
+            
+        static member autoCapitalization<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.AutoCapitalizationProperty, value, ValueNone)
+            
+        static member isSensitive<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.IsSensitiveProperty, value, ValueNone)
+            
+        static member uppercase<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.UppercaseProperty, value, ValueNone)
+            
+        static member lowercase<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.LowercaseProperty, value, ValueNone)
