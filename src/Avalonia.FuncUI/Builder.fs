@@ -246,3 +246,48 @@ type ViewBuilder() =
           View.Attrs = attrs
           View.ConstructorArgs = null
           View.Outlet = ValueNone }
+
+
+type ViewBuilderCE<'view> =
+    struct
+        val view: View<'view>
+        val buffer: Attr<'view> array
+        val length: int
+
+        new (view: View<'view>) =
+            { view = view
+              buffer = System.Buffers.ArrayPool<_>.Shared.Rent(16)
+              length = 0 }
+
+        member this.Yield(vars) = ()
+
+        member this.Return(vars) = this.view
+
+        member inline this.Run() =
+            (* yes, this is dumb, but at this point I just want to get the collection CE working. Porting everything
+            from list -> array will be interesting. We should probably use a read only collection that is array backed
+            instead. *)
+            { View.ViewType = this.view.ViewType
+              View.ViewKey = this.view.ViewKey
+              View.Attrs = List.ofArray this.buffer[0..this.length - 1]
+              View.ConstructorArgs = this.view.ConstructorArgs
+              View.Outlet = this.view.Outlet }
+
+        member inline this.Zero() : View<'view> =
+            this.view
+
+
+
+    end
+
+type ViewBuilder with
+
+    static member CreateF (viewType: Type) : ViewBuilderCE<'view> =
+        let view =
+            { View.ViewType = viewType
+              View.ViewKey = ValueNone
+              View.Attrs = List.empty
+              View.ConstructorArgs = null
+              View.Outlet = ValueNone }
+
+        ViewBuilderCE view

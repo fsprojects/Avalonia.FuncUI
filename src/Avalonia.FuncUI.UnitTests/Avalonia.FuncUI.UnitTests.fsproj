@@ -17,6 +17,7 @@
     <Compile Include="VirtualDom\VirtualDom.DifferTests.fs" />
     <Compile Include="VirtualDom\VirtualDom.PatcherTests.fs" />
     <Compile Include="State.fs" />
+    <Compile Include="StackArrayTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
