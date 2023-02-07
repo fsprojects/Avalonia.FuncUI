@@ -4,6 +4,7 @@ open Avalonia
 open Avalonia.Controls
 open System
 open System.Threading
+open Avalonia.Data
 
 module Types =
 
@@ -76,12 +77,18 @@ module Types =
 
         override this.GetHashCode () =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
-    
+
+    [<Struct>]
+    type BindingSetup =
+        { Property: AvaloniaProperty
+          Binding: IBinding }
+
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
+        abstract member BindingSetup: BindingSetup option
 
     type IAttr<'viewType> =
         inherit IAttr
@@ -90,6 +97,7 @@ module Types =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
+        | BindingSetup of BindingSetup
 
         interface IAttr<'viewType>
 
@@ -106,7 +114,11 @@ module Types =
                     | Accessor.AvaloniaProperty p -> p.Name
                     | Accessor.InstanceProperty p -> p.Name
 
-                | Subscription subscription -> subscription.Name
+                | Subscription subscription ->
+                    subscription.Name
+
+                | BindingSetup bindingSetup ->
+                    bindingSetup.Property.Name
 
             member this.Property =
                 match this with
@@ -121,6 +133,11 @@ module Types =
             member this.Subscription =
                 match this with
                 | Subscription value -> Some value
+                | _ -> None
+
+            member this.BindingSetup =
+                match this with
+                | BindingSetup value -> Some value
                 | _ -> None
 
     type IView =
@@ -163,4 +180,6 @@ module Types =
 
     let internal (|Subscription'|_|) (attr: IAttr)  =
         attr.Subscription
-    
+
+    let internal (|BindingSetup'|_|) (attr: IAttr) =
+        attr.BindingSetup

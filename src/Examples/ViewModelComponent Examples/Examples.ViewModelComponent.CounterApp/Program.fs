@@ -1,8 +1,10 @@
 ﻿namespace Examples.CounterApp
 
+open System.ComponentModel
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.Data
 open Avalonia.Interactivity
 open Avalonia.Layout
 open Avalonia.Themes.Fluent
@@ -13,14 +15,16 @@ open Avalonia.FuncUI.DSL
 type CounterComponent_CodeBehindFlavoured () =
     inherit ViewModelComponentBase ()
 
-    //[<Observe>]
-    member val Counter: int = 0 with get, set
+    [<Observe>]
+    member val Counter: int = 56 with get, set
 
     member this.Decrement (args: RoutedEventArgs) =
         this.Counter <- this.Counter - 1
+        printfn $"Counter is: %i{this.Counter}"
 
     member this.Increment (args: RoutedEventArgs) =
         this.Counter <- this.Counter + 1
+        printfn $"Counter is: %i{this.Counter}"
 
     override this.Build () =
         DockPanel.create [
@@ -52,7 +56,14 @@ type CounterComponent_CodeBehindFlavoured () =
                     TextBlock.fontSize 48.0
                     TextBlock.verticalAlignment VerticalAlignment.Center
                     TextBlock.horizontalAlignment HorizontalAlignment.Center
-                    TextBlock.text "0"
+                    TextBlock.binding (
+                        TextBlock.TextProperty,
+                        Binding(
+                            Source = (this :> INotifyPropertyChanged),
+                            Path = "Counter",
+                            Mode = BindingMode.TwoWay
+                        )
+                    )
                 ]
             ]
         ]
@@ -83,6 +94,8 @@ module Program =
 
     [<EntryPoint>]
     let main(args: string[]) =
+        ViewModelPatcher.PatchAll()
+
         AppBuilder
             .Configure<App>()
             .UsePlatformDetect()

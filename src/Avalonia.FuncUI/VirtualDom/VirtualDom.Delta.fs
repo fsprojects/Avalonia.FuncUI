@@ -13,12 +13,14 @@ module internal rec Delta =
         | Property of PropertyDelta
         | Content of ContentDelta
         | Subscription of SubscriptionDelta
+        | BindingSetup of BindingSetup
 
         static member From (attr: IAttr) : AttrDelta =
             match attr with
             | Property' property -> Property (PropertyDelta.From property)
             | Content' content -> Content (ContentDelta.From content)
             | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
+            | BindingSetup' bindingSetup -> BindingSetup bindingSetup
             | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
 
 
@@ -73,7 +75,7 @@ module internal rec Delta =
         static member From (content: Content) : ContentDelta =
             { Accessor = content.Accessor;
               Content = ViewContentDelta.From content.Content }
-            
+
     type ViewContentDelta =
         | Single of ViewDelta option
         | Multiple of ViewDelta list
@@ -109,7 +111,7 @@ module internal rec Delta =
               ConstructorArgs = view.ConstructorArgs
               KeyDidChange = defaultArg keyDidChange false
               Outlet = view.Outlet}
-            
+
         override this.Equals(other) =
             match other with
             | :? ViewDelta as other ->
@@ -119,6 +121,6 @@ module internal rec Delta =
                 this.KeyDidChange = other.KeyDidChange &&
                 (ValueOption.isSome this.Outlet = ValueOption.isSome other.Outlet)
             | _ -> false
-            
+
         override this.GetHashCode() =
             HashCode.Combine(this.ViewType, this.Attrs, this.ConstructorArgs, this.KeyDidChange, ValueOption.isSome this.Outlet)
