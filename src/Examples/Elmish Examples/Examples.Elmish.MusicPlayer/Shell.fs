@@ -186,6 +186,7 @@ module Shell =
         inherit HostWindow()
         do
             base.Title <- "Music Player in F# :)"
+            base.Icon <- WindowIcon("Assets\Icons\icon.ico")
             base.Width <- 800.0
             base.Height <- 600.0
             base.MinWidth <- 526.0

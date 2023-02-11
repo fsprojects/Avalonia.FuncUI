@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <None Include="README.md" />
+        <AvaloniaResource Include="Assets\Icons\**" />
         <Compile Include="Icons.fs" />
         <Compile Include="Types.fs" />
         <Compile Include="Songs.fs" />
@@ -19,7 +20,9 @@
         <Compile Include="Shell.fs" />
         <Compile Include="Program.fs" />
         <AvaloniaResource Include="**\*.xaml" />
-        <AvaloniaResource Include="Assets\Icons\**" />
+        <Content Include="Assets\Icons\icon.ico">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>

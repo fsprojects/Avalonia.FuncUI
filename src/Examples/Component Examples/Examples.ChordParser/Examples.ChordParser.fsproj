@@ -8,11 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Assets\Icons\icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="ChordParser.fs" />
     <Compile Include="SampleCharts.fs" />
     <Compile Include="ChordParserView.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
+
+  <ItemGroup />
 
   <ItemGroup>
     <PackageReference Include="FParsec" Version="1.1.1" />

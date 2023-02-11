@@ -4,11 +4,13 @@ open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
+open Avalonia.Controls
 
 type MainWindow() =
     inherit HostWindow()
     do
         base.Title <- "Counter Example"
+        base.Icon <- WindowIcon("Assets\Icons\icon.ico")
         base.Height <- 400.0
         base.Width <- 400.0
         base.Content <- Main.view
