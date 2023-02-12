@@ -9,18 +9,31 @@ open Avalonia.FuncUI.Types
 
 module internal rec Delta =
 
+    [<CustomEquality; NoComparison>]
     type AttrDelta =
         | Property of PropertyDelta
         | Content of ContentDelta
         | Subscription of SubscriptionDelta
-        | BindingSetup of BindingSetup
+        | SetupFunction of SetupFunction
+
+        override this.Equals (other: obj) : bool =
+            match other with
+            | :? AttrDelta as other ->
+                match this, other with
+                | Property a, Property b -> a.Equals b
+                | Content a, Content b -> a.Equals b
+                | Subscription a, Subscription b -> a.Equals b
+                | SetupFunction a, SetupFunction b -> a.Equals b
+                | _ -> false
+            | _ ->
+                false
 
         static member From (attr: IAttr) : AttrDelta =
             match attr with
             | Property' property -> Property (PropertyDelta.From property)
             | Content' content -> Content (ContentDelta.From content)
             | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
-            | BindingSetup' bindingSetup -> BindingSetup bindingSetup
+            | BindingSetup' bindingSetup -> SetupFunction bindingSetup
             | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
 
 

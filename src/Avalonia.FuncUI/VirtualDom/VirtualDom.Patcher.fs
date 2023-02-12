@@ -243,7 +243,6 @@ module internal rec Patcher =
             | AttrDelta.Content content -> Patcher.patchContent control content
             | AttrDelta.Subscription s -> Patcher.patchSubscription (control :?> IControl) s
             | AttrDelta.Property property -> Patcher.patchProperty control property
-            | AttrDelta.BindingSetup bindingSetup ->
-                control.Bind(bindingSetup.Property, bindingSetup.Binding) |> ignore
+            | AttrDelta.SetupFunction setupFunction -> setupFunction.Function(control)
 
         control

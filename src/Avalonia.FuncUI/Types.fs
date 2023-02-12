@@ -78,17 +78,19 @@ module Types =
         override this.GetHashCode () =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
 
-    [<Struct>]
-    type BindingSetup =
-        { Property: AvaloniaProperty
-          Binding: IBinding }
+    [<Struct; CustomEquality; NoComparison>]
+    type SetupFunction =
+        { Function: obj -> unit }
+
+        override this.Equals (obj: obj) =
+            false
 
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
-        abstract member BindingSetup: BindingSetup option
+        abstract member BindingSetup: SetupFunction option
 
     type IAttr<'viewType> =
         inherit IAttr
@@ -97,7 +99,7 @@ module Types =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
-        | BindingSetup of BindingSetup
+        | SetupFunction of SetupFunction
 
         interface IAttr<'viewType>
 
@@ -117,8 +119,8 @@ module Types =
                 | Subscription subscription ->
                     subscription.Name
 
-                | BindingSetup bindingSetup ->
-                    bindingSetup.Property.Name
+                | SetupFunction _ ->
+                    "setup"
 
             member this.Property =
                 match this with
@@ -137,7 +139,7 @@ module Types =
 
             member this.BindingSetup =
                 match this with
-                | BindingSetup value -> Some value
+                | SetupFunction value -> Some value
                 | _ -> None
 
     type IView =

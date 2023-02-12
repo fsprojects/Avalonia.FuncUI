@@ -139,6 +139,13 @@ module StateExtensions =
                     this.Subscribe(observer.OnNext)
             }
 
+        member this.ImmediateObservable with get () : IObservable<'value> =
+            { new IObservable<'value> with
+                member _.Subscribe(observer: IObserver<'value>) =
+                    observer.OnNext this.Current
+                    this.Subscribe(observer.OnNext)
+            }
+
     type IWritable<'value> with
 
         member this.Observer with get () : IObserver<'value> =

@@ -4,65 +4,62 @@ open System.ComponentModel
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
-open Avalonia.Data
+open Avalonia.FuncUI.Types
 open Avalonia.Interactivity
 open Avalonia.Layout
+open Avalonia.Media
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 
-type CounterComponent_CodeBehindFlavoured () =
-    inherit ViewModelComponentBase ()
+type CounterComponent () =
+    inherit StaticComponent ()
 
-    [<Observe>]
-    member val Counter: int = 56 with get, set
+    let counter: IWritable<int> = new State<int>(0)
 
-    member this.Decrement (args: RoutedEventArgs) =
-        this.Counter <- this.Counter - 1
-        printfn $"Counter is: %i{this.Counter}"
+    member this.Decrement (_args: RoutedEventArgs) =
+        counter.Set (counter.Current - 1)
 
-    member this.Increment (args: RoutedEventArgs) =
-        this.Counter <- this.Counter + 1
-        printfn $"Counter is: %i{this.Counter}"
+    member this.Increment (_args: RoutedEventArgs) =
+        counter.Set (counter.Current + 1)
 
-    override this.Build () =
+    override this.Build () : IView =
         DockPanel.create [
             DockPanel.children [
+
                 Button.create [
                     Button.dock Dock.Bottom
                     Button.onClick this.Decrement
                     Button.content "-"
                     Button.horizontalAlignment HorizontalAlignment.Stretch
+                    Button.init (fun button ->
+                        button.Bind(Button.IsEnabledProperty, counter.Map (fun c -> c > -10))
+                    )
                 ]
+
                 Button.create [
                     Button.dock Dock.Bottom
                     Button.onClick this.Increment
                     Button.content "+"
                     Button.horizontalAlignment HorizontalAlignment.Stretch
+                    Button.init (fun button ->
+                        button.Bind(Button.IsEnabledProperty, counter.Map (fun c -> c < 10))
+                    )
                 ]
-                TextBox.create [
-                    TextBox.dock Dock.Bottom
-                    //TextBox.onTextChanged (
-                    //    (fun text ->
-                    //        let isNumber, number = System.Int32.TryParse text
-                    //        if isNumber then number |> state.Set)
-                    //)
-                    //TextBox.text (string state.Current)
-                    TextBox.horizontalAlignment HorizontalAlignment.Stretch
-                ]
+
                 TextBlock.create [
                     TextBlock.dock Dock.Top
                     TextBlock.fontSize 48.0
                     TextBlock.verticalAlignment VerticalAlignment.Center
                     TextBlock.horizontalAlignment HorizontalAlignment.Center
-                    TextBlock.binding (
-                        TextBlock.TextProperty,
-                        Binding(
-                            Source = (this :> INotifyPropertyChanged),
-                            Path = "Counter",
-                            Mode = BindingMode.TwoWay
-                        )
+                    TextBlock.init (fun textBlock ->
+                        textBlock.Bind(TextBlock.TextProperty, counter.Map string)
+                        textBlock.Bind(TextBlock.ForegroundProperty, counter.Map (fun c ->
+                            if c < 0
+                            then Brushes.Red :> IBrush
+                            else Brushes.Green :> IBrush
+                        ))
                     )
                 ]
             ]
@@ -75,7 +72,7 @@ type MainWindow() =
         base.Title <- "Counter Example"
         base.Height <- 400.0
         base.Width <- 400.0
-        base.Content <- CounterComponent_CodeBehindFlavoured()
+        base.Content <- CounterComponent()
 
 type App() =
     inherit Application()
@@ -94,8 +91,6 @@ module Program =
 
     [<EntryPoint>]
     let main(args: string[]) =
-        ViewModelPatcher.PatchAll()
-
         AppBuilder
             .Configure<App>()
             .UsePlatformDetect()

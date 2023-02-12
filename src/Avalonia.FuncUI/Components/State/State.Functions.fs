@@ -1,6 +1,7 @@
 namespace Avalonia.FuncUI
 
 open System
+open System.Runtime.CompilerServices
 open Avalonia.FuncUI
 
 [<RequireQualifiedAccess>]
@@ -45,3 +46,10 @@ module State =
         let keyedWire: IReadable<Map<'key, 'value>> = new ReadValueMap<'value, 'key>(wire, keyPath) :> _
         let keyFocusedWire: IReadable<'value option> = new ReadKeyFocusedValue<'value, 'key>(keyedWire, key) :> _
         keyFocusedWire
+
+[<Extension>]
+type __IReadableExtensions =
+
+    [<Extension>]
+    static member Map<'a, 'b> (value: IReadable<'a>, mapFunc: 'a -> 'b) : IReadable<'b> =
+        State.readMap mapFunc value
