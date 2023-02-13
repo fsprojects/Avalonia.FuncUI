@@ -14,8 +14,8 @@ module __Bindable =
 
     type Control with
         static member init<'t when 't :> Control>(func: 't -> unit) : IAttr<'t> =
-            Attr.SetupFunction {
-                SetupFunction.Function = (fun (control: obj) -> func (control :?> 't))
+            Attr.InitFunction {
+                InitFunction.Function = (fun (control: obj) -> func (control :?> 't))
             }
 
     type IAvaloniaObject with

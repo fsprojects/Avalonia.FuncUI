@@ -79,7 +79,7 @@ module Types =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
 
     [<Struct; CustomEquality; NoComparison>]
-    type SetupFunction =
+    type InitFunction =
         { Function: obj -> unit }
 
         override this.Equals (obj: obj) =
@@ -90,7 +90,7 @@ module Types =
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
-        abstract member BindingSetup: SetupFunction option
+        abstract member InitFunction: InitFunction option
 
     type IAttr<'viewType> =
         inherit IAttr
@@ -99,7 +99,7 @@ module Types =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
-        | SetupFunction of SetupFunction
+        | InitFunction of InitFunction
 
         interface IAttr<'viewType>
 
@@ -119,8 +119,8 @@ module Types =
                 | Subscription subscription ->
                     subscription.Name
 
-                | SetupFunction _ ->
-                    "setup"
+                | InitFunction _ ->
+                    "initFunction"
 
             member this.Property =
                 match this with
@@ -137,9 +137,9 @@ module Types =
                 | Subscription value -> Some value
                 | _ -> None
 
-            member this.BindingSetup =
+            member this.InitFunction =
                 match this with
-                | SetupFunction value -> Some value
+                | InitFunction value -> Some value
                 | _ -> None
 
     type IView =
@@ -183,5 +183,5 @@ module Types =
     let internal (|Subscription'|_|) (attr: IAttr)  =
         attr.Subscription
 
-    let internal (|BindingSetup'|_|) (attr: IAttr) =
-        attr.BindingSetup
+    let internal (|InitFunction|_|) (attr: IAttr) =
+        attr.InitFunction

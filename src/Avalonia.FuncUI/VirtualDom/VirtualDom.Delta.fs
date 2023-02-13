@@ -14,7 +14,7 @@ module internal rec Delta =
         | Property of PropertyDelta
         | Content of ContentDelta
         | Subscription of SubscriptionDelta
-        | SetupFunction of SetupFunction
+        | SetupFunction of InitFunction
 
         override this.Equals (other: obj) : bool =
             match other with
@@ -33,7 +33,7 @@ module internal rec Delta =
             | Property' property -> Property (PropertyDelta.From property)
             | Content' content -> Content (ContentDelta.From content)
             | Subscription' subscription -> Subscription (SubscriptionDelta.From subscription)
-            | BindingSetup' bindingSetup -> SetupFunction bindingSetup
+            | InitFunction bindingSetup -> SetupFunction bindingSetup
             | _ -> raise (Exception "unknown IAttr type. (not a Property, Content ore Subscription attribute)")
 
 
