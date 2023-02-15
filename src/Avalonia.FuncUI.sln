@@ -9,7 +9,7 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.UnitTests",
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Elmish", "Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj", "{3D70F99C-BA11-41F2-ADB1-A4B5ABC12CBD}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj", "{2EE61E50-F492-4024-85D3-D310D05B4D72}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj", "{2EE61E50-F492-4024-85D3-D310D05B4D72}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.Elmish", "Examples.Elmish", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
 EndProject
@@ -53,11 +53,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		NuGet.config = NuGet.config
 	EndProjectSection
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.InlineText", "Examples\Component Examples\Examples.InlineText\Examples.InlineText.fsproj", "{B8D8C84B-05AD-475B-BE81-A30544CE0149}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.InlineText", "Examples\Component Examples\Examples.InlineText\Examples.InlineText.fsproj", "{B8D8C84B-05AD-475B-BE81-A30544CE0149}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.ViewModelComponent", "Examples.ViewModelComponent", "{24AD0B82-9D10-4929-8FFE-E5E048C11842}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ViewModelComponent.CounterApp", "Examples\ViewModelComponent Examples\Examples.ViewModelComponent.CounterApp\Examples.ViewModelComponent.CounterApp.fsproj", "{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog.Desktop", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.Desktop\Avalonia.FuncUI.ControlCatalog.Desktop.fsproj", "{4121CB46-AEBD-4047-B032-8682ADFF02A6}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog.Browser", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.Browser\Avalonia.FuncUI.ControlCatalog.Browser.fsproj", "{01631D41-54F9-4815-8B26-9F1BEEC22F7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -141,6 +145,14 @@ Global
 		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4121CB46-AEBD-4047-B032-8682ADFF02A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4121CB46-AEBD-4047-B032-8682ADFF02A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4121CB46-AEBD-4047-B032-8682ADFF02A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4121CB46-AEBD-4047-B032-8682ADFF02A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01631D41-54F9-4815-8B26-9F1BEEC22F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01631D41-54F9-4815-8B26-9F1BEEC22F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01631D41-54F9-4815-8B26-9F1BEEC22F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01631D41-54F9-4815-8B26-9F1BEEC22F7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -164,6 +176,8 @@ Global
 		{B8D8C84B-05AD-475B-BE81-A30544CE0149} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{24AD0B82-9D10-4929-8FFE-E5E048C11842} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
 		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC} = {24AD0B82-9D10-4929-8FFE-E5E048C11842}
+		{4121CB46-AEBD-4047-B032-8682ADFF02A6} = {5DB968C6-935E-41AC-A252-644B4886AF8A}
+		{01631D41-54F9-4815-8B26-9F1BEEC22F7A} = {5DB968C6-935E-41AC-A252-644B4886AF8A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
