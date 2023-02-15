@@ -1,5 +1,7 @@
 namespace Avalonia.FuncUI.VirtualDom
 
+open Avalonia.FuncUI.VirtualDom.Delta
+
 module internal rec Patcher =
     open System
     open System.Collections
@@ -207,7 +209,7 @@ module internal rec Patcher =
             patchContentSingle view attr.Accessor single
         | ViewContentDelta.Multiple multiple ->
             patchContentMultiple view attr.Accessor multiple
-            
+
     let patch (view: IAvaloniaObject, viewElement: ViewDelta) : unit =
         for attr in viewElement.Attrs do
             match attr with
@@ -215,7 +217,7 @@ module internal rec Patcher =
             | AttrDelta.Content content -> patchContent view content
             | AttrDelta.Subscription subscription ->
                 match view with
-                | :? IControl as control -> 
+                | :? IControl as control ->
                     patchSubscription control subscription
                 | _ -> failwith "Only controls can have subscriptions"
 
@@ -235,5 +237,12 @@ module internal rec Patcher =
         | ValueNone -> ()
 
         control.SetValue(ViewMetaData.ViewIdProperty, Guid.NewGuid()) |> ignore
-        Patcher.patch (control, viewElement)
+
+        for attr in viewElement.Attrs do
+            match attr with
+            | AttrDelta.Content content -> Patcher.patchContent control content
+            | AttrDelta.Subscription s -> Patcher.patchSubscription (control :?> IControl) s
+            | AttrDelta.Property property -> Patcher.patchProperty control property
+            | AttrDelta.SetupFunction setupFunction -> setupFunction.Function(control)
+
         control

@@ -125,17 +125,49 @@ module StateExtensions =
             currentGeneric.GetMethod.Invoke(this, Array.empty)
 
 
+        /// <summary>
+        /// Observable for non generic state values. Fires whenever the value changes.
+        /// <seealso cref="ImmediateObservableAny"/>
+        /// </summary>
         member this.ObservableAny with get () : IObservable<obj> =
             { new IObservable<obj> with
                 member _.Subscribe(observer: IObserver<obj>) =
                     this.SubscribeAny(observer.OnNext)
             }
 
+         /// <summary>
+        /// Observable for non generic state values. Fires whenever the value changes and immediately after subscribing.
+        /// <seealso cref="ObservableAny"/>
+        /// </summary>
+        [<Experimental "Same as ObservableAny, but fires once immediately after subscribing">]
+        member this.ImmediateObservableAny with get () : IObservable<obj> =
+            { new IObservable<obj> with
+                member _.Subscribe(observer: IObserver<obj>) =
+                    observer.OnNext this.CurrentAny
+                    this.SubscribeAny(observer.OnNext)
+            }
+
     type IReadable<'value> with
 
+         /// <summary>
+        /// Observable for state values. Fires whenever the value changes.
+        /// <seealso cref="ImmediateObservable"/>
+        /// </summary>
         member this.Observable with get () : IObservable<'value> =
             { new IObservable<'value> with
                 member _.Subscribe(observer: IObserver<'value>) =
+                    this.Subscribe(observer.OnNext)
+            }
+
+        /// <summary>
+        /// Observable for state values. Fires whenever the value changes and immediately after subscribing.
+        /// <seealso cref="Observable"/>
+        /// </summary>
+        [<Experimental "Same as Observable, but fires once immediately after subscribing">]
+        member this.ImmediateObservable with get () : IObservable<'value> =
+            { new IObservable<'value> with
+                member _.Subscribe(observer: IObserver<'value>) =
+                    observer.OnNext this.Current
                     this.Subscribe(observer.OnNext)
             }
 

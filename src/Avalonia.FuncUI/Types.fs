@@ -4,6 +4,7 @@ open Avalonia
 open Avalonia.Controls
 open System
 open System.Threading
+open Avalonia.Data
 
 module Types =
 
@@ -76,12 +77,20 @@ module Types =
 
         override this.GetHashCode () =
             (this.Name, this.FuncType, this.Scope).GetHashCode()
-    
+
+    [<Struct; CustomEquality; NoComparison>]
+    type InitFunction =
+        { Function: obj -> unit }
+
+        override this.Equals (obj: obj) =
+            false
+
     type IAttr =
         abstract member UniqueName : string
         abstract member Property : Property option
         abstract member Content : Content option
         abstract member Subscription : Subscription option
+        abstract member InitFunction: InitFunction option
 
     type IAttr<'viewType> =
         inherit IAttr
@@ -90,6 +99,7 @@ module Types =
         | Property of Property
         | Content of Content
         | Subscription of Subscription
+        | InitFunction of InitFunction
 
         interface IAttr<'viewType>
 
@@ -106,7 +116,11 @@ module Types =
                     | Accessor.AvaloniaProperty p -> p.Name
                     | Accessor.InstanceProperty p -> p.Name
 
-                | Subscription subscription -> subscription.Name
+                | Subscription subscription ->
+                    subscription.Name
+
+                | InitFunction _ ->
+                    "initFunction"
 
             member this.Property =
                 match this with
@@ -121,6 +135,11 @@ module Types =
             member this.Subscription =
                 match this with
                 | Subscription value -> Some value
+                | _ -> None
+
+            member this.InitFunction =
+                match this with
+                | InitFunction value -> Some value
                 | _ -> None
 
     type IView =
@@ -163,4 +182,6 @@ module Types =
 
     let internal (|Subscription'|_|) (attr: IAttr)  =
         attr.Subscription
-    
+
+    let internal (|InitFunction|_|) (attr: IAttr) =
+        attr.InitFunction
