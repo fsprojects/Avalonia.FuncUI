@@ -13,6 +13,24 @@ open System.Runtime.InteropServices
 module __Bindable =
 
     type Control with
+
+        /// <summary>
+        /// Hook into the controls lifetime. This is called when the backing avalonia control is created.
+        /// <example>
+        /// <code>
+        /// TextBlock.create [
+        ///     TextBlock.init (fun textBlock -&gt;
+        ///         textBlock.Bind(TextBlock.TextProperty, counter.Map string)
+        ///         textBlock.Bind(TextBlock.ForegroundProperty, counter.Map (fun c -&gt;
+        ///             if c &lt; 0
+        ///             then Brushes.Red :&gt; IBrush
+        ///             else Brushes.Green :&gt; IBrush
+        ///         ))
+        ///     )
+        /// ]
+        /// </code>
+        /// </example>
+        /// </summary>
         static member init<'t when 't :> Control>(func: 't -> unit) : IAttr<'t> =
             Attr.InitFunction {
                 InitFunction.Function = (fun (control: obj) -> func (control :?> 't))
