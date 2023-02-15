@@ -1,5 +1,6 @@
 namespace Avalonia.FuncUI.DSL
 open Avalonia.Controls
+open Avalonia.Controls.Primitives
 
 [<AutoOpen>]
 module StyledElement =  
@@ -15,8 +16,8 @@ module StyledElement =
         static member name<'t when 't :> StyledElement>(name: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(StyledElement.NameProperty, name, ValueNone)
             
-        static member templatedParent<'t when 't :> StyledElement>(template: ITemplatedControl) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ITemplatedControl>(StyledElement.TemplatedParentProperty, template, ValueNone)
+        static member templatedParent<'t when 't :> StyledElement>(template: TemplatedControl) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<AvaloniaObject>(StyledElement.TemplatedParentProperty, template, ValueNone)
             
         static member classes<'t when 't :> StyledElement>(value: Classes) : IAttr<'t> =
             let getter : ('t -> Classes) = (fun control -> control.Classes)

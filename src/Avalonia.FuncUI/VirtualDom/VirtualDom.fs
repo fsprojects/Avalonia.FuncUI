@@ -7,20 +7,20 @@ open Avalonia.FuncUI.VirtualDom.Delta
 
 module rec VirtualDom =
 
-    let create (view: IView) : IControl =
+    let create (view: IView) : Control =
         view
         |> ViewDelta.From
-        |> Patcher.create :?> IControl
+        |> Patcher.create :?> Control
 
-    let update (root: IControl, last: IView, next: IView) : unit =
+    let update (root: Control, last: IView, next: IView) : unit =
         let delta = Differ.diff(last, next)
         Patcher.patch(root, delta)
 
     let updateRoot (host: IContentControl, last: IView option, next: IView option) =
-        let root : IControl voption =
+        let root : Control voption =
             if host.Content <> null then
                 match host.Content with
-                | :? IControl as control -> ValueSome control
+                | :? Control as control -> ValueSome control
                 | _ -> ValueNone
             else
                 ValueNone
@@ -53,7 +53,7 @@ module rec VirtualDom =
 
     // TODO: share code with updateRoot
     let internal updateBorderRoot (host: Border, last: IView option, next: IView option) =
-        let root : IControl voption =
+        let root : Control voption =
             if host.Child <> null then
                 ValueSome host.Child
             else
@@ -76,11 +76,11 @@ module rec VirtualDom =
             | ValueSome delta ->
                 match control.GetType () = delta.ViewType && not delta.KeyDidChange with
                 | true -> Patcher.patch (control, delta)
-                | false -> host.Child <- (Patcher.create delta) :?> IControl
+                | false -> host.Child <- (Patcher.create delta) :?> Control
             | ValueNone ->
                 host.Child <- null
 
         | ValueNone ->
             match delta with
-            | ValueSome delta -> host.Child <- (Patcher.create delta) :?> IControl
+            | ValueSome delta -> host.Child <- (Patcher.create delta) :?> Control
             | ValueNone -> host.Child <- null

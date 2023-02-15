@@ -11,7 +11,7 @@ module Control =
 
     type Control with
 
-        static member focusAdorner<'t, 'c when 't :> Control and 'c :> IControl>(value: ITemplate<'c>) : IAttr<'t> =
+        static member focusAdorner<'t, 'c when 't :> Control and 'c :> Control>(value: ITemplate<'c>) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ITemplate<'c>>(Control.FocusAdornerProperty, value, ValueNone)
 
         static member tag<'t when 't :> Control>(value: obj) : IAttr<'t> =

@@ -7,7 +7,7 @@ open Avalonia.FuncUI.Types
 [<AutoOpen>]
 module AvaloniaObject =
 
-    type IAvaloniaObject with
+    type AvaloniaObject with
 
         /// <summary>
         /// Hook into the controls lifetime. This is called when the backing avalonia control is created.
@@ -35,6 +35,6 @@ module AvaloniaObject =
             let _ = this.Bind(property = prop, source = readable.ImmediateObservable)
             ()
 
-        member this.Bind(prop: StyledPropertyBase<'value>, readable: #IReadable<'value>) : unit =
+        member this.Bind(prop: StyledProperty<'value>, readable: #IReadable<'value>) : unit =
             let _ = this.Bind(property = prop, source = readable.ImmediateObservable)
             ()

@@ -23,6 +23,3 @@ module ComboBox =
             
         static member verticalContentAlignment<'t when 't :> ComboBox>(alignment: VerticalAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<VerticalAlignment>(ComboBox.VerticalContentAlignmentProperty, alignment, ValueNone)
-            
-        static member virtualizationMode<'t when 't :> ComboBox>(mode: ItemVirtualizationMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<ItemVirtualizationMode>(ComboBox.VirtualizationModeProperty, mode, ValueNone)

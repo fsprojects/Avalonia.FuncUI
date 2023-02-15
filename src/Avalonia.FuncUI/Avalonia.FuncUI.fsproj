@@ -82,7 +82,6 @@
     <Compile Include="DSL\Panels\Grid.fs" />
     <Compile Include="DSL\Panels\StackPanel.fs" />
     <Compile Include="DSL\Panels\WrapPanel.fs" />
-    <Compile Include="DSL\Panels\ItemsRepeater.fs" />
     <Compile Include="DSL\Shapes\Shape.fs" />
     <Compile Include="DSL\Shapes\Rectangle.fs" />
     <Compile Include="DSL\Shapes\Ellipse.fs" />

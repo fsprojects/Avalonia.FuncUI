@@ -20,6 +20,9 @@ module internal rec Differ =
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
 
+        | InitFunction init ->
+            AttrDelta.SetupFunction init
+
         | _ -> failwithf "no update operation is defined for '%A' next" next
 
     let private reset (last: IAttr) : AttrDelta =
@@ -45,6 +48,9 @@ module internal rec Differ =
                 { Name = subscription.Name
                   Subscribe = subscription.Subscribe
                   Func = None }
+
+        | InitFunction init ->
+            AttrDelta.SetupFunction init
 
         | _ -> failwithf "no reset operation is defined for last '%A'" last
 

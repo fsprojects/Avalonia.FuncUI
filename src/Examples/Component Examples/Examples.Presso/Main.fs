@@ -88,7 +88,7 @@ module Main =
                         Slider.minimum 0.0
                         Slider.maximum 1000.0
                         Slider.largeChange 100.0
-                        Slider.smallChange 100.00
+                        Slider.smallChange 100.0
                         Slider.tickFrequency 5.0
                         Slider.isSnapToTickEnabled true
                         Slider.value (float state.Current.water)

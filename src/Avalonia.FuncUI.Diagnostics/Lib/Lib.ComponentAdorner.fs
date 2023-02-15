@@ -45,5 +45,5 @@ type internal ComponentHighlightAdorner (adornedElement: Component) =
             |> Seq.filter (fun c -> c.GetType() = typeof<ComponentHighlightAdorner>)
             |> Seq.cast<ComponentHighlightAdorner>
             |> Seq.filter (fun c -> c.Component.ComponentId = adornedElement.ComponentId)
-            |> Seq.cast<IControl>
+            |> Seq.cast<Control>
             |> layer.Children.RemoveAll

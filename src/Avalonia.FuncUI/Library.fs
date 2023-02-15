@@ -27,13 +27,17 @@ module internal Utils =
 module internal Extensions =
     open Avalonia.Interactivity
     open System
-    open System.Reactive.Linq
+    open System.Threading
 
     type IObservable<'a> with
         member this.SubscribeWeakly(callback: 'a -> unit, target) =
             Observable.subscribeWeakly(this, callback, target)
 
-    type IInteractive with
+        member this.Subscribe (callback: 'a -> unit, token: CancellationToken) =
+            let disposable = Observable.subscribe callback this
+            token.Register(fun () -> disposable.Dispose()) |> ignore
+
+    type Interactive with
         member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent<'args>) : IObservable<'args> =
             let sub = Func<IObserver<'args>, IDisposable>(fun observer ->
                 // push new update to subscribers
@@ -45,4 +49,5 @@ module internal Extensions =
                 this.AddDisposableHandler(routedEvent, handler, routedEvent.RoutingStrategies)
             )
             
-            Observable.Create(sub)
+            { new IObservable<'args>
+              with member this.Subscribe(observer: IObserver<'args>) = sub.Invoke(observer) }

@@ -14,7 +14,7 @@ type MainWindow() as this =
     inherit HostWindow()
     do
         base.Title <- "Presso"
-        base.Icon <- WindowIcon("Assets\Icons\icon.ico")
+        base.Icon <- WindowIcon(System.IO.Path.Combine("Assets","Icons", "icon.ico"))
         base.Width <- 500.0
         base.Height <- 500.0
 
@@ -30,8 +30,9 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Add (FluentTheme(baseUri = null, Mode = FluentThemeMode.Dark))
+        this.Styles.Add (FluentTheme())
         this.Styles.Load "avares://Examples.Elmish.Presso/Styles/Styles.xaml"
+        this.RequestedThemeVariant <- Styling.ThemeVariant.Dark
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
