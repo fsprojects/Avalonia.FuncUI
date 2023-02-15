@@ -33,16 +33,17 @@
     <Compile Include="Components\State\State.fs" />
     <Compile Include="Components\State\State.Adapters.fs" />
     <Compile Include="Components\State\State.Functions.fs" />
+    <Compile Include="Components\StaticComponent.fs" />
     <Compile Include="Components\Context\Context.EffectsHook.fs" />
     <Compile Include="Components\Context\Context.StateHook.fs" />
     <Compile Include="Components\Context\Context.fs" />
     <Compile Include="Components\Component.fs" />
-    <Compile Include="ViewModelComponent.fs" />
     <Compile Include="Builder.fs" />
     <Compile Include="Hosts.fs" />
     <Compile Include="DataTemplateView.fs" />
     <Compile Include="Helpers.fs" />
     <Compile Include="View.fs" />
+    <Compile Include="DSL\Base\AvaloniaObject.fs" />
 
 
     <Compile Include="DSL\Base\Layoutable.fs" />
