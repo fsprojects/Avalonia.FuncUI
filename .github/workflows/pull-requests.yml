@@ -19,6 +19,8 @@ jobs:
           7.0.x
     - name: Restore dependencies
       run: dotnet restore src/Avalonia.FuncUI.sln
+    - name: Install WASM workload
+      run: dotnet workload install wasm-tools
     - name: Build
       run: dotnet build src/Avalonia.FuncUI.sln --no-restore
     - name: Test
