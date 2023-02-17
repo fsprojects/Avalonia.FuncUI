@@ -1,12 +1,12 @@
 ﻿namespace Avalonia.FuncUI.ControlCatalog
 
 open Avalonia
-open Avalonia.FuncUI.Hosts
-open Avalonia.FuncUI.Elmish
-open Avalonia.Themes.Fluent
-open Elmish
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.FuncUI.Hosts
+open Elmish
+open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.ControlCatalog.Views
+open Avalonia.Themes.Fluent
 
 type MainWindow() as this =
     inherit HostWindow()
@@ -19,34 +19,35 @@ type MainWindow() as this =
         this.VisualRoot.Renderer.Diagnostics.DebugOverlays <- Avalonia.Rendering.RendererDebugOverlays.Fps
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         ()
-        
+
 type App() =
     inherit Application()
 
     override this.Initialize() =
         this.Styles.Add (FluentTheme())
         this.Styles.Load "avares://Avalonia.FuncUI.ControlCatalog/Styles/TabControl.xaml"
-        this.RequestedThemeVariant <- Styling.ThemeVariant.Dark
 
     override this.OnFrameworkInitializationCompleted() =
-        match this.ApplicationLifetime with
-        | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
-            let mainWindow = MainWindow()
-            desktopLifetime.MainWindow <- mainWindow
+        let host =
+            match this.ApplicationLifetime with
+            | :? ISingleViewApplicationLifetime as single ->
+                let mainView = HostControl()
+                single.MainView <-mainView
+                Some (mainView :> IViewHost)
+               
+            | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
+                let mainWindow = MainWindow()
+                desktopLifetime.MainWindow <- mainWindow
+                Some mainWindow
             
+            | _ -> None
+
+        match host with
+        | Some hostControl ->
             Elmish.Program.mkSimple MainView.init MainView.update MainView.view
-            |> Program.withHost mainWindow
+            |> Program.withHost hostControl
             |> Program.withConsoleTrace
             |> Program.run
         | _ -> ()
 
-module Program =
-
-    [<EntryPoint>]
-    let main(args: string[]) =
-        AppBuilder
-            .Configure<App>()
-            .UsePlatformDetect()
-            .UseSkia()
-            .StartWithClassicDesktopLifetime(args)
-
+        base.OnFrameworkInitializationCompleted()

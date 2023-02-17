@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
@@ -28,18 +27,17 @@
         <Compile Include="Views\Tabs\WindowMenuDemo.fs" />
         <Compile Include="Views\Tabs\FlyoutDemo.fs" />
         <Compile Include="Views\MainView.fs" />
+		<Compile Include="ControlCatalog.fs" />
         <AvaloniaResource Include="**\*.xaml" />
-        <Compile Include="Main.fs" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
-      <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+      <ProjectReference Include="..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
+      <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
 
     <ItemGroup>
-	  <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
-	  <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+      <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
       <PackageReference Include="Bogus" Version="28.4.1" />
     </ItemGroup>
 
