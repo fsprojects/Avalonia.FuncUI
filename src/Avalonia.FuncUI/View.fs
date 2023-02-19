@@ -5,6 +5,14 @@ open Avalonia.FuncUI.Types
 [<AbstractClass; Sealed>]
 type View () =
 
+    static member createGeneric<'t> (attrs: IAttr<'t> list) =
+        { View.ViewType = typeof<'t>
+          View.ViewKey = ValueNone
+          View.Attrs = attrs
+          View.ConstructorArgs = null
+          View.Outlet = ValueNone }
+        :> IView<'t>
+
     static member createWithKey (key: string) (createView: IAttr<'view> list -> IView<'view>) (attrs: IAttr<'view> list) =
         let view = createView(attrs)
 
@@ -38,7 +46,7 @@ type View () =
           View.Attrs = view.Attrs
           View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = ValueSome (fun control -> outlet (control :?> 'view)) }
-        
+
     static member withConstructorArgs (constructorArgs: obj array) (view: IView<'view>) : IView<'view> =
         { View.ViewType = view.ViewType
           View.ViewKey = view.ViewKey
