@@ -18,7 +18,9 @@ jobs:
           6.0.x
           7.0.x
     - name: Restore workload
-      run: dotnet workload restore src/Avalonia.FuncUI.sln
+      run: |
+        cd src 
+        dotnet workload restore
     - name: Restore dependencies
       run: dotnet restore src/Avalonia.FuncUI.sln
     - name: Build
