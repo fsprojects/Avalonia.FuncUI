@@ -5,7 +5,6 @@
 <h1 align="center">Avalonia FuncUI</h1>
 <p align="center">Develop cross-platform GUI Applications using F# and <a href="https://github.com/AvaloniaUI/Avalonia">AvaloniaUI</a>!</p>
 <p align="center">
-<a href="https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_apis/build/status/AvaloniaCommunity.Avalonia.FuncUI?branchName=master"><img src="https://voyonic-labs.visualstudio.com/Avalonia.FuncUI/_apis/build/status/AvaloniaCommunity.Avalonia.FuncUI?branchName=master"></a>
 <img src="https://img.shields.io/github/languages/top/JaggerJo/Avalonia.FuncUI" alt="GitHub top language">
 <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/JaggerJo/Avalonia.FuncUI">
 <img src="https://img.shields.io/github/license/JaggerJo/Avalonia.FuncUI">
