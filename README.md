@@ -1,8 +1,9 @@
 [![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
 
+<h1 align="center"><img src="github/img/logo/FuncUI_Boxed.png" width="32px" alt="Avalonia FuncUI"> 
+Avalonia FuncUI
+</h1>
 
-<p align="center"><img src="github/img/logo/FuncUI.png" width="400px" alt="Avalonia FuncUI"></p>
-<h1 align="center">Avalonia FuncUI</h1>
 <p align="center">Develop cross-platform GUI Applications using F# and <a href="https://github.com/AvaloniaUI/Avalonia">AvaloniaUI</a>!</p>
 <p align="center">
 <img src="https://img.shields.io/github/languages/top/fsprojects/Avalonia.FuncUI" alt="GitHub top language">
