@@ -5,24 +5,30 @@
 <h1 align="center">Avalonia FuncUI</h1>
 <p align="center">Develop cross-platform GUI Applications using F# and <a href="https://github.com/AvaloniaUI/Avalonia">AvaloniaUI</a>!</p>
 <p align="center">
-<img src="https://img.shields.io/github/languages/top/JaggerJo/Avalonia.FuncUI" alt="GitHub top language">
-<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/JaggerJo/Avalonia.FuncUI">
-<img src="https://img.shields.io/github/license/JaggerJo/Avalonia.FuncUI">
+<img src="https://img.shields.io/github/languages/top/fsprojects/Avalonia.FuncUI" alt="GitHub top language">
+<img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/fsprojects/Avalonia.FuncUI">
+<img src="https://img.shields.io/github/license/fsprojects/Avalonia.FuncUI">
 </p><br>
 
 ![](github/img/hero.png)
 *(Application was created using Avalonia.FuncUI!)*
 
 ## About
-This library allows you to write cross-platform GUI Applications entirely in F# - No XAML, but either using React/Sutil inspired components or a declarative Elm-like DSL with MVU (Model-View-Update) architecture support and Elmish bindings built-in.
+FuncUI is a thin layer built on top of [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia). It contains abstractions 
+for writing UI applications in different programming styles. It also contains a component & state management system. 
+
+FuncUI mostly consists of:
+- Virtual DOM
+- View DSL
+- Component model
 
 ## Resources
 
 - 💨 [Getting started](https://funcui.avaloniaui.net)
 
-- 📚[Documentation](https://funcui.avaloniaui.net/)
+- 📚 [Documentation](https://funcui.avaloniaui.net/)
 
-- 📓[Examples](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples)
+- 📓 [Examples](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples)
 
 ## Contributing
 Please contribute to this library through issue reports, pull requests, code reviews, documentation, and discussion. 
