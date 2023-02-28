@@ -9,6 +9,7 @@ Avalonia FuncUI
 <img src="https://img.shields.io/github/languages/top/fsprojects/Avalonia.FuncUI" alt="GitHub top language">
 <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/fsprojects/Avalonia.FuncUI">
 <img src="https://img.shields.io/github/license/fsprojects/Avalonia.FuncUI">
+<img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Avalonia.FuncUI?color=green&label=package%20Avalonia.FuncUI">
 </p><br>
 
 ![](github/img/hero.png)
