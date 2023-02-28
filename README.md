@@ -4,7 +4,7 @@
 Avalonia FuncUI
 </h1>
 
-<p align="center">Develop cross-platform GUI Applications using F# and <a href="https://github.com/AvaloniaUI/Avalonia">AvaloniaUI</a>!</p>
+<p align="center">Develop cross-platform GUI Applications using [F#](https://fsharp.org) and <a href="https://github.com/AvaloniaUI/Avalonia">AvaloniaUI</a>!</p>
 <p align="center">
 <img src="https://img.shields.io/github/languages/top/fsprojects/Avalonia.FuncUI" alt="GitHub top language">
 <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/fsprojects/Avalonia.FuncUI">
