@@ -53,6 +53,24 @@ type IComponentContext =
     abstract useState<'value> : initialValue: 'value * ?renderOnChange: bool -> IWritable<'value>
 
     /// <summary>
+    /// Attaches a value from a function to the component context.
+    /// <example>
+    /// <code>
+    /// Component (fun ctx ->
+    ///     let count = ctx.useStateLazy (fun () -> 42)
+    ///     ..
+    ///     // id will have the same value during the whole component lifetime. (unless changed via 'id.Set ..')
+    ///     let id = ctx.useState ((fun () -> Guid.NewGuid()), renderOnChange=false)
+    ///     ..
+    /// )
+    /// </code>
+    /// </example>
+    /// </summary>
+    /// <param name="buildInitialValue">function will be called once during the component lifetime.</param>
+    /// <param name="renderOnChange">re-render component on change (default: true).</param>
+    abstract useStateLazy<'value> : buildInitialValue: (unit -> 'value) * ?renderOnChange: bool -> IWritable<'value>
+
+    /// <summary>
     /// Attaches a passed <c>IWritable&lt;'value&gt;</c> value to the component context.
     /// <example>
     /// <code>
@@ -316,6 +334,16 @@ type Context (componentControl: Avalonia.Controls.Border) =
                     renderOnChange = defaultArg renderOnChange true
                 )
             ) :?> IWritable<'value>
+
+        member this.useStateLazy(buildInitialValue: unit -> 'value, ?renderOnChange: bool) =
+            this.useStateHook<'value>(
+                StateHook.Create (
+                    identity = callingIndex,
+                    state = StateHookValue.Lazy (fun _ -> new State<'value>(buildInitialValue()) :> IAnyReadable),
+                    renderOnChange = defaultArg renderOnChange true
+                )
+            ) :?> IWritable<'value>
+
 
         member this.control = componentControl
 
