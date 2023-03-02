@@ -57,7 +57,8 @@ type IComponentContext =
     /// <example>
     /// <code>
     /// Component (fun ctx ->
-    ///     let count = ctx.useStateLazy (fun () -> 42)
+    ///     (* expensive operation that should only happen once on initialisation *) 
+    ///     let count = ctx.useStateLazy (fun () -> Math.Sqrt(42))
     ///     ..
     ///     // id will have the same value during the whole component lifetime. (unless changed via 'id.Set ..')
     ///     let id = ctx.useState ((fun () -> Guid.NewGuid()), renderOnChange=false)
