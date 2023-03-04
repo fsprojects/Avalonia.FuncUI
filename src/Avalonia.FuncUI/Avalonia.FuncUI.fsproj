@@ -146,6 +146,7 @@
     <Compile Include="DSL\TickBar.fs" />
     <Compile Include="DSL\Viewbox.fs" />
     <Compile Include="DSL\SelectableTextBlock.fs" />
+    <Compile Include="Environment.fs" />
   </ItemGroup>
 
   <ItemGroup>
