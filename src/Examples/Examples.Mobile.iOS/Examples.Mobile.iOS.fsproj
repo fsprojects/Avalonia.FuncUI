@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <ProvisioningType>manual</ProvisioningType>
+        <TargetFramework>net6.0-ios</TargetFramework>
+        <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
+
+        <!-- temporal workaround for our GL interface backend -->
+        <UseInterpreter>True</UseInterpreter>
+        <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
+
+        <!-- (use for running on device)
+        <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
+        <CodesignKey>Apple Development: XXX</CodesignKey>
+        -->
+
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <CodesignKey>iPhone Developer</CodesignKey>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Program.fs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Avalonia.Themes.Simple" Version="$(AvaloniaVersion)" />
+      <PackageReference Include="Avalonia.iOS" Version="$(AvaloniaVersion)" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+    </ItemGroup>
+
+</Project>

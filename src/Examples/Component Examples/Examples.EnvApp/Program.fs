@@ -11,6 +11,7 @@ open Avalonia.Media
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
+#nowarn "57"
 
 [<RequireQualifiedAccess>]
 module SharedState =
@@ -174,8 +175,7 @@ type Views =
             let brush = ctx.useState (Brushes.Black :> IBrush, renderOnChange = false)
             let size = ctx.useState (2, renderOnChange = false)
 
-            EnvironmentStateProvider.create(
-                state = SharedState.brush,
+            SharedState.brush.provide (
                 providedValue = brush,
                 content = (
                     EnvironmentStateProvider.create(
