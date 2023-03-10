@@ -57,7 +57,7 @@ type IComponentContext =
     /// <example>
     /// <code>
     /// Component (fun ctx ->
-    ///     (* expensive operation that should only happen once on initialisation *) 
+    ///     (* expensive operation that should only happen once on initialisation *)
     ///     let count = ctx.useStateLazy (fun () -> Math.Sqrt(42))
     ///     ..
     ///     // id will have the same value during the whole component lifetime. (unless changed via 'id.Set ..')
@@ -87,6 +87,23 @@ type IComponentContext =
     /// <param name="value">value should not change during the component lifetime.</param>
     /// <param name="renderOnChange">re-render component on change (default: true).</param>
     abstract usePassed<'value> : value: IWritable<'value> * ?renderOnChange: bool -> IWritable<'value>
+
+    /// <summary>
+    /// Attaches a passed <c>IWritable&lt;'value&gt;</c> value to the component context.
+    /// <example>
+    /// <code>
+    /// let countView (count: IWritable&lt;int&gt;) =
+    ///     Component (fun ctx ->
+    ///         // attach passed writable value to the component context
+    ///         let count = ctx.usePassedLazy (fun _ -> (* expensive function that returns IWritable*))
+    ///         ..
+    ///     )
+    /// </code>
+    /// </example>
+    /// </summary>
+    /// <param name="obtainValue">(expensive) function that returns an IWritable.</param>
+    /// <param name="renderOnChange">re-render component on change (default: true).</param>
+    abstract usePassedLazy<'value> : obtainValue: (unit -> IWritable<'value>) * ?renderOnChange: bool -> IWritable<'value>
 
     /// <summary>
     /// Attaches a passed <c>IReadable&lt;'value&gt;</c> value to the component context.
@@ -318,6 +335,15 @@ type Context (componentControl: Avalonia.Controls.Border) =
                 )
             ) :?> IWritable<'value>
 
+        member this.usePassedLazy (obtainState: unit -> IWritable<'value>, ?renderOnChange: bool) =
+            this.useStateHook<'value>(
+                StateHook.Create (
+                    identity = callingIndex,
+                    state = StateHookValue.Lazy (fun _ -> obtainState() :> IAnyReadable),
+                    renderOnChange = defaultArg renderOnChange true
+                )
+            ) :?> IWritable<'value>
+
         member this.usePassedRead(value: IReadable<'t>, ?renderOnChange: bool) =
             this.useStateHook<'value>(
                 StateHook.Create (
@@ -344,7 +370,6 @@ type Context (componentControl: Avalonia.Controls.Border) =
                     renderOnChange = defaultArg renderOnChange true
                 )
             ) :?> IWritable<'value>
-
 
         member this.control = componentControl
 
