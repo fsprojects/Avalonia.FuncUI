@@ -56,9 +56,6 @@ module AutoCompleteBox =
         static member onTextChanged<'t when 't :> AutoCompleteBox>(func: string -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<string>(AutoCompleteBox.TextProperty, func, ?subPatchOptions = subPatchOptions)
 
-        static member searchText<'t when 't :> AutoCompleteBox>(text: string) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<string>(AutoCompleteBox.SearchTextProperty, text, ValueNone)
-
         static member onSearchTextChanged<'t when 't :> AutoCompleteBox>(func: string -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<string>(AutoCompleteBox.SearchTextProperty, func, ?subPatchOptions = subPatchOptions)
 
