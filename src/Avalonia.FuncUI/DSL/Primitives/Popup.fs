@@ -31,6 +31,9 @@ module Popup =
         static member topmost<'t when 't :> Popup>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Popup.TopmostProperty, value, ValueNone)
 
+        static member placement<'t when 't :> Popup>(value: PlacementMode) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<PlacementMode>(Popup.PlacementProperty, value, ValueNone)
+
         static member placementAnchor<'t when 't :> Popup>(value: PopupAnchor) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<PopupAnchor>(Popup.PlacementAnchorProperty, value, ValueNone)
             
@@ -49,6 +52,7 @@ module Popup =
         static member placementRect<'t when 't :> Popup>(value: Rect option) : IAttr<'t> =
             value |> Option.toNullable |> Popup.placementRect
 
+        [<Obsolete "use 'placement' instead">]
         static member placementMode<'t when 't :> Popup>(value: PlacementMode) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<PlacementMode>(Popup.PlacementModeProperty, value, ValueNone)
             

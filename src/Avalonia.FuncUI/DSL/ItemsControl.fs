@@ -17,7 +17,7 @@ module ItemsControl =
             AttrBuilder<'t>.CreateContentMultiple(ItemsControl.ItemsProperty, views)
 
         static member dataItems<'t when 't :> ItemsControl>(data: IEnumerable) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IEnumerable>(ItemsControl.ItemsProperty, data, ValueNone)
+            AttrBuilder<'t>.CreateProperty<IEnumerable>(ItemsControl.ItemsSourceProperty, data, ValueNone)
 
         static member itemsPanel<'t when 't :> ItemsControl>(value: ITemplate<Panel>) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ITemplate<Panel>>(ItemsControl.ItemsPanelProperty, value, ValueNone)
@@ -25,5 +25,5 @@ module ItemsControl =
         static member itemTemplate<'t when 't :> ItemsControl>(value: IDataTemplate) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(ItemsControl.ItemTemplateProperty, value, ValueNone)
 
-        static member onItemsChanged<'t when 't :> ItemsControl>(func: IEnumerable -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<IEnumerable, _>(ItemsControl.ItemsProperty, func, ?subPatchOptions = subPatchOptions)
+        static member onItemsChanged<'t when 't :> ItemsControl>(func: IList -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<IList, _>(ItemsControl.ItemsProperty, func, ?subPatchOptions = subPatchOptions)

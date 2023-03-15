@@ -1,27 +1,18 @@
 namespace Examples.WebAssemblyPlayground
 
 open System
-open System.Net.Http
+open Avalonia
 open Avalonia.Browser.Blazor
 open Bolero
 open Bolero.Html
 open Microsoft.AspNetCore.Components.WebAssembly.Hosting
 open Avalonia.ReactiveUI
-open Microsoft.Extensions.DependencyInjection
 
 type MainView () =
     inherit Component()
 
     override this.SetParametersAsync (parameters) =
         base.SetParametersAsync parameters
-
-    override this.OnParametersSet () =
-        base.OnParametersSet()
-
-        WebAppBuilder.Configure<App>()
-            .UseReactiveUI()
-            .SetupWithSingleViewLifetime()
-        ()
 
     override this.Render () =
         comp<AvaloniaView> { attr.empty() }
@@ -33,5 +24,14 @@ module Program =
 
         let builder = WebAssemblyHostBuilder.CreateDefault(args)
         builder.RootComponents.Add<MainView>("#app")
-        builder.Build().RunAsync() |> ignore
+        let host = builder.Build()
+
+        task {
+            do! AppBuilder.Configure<App>()
+                      .UseReactiveUI()
+                      .StartBlazorAppAsync()
+
+            do! host.RunAsync()
+        } |> ignore
+
         0
