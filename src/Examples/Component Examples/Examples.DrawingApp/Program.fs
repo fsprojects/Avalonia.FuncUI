@@ -1,5 +1,6 @@
 namespace Examples.DrawingApp
 
+open System
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
@@ -8,6 +9,7 @@ open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI.Types
 open Avalonia.Layout
 open Avalonia.Media
+open Avalonia.Media.Imaging
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
@@ -29,6 +31,40 @@ type Views =
             ]
 
             View.createWithOutlet canvasOutlet.Set Canvas.create [
+                Canvas.contextMenu (
+                    ContextMenu.create [
+                        ContextMenu.viewItems [
+                            MenuItem.create [
+                                MenuItem.header "Clear"
+                                MenuItem.onClick (fun _ ->
+                                    canvasOutlet.Current.Children.Clear()
+                                )
+                            ]
+
+                            MenuItem.create [
+                                MenuItem.header "Save"
+                                MenuItem.onClick (fun _ ->
+                                    let renderToFile (target : Control, path : string) =
+                                        let pixelSize = PixelSize(int target.Bounds.Width, int target.Bounds.Height)
+                                        let size = Size(target.Bounds.Width, target.Bounds.Height)
+                                        use bitmap = new RenderTargetBitmap(pixelSize, new Vector(96.0, 96.0))
+                                        target.Measure(size)
+                                        target.Arrange(Rect(size))
+                                        bitmap.Render(target)
+                                        bitmap.Save(path)
+
+                                    let path =
+                                        System.IO.Path.Combine(
+                                            System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop),
+                                            $"{DateTime.Now.ToString()}_drawing.png"
+                                        )
+
+                                    renderToFile (canvasOutlet.Current, path)
+                                )
+                            ]
+                        ]
+                    ]
+                )
                 Canvas.verticalAlignment VerticalAlignment.Stretch
                 Canvas.horizontalAlignment HorizontalAlignment.Stretch
                 Canvas.background Brushes.White
