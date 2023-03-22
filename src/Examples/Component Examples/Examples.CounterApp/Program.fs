@@ -13,7 +13,7 @@ type MainWindow() =
         base.Icon <- WindowIcon(System.IO.Path.Combine("Assets","Icons", "icon.ico"))
         base.Height <- 400.0
         base.Width <- 400.0
-        base.Content <- Main.view
+        base.Content <- Main.view ()
 
 type App() =
     inherit Application()

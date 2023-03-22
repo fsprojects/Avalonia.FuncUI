@@ -67,6 +67,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.Mobile", "Examples
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.EnvApp", "Examples\Component Examples\Examples.EnvApp\Examples.EnvApp.fsproj", "{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.PreviewApp", "Avalonia.FuncUI.PreviewApp\Avalonia.FuncUI.PreviewApp.fsproj", "{8FE8A207-916C-4271-9929-D08D7155333C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,10 @@ Global
 		{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE8A207-916C-4271-9929-D08D7155333C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE8A207-916C-4271-9929-D08D7155333C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE8A207-916C-4271-9929-D08D7155333C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE8A207-916C-4271-9929-D08D7155333C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

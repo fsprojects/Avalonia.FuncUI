@@ -1,12 +1,41 @@
 namespace Examples.CounterApp
 
+open Avalonia.Media
+
 module Main =
     open Avalonia.Controls
     open Avalonia.FuncUI
     open Avalonia.FuncUI.DSL
     open Avalonia.Layout
 
-    let view =
+    let other_component (color: string) =
+        Component (fun ctx ->
+            let state = ctx.useState 0
+
+            DockPanel.create [
+                DockPanel.children [
+                    TextBlock.create [
+                        TextBlock.dock Dock.Top
+                        TextBlock.foreground color
+                        TextBlock.fontSize 100.0
+                        TextBlock.verticalAlignment VerticalAlignment.Center
+                        TextBlock.horizontalAlignment HorizontalAlignment.Center
+                        TextBlock.text (string state.Current)
+                    ]
+                ]
+            ]
+        )
+
+    [<Preview>]
+    let other_component_red () =
+        other_component "red"
+
+    [<Preview>]
+    let other_component_green () =
+        other_component "green"
+
+    [<Preview>]
+    let view () =
         Component (fun ctx ->
             let state = ctx.useState 0
 
