@@ -2,7 +2,6 @@ namespace Examples.CounterApp
 
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
-open Avalonia.FuncUI
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
@@ -34,8 +33,6 @@ module Program =
 
     [<EntryPoint>]
     let main(args: string[]) =
-        Previewer.launch ()
-
         AppBuilder
             .Configure<App>()
             .UsePlatformDetect()

@@ -28,11 +28,11 @@ module Main =
 
     [<Preview>]
     let other_component_red () =
-        other_component "yellow"
+        other_component "red"
 
     [<Preview>]
     let other_component_green () =
-        other_component "blue"
+        other_component "green"
 
     [<Preview>]
     let view () =
