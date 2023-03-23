@@ -210,12 +210,22 @@ type App() =
             desktopLifetime.MainWindow <- mainWindow
         | _ -> ()
 
+
 module Program =
+    open System.Threading
+
+    let mutex = new Mutex(false, "Avalonia.FuncUI.Previewer")
+
+    [<STAThread>]
 
     [<EntryPoint>]
     let main(args: string[]) =
-        AppBuilder
-            .Configure<App>()
-            .UsePlatformDetect()
-            .UseSkia()
-            .StartWithClassicDesktopLifetime(args)
+        if mutex.WaitOne(0, exitContext = true) then
+            printfn "Already running"
+            1
+        else
+            AppBuilder
+                .Configure<App>()
+                .UsePlatformDetect()
+                .UseSkia()
+                .StartWithClassicDesktopLifetime(args)
