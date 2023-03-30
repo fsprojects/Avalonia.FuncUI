@@ -44,11 +44,11 @@ module MenuItem =
         static member onClick<'t when 't :> MenuItem>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(MenuItem.ClickEvent, func, ?subPatchOptions = subPatchOptions)
             
-        static member onPointerEnteredItem<'t when 't :> MenuItem>(func: PointerEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(MenuItem.PointerEnteredItemEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onPointerEnteredItem<'t when 't :> MenuItem>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(MenuItem.PointerEnteredItemEvent, func, ?subPatchOptions = subPatchOptions)
             
-        static member onPointerExitedItem<'t when 't :> MenuItem>(func: PointerEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(MenuItem.PointerExitedItemEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onPointerExitedItem<'t when 't :> MenuItem>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(MenuItem.PointerExitedItemEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onSubMenuOpened<'t when 't :> MenuItem>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(MenuItem.SubmenuOpenedEvent, func, ?subPatchOptions = subPatchOptions)

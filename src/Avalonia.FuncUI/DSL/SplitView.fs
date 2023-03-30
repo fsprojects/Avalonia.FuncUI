@@ -52,5 +52,5 @@ module SplitView =
         static member useLightDismissOverlayMode<'t when 't :> SplitView>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(SplitView.UseLightDismissOverlayModeProperty, value, ValueNone)
 
-        static member templateSettings<'t when 't :> SplitView>(value: SplitViewTemplateSettings) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<SplitViewTemplateSettings>(SplitView.TemplateSettingsProperty, value, ValueNone)
+        static member templateSettings<'t when 't :> SplitView>(value: Primitives.SplitViewTemplateSettings) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<Primitives.SplitViewTemplateSettings>(SplitView.TemplateSettingsProperty, value, ValueNone)

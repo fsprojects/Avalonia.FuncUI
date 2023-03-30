@@ -9,17 +9,17 @@ open Avalonia.FuncUI.Elmish
 
 module FlyoutDemo =
     type State = {
-        placement: FlyoutPlacementMode
+        placement: PlacementMode
         showMode: FlyoutShowMode
     }
         
     let init () = {
-        placement = FlyoutPlacementMode.Auto
+        placement = PlacementMode.Pointer
         showMode = FlyoutShowMode.Standard
     }
 
     type Msg =
-    | SetPlacementMode of FlyoutPlacementMode
+    | SetPlacementMode of PlacementMode
     | SetShowMode of FlyoutShowMode
 
     let update (msg: Msg) (state: State) : State =
@@ -42,19 +42,21 @@ module FlyoutDemo =
                         ]
                         ComboBox.create [
                             ComboBox.dataItems [
-                                FlyoutPlacementMode.Auto
-                                FlyoutPlacementMode.Bottom
-                                FlyoutPlacementMode.Left
-                                FlyoutPlacementMode.Right
-                                FlyoutPlacementMode.Top
-                                FlyoutPlacementMode.BottomEdgeAlignedLeft
-                                FlyoutPlacementMode.BottomEdgeAlignedRight
-                                FlyoutPlacementMode.LeftEdgeAlignedBottom
-                                FlyoutPlacementMode.LeftEdgeAlignedTop
-                                FlyoutPlacementMode.RightEdgeAlignedBottom
-                                FlyoutPlacementMode.RightEdgeAlignedTop
-                                FlyoutPlacementMode.TopEdgeAlignedLeft
-                                FlyoutPlacementMode.TopEdgeAlignedRight
+                                PlacementMode.AnchorAndGravity
+                                PlacementMode.Bottom
+                                PlacementMode.Center
+                                PlacementMode.Left
+                                PlacementMode.Pointer
+                                PlacementMode.Right
+                                PlacementMode.Top
+                                PlacementMode.BottomEdgeAlignedLeft
+                                PlacementMode.BottomEdgeAlignedRight
+                                PlacementMode.LeftEdgeAlignedBottom
+                                PlacementMode.LeftEdgeAlignedTop
+                                PlacementMode.RightEdgeAlignedBottom
+                                PlacementMode.RightEdgeAlignedTop
+                                PlacementMode.TopEdgeAlignedLeft
+                                PlacementMode.TopEdgeAlignedRight
                             ]
                             ComboBox.selectedItem state.placement
                             ComboBox.onSelectedItemChanged (tryUnbox >> Option.iter(Msg.SetPlacementMode >> dispatch))
@@ -67,7 +69,7 @@ module FlyoutDemo =
                     StackPanel.children [
                         TextBlock.create [
                             TextBlock.verticalAlignment VerticalAlignment.Center
-                            TextBlock.text "FlyoutPlacementMode: "
+                            TextBlock.text "FlyoutShowMode: "
                         ]
                         ComboBox.create [
                             ComboBox.dataItems [
