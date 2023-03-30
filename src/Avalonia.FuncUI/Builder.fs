@@ -28,6 +28,7 @@ open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Library
+open System.Diagnostics.CodeAnalysis
 
 module private Helpers =
     let wrappedGetter<'view, 'value>(func: 'view -> 'value) : AvaloniaObject -> obj =
@@ -246,7 +247,7 @@ type AttrBuilder<'view>() =
 [<AbstractClass; Sealed>]
 type ViewBuilder() =
 
-    static member Create<'view>(attrs: IAttr<'view> list) : IView<'view> =
+    static member Create<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)>]'view>(attrs: IAttr<'view> list) : IView<'view> =
         { View.ViewType = typeof<'view>
           View.ViewKey = ValueNone
           View.Attrs = attrs
