@@ -216,7 +216,7 @@ type Views =
     static member contactView (contact: IReadable<Contact>) =
         Component.create ("contact-view", fun ctx ->
             let contact = ctx.usePassedRead contact
-            let image = ctx.useAsync Api.randomImage
+            let image = ctx.useAsync (Api.randomImage contact.Current.Gender)
 
             StackPanel.create [
                 StackPanel.orientation Orientation.Vertical

@@ -5,13 +5,12 @@ module Examples.ContactBook.Api
     open System.Net.Http
     open Avalonia.Media.Imaging
 
-    let private randomImageUri = "https://thispersondoesnotexist.com/image"
 
-    let randomImage =
+    let randomImage (gender: string) =
         async {
             use httpClient = new HttpClient()
             let! bytes =
-                randomImageUri
+                $"https://source.unsplash.com/random/?%s{gender}"
                 |> httpClient.GetByteArrayAsync
                 |> Async.AwaitTask
 
