@@ -41,6 +41,25 @@ type Views =
                                 DataGridTextColumn.header "Name"
                                 DataGridTextColumn.binding (Binding ("Name", BindingMode.TwoWay))
                             ]
+                            DataGridTemplateColumn.create [
+                                DataGridTemplateColumn.header "Name"
+                                DataGridTemplateColumn.cellTemplate (
+                                    DataTemplateView<_>.create (fun (data: Person) ->
+                                        TextBlock.create [
+                                            TextBlock.text data.Name
+                                        ]
+                                    )
+                                )
+                                DataGridTemplateColumn.cellEditingTemplate (
+                                    DataTemplateView<_>.create (fun (data: Person) ->
+                                        TextBox.create [
+                                            TextBox.init (fun t ->
+                                                t.Bind(TextBox.TextProperty, Binding("Name", BindingMode.TwoWay)) |> ignore
+                                            )
+                                        ]
+                                    )
+                                )
+                            ]
                             DataGridTextColumn.create [
                                 DataGridTextColumn.header "Age"
                                 DataGridTextColumn.binding (Binding "Age")

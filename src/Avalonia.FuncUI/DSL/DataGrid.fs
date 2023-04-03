@@ -2,6 +2,7 @@ namespace Avalonia.FuncUI.DSL
 
 open Avalonia
 open Avalonia.Controls.Documents
+open Avalonia.Controls.Templates
 open Avalonia.Data
 open Avalonia.Media
 open Avalonia.Media.Immutable
@@ -115,3 +116,16 @@ module DataGridCheckBoxColumn =
     let create (attrs: IAttr<DataGridCheckBoxColumn> list): IView<DataGridCheckBoxColumn> =
         ViewBuilder.Create<DataGridCheckBoxColumn>(attrs)
 
+[<AutoOpen>]
+module DataGridTemplateColumn =
+
+    let create (attrs: IAttr<DataGridTemplateColumn> list): IView<DataGridTemplateColumn> =
+        ViewBuilder.Create<DataGridTemplateColumn>(attrs)
+
+    type DataGridTemplateColumn with
+
+        static member cellTemplate<'t when 't :> DataGridTemplateColumn>(template: IDataTemplate) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(DataGridTemplateColumn.CellTemplateProperty, template, ValueNone)
+
+        static member cellEditingTemplate<'t when 't :> DataGridTemplateColumn>(template: IDataTemplate) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(DataGridTemplateColumn.CellEditingTemplateProperty, template, ValueNone)
