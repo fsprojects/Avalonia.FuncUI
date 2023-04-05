@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Library\Extensions.fs" />
         <Compile Include="Views\Tabs\ToggleSwitchDemo.fs" />
         <Compile Include="Views\Tabs\SpinnerDemo.fs" />
         <Compile Include="Views\Tabs\TreeViewDemo.fs" />
