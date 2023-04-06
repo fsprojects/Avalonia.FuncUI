@@ -106,5 +106,9 @@ module MainView =
                     TabItem.header "Flyout Demo"
                     TabItem.content (ViewBuilder.Create<FlyoutDemo.Host>([]))
                 ]
+                TabItem.create [
+                    TabItem.header "Drag+Drop Demo"
+                    TabItem.content (ViewBuilder.Create<DragDropDemo.Host>([]))
+                ]
             ]
         ]

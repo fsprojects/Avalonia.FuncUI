@@ -6,7 +6,6 @@ open Avalonia.Controls
 open Avalonia.Input
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
-open Avalonia.FuncUI.Components
 open Avalonia.FuncUI.Elmish
 open Avalonia.Layout
 open Avalonia.Threading
@@ -86,15 +85,17 @@ module DragDropDemo =
                                                 DragDrop.onDrop (fun e ->
                                                     if e.Data.Contains(DataFormats.Text) then
                                                         Dropped(e.Data.GetText()) |> dispatch
-                                                    elif e.Data.Contains(DataFormats.FileNames) then
+                                                    elif e.Data.Contains(DataFormats.Files) then
                                                         Dropped
-                                                            (e.Data.GetFileNames() |> String.concat Environment.NewLine)
+                                                            (e.Data.GetFiles()
+                                                            |> Seq.map (fun item -> item.Name)
+                                                            |> String.concat Environment.NewLine)
                                                         |> dispatch
                                                     )
                                                 DragDrop.onDragOver (fun e ->
                                                     e.DragEffects <-
                                                         if e.Data.Contains(DataFormats.Text)
-                                                           || e.Data.Contains(DataFormats.FileNames) then
+                                                           || e.Data.Contains(DataFormats.Files) then
                                                             e.DragEffects
                                                             &&& (DragDropEffects.Copy ||| DragDropEffects.Link)
                                                         else
@@ -106,15 +107,7 @@ module DragDropDemo =
         do
             this.Styles.Load "avares://Avalonia.FuncUI.ControlCatalog/Views/Tabs/Styles.xaml"
 
-            /// we use this function because sometimes we dispatch messages
-            /// from another thread
-            let syncDispatch (dispatch: Dispatch<'msg>): Dispatch<'msg> =
-                match Dispatcher.UIThread.CheckAccess() with
-                | true -> fun msg -> Dispatcher.UIThread.Post(fun () -> dispatch msg)
-                | false -> dispatch
-
             Elmish.Program.mkProgram (fun () -> init) update view
             |> Program.withHost this
-            |> Program.withSyncDispatch syncDispatch
             |> Program.withConsoleTrace
-            |> Program.run
+            |> Program.runWithAvaloniaSyncDispatch ()

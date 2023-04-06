@@ -4,7 +4,6 @@ namespace Avalonia.FuncUI.DSL
 module DragDrop =
     open Avalonia.Controls
     open Avalonia.Input
-    open Avalonia.Interactivity
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
@@ -14,8 +13,8 @@ module DragDrop =
             AttrBuilder<'t>.CreateSubscription<DragEventArgs>
                 (DragDrop.DragEnterEvent, func, ?subPatchOptions = subPatchOptions)
 
-        static member onDragLeave<'t when 't :> Control> (func: RoutedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>
+        static member onDragLeave<'t when 't :> Control> (func: DragEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<DragEventArgs>
                 (DragDrop.DragLeaveEvent, func, ?subPatchOptions = subPatchOptions)
 
         static member onDragOver<'t when 't :> Control> (func: DragEventArgs -> unit, ?subPatchOptions) =
