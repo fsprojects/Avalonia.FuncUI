@@ -126,11 +126,11 @@ module internal rec Patcher =
 
             (newList :> IEnumerable)
 
-        let patch (getValue: (unit -> obj) option, setValue: (obj -> unit) option) =
+        let patch (getValue: (unit -> obj) voption, setValue: (obj -> unit) voption) =
             let value =
                 match getValue with
-                | Some get -> get()
-                | _ -> failwith "accessor must have a getter"
+                | ValueSome get -> get()
+                | ValueNone -> failwith "accessor must have a getter"
 
             match value with
             | :? IList as collection ->
@@ -138,8 +138,8 @@ module internal rec Patcher =
 
             | :? IEnumerable as enumerable ->
                 match setValue with
-                | Some set -> set (patch_IEnumerable enumerable)
-                | _ -> failwith "accessor must have a setter"
+                | ValueSome set -> set (patch_IEnumerable enumerable)
+                | ValueNone -> failwith "accessor must have a setter"
 
             | _ -> raise (Exception("type does not implement IEnumerable or IList. This is required for view patching"))
 
@@ -147,19 +147,19 @@ module internal rec Patcher =
         | Accessor.InstanceProperty instanceProperty ->
             let getter =
                 match instanceProperty.Getter with
-                | ValueSome getter -> Some (fun () -> getter(view))
-                | ValueNone -> None
+                | ValueSome getter -> ValueSome (fun () -> getter(view))
+                | ValueNone -> ValueNone
 
             let setter =
                 match instanceProperty.Setter with
-                | ValueSome setter -> Some (fun value -> setter(view, value))
-                | ValueNone -> None
+                | ValueSome setter -> ValueSome (fun value -> setter(view, value))
+                | ValueNone -> ValueNone
 
             patch (getter ,setter)
 
         | Accessor.AvaloniaProperty property ->
-            let getter = Some (fun () -> view.GetValue(property))
-            let setter = Some (fun obj -> view.SetValue(property, obj) |> ignore)
+            let getter = ValueSome (fun () -> view.GetValue(property))
+            let setter = ValueSome (fun obj -> view.SetValue(property, obj) |> ignore)
             patch (getter, setter)
 
     let private patchContentSingle (view: AvaloniaObject, accessor: Accessor, viewElement: ViewDelta option) : unit =

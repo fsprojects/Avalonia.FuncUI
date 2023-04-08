@@ -8,7 +8,7 @@ open Avalonia.Data
 
 module Types =
 
-    [<CustomEquality; NoComparison>]
+    [<CustomEquality; NoComparison; Struct>]
     type PropertyAccessor =
         { Name: string
           Getter: (AvaloniaObject -> obj) voption
@@ -83,7 +83,10 @@ module Types =
         { Function: obj -> unit }
 
         override this.Equals (obj: obj) =
-            false
+            Object.ReferenceEquals (this, obj)
+
+        override this.GetHashCode () =
+            (this.Function :> obj).GetHashCode()
 
     type IAttr =
         abstract member UniqueName : string
