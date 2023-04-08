@@ -70,6 +70,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.EnvApp", "Examples
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.DataGridPlayground", "Examples\Examples.DataGridPlayground\Examples.DataGridPlayground.fsproj", "{71C50981-2E3D-476B-9FA5-971671A9BB7A}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.Benchmarks", "Avalonia.FuncUI.Benchmarks\Avalonia.FuncUI.Benchmarks.fsproj", "{8E3586BB-D43F-4FD7-9F8E-05F55EAEE850}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -168,6 +170,10 @@ Global
 		{71C50981-2E3D-476B-9FA5-971671A9BB7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71C50981-2E3D-476B-9FA5-971671A9BB7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{71C50981-2E3D-476B-9FA5-971671A9BB7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E3586BB-D43F-4FD7-9F8E-05F55EAEE850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E3586BB-D43F-4FD7-9F8E-05F55EAEE850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E3586BB-D43F-4FD7-9F8E-05F55EAEE850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E3586BB-D43F-4FD7-9F8E-05F55EAEE850}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -196,6 +202,7 @@ Global
 		{AD6796F9-45CA-4FBA-9673-E6FC9214C80D} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
 		{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{71C50981-2E3D-476B-9FA5-971671A9BB7A} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
+		{8E3586BB-D43F-4FD7-9F8E-05F55EAEE850} = {681AB0E5-A733-4CFE-872A-10B810DAF86D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
