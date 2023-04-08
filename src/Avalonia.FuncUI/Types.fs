@@ -87,10 +87,11 @@ module Types =
 
     type IAttr =
         abstract member UniqueName : string
-        abstract member Property : Property option
-        abstract member Content : Content option
-        abstract member Subscription : Subscription option
-        abstract member InitFunction: InitFunction option
+
+        abstract member Property : Property voption
+        abstract member Content : Content voption
+        abstract member Subscription : Subscription voption
+        abstract member InitFunction: InitFunction voption
 
     type IAttr<'viewType> =
         inherit IAttr
@@ -124,23 +125,23 @@ module Types =
 
             member this.Property =
                 match this with
-                | Property value -> Some value
-                | _ -> None
+                | Property value -> ValueSome value
+                | _ -> ValueNone
 
             member this.Content =
                 match this with
-                | Content value -> Some value
-                | _ -> None
+                | Content value -> ValueSome value
+                | _ -> ValueNone
 
             member this.Subscription =
                 match this with
-                | Subscription value -> Some value
-                | _ -> None
+                | Subscription value -> ValueSome value
+                | _ -> ValueNone
 
             member this.InitFunction =
                 match this with
-                | InitFunction value -> Some value
-                | _ -> None
+                | InitFunction value -> ValueSome value
+                | _ -> ValueNone
 
     type IView =
         abstract member ViewType: Type with get
@@ -174,14 +175,18 @@ module Types =
 
     // TODO: maybe move active patterns to Virtual DON Misc
 
-    let internal (|Property'|_|) (attr: IAttr)  =
+    [<return: Struct>]
+    let internal (|Property'|_|) (attr: IAttr) : Property voption =
         attr.Property
 
-    let internal (|Content'|_|) (attr: IAttr)  =
+    [<return: Struct>]
+    let internal (|Content'|_|) (attr: IAttr) : Content voption =
         attr.Content
 
-    let internal (|Subscription'|_|) (attr: IAttr)  =
+    [<return: Struct>]
+    let internal (|Subscription'|_|) (attr: IAttr)  : Subscription voption =
         attr.Subscription
 
-    let internal (|InitFunction|_|) (attr: IAttr) =
+    [<return: Struct>]
+    let internal (|InitFunction|_|) (attr: IAttr) : InitFunction voption =
         attr.InitFunction

@@ -40,7 +40,7 @@ type Component (render: IComponentContext -> IView) as this =
                   Delta.ViewDelta.ConstructorArgs = null
                   Delta.ViewDelta.KeyDidChange = false
                   Delta.ViewDelta.Outlet = ValueNone
-                  Delta.ViewDelta.Attrs = Differ.diffAttributes lastViewAttrs nextViewAttrs }
+                  Delta.ViewDelta.Attrs = Differ.diffAttributes (lastViewAttrs, nextViewAttrs) }
             )
 
             lastViewAttrs <- nextViewAttrs

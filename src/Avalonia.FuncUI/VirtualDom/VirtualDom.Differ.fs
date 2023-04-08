@@ -4,7 +4,8 @@ open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom.Delta
 
 module internal rec Differ =
-    let private update (last: IAttr) (next: IAttr) : AttrDelta =
+
+    let private update (last: IAttr, next: IAttr) : AttrDelta =
         match next with
         | Property' property ->
             AttrDelta.Property
@@ -15,7 +16,7 @@ module internal rec Differ =
         | Content' content ->
             AttrDelta.Content
                 { Accessor = content.Accessor;
-                  Content = Differ.diffContent last next }
+                  Content = Differ.diffContent (last, next) }
 
         | Subscription' subscription ->
             AttrDelta.Subscription (SubscriptionDelta.From subscription)
@@ -54,7 +55,7 @@ module internal rec Differ =
 
         | _ -> failwithf "no reset operation is defined for last '%A'" last
 
-    let private diffContentSingle (last: IView option) (next: IView option) : ViewDelta option =
+    let private diffContentSingle (last: IView option, next: IView option) : ViewDelta option =
         match next with
         | Some next ->
             match last with
@@ -62,7 +63,7 @@ module internal rec Differ =
             | None -> Some (ViewDelta.From next)
         | None -> None
 
-    let private diffContentMultiple (lastList: IView list) (nextList: IView list) : ViewDelta list =
+    let private diffContentMultiple (lastList: IView list, nextList: IView list) : ViewDelta list =
         nextList |> List.mapi (fun index next ->
             if index + 1 <= lastList.Length then
                 Differ.diff(lastList.[index], nextList.[index])
@@ -70,7 +71,7 @@ module internal rec Differ =
                 ViewDelta.From next
         )
 
-    let private diffContent (last: IAttr) (next: IAttr) : ViewContentDelta =
+    let private diffContent (last: IAttr, next: IAttr) : ViewContentDelta =
             match next with
             | Content' nextContent ->
                 match last with
@@ -81,7 +82,7 @@ module internal rec Differ =
                     | ViewContent.Single nextSingleContent ->
                         match lastContent.Content with
                         | ViewContent.Single lastSingleContent ->
-                            ViewContentDelta.Single (diffContentSingle lastSingleContent nextSingleContent)
+                            ViewContentDelta.Single (diffContentSingle (lastSingleContent, nextSingleContent))
                         | _ ->
                             ViewContentDelta.Single None
 
@@ -89,41 +90,31 @@ module internal rec Differ =
                     | ViewContent.Multiple nextMultipleContent ->
                         match lastContent.Content with
                         | ViewContent.Multiple lastMultipleContent ->
-                            ViewContentDelta.Multiple (diffContentMultiple lastMultipleContent nextMultipleContent)
+                            ViewContentDelta.Multiple (diffContentMultiple (lastMultipleContent, nextMultipleContent))
                         | _ ->
-                            ViewContentDelta.Multiple (diffContentMultiple [] nextMultipleContent)
+                            ViewContentDelta.Multiple (diffContentMultiple (List.empty, nextMultipleContent))
 
                 | _ -> invalidOp "'last' must be of type content"
 
             | _ -> invalidOp "'next' must be of type content"
 
-    let internal diffAttributes (lastAttrs: IAttr list) (nextAttrs: IAttr list) : AttrDelta list =
-        (* TODO: optimize. *)
-
-        (* NOTE: using a map here might be actually slower
-        than iterating over a short list. views usually don't
-        have a lot of attributes set. needs benchmarking  *)
-        let nextAttrsMap : Map<string, IAttr> =
-            nextAttrs
-            |> List.map (fun i -> i.UniqueName, i)
-            |> Map.ofList
-
-        let lastAttrsMap : Map<string, IAttr> =
-            lastAttrs
-            |> List.map (fun i -> i.UniqueName, i)
-            |> Map.ofList
+    let internal diffAttributes (lastAttrs: IAttr list, nextAttrs: IAttr list) : AttrDelta list =
 
         let delta = ResizeArray<AttrDelta>()
 
         (* check if there is a corresponding new attribute for all old attributes *)
         for lastAttr in lastAttrs do
 
+            let isAttrStillPresent =
+                nextAttrs
+                |> List.tryFind (fun nextAttr -> nextAttr.UniqueName = lastAttr.UniqueName)
+
             (* check if attribute is still present *)
-            match Map.tryFind lastAttr.UniqueName nextAttrsMap with
+            match isAttrStillPresent with
 
             (* attribute is still there, but it's value changed. -> update value *)
             | Some nextAttr when not (nextAttr.Equals lastAttr) ->
-                let attrDelta = update lastAttr nextAttr
+                let attrDelta = update (lastAttr, nextAttr)
                 delta.Add attrDelta
 
             (* attribute is still there. It hasn't changed -> do nothing *)
@@ -137,8 +128,12 @@ module internal rec Differ =
         (* check if new attributes need to be added  *)
         for nextAttr in nextAttrs do
 
+            let attrIsAlreadyKnown =
+                lastAttrs
+                |> List.exists (fun lastAttr -> lastAttr.UniqueName = nextAttr.UniqueName)
+
             (* attribute is new - create delta from it -> set value  *)
-            if not (Map.containsKey nextAttr.UniqueName lastAttrsMap) then
+            if not attrIsAlreadyKnown then
                 delta.Add (AttrDelta.From nextAttr)
 
         List.ofSeq delta
@@ -151,7 +146,7 @@ module internal rec Differ =
             ViewDelta.From next
         else
             { ViewType = next.ViewType
-              Attrs = diffAttributes last.Attrs next.Attrs
+              Attrs = diffAttributes (last.Attrs, next.Attrs)
               ConstructorArgs = next.ConstructorArgs
               KeyDidChange = false
               Outlet = next.Outlet }
