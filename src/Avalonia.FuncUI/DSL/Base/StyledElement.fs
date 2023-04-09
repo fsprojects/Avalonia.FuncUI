@@ -18,7 +18,10 @@ module StyledElement =
             
         static member templatedParent<'t when 't :> StyledElement>(template: TemplatedControl) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<AvaloniaObject>(StyledElement.TemplatedParentProperty, template, ValueNone)
-            
+        
+        static member theme<'t when 't :> StyledElement>(theme: ControlTheme) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<ControlTheme>(StyledElement.ThemeProperty, theme, ValueNone)
+
         static member classes<'t when 't :> StyledElement>(value: Classes) : IAttr<'t> =
             let getter : ('t -> Classes) = (fun control -> control.Classes)
             let setter : ('t * Classes -> unit) = (fun (control, value) -> control.Classes <- value)
