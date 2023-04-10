@@ -51,11 +51,12 @@
     <Compile Include="Components\Context\Context.StateHook.fs" />
     <Compile Include="Components\Context\Context.fs" />
     <Compile Include="Components\Component.fs" />
-    <Compile Include="Builder.fs" />
     <Compile Include="Hosts.fs" />
     <Compile Include="DataTemplateView.fs" />
     <Compile Include="Helpers.fs" />
-    <Compile Include="View.fs" />
+    <Compile Include="DSL\AttrBuilder.fs" />
+    <Compile Include="DSL\ViewBuilder.fs" />
+    <Compile Include="DSL\View.fs" />
     <Compile Include="DSL\Base\AvaloniaObject.fs" />
 
 
