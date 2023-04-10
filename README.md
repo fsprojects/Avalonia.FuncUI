@@ -81,8 +81,8 @@ module Counter =
     }
 
     type Msg =
-    | Increment
-    | Decrement
+        | Increment
+        | Decrement
 
     let update (msg: Msg) (state: CounterState) : CounterState =
         match msg with
