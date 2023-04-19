@@ -7,6 +7,7 @@ open Elmish
 open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.ControlCatalog.Views
 open Avalonia.Themes.Fluent
+open Avalonia.FuncUI
 
 type MainWindow() as this =
     inherit HostWindow()
