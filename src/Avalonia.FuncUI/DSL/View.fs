@@ -18,7 +18,7 @@ type View () =
     /// </code>
     /// </example>
     /// </summary>
-    static member createGeneric<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)>] 'view when 'view :> AvaloniaObject>
+    static member createGeneric<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
       ( attrs: IAttr<'view> list ) =
 
         { View.ViewType = typeof<'view>
@@ -39,7 +39,7 @@ type View () =
     /// </code>
     /// </example>
     /// </summary>
-    static member createWithKey<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)>] 'view when 'view :> AvaloniaObject>
+    static member createWithKey<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
       ( key: string )
       ( createView: IAttr<'view> list -> IView<'view>)
       ( attrs: IAttr<'view> list ) =
@@ -68,7 +68,7 @@ type View () =
     /// </example>
     /// <remarks>Consider using an init attribute instead.</remarks>
     /// </summary>
-    static member createWithOutlet<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)>] 'view when 'view :> AvaloniaObject>
+    static member createWithOutlet<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
       ( outlet: 'view -> unit )
       ( createView: IAttr<'view> list -> IView<'view> )
       ( attrs: IAttr<'view> list ) =
@@ -95,7 +95,7 @@ type View () =
     /// </code>
     /// </example>
     /// </summary>
-    static member withKey<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)>] 'view when 'view :> AvaloniaObject>
+    static member withKey<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
       ( key: string )
       ( view: IView<'view> ) : IView<'view> =
 
@@ -122,7 +122,7 @@ type View () =
     /// </example>
     /// <remarks>Consider using an init attribute instead.</remarks>
     /// </summary>
-    static member withOutlet<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)>] 'view when 'view :> AvaloniaObject>
+    static member withOutlet<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
       (outlet: 'view -> unit)
       (view: IView<'view>) : IView<'view> =
 
@@ -144,7 +144,7 @@ type View () =
     /// </code>
     /// </example>
     /// </summary>
-    static member withConstructorArgs<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicParameterlessConstructor)>] 'view when 'view :> AvaloniaObject>
+    static member withConstructorArgs<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
       ( constructorArgs: obj array )
       ( view: IView<'view> ) : IView<'view> =
 
