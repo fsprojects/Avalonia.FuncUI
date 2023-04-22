@@ -322,13 +322,3 @@ type AttrBuilder<'view>() =
         }
 
         attr :> IAttr<'view>
-
-[<AbstractClass; Sealed>]
-type ViewBuilder() =
-
-    static member Create<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>]'view>(attrs: IAttr<'view> list) : IView<'view> =
-        { View.ViewType = typeof<'view>
-          View.ViewKey = ValueNone
-          View.Attrs = attrs
-          View.ConstructorArgs = null
-          View.Outlet = ValueNone }
