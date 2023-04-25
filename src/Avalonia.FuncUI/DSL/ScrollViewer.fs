@@ -63,11 +63,11 @@ module ScrollViewer  =
         /// <summary>
         /// Sets the vertical scrollbar value.
         /// </summary>
-        static member verticalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.VerticalScrollBarValueProperty, value, ValueNone)
+        //static member verticalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
+        //    AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.ver, value, ValueNone)
             
          /// <summary>
         /// Sets the horizontal scrollbar value.
         /// </summary>
-        static member horizontalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.HorizontalScrollBarValueProperty, value, ValueNone)
+        //static member horizontalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
+        //    AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.HorizontalScrollBarValueProperty, value, ValueNone)

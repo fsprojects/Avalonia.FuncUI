@@ -73,7 +73,7 @@ module AutoCompleteBox =
             AttrBuilder<'t>.CreateProperty<_>(AutoCompleteBox.TextFilterProperty, filterFunc, ValueNone)
 
         static member dataItems<'t when 't :> AutoCompleteBox>(items: IEnumerable) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IEnumerable>(AutoCompleteBox.ItemsProperty, items, ValueNone)
+            AttrBuilder<'t>.CreateProperty<IEnumerable>(AutoCompleteBox.ItemsSourceProperty, items, ValueNone)
 
         static member asyncPopulator<'t when 't :> AutoCompleteBox>(populator: Func<string, CancellationToken, Task<seq<obj>>>) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<_>(AutoCompleteBox.AsyncPopulatorProperty, populator, ValueNone)

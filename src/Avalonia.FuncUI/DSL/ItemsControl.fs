@@ -14,7 +14,8 @@ module ItemsControl =
     type ItemsControl with
 
         static member viewItems<'t when 't :> ItemsControl>(views: IView list) : IAttr<'t> =
-            AttrBuilder<'t>.CreateContentMultiple(ItemsControl.ItemsProperty, views)
+            let getter : ('t -> obj) = (fun control -> control.Items :> obj)
+            AttrBuilder<'t>.CreateContentMultiple("Items", ValueSome getter, ValueNone, views)
 
         static member dataItems<'t when 't :> ItemsControl>(data: IEnumerable) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IEnumerable>(ItemsControl.ItemsSourceProperty, data, ValueNone)

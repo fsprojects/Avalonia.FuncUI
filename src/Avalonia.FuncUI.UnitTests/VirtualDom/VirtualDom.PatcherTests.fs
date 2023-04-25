@@ -53,8 +53,11 @@ module PatcherTests =
                 se.Styles.AddRange(s))
 
         let classesGetter: AvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Classes :> obj)
-        let classesSetter: AvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Classes <- v :?> Classes)
-
+        let classesSetter: AvaloniaObject * obj -> unit = (fun (c, v) -> 
+            let element = (c :?> StyledElement)
+            element.Classes.Clear()
+            element.Classes.AddRange(v :?> Classes))
+      
         let resourcesGetter: AvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Resources :> obj)
         let resourcesSetter: AvaloniaObject * obj -> unit = (fun (c, v) -> (c :?> StyledElement).Resources <- v :?> IResourceDictionary)
 
@@ -97,7 +100,7 @@ module PatcherTests =
 
         let control = TextBlock()
         control.Styles.Add(Style())
-        control.Classes <- Classes([| "class" |])
+        control.Classes.Add("class")
         control.Resources.Add(KeyValuePair.Create("key" :> obj, "Value" :> obj))
 
         Patcher.patch (control, delta)
