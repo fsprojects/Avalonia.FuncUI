@@ -7,11 +7,11 @@ module ScrollViewer  =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-   
+
     let create (attrs: IAttr<ScrollViewer> list): IView<ScrollViewer> =
         ViewBuilder.Create<ScrollViewer>(attrs)
 
-    type Control with            
+    type Control with
 
         /// <summary>
         /// Sets the vertical scrollbar visibility.
@@ -29,7 +29,7 @@ module ScrollViewer  =
 
         static member allowAutoHide<'t when 't :> ScrollViewer>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(ScrollViewer.AllowAutoHideProperty, value, ValueNone)
-        
+
         /// <summary>
         /// Sets the extent of the scrollable content.
         /// </summary>
@@ -59,15 +59,3 @@ module ScrollViewer  =
         /// </summary>
         static member viewport<'t when 't :> ScrollViewer>(value: Size) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Size>(ScrollViewer.ViewportProperty, value, ValueNone)
-            
-        /// <summary>
-        /// Sets the vertical scrollbar value.
-        /// </summary>
-        //static member verticalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
-        //    AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.ver, value, ValueNone)
-            
-         /// <summary>
-        /// Sets the horizontal scrollbar value.
-        /// </summary>
-        //static member horizontalScrollBarValue<'t when 't :> ScrollViewer>(value: double) : IAttr<'t> =
-        //    AttrBuilder<'t>.CreateProperty<double>(ScrollViewer.HorizontalScrollBarValueProperty, value, ValueNone)
