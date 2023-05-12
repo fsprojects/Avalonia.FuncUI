@@ -24,7 +24,9 @@ module StyledElement =
 
         static member classes<'t when 't :> StyledElement>(value: Classes) : IAttr<'t> =
             let getter : ('t -> Classes) = (fun control -> control.Classes)
-            let setter : ('t * Classes -> unit) = (fun (control, value) -> control.Classes <- value)
+            let setter : ('t * Classes -> unit) = (fun (control, value) ->              
+                control.Classes.Clear()
+                control.Classes.AddRange(value))
             
             AttrBuilder<'t>.CreateProperty<Classes>("Classes", value, ValueSome getter, ValueSome setter, ValueNone, fun () -> Classes())
             
