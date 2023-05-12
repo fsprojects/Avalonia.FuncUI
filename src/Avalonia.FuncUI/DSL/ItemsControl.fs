@@ -1,5 +1,7 @@
 namespace Avalonia.FuncUI.DSL
 
+open Avalonia
+
 [<AutoOpen>]
 module ItemsControl =
     open Avalonia.Controls.Templates
@@ -32,5 +34,9 @@ module ItemsControl =
         static member areVerticalSnapPointsRegular<'t when 't :> ItemsControl>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(ItemsControl.AreVerticalSnapPointsRegularProperty, value, ValueNone)
 
-        static member onItemsChanged<'t when 't :> ItemsControl>(func: IList -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<IList, _>(ItemsControl.ItemsProperty, func, ?subPatchOptions = subPatchOptions)
+        static member onItemsChanged<'t when 't :> ItemsControl>(func: IEnumerable -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription(
+                ItemsControl.ItemsSourceProperty :> AvaloniaProperty<IEnumerable>,
+                func,
+                ?subPatchOptions = subPatchOptions
+            )
