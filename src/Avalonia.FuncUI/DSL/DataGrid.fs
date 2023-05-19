@@ -26,7 +26,7 @@ module DataGrid =
             AttrBuilder<'t>.CreateProperty<bool>(DataGrid.AutoGenerateColumnsProperty, autoGenerate, ValueNone)
 
         static member items (items: #System.Collections.IEnumerable) : IAttr<DataGrid> =
-            AttrBuilder<DataGrid>.CreateProperty(DataGrid.ItemsProperty, items, ValueNone)
+            AttrBuilder<DataGrid>.CreateProperty(DataGrid.ItemsSourceProperty, items, ValueNone)
 
         static member canUserReorderColumns<'t when 't :> DataGrid>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DataGrid.CanUserReorderColumnsProperty, value, ValueNone)

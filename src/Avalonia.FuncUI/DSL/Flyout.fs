@@ -60,10 +60,12 @@ module MenuFlyout =
     type MenuFlyout with
 
         static member viewItems<'t when 't :> MenuFlyout>(views: List<IView>): IAttr<'t> =
-            AttrBuilder<'t>.CreateContentMultiple(MenuFlyout.ItemsProperty, views)
+            let getter : ('t -> obj) = (fun control -> control.Items :> obj)
+
+            AttrBuilder<'t>.CreateContentMultiple("Items", ValueSome getter, ValueNone, views)
 
         static member dataItems<'t when 't :> MenuFlyout>(data : IEnumerable): IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IEnumerable>(MenuFlyout.ItemsProperty, data, ValueNone)
+            AttrBuilder<'t>.CreateProperty<IEnumerable>(MenuFlyout.ItemsSourceProperty, data, ValueNone)
 
         static member itemTemplate<'t when 't :> MenuFlyout>(value : IDataTemplate): IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(MenuFlyout.ItemTemplateProperty, value, ValueNone)

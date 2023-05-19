@@ -24,12 +24,12 @@ type internal StateHookViews =
                         ContextMenu.viewItems [
                             MenuItem.create [
                                 MenuItem.header "Copy"
-                                MenuItem.onClick (fun _ ->
+                                MenuItem.onClick (fun args ->
                                     Async.StartImmediate (
                                         async {
                                             let json = System.Text.Json.JsonSerializer.Serialize value.Current
 
-                                            do! Async.AwaitTask (Application.Current.Clipboard.SetTextAsync json)
+                                            do! Async.AwaitTask (TopLevel.GetTopLevel(args.Source :?> Visual).Clipboard.SetTextAsync json)
                                         }
                                     )
                                 )
