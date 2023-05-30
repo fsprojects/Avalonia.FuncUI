@@ -12,4 +12,19 @@
     <Style Selector="Button:pointerover">
         <Setter Property="Background" Value="#1abc9c"/>
     </Style>
+
+    <Style Selector="TextBlock.h1">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style Selector="TextBlock.h2">
+        <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+    </Style>
+
+    <Style Selector="Border.drag">
+        <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush}"/>
+    </Style>
+    <Style Selector="Border.drop">
+        <Setter Property="Background" Value="{DynamicResource ThemeAccentBrush2}"/>
+    </Style>
 </Styles>
