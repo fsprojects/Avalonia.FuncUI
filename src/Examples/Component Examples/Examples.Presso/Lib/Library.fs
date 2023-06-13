@@ -18,5 +18,4 @@ module Extensions =
             if uri.IsAbsoluteUri && uri.IsFile then
                 new Bitmap(uri.LocalPath)
             else
-                let assets = AvaloniaLocator.Current.GetService<IAssetLoader>();
-                new Bitmap(assets.Open(uri));
+                new Bitmap(AssetLoader.Open(uri))

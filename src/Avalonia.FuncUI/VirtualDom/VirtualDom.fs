@@ -16,7 +16,7 @@ module rec VirtualDom =
         let delta = Differ.diff(last, next)
         Patcher.patch(root, delta)
 
-    let updateRoot (host: IContentControl, last: IView option, next: IView option) =
+    let updateRoot (host: ContentControl, last: IView option, next: IView option) =
         let root : Control voption =
             if host.Content <> null then
                 match host.Content with

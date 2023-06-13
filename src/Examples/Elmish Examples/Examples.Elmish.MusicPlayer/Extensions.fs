@@ -4,7 +4,6 @@ namespace Examples.MusicPlayer
 [<AutoOpen>]
 module Extensions =
     open System
-    open Avalonia
     open Avalonia.Controls
     open Avalonia.Media.Imaging
     open Avalonia.Platform
@@ -17,8 +16,7 @@ module Extensions =
             if uri.IsAbsoluteUri && uri.IsFile then
                 new Bitmap(uri.LocalPath)
             else
-                let assets = AvaloniaLocator.Current.GetService<IAssetLoader>()
-                new Bitmap(assets.Open(uri))
+                new Bitmap(AssetLoader.Open(uri))
 
     type Image with
         static member FromString(s: string): Image =
