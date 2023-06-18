@@ -31,8 +31,7 @@ type EnvironmentStateProvider<'value>
 
     member this.ProvidedState with get () = providedState
 
-    interface IStyleable with
-        member this.StyleKey = typeof<ContentControl>
+    override this.StyleKeyOverride = typeof<ContentControl>
 
 type EnvironmentStateProvider<'value> with
 

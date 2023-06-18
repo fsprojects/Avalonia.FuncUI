@@ -30,8 +30,7 @@ type HostControl() as this =
         VirtualDom.updateRoot (this, lastViewElement, nextViewElement)
         lastViewElement <- nextViewElement
 
-    interface IStyleable with
-        member this.StyleKey = typeof<ContentControl>
+    override this.StyleKeyOverride = typeof<ContentControl>
 
     interface IViewHost with
         member this.Update next =
