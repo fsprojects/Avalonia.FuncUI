@@ -65,12 +65,12 @@ module internal rec Differ =
 
     let private diffContentMultiple (lastList: IView list, nextList: IView list) : ViewDelta list =
         let lastList = lastList |> List.toArray
-        nextList
-        |> List.mapi (fun index next ->
-            if index < lastList.Length
-            then Differ.diff (lastList.[index], next)
-            else ViewDelta.From next
-            )
+        nextList |> List.mapi (fun index next ->
+            if index < lastList.Length then
+                Differ.diff(lastList.[index], next)
+            else
+                ViewDelta.From next
+        )
 
     let private diffContent (last: IAttr, next: IAttr) : ViewContentDelta =
             match next with
