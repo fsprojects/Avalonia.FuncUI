@@ -8,6 +8,7 @@ open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.ControlCatalog.Views
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
+open Avalonia.Controls
 
 type MainWindow() as this =
     inherit HostWindow()
@@ -17,7 +18,7 @@ type MainWindow() as this =
         base.Height <- 600.0
         base.Width <- 800.0
 
-        this.VisualRoot.Renderer.Diagnostics.DebugOverlays <- Avalonia.Rendering.RendererDebugOverlays.Fps
+        TopLevel.GetTopLevel(this).RendererDiagnostics.DebugOverlays <- Avalonia.Rendering.RendererDebugOverlays.Fps
         //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         ()
 

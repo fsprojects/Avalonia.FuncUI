@@ -9,6 +9,7 @@
         <!-- temporal workaround for our GL interface backend -->
         <UseInterpreter>True</UseInterpreter>
         <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
+        <PublishTrimmed>False</PublishTrimmed>
 
         <!-- (use for running on device)
         <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>

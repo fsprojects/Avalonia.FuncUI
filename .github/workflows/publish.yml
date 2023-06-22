@@ -7,21 +7,32 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: |
-          6.0.x
-          7.0.x
-    - name: Restore workload
-      run: dotnet workload restore src/Avalonia.FuncUI.sln
+          6.x.x
+          7.x.x
+          
+    - name: install workload ios
+      run: dotnet workload install ios
+      
+    - name: install workload wasm
+      run: dotnet workload install wasm-tools
+      
     - name: Build & Test
       run: dotnet test src/Avalonia.FuncUI.sln --verbosity normal
+      
     - name: Build for release
-      run: dotnet build src/Avalonia.FuncUI.sln -c Release
+      run: dotnet build src/Avalonia.FuncUI/Avalonia.FuncUI.fsproj -c Release
+      
+    - name: Build for release
+      run: dotnet build src/Avalonia.FuncUI.Elmish/Avalonia.FuncUI.Elmish.fsproj -c Release
+      
     - name: Publish base project and Elmish NuGets (if this version was not published before)
       run: dotnet nuget push src/**/bin/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate

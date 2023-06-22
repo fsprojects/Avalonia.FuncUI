@@ -3,7 +3,6 @@ namespace Avalonia.FuncUI
 open Avalonia
 open Avalonia.Controls
 open Avalonia.FuncUI.Types
-open Avalonia.Styling
 
 [<AbstractClass>]
 [<Experimental "Statically construct views with F#">]
@@ -21,5 +20,4 @@ type StaticComponent () =
 
     abstract member Build: unit -> IView
 
-    interface IStyleable with
-        member this.StyleKey = typeof<Border>
+    override this.StyleKeyOverride = typeof<Border>

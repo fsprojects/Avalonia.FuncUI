@@ -4,7 +4,6 @@ open System
 open Avalonia.Controls
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
-open Avalonia.Styling
 open Avalonia.FuncUI.VirtualDom
 open Avalonia.Threading
 
@@ -63,8 +62,7 @@ type Component (render: IComponentContext -> IView) as this =
         base.Finalize ()
         (context :> IDisposable).Dispose ()
 
-    interface IStyleable with
-        member this.StyleKey = typeof<Border>
+    override this.StyleKeyOverride = typeof<Border>
 
 type Component with
 

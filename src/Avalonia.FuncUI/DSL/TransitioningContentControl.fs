@@ -13,8 +13,5 @@ module TransitioningContentControl =
 
     type TransitioningContentControl with
 
-        static member currentContent<'t when 't :> TransitioningContentControl>(value: obj) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<obj>(TransitioningContentControl.CurrentContentProperty, value, ValueNone)
-
         static member pageTransition<'t when 't :> TransitioningContentControl>(transition: IPageTransition) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IPageTransition>(TransitioningContentControl.PageTransitionProperty, transition, ValueNone)
