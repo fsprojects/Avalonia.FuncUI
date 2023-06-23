@@ -69,14 +69,14 @@
       "description": "The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property).",
       "datatype": "string",
       "replaces": "AvaDisplayVersionParameter",
-      "defaultValue": "1.0"
+      "defaultValue": "1.0-funcui"
     },
     "ApplicationTitle": {
       "type": "parameter",
       "description": "The application title for desktop and mobile projects (ApplicationTitle MSBuild property).",
       "datatype": "string",
       "replaces": "AvaTitleParameter",
-      "defaultValue": "Avalonia UI Application"
+      "defaultValue": "Avalonia FuncUI Application"
     }
   },
   "sources": [
