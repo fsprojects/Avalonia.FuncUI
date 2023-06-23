@@ -6,6 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="Scenarios\Diffing\GameOfLife.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
