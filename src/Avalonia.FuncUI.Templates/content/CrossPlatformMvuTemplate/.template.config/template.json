@@ -59,14 +59,14 @@
     },
     "ApplicationVersion": {
       "type": "parameter",
-      "description": "The application version for desktop and mobile projects (ApplicationVersion MSBuild property). Required to be integer on mobile projects and <=10000 on iOS. Must be incremented per store submission.",
+      "description": "The application version for mobile projects (ApplicationVersion MSBuild property). Required to be integer on mobile projects and <=10000 on iOS. Must be incremented per store submission.",
       "datatype": "integer",
       "replaces": "AvaVersionParameter",
       "defaultValue": "1"
     },
     "ApplicationDisplayVersion": {
       "type": "parameter",
-      "description": "The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property). Avoid inputting < and > characters which mess with source code.",
+      "description": "The application display version for mobile projects (ApplicationDisplayVersion MSBuild property). Avoid inputting < and > characters which mess with source code.",
       "datatype": "string",
       "replaces": "AvaDisplayVersionParameter",
       "defaultValue": "1.0-funcui"

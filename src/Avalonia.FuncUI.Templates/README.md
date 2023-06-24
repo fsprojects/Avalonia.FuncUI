@@ -80,10 +80,10 @@ Additional options include
   -id <id>                                      The application ID for mobile projects (ApplicationId MSBuild property). Both Android and iOS restrict possible IDs: Any ID must have at least two segments (separated by one or more dots). Each segment must start with a letter. All characters must be alphanumeric [a-zA-Z0-9]. IDs are case sensitive and must be unique to each application.
                                                 Type: string
                                                 Default: com.companyname.AvaloniaFuncUIApplication
-  -vn, --version <version>                      The application version for desktop and mobile projects (ApplicationVersion MSBuild property). Required to be integer on mobile projects and <=10000 on iOS. Must be incremented per store submission.
+  -vn, --version <version>                      The application version for mobile projects (ApplicationVersion MSBuild property). Required to be integer on mobile projects and <=10000 on iOS. Must be incremented per store submission.
                                                 Type: integer
                                                 Default: 1
-  -vd, --display-version <display-version>      The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property). Avoid inputting < and > characters which mess with source code.
+  -vd, --display-version <display-version>      The application display version for mobile projects (ApplicationDisplayVersion MSBuild property). Avoid inputting < and > characters which mess with source code.
                                                 Type: string
                                                 Default: 1.0-funcui
   -t, --title <title>                           The application title for all projects (ApplicationTitle MSBuild property). Avoid inputting ", < and > characters which mess with source code.
