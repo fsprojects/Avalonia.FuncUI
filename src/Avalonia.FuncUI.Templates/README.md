@@ -77,7 +77,7 @@ Additional options include
                                                   Browser  Browser: WebAssembly
                                                 Multiple values are allowed: True
                                                 Default: Desktop|iOS|Android|Browser
-  -id <id>                                      The application ID for mobile projects (ApplicationId MSBuild property). Both Android and iOS restrict possible IDs: Any ID must have at least two segments (separated by one or more dots). Each segment must start with a letter. All characters must be alphanumeric [a-zA-Z0-9].
+  -id <id>                                      The application ID for mobile projects (ApplicationId MSBuild property). Both Android and iOS restrict possible IDs: Any ID must have at least two segments (separated by one or more dots). Each segment must start with a letter. All characters must be alphanumeric [a-zA-Z0-9]. IDs are case sensitive.
                                                 Type: string
                                                 Default: com.companyname.AvaloniaFuncUIApplication
   -vn, --version <version>                      The application version for desktop and mobile projects (ApplicationVersion MSBuild property). Required to be integer on mobile projects and <=10000 on iOS. Must be incremented per store submission.
