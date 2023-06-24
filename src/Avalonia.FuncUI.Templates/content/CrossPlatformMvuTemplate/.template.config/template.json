@@ -52,7 +52,7 @@
     },
     "ApplicationId": {
       "type": "parameter",
-      "description": "The application ID for mobile projects (ApplicationId MSBuild property). Both Android and iOS restrict possible IDs: It must have at least two segments (includes one or more dots). Each segment must start with a letter. All characters must be alphanumeric [a-zA-Z0-9].",
+      "description": "The application ID for mobile projects (ApplicationId MSBuild property). Both Android and iOS restrict possible IDs: It must have at least two segments (separated by one or more dots). Each segment must start with a letter. All characters must be alphanumeric [a-zA-Z0-9].",
       "datatype": "string",
       "replaces": "AvaIdParameter",
       "defaultValue": "com.companyname.AvaloniaFuncUIApplication"
