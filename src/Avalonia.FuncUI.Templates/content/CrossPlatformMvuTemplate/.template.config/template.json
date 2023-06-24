@@ -73,7 +73,7 @@
     },
     "ApplicationTitle": {
       "type": "parameter",
-      "description": "The application title for all projects (ApplicationTitle MSBuild property). Avoid inputting \", < and > characters which mess with source code.",
+      "description": "The application title for all projects (ApplicationTitle MSBuild property for mobile). Avoid inputting \", < and > characters which mess with source code.",
       "datatype": "string",
       "replaces": "AvaTitleParameter",
       "defaultValue": "Avalonia FuncUI Application"
