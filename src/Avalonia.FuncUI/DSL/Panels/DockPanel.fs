@@ -10,7 +10,7 @@ module DockPanel =
         ViewBuilder.Create<DockPanel>(attrs)
     
     type Control with
-        /// An attached property specifying dock relative to the parent DockPanel. The applied control should be a child of a DockPanel for this property to take effect.
+        /// An attached property specifying the dock relative to the parent DockPanel. The applied control should be a child of a DockPanel for this property to take effect.
         static member dock<'t when 't :> Control>(dock: Dock) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Dock>(DockPanel.DockProperty, dock, ValueNone)
     
