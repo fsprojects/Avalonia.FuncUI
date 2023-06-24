@@ -52,7 +52,7 @@
     },
     "ApplicationId": {
       "type": "parameter",
-      "description": "The application ID for mobile projects (ApplicationId MSBuild property).",
+      "description": "The application ID for mobile projects (ApplicationId MSBuild property). Both Android and iOS restrict possible IDs: It must have at least two segments (includes one or more dots). Each segment must start with a letter. All characters must be alphanumeric [a-zA-Z0-9].",
       "datatype": "string",
       "replaces": "AvaIdParameter",
       "defaultValue": "com.companyname.AvaloniaFuncUIApplication"
@@ -66,14 +66,14 @@
     },
     "ApplicationDisplayVersion": {
       "type": "parameter",
-      "description": "The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property).",
+      "description": "The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property). Avoid inputting < and > characters which mess with source code.",
       "datatype": "string",
       "replaces": "AvaDisplayVersionParameter",
       "defaultValue": "1.0-funcui"
     },
     "ApplicationTitle": {
       "type": "parameter",
-      "description": "The application title for desktop and mobile projects (ApplicationTitle MSBuild property).",
+      "description": "The application title for desktop and mobile projects (ApplicationTitle MSBuild property). Avoid inputting \", < and > characters which mess with source code.",
       "datatype": "string",
       "replaces": "AvaTitleParameter",
       "defaultValue": "Avalonia FuncUI Application"
