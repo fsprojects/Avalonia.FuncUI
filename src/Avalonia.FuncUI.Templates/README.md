@@ -83,7 +83,7 @@ Additional options include
   -vn, --version <version>                      The application version for desktop and mobile projects (ApplicationVersion MSBuild property). Required to be integer on mobile projects and <=10000 on iOS. Must be incremented per store submission.
                                                 Type: integer
                                                 Default: 1
-  -vd, --display-version <display-version>      The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property).  Avoid inputting < and > characters which mess with source code.
+  -vd, --display-version <display-version>      The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property). Avoid inputting < and > characters which mess with source code.
                                                 Type: string
                                                 Default: 1.0-funcui
   -t, --title <title>                           The application title for desktop and mobile projects (ApplicationTitle MSBuild property). Avoid inputting ", < and > characters which mess with source code.
