@@ -52,18 +52,23 @@ module Grid =
             Enumerable.SequenceEqual(a, b, comparer);
 
     type Control with
+        /// An attached property specifying the row of parent Grid. The applied control should be a child of a Grid for this property to take effect.
         static member row<'t when 't :> Control>(row: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(Grid.RowProperty, row, ValueNone)
             
+        /// An attached property specifying the row span of parent Grid. The applied control should be a child of a Grid for this property to take effect.
         static member rowSpan<'t when 't :> Control>(span: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(Grid.RowSpanProperty, span, ValueNone)
             
+        /// An attached property specifying the column of parent Grid. The applied control should be a child of a Grid for this property to take effect.
         static member column<'t when 't :> Control>(column: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(Grid.ColumnProperty, column, ValueNone)
             
+        /// An attached property specifying the column span of parent Grid. The applied control should be a child of a Grid for this property to take effect.
         static member columnSpan<'t when 't :> Control>(span: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(Grid.ColumnSpanProperty, span, ValueNone)
             
+        /// An attached property marking the scoping element for shared size for the parent Grid. The applied control should be a child of a Grid for this property to take effect.
         static member isSharedSizeScope<'t when 't :> Control>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Grid.IsSharedSizeScopeProperty, value, ValueNone)
     
