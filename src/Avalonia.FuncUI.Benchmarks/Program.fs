@@ -3,20 +3,9 @@
 open BenchmarkDotNet.Attributes
 open BenchmarkDotNet.Running
 
-[<MemoryDiagnoser; >]
-type Bench () =
-
-    [<Benchmark(Baseline = true)>]
-    member this.Baseline () : unit =
-        ()
-
-    [<Benchmark>]
-    member this.Champion () : unit =
-        ()
-
 module Program =
 
     [<EntryPoint>]
     let main (args: string array) : int =
-        let _ = BenchmarkRunner.Run<Bench>()
+        let _ = BenchmarkRunner.Run<Scenarios.Diffing.GameOfLifeBench>()
         0
