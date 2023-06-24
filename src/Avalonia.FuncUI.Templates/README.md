@@ -86,7 +86,7 @@ Additional options include
   -vd, --display-version <display-version>      The application display version for desktop and mobile projects (ApplicationDisplayVersion MSBuild property). Avoid inputting < and > characters which mess with source code.
                                                 Type: string
                                                 Default: 1.0-funcui
-  -t, --title <title>                           The application title for desktop and mobile projects (ApplicationTitle MSBuild property). Avoid inputting ", < and > characters which mess with source code.
+  -t, --title <title>                           The application title for all projects (ApplicationTitle MSBuild property). Avoid inputting ", < and > characters which mess with source code.
                                                 Type: string
                                                 Default: Avalonia FuncUI Application
 
