@@ -13,7 +13,7 @@
     "type": "project"
   },
   "identity": "Avalonia.FuncUI.FullMvuTemplate",
-  "shortName": "funcUI.full.mvu",
+  "shortName": "funcui.full.mvu",
   "sourceName": "FullMvuTemplate",
   "preferNameDirectory": true
 }

@@ -13,7 +13,7 @@
     "type": "project"
   },
   "identity": "Avalonia.FuncUI.FullTemplate",
-  "shortName": "funcUI.full",
+  "shortName": "funcui.full",
   "sourceName": "FullTemplate",
   "preferNameDirectory": true
 }

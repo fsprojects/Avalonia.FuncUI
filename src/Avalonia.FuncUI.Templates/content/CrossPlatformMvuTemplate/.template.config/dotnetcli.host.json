@@ -1,24 +1,12 @@
 {
   "$schema": "http://json.schemastore.org/dotnetcli.host",
   "symbolInfo": {
-    "Framework": {
-      "longName": "framework"
-    },
-    "Platform": {
-      "longName": "platform"
-    },
-    "ApplicationId": {
-      "longName": "id"
-    },
-    "ApplicationVersion": {
-      "longName": "version"
-    },
-    "ApplicationDisplayVersion": {
-      "longName": "display-version"
-    },
-    "ApplicationTitle": {
-      "longName": "title"
-    }
+    "Framework": { "longName": "framework" },
+    "Platform": { "longName": "platform" },
+    "ApplicationTitle": { "longName": "title", "shortName": "t" },
+    "ApplicationId": { "longName": "id" },
+    "ApplicationVersion": { "longName": "version", "shortName": "vn" },
+    "ApplicationDisplayVersion": { "longName": "display-version", "shortName": "vd" }
   },
   "usageExamples": [
     ""
