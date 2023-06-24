@@ -28,7 +28,7 @@ type App() =
             lifetime.MainWindow <- {
                 new HostWindow() with
                     override this.OnInitialized() =
-                        base.Title <- "Full App"
+                        base.Title <- "AvaTitleParameter"
                         init this this.VisualRoot
             }
         | :? ISingleViewApplicationLifetime as lifetime ->
