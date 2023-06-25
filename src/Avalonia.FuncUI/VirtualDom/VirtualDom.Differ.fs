@@ -64,9 +64,18 @@ module internal rec Differ =
         | None -> None
 
     let private diffContentMultiple (lastList: IView list, nextList: IView list) : ViewDelta list =
+        let lastListLength = lastList.Length
+
+        (* implementation that avoids indexed access to lists *)
+        (* more details: https://github.com/fsprojects/Avalonia.FuncUI/pull/317 *)
+
+        let mutable lastTail: IView list = lastList
+
         nextList |> List.mapi (fun index next ->
-            if index + 1 <= lastList.Length then
-                Differ.diff(lastList.[index], nextList.[index])
+            if index < lastListLength then
+                let result = diff(lastTail.Head, next)
+                lastTail <- lastTail.Tail
+                result
             else
                 ViewDelta.From next
         )
