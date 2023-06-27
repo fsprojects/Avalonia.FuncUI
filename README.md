@@ -13,7 +13,6 @@ Avalonia FuncUI
 </p><br>
 
 ![](github/img/hero-multiple-apps.png)
-*(Applications created using Avalonia.FuncUI)*
 
 ## About
 FuncUI is a thin layer built on top of [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia). It contains abstractions 
