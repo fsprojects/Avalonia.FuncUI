@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "JaggerJo",
+  "classifications": [
+    "Console",
+    "Avalonia",
+    "UI",
+    "Components"
+  ],
+  "name": "Avalonia FuncUI Component App (with extras)",
+  "tags": {
+    "language": "F#",
+    "type": "project"
+  },
+  "identity": "Avalonia.FuncUI.FullTemplate",
+  "shortName": "funcui.full",
+  "sourceName": "FullTemplate",
+  "preferNameDirectory": true
+}
