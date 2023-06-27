@@ -12,8 +12,8 @@ Avalonia FuncUI
 <img alt="Nuget (with prereleases)" src="https://img.shields.io/nuget/vpre/Avalonia.FuncUI?color=green&label=package%20Avalonia.FuncUI">
 </p><br>
 
-![](github/img/hero.png)
-*(Application was created using Avalonia.FuncUI!)*
+![](github/img/hero-multiple-apps.png)
+*(Applications created using Avalonia.FuncUI)*
 
 ## About
 FuncUI is a thin layer built on top of [AvaloniaUI](https://github.com/AvaloniaUI/Avalonia). It contains abstractions 
