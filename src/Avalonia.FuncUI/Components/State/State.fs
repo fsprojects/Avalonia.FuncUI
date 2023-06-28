@@ -77,13 +77,17 @@ type State<'value>(init: 'value) =
         member this.InstanceType with get () = InstanceType.Source
         member this.ValueType with get () = typeof<'value>
         member this.Current with get () = current
+
         member this.Subscribe (handler: 'value -> unit) =
             onChange.Publish.Subscribe handler
+
         member this.SubscribeAny (handler: obj -> unit) : IDisposable =
             onChange.Publish.Subscribe handler
+
         member this.Set (signal: 'value) : unit =
             current <- signal
             onChange.Trigger(signal)
+
         member this.Dispose () =
             ()
 

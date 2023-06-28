@@ -48,12 +48,12 @@ module AppState =
 module Views =
 
     let listItemView (item: IWritable<TodoItem>) =
-        Component.create ($"item-{item.Current.ItemId}", fun ctx ->
+        Component.create ($"item-%O{item.Current.ItemId}", fun ctx ->
             let activeItemId = ctx.usePassed AppState.activeItemId
             let item = ctx.usePassed item
+            let title = ctx.useState item.Current.Title
 
             let isActive = Some item.Current.ItemId = activeItemId.Current
-            let title = ctx.useState item.Current.Title
 
             ctx.useEffect (
                 handler = (fun _ ->

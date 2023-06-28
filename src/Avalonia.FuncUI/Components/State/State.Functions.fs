@@ -16,8 +16,9 @@ module State =
         let keyedWire = new ValueMap<'value, 'key>(wire, keyPath)
         [
             for item in wire.Current do
-                let key = keyPath item
-                new TraversedValue<'value, 'key>(keyedWire, key) :> IWritable<'value>
+                let tv = new TraversedValue<'value, 'key>(keyedWire, keyPath item)
+                let uv = new UniqueValue<_>(tv)
+                uv :> IWritable<'value>
         ]
 
     let tryFindByKey (keyPath: 'value -> 'key) (key: IReadable<'key>) (wire: IWritable<list<'value>>) : IWritable<'value option> =
