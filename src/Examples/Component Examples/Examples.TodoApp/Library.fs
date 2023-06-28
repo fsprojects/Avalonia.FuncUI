@@ -38,13 +38,32 @@ module AppState =
 
     let activeItemId: IWritable<Guid option> = new State<_>(None)
 
+    let _ =  items.Subscribe (fun items ->
+        Console.WriteLine "Items changed:"
+
+        for item in items do
+            Console.WriteLine $"    {item.ItemId} {item.Title}"
+    )
+
 module Views =
 
     let listItemView (item: IWritable<TodoItem>) =
         Component.create ($"item-{item.Current.ItemId}", fun ctx ->
             let activeItemId = ctx.usePassed AppState.activeItemId
+            let item = ctx.usePassed item
+
             let isActive = Some item.Current.ItemId = activeItemId.Current
             let title = ctx.useState item.Current.Title
+
+            ctx.useEffect (
+                handler = (fun _ ->
+                    let _ = item.Subscribe (fun item ->
+                        Console.WriteLine $"Item {item.ItemId} changed"
+                    )
+                    ()
+                ),
+                triggers = [ EffectTrigger.AfterInit ]
+            )
 
             if isActive then
                 DockPanel.create [
@@ -92,9 +111,6 @@ module Views =
         Component.create ("listView", fun ctx ->
             let items = ctx.usePassed AppState.items
 
-            printf $"%A{items.Current}"
-
-
             StackPanel.create [
                 StackPanel.orientation Orientation.Vertical
                 StackPanel.children (
@@ -124,10 +140,6 @@ type MainWindow() as this =
         base.Width <- 400.0
         base.Height <- 400.0
         this.Content <- Views.mainView ()
-
-        #if DEBUG
-        this.AttachDevTools (KeyGesture Key.F12)
-        #endif
 
 type App() =
     inherit Application()

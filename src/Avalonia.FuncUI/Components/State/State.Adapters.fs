@@ -73,6 +73,7 @@ type internal ReadValueMap<'value, 'key when 'key : comparison>
     keyPath: 'value -> 'key ) =
 
     let disposable = new DisposableBag ()
+
     let value: IReadable<_> =
         let value = new UniqueValueReadOnly<_>(src)
         disposable.Add value
@@ -82,6 +83,7 @@ type internal ReadValueMap<'value, 'key when 'key : comparison>
         items
         |> Seq.map (fun item -> keyPath item, item)
         |> Map.ofSeq
+
     let mutable current: Map<'key, 'value> = makeMap value.Current
 
     interface IReadable<Map<'key, 'value>> with
@@ -239,6 +241,8 @@ type internal TraversedValue<'value, 'key when 'key : comparison>
 
         member this.Subscribe (handler: 'value -> unit) =
             wire.Subscribe (fun value ->
+                printfn $"------ TraversedValue.Subscribe  Invoked %A{key} %A{value} ------"
+
                 match value.TryFind key with
                 | Some value -> handler value
                 | None -> ()
