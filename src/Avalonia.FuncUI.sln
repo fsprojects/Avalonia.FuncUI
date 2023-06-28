@@ -72,6 +72,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.Benchmarks"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Mobile.iOS", "Examples\Examples.Mobile.iOS\Examples.Mobile.iOS.fsproj", "{222A135C-23A4-471B-8A6A-630B7EEFAD4F}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.Templates", "Avalonia.FuncUI.Templates\Avalonia.FuncUI.Templates.fsproj", "{1EEA7F36-3DCD-4A42-BE59-1E02E1B8E3BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -174,6 +176,10 @@ Global
 		{222A135C-23A4-471B-8A6A-630B7EEFAD4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{222A135C-23A4-471B-8A6A-630B7EEFAD4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{222A135C-23A4-471B-8A6A-630B7EEFAD4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EEA7F36-3DCD-4A42-BE59-1E02E1B8E3BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EEA7F36-3DCD-4A42-BE59-1E02E1B8E3BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EEA7F36-3DCD-4A42-BE59-1E02E1B8E3BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EEA7F36-3DCD-4A42-BE59-1E02E1B8E3BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
