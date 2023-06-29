@@ -164,6 +164,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Compile Include="Experimantal\Experimental.Animations.fs" />
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,7 @@ open System
 open System.Reflection.PortableExecutable
 open Avalonia
 open Avalonia.Animation
+open Avalonia.Animation.Easings
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI.Types
 open Avalonia.Input
@@ -13,6 +14,7 @@ open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.Experimental
 open Avalonia.Layout
 open Avalonia.Threading
 
@@ -53,25 +55,26 @@ module Views =
             let item = ctx.usePassed item
             let title = ctx.useState item.Current.Title
             let animation = ctx.useStateLazy(fun () ->
-                let animation = new Animation();
-                animation.Duration <- TimeSpan.FromMilliseconds(1000);
-                //animation.IterationCount <- new IterationCount(2uL);
+                Animation()
+                    .WithDuration(0.3)
+                    .WithEasing(CubicEaseIn())
+                    .WithFillMode(FillMode.Forward)
+                    .WithKeyFrames [
+                        KeyFrame()
+                            .WithCue(0)
+                            .WithSetter(Component.OpacityProperty, 1.0)
+                            .WithSetter(TranslateTransform.XProperty, 0.0)
 
-                let key0 = new KeyFrame();
-                key0.KeyTime <- TimeSpan.FromMilliseconds(0);
-                key0.Setters.Add(new Avalonia.Styling.Setter(Border.OpacityProperty, 1.0))
-                key0.Setters.Add(new Avalonia.Styling.Setter(Border.RenderTransformProperty, Rotate3DTransform()))
-
-                let key1 = new KeyFrame();
-                key1.KeyTime <- TimeSpan.FromMilliseconds(1000);
-                key1.Setters.Add(new Avalonia.Styling.Setter(Border.OpacityProperty, 0.0))
-                key0.Setters.Add(new Avalonia.Styling.Setter(Border.RenderTransformProperty, Rotate3DTransform(AngleX = 90)))
-                animation.Children.Add(key1);
-
-                animation;
-
-
+                        KeyFrame()
+                            .WithCue(1)
+                            .WithSetter(Component.OpacityProperty, 0.0)
+                            .WithSetter(TranslateTransform.XProperty, 500.0)
+                    ]
             )
+
+            ctx.attrs [
+                Component.renderTransform (TranslateTransform())
+            ]
 
             let isActive = Some item.Current.ItemId = activeItemId.Current
 
@@ -105,19 +108,20 @@ module Views =
 
 
                             Button.onClick (fun args ->
-                                ignore (
-                                    task {
-                                        do! animation.Current.RunAsync (ctx.control)
+                                if not (ctx.control.IsAnimating Component.OpacityProperty) then
+                                    ignore (
+                                        task {
+                                            do! animation.Current.RunAsync ctx.control
 
-                                        Dispatcher.UIThread.Post (fun _ ->
-                                            AppState.items.Current
-                                            |> List.filter (fun i -> i.ItemId <> item.Current.ItemId)
-                                            |> AppState.items.Set
-                                        )
+                                            Dispatcher.UIThread.Post (fun _ ->
+                                                AppState.items.Current
+                                                |> List.filter (fun i -> i.ItemId <> item.Current.ItemId)
+                                                |> AppState.items.Set
+                                            )
 
-                                        return ()
-                                    }
-                                )
+                                            return ()
+                                        }
+                                    )
                             )
                         ]
 
