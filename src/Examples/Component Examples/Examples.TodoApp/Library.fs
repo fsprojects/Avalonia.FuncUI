@@ -1,15 +1,20 @@
 ﻿namespace BasicTemplate
 
 open System
+open System.Reflection.PortableExecutable
 open Avalonia
+open Avalonia.Animation
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.FuncUI.Types
 open Avalonia.Input
+open Avalonia.Media
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.Layout
+open Avalonia.Threading
 
 type TodoItem =
     { ItemId: Guid
@@ -38,12 +43,7 @@ module AppState =
 
     let activeItemId: IWritable<Guid option> = new State<_>(None)
 
-    let _ =  items.Subscribe (fun items ->
-        Console.WriteLine "Items changed:"
-
-        for item in items do
-            Console.WriteLine $"    {item.ItemId} {item.Title}"
-    )
+    let hideDoneItems: IWritable<bool> = new State<_>(false)
 
 module Views =
 
@@ -52,18 +52,28 @@ module Views =
             let activeItemId = ctx.usePassed AppState.activeItemId
             let item = ctx.usePassed item
             let title = ctx.useState item.Current.Title
+            let animation = ctx.useStateLazy(fun () ->
+                let animation = new Animation();
+                animation.Duration <- TimeSpan.FromMilliseconds(1000);
+                //animation.IterationCount <- new IterationCount(2uL);
+
+                let key0 = new KeyFrame();
+                key0.KeyTime <- TimeSpan.FromMilliseconds(0);
+                key0.Setters.Add(new Avalonia.Styling.Setter(Border.OpacityProperty, 1.0))
+                key0.Setters.Add(new Avalonia.Styling.Setter(Border.RenderTransformProperty, Rotate3DTransform()))
+
+                let key1 = new KeyFrame();
+                key1.KeyTime <- TimeSpan.FromMilliseconds(1000);
+                key1.Setters.Add(new Avalonia.Styling.Setter(Border.OpacityProperty, 0.0))
+                key0.Setters.Add(new Avalonia.Styling.Setter(Border.RenderTransformProperty, Rotate3DTransform(AngleX = 90)))
+                animation.Children.Add(key1);
+
+                animation;
+
+
+            )
 
             let isActive = Some item.Current.ItemId = activeItemId.Current
-
-            ctx.useEffect (
-                handler = (fun _ ->
-                    let _ = item.Subscribe (fun item ->
-                        Console.WriteLine $"Item {item.ItemId} changed"
-                    )
-                    ()
-                ),
-                triggers = [ EffectTrigger.AfterInit ]
-            )
 
             if isActive then
                 DockPanel.create [
@@ -91,12 +101,37 @@ module Views =
 
                         Button.create [
                             Button.dock Dock.Right
+                            Button.content "delete"
+
+
+                            Button.onClick (fun args ->
+                                ignore (
+                                    task {
+                                        do! animation.Current.RunAsync (ctx.control)
+
+                                        Dispatcher.UIThread.Post (fun _ ->
+                                            AppState.items.Current
+                                            |> List.filter (fun i -> i.ItemId <> item.Current.ItemId)
+                                            |> AppState.items.Set
+                                        )
+
+                                        return ()
+                                    }
+                                )
+                            )
+                        ]
+
+                        Button.create [
+                            Button.dock Dock.Right
                             Button.content "edit"
                             Button.onClick (fun _ -> activeItemId.Set (Some item.Current.ItemId))
                         ]
 
                         CheckBox.create [
                             CheckBox.dock Dock.Left
+                            CheckBox.isChecked item.Current.Done
+                            CheckBox.onChecked (fun _ -> item.Set { item.Current with Done = true })
+                            CheckBox.onUnchecked (fun _ -> item.Set { item.Current with Done = false })
                             CheckBox.content (
                                 TextBlock.create [
                                     TextBlock.text item.Current.Title
@@ -110,12 +145,19 @@ module Views =
     let listView () =
         Component.create ("listView", fun ctx ->
             let items = ctx.usePassed AppState.items
+            let hideDoneItems = ctx.usePassed AppState.hideDoneItems
 
             StackPanel.create [
                 StackPanel.orientation Orientation.Vertical
                 StackPanel.children (
                     items
                     |> State.sequenceBy (fun item -> item.ItemId)
+                    |> List.filter (fun item ->
+                        if hideDoneItems.Current then
+                            not item.Current.Done
+                         else
+                             true
+                    )
                     |> List.map (fun item -> listItemView item)
                 )
             ]
@@ -125,10 +167,39 @@ module Views =
     let mainView () =
         Component(fun ctx ->
 
+            let hideDoneItems = ctx.usePassed AppState.hideDoneItems
 
             DockPanel.create [
                 DockPanel.children [
-                    listView ()
+                    StackPanel.create [
+                        StackPanel.dock Dock.Bottom
+                        StackPanel.children [
+                            Button.create [
+                                Button.content "add item"
+                                Button.onClick (fun _ ->
+                                    let newItem = TodoItem.create ""
+                                    AppState.items.Set (AppState.items.Current @ [newItem])
+                                    AppState.activeItemId.Set (Some newItem.ItemId))
+                            ]
+
+                            Button.create [
+                                Button.content (
+                                    if hideDoneItems.Current
+                                    then "show done items"
+                                    else "hide done items"
+                                )
+                                Button.onClick (fun _ ->
+                                    hideDoneItems.Set (not hideDoneItems.Current)
+                                )
+                            ]
+
+                        ]
+                    ]
+
+                    ContentControl.create [
+                        ContentControl.dock Dock.Top
+                        ContentControl.content (listView())
+                    ]
                 ]
             ]
         )

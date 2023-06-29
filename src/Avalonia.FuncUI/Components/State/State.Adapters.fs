@@ -249,18 +249,25 @@ type internal TraversedValue<'value, 'key when 'key : comparison>
   ( wire: IWritable<Map<'key, 'value>>,
     key: 'key ) =
 
-    do printfn $"TraversedValue Created %A{key}"
+    let mutable fallbackValue: 'value voption = ValueNone
 
     interface IWritable<'value> with
         member this.InstanceId with get () = wire.InstanceId
         member this.InstanceType with get () = InstanceType.Create wire
         member this.ValueType with get () = typeof<'value>
-        member this.Current with get () = wire.Current[key]
+        member this.Current with get () =
+            match wire.Current.TryGetValue key with
+            | true, value ->
+                fallbackValue <- ValueSome value
+                value
+            | false, _ ->
+                match fallbackValue with
+                | ValueSome value -> value
+                | ValueNone -> failwith $"TraversedValue: No value found for key '%A{key}'"
+
 
         member this.Subscribe (handler: 'value -> unit) =
             wire.Subscribe (fun value ->
-                printfn $"Subscribe Invoked %A{key}"
-
                 match value.TryFind key with
                 | Some value -> handler value
                 | None -> ()
