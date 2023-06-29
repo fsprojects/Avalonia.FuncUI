@@ -1,4 +1,4 @@
-﻿namespace BasicTemplate
+﻿namespace Examples.TodoApp
 
 open System
 open System.Reflection.PortableExecutable
@@ -9,6 +9,8 @@ open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI.Types
 open Avalonia.Input
 open Avalonia.Media
+open Avalonia.Media.Imaging
+open Avalonia.Platform
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
@@ -46,6 +48,10 @@ module AppState =
     let activeItemId: IWritable<Guid option> = new State<_>(None)
 
     let hideDoneItems: IWritable<bool> = new State<_>(false)
+
+module Icons =
+
+    let delete = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/trash.png")))
 
 module Views =
 
@@ -94,6 +100,8 @@ module Views =
                         TextBox.create [
                             TextBox.dock Dock.Left
                             TextBox.text title.Current
+                            TextBox.fontSize 18.0
+                            TextBox.fontWeight FontWeight.Light
                             TextBox.onTextChanged (fun text -> title.Set text)
                         ]
                     ]
@@ -104,9 +112,13 @@ module Views =
 
                         Button.create [
                             Button.dock Dock.Right
-                            Button.content "delete"
-
-
+                            Button.content (
+                                Image.create [
+                                    Image.width 24
+                                    Image.height 24
+                                    Image.source Icons.delete.Value
+                                ]
+                            )
                             Button.onClick (fun args ->
                                 if not (ctx.control.IsAnimating Component.OpacityProperty) then
                                     ignore (
@@ -138,6 +150,8 @@ module Views =
                             CheckBox.onUnchecked (fun _ -> item.Set { item.Current with Done = false })
                             CheckBox.content (
                                 TextBlock.create [
+                                    TextBlock.fontSize 18.0
+                                    TextBlock.fontWeight FontWeight.Light
                                     TextBlock.text item.Current.Title
                                 ]
                             )

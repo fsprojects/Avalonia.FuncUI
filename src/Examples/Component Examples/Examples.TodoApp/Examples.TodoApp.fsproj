@@ -7,9 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Library.fs"/>
+        <Compile Include="Library.fs" />
+        <AvaloniaResource Include="Assets\Icons\trash.png"/>
     </ItemGroup>
     <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
         <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
