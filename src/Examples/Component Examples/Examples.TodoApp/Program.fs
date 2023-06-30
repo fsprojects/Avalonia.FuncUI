@@ -2,16 +2,17 @@
 
 open System
 
-open System.Collections
 open Avalonia
 open Avalonia.Animation
 open Avalonia.Animation.Easings
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Controls.Primitives
 open Avalonia.Controls.Shapes
+open Avalonia.Input
 open Avalonia.Markup.Xaml.Styling
 open Avalonia.Media
 open Avalonia.Media.Imaging
+open Avalonia.Media.Immutable
 open Avalonia.Platform
 open Avalonia.Styling
 open Avalonia.Themes.Fluent
@@ -39,9 +40,9 @@ module TodoItem =
 
     let demoItems: TodoItem list =
         [
-            create "Item 1"
-            create "Item 2"
-            create "Item 3"
+            create "Learn F#"
+            create "Play with Avalonia.FuncUI"
+            create "Write great apps 🚀"
         ]
 
 [<RequireQualifiedAccess>]
@@ -56,10 +57,12 @@ module AppState =
 [<RequireQualifiedAccess>]
 module Icons =
     (* https://icons8.com/icon/set/edit/sf-regular *)
-
     let delete = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/trash.png")))
     let edit = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/edit.png")))
     let plus = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/plus.png")))
+    let show = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/show.png")))
+    let hide = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/hide.png")))
+    let save = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/save.png")))
 
 [<RequireQualifiedAccess>]
 module ControlThemes =
@@ -108,7 +111,16 @@ module Views =
 
                         Button.create [
                             Button.dock Dock.Right
-                            Button.content "save"
+                            Button.margin 5
+                            Button.theme ControlThemes.inlineButton.Value
+                            Button.content (
+                                Image.create [
+                                    Image.width 24
+                                    Image.height 24
+                                    Image.source Icons.save.Value
+                                ]
+                            )
+                            Button.hotKey (KeyGesture Key.Enter)
                             Button.onClick (fun _ ->
                                 item.Set { item.Current with Title = title.Current }
                                 activeItemId.Set None
@@ -121,6 +133,8 @@ module Views =
                             TextBox.fontSize 18.0
                             TextBox.fontWeight FontWeight.Light
                             TextBox.onTextChanged (fun text -> title.Set text)
+                            TextBox.verticalContentAlignment VerticalAlignment.Center
+                            TextBox.classes [ "borderless" ]
                         ]
                     ]
                 ]
@@ -221,75 +235,131 @@ module Views =
                             Rectangle.height 1.0
                             Rectangle.horizontalAlignment HorizontalAlignment.Stretch
                         ]
-
-                    Button.create [
-                        Button.theme ControlThemes.inlineButton.Value
-                        Button.content (
-                            StackPanel.create [
-                                StackPanel.horizontalAlignment HorizontalAlignment.Center
-                                StackPanel.orientation Orientation.Horizontal
-                                StackPanel.spacing 5
-                                StackPanel.children [
-                                    Image.create [
-                                        Image.width 24
-                                        Image.height 24
-                                        Image.source Icons.plus.Value
-                                    ]
-                                    TextBlock.create [
-                                        TextBlock.verticalAlignment VerticalAlignment.Center
-                                        TextBlock.text "add item"
-                                    ]
-                                ]
-                            ]
-                        )
-                        Button.onClick (fun _ ->
-                            let newItem = TodoItem.create ""
-                            AppState.items.Set (AppState.items.Current @ [newItem])
-                            AppState.activeItemId.Set (Some newItem.ItemId)
-                        )
-                    ]
                 ]
             ]
         )
 
-    let mainView () =
+    let toolbarView () =
         Component(fun ctx ->
 
             let hideDoneItems = ctx.usePassed AppState.hideDoneItems
+            let items = ctx.usePassed AppState.items
 
-            ScrollViewer.create [
-                ScrollViewer.content (listView())
-            ]
-            //listView()
+            let doneItemsCount =
+                items.Current
+                |> List.filter (fun item -> item.Done)
+                |> List.length
 
-            (*
             DockPanel.create [
+                DockPanel.lastChildFill false
+                DockPanel.background (ImmutableSolidColorBrush(Colors.Black, 0.1))
                 DockPanel.children [
+
+                    (* left *)
                     StackPanel.create [
-                        StackPanel.dock Dock.Bottom
+                        StackPanel.dock Dock.Left
+                        StackPanel.orientation Orientation.Horizontal
+                        StackPanel.spacing 5
+                        StackPanel.margin 5
                         StackPanel.children [
 
                             Button.create [
+                                Button.theme ControlThemes.inlineButton.Value
                                 Button.content (
-                                    if hideDoneItems.Current
-                                    then "show done items"
-                                    else "hide done items"
+                                    StackPanel.create [
+                                        StackPanel.horizontalAlignment HorizontalAlignment.Center
+                                        StackPanel.orientation Orientation.Horizontal
+                                        StackPanel.spacing 5
+                                        StackPanel.children [
+                                            Image.create [
+                                                Image.width 24
+                                                Image.height 24
+                                                Image.source Icons.plus.Value
+                                            ]
+                                            TextBlock.create [
+                                                TextBlock.verticalAlignment VerticalAlignment.Center
+                                                TextBlock.text "add item"
+                                            ]
+                                        ]
+                                    ]
                                 )
                                 Button.onClick (fun _ ->
-                                    hideDoneItems.Set (not hideDoneItems.Current)
+                                    let newItem = TodoItem.create ""
+                                    AppState.items.Set (AppState.items.Current @ [newItem])
+                                    AppState.activeItemId.Set (Some newItem.ItemId)
                                 )
                             ]
 
                         ]
                     ]
 
+                    (* right *)
+                    StackPanel.create [
+                        StackPanel.dock Dock.Right
+                        StackPanel.orientation Orientation.Horizontal
+                        StackPanel.spacing 5
+                        StackPanel.margin 5
+                        StackPanel.children [
+                            Button.create [
+                                Button.theme ControlThemes.inlineButton.Value
+                                Button.content (
+                                    StackPanel.create [
+                                        StackPanel.horizontalAlignment HorizontalAlignment.Center
+                                        StackPanel.orientation Orientation.Horizontal
+                                        StackPanel.spacing 5
+                                        StackPanel.children [
+                                            Image.create [
+                                                Image.width 24
+                                                Image.height 24
+                                                Image.source (
+                                                    if hideDoneItems.Current then
+                                                        Icons.show.Value
+                                                    else
+                                                        Icons.hide.Value
+                                                )
+                                            ]
+                                            TextBlock.create [
+                                                TextBlock.verticalAlignment VerticalAlignment.Center
+                                                TextBlock.text (
+                                                    if hideDoneItems.Current then
+                                                        $"show %i{doneItemsCount} done"
+                                                    else
+                                                        $"hide %i{doneItemsCount} done"
+                                                )
+                                            ]
+                                        ]
+                                    ]
+                                )
+                                Button.onClick (fun _ ->
+                                    hideDoneItems.Set (not hideDoneItems.Current)
+                                )
+                            ]
+                        ]
+                    ]
+
+                ]
+            ]
+
+        )
+
+    let mainView () =
+        Component(fun ctx ->
+
+            DockPanel.create [
+                DockPanel.children [
+                    (* toolbar *)
                     ContentControl.create [
                         ContentControl.dock Dock.Top
-                        ContentControl.content (listView())
+                        ContentControl.content (toolbarView())
+                    ]
+
+                    (* item list *)
+                    ScrollViewer.create [
+                        ScrollViewer.dock Dock.Top
+                        ScrollViewer.content (listView())
                     ]
                 ]
             ]
-            *)
         )
 
 type MainWindow() as this =
@@ -305,10 +375,12 @@ type App() =
 
     override this.Initialize() =
         this.Styles.Add (FluentTheme())
+        this.Styles.Add (StyleInclude(baseUri = null, Source = Uri("avares://Examples.TodoApp/Styles.axaml")))
+        this.RequestedThemeVariant <- ThemeVariant.Light
         this.Resources.MergedDictionaries.Add (
             ResourceInclude(baseUri = null, Source = Uri("avares://Examples.TodoApp/Resources.axaml"))
         )
-        //AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/edit.png"))
+
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->

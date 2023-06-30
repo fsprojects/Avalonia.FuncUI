@@ -11,6 +11,9 @@
         <AvaloniaResource Include="Assets\Icons\edit.png" />
         <AvaloniaResource Include="Assets\Icons\trash.png" />
         <AvaloniaResource Include="Assets\Icons\plus.png" />
+        <AvaloniaResource Include="Assets\Icons\show.png" />
+        <AvaloniaResource Include="Assets\Icons\hide.png" />
+        <AvaloniaResource Include="Assets\Icons\save.png" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
