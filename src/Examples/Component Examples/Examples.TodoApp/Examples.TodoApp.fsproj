@@ -8,7 +8,8 @@
 
     <ItemGroup>
         <Compile Include="Library.fs" />
-        <AvaloniaResource Include="Assets\Icons\trash.png"/>
+        <AvaloniaResource Include="Assets\Icons\edit.png" />
+        <AvaloniaResource Include="Assets\Icons\trash.png" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />

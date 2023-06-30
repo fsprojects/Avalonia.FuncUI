@@ -50,8 +50,12 @@ module AppState =
     let hideDoneItems: IWritable<bool> = new State<_>(false)
 
 module Icons =
+    (* https://icons8.com/icon/set/edit/sf-regular *)
 
     let delete = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/trash.png")))
+    let edit = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/edit.png")))
+
+
 
 module Views =
 
@@ -139,13 +143,21 @@ module Views =
 
                         Button.create [
                             Button.dock Dock.Right
-                            Button.content "edit"
+                            Button.content (
+                                Image.create [
+                                    Image.width 24
+                                    Image.height 24
+                                    Image.source Icons.edit.Value
+                                ]
+                            )
                             Button.onClick (fun _ -> activeItemId.Set (Some item.Current.ItemId))
                         ]
 
                         CheckBox.create [
                             CheckBox.dock Dock.Left
                             CheckBox.isChecked item.Current.Done
+                            CheckBox.horizontalAlignment HorizontalAlignment.Stretch
+                            //CheckBox.background Brushes.Gainsboro
                             CheckBox.onChecked (fun _ -> item.Set { item.Current with Done = true })
                             CheckBox.onUnchecked (fun _ -> item.Set { item.Current with Done = false })
                             CheckBox.content (
