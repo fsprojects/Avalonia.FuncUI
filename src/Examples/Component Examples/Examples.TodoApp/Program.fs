@@ -8,9 +8,11 @@ open Avalonia.Animation.Easings
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI.Types
 open Avalonia.Input
+open Avalonia.Markup.Xaml.Styling
 open Avalonia.Media
 open Avalonia.Media.Imaging
 open Avalonia.Platform
+open Avalonia.Styling
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
@@ -49,12 +51,21 @@ module AppState =
 
     let hideDoneItems: IWritable<bool> = new State<_>(false)
 
+[<RequireQualifiedAccess>]
 module Icons =
     (* https://icons8.com/icon/set/edit/sf-regular *)
 
     let delete = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/trash.png")))
     let edit = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/edit.png")))
 
+[<RequireQualifiedAccess>]
+module ControlThemes =
+
+    let inlineButton = lazy (
+        match Application.Current.TryFindResource "InlineButton" with
+        | true, theme -> theme :?> ControlTheme
+        | false, _ -> failwithf "Could not find theme 'InlineButton'"
+    )
 
 
 module Views =
@@ -116,6 +127,7 @@ module Views =
 
                         Button.create [
                             Button.dock Dock.Right
+                            Button.theme ControlThemes.inlineButton.Value
                             Button.content (
                                 Image.create [
                                     Image.width 24
@@ -143,6 +155,7 @@ module Views =
 
                         Button.create [
                             Button.dock Dock.Right
+                            Button.theme ControlThemes.inlineButton.Value
                             Button.content (
                                 Image.create [
                                     Image.width 24
@@ -157,7 +170,6 @@ module Views =
                             CheckBox.dock Dock.Left
                             CheckBox.isChecked item.Current.Done
                             CheckBox.horizontalAlignment HorizontalAlignment.Stretch
-                            //CheckBox.background Brushes.Gainsboro
                             CheckBox.onChecked (fun _ -> item.Set { item.Current with Done = true })
                             CheckBox.onUnchecked (fun _ -> item.Set { item.Current with Done = false })
                             CheckBox.content (
@@ -247,7 +259,10 @@ type App() =
 
     override this.Initialize() =
         this.Styles.Add (FluentTheme())
-
+        this.Resources.MergedDictionaries.Add (
+            ResourceInclude(baseUri = null, Source = Uri("avares://Examples.TodoApp/Resources.axaml"))
+        )
+        //AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/edit.png"))
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
