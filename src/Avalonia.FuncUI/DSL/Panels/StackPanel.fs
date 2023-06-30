@@ -22,3 +22,9 @@ module StackPanel =
         /// </summary>
         static member orientation<'t when 't :> StackPanel>(orientation: Orientation) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Orientation>(StackPanel.OrientationProperty, orientation, ValueNone)
+
+        static member areHorizontalSnapPointsRegular<'t when 't :> StackPanel>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(StackPanel.AreHorizontalSnapPointsRegularProperty, value, ValueNone)
+
+        static member areVerticalSnapPointsRegular<'t when 't :> StackPanel>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(StackPanel.AreVerticalSnapPointsRegularProperty, value, ValueNone)
