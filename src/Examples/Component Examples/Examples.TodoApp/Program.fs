@@ -1,13 +1,14 @@
 ﻿namespace Examples.TodoApp
 
 open System
-open System.Reflection.PortableExecutable
+
+open System.Collections
 open Avalonia
 open Avalonia.Animation
 open Avalonia.Animation.Easings
 open Avalonia.Controls.ApplicationLifetimes
-open Avalonia.FuncUI.Types
-open Avalonia.Input
+open Avalonia.Controls.Primitives
+open Avalonia.Controls.Shapes
 open Avalonia.Markup.Xaml.Styling
 open Avalonia.Media
 open Avalonia.Media.Imaging
@@ -16,11 +17,12 @@ open Avalonia.Styling
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
+open Avalonia.Layout
+open Avalonia.Threading
+
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Experimental
-open Avalonia.Layout
-open Avalonia.Threading
 
 type TodoItem =
     { ItemId: Guid
@@ -57,6 +59,7 @@ module Icons =
 
     let delete = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/trash.png")))
     let edit = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/edit.png")))
+    let plus = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/plus.png")))
 
 [<RequireQualifiedAccess>]
 module ControlThemes =
@@ -125,48 +128,55 @@ module Views =
                 DockPanel.create [
                     DockPanel.children [
 
-                        Button.create [
-                            Button.dock Dock.Right
-                            Button.theme ControlThemes.inlineButton.Value
-                            Button.content (
-                                Image.create [
-                                    Image.width 24
-                                    Image.height 24
-                                    Image.source Icons.delete.Value
-                                ]
-                            )
-                            Button.onClick (fun args ->
-                                if not (ctx.control.IsAnimating Component.OpacityProperty) then
-                                    ignore (
-                                        task {
-                                            do! animation.Current.RunAsync ctx.control
-
-                                            Dispatcher.UIThread.Post (fun _ ->
-                                                AppState.items.Current
-                                                |> List.filter (fun i -> i.ItemId <> item.Current.ItemId)
-                                                |> AppState.items.Set
-                                            )
-
-                                            return ()
-                                        }
+                        StackPanel.create [
+                            StackPanel.dock Dock.Right
+                            StackPanel.margin 5
+                            StackPanel.spacing 5
+                            StackPanel.orientation Orientation.Horizontal
+                            StackPanel.children [
+                                Button.create [
+                                    Button.theme ControlThemes.inlineButton.Value
+                                    Button.content (
+                                        Image.create [
+                                            Image.width 24
+                                            Image.height 24
+                                            Image.source Icons.edit.Value
+                                        ]
                                     )
-                            )
-                        ]
-
-                        Button.create [
-                            Button.dock Dock.Right
-                            Button.theme ControlThemes.inlineButton.Value
-                            Button.content (
-                                Image.create [
-                                    Image.width 24
-                                    Image.height 24
-                                    Image.source Icons.edit.Value
+                                    Button.onClick (fun _ -> activeItemId.Set (Some item.Current.ItemId))
                                 ]
-                            )
-                            Button.onClick (fun _ -> activeItemId.Set (Some item.Current.ItemId))
+
+                                Button.create [
+                                    Button.theme ControlThemes.inlineButton.Value
+                                    Button.content (
+                                        Image.create [
+                                            Image.width 24
+                                            Image.height 24
+                                            Image.source Icons.delete.Value
+                                        ]
+                                    )
+                                    Button.onClick (fun args ->
+                                        if not (ctx.control.IsAnimating Component.OpacityProperty) then
+                                            ignore (
+                                                task {
+                                                    do! animation.Current.RunAsync ctx.control
+
+                                                    Dispatcher.UIThread.Post (fun _ ->
+                                                        AppState.items.Current
+                                                        |> List.filter (fun i -> i.ItemId <> item.Current.ItemId)
+                                                        |> AppState.items.Set
+                                                    )
+
+                                                    return ()
+                                                }
+                                            )
+                                    )
+                                ]
+                            ]
                         ]
 
                         CheckBox.create [
+                            CheckBox.margin (Thickness (10, 0, 0, 0))
                             CheckBox.dock Dock.Left
                             CheckBox.isChecked item.Current.Done
                             CheckBox.horizontalAlignment HorizontalAlignment.Stretch
@@ -191,38 +201,73 @@ module Views =
 
             StackPanel.create [
                 StackPanel.orientation Orientation.Vertical
-                StackPanel.children (
-                    items
-                    |> State.sequenceBy (fun item -> item.ItemId)
-                    |> List.filter (fun item ->
-                        if hideDoneItems.Current then
-                            not item.Current.Done
-                         else
-                             true
-                    )
-                    |> List.map (fun item -> listItemView item)
-                )
+                StackPanel.verticalScrollBarVisibility ScrollBarVisibility.Visible
+                StackPanel.children [
+                    let items =
+                        items
+                        |> State.sequenceBy (fun item -> item.ItemId)
+                        |> List.filter (fun item ->
+                            if hideDoneItems.Current then
+                                not item.Current.Done
+                             else
+                                 true
+                        )
+
+                    for item in items do
+                        listItemView item
+
+                        Rectangle.create [
+                            Rectangle.fill Brushes.LightGray
+                            Rectangle.height 1.0
+                            Rectangle.horizontalAlignment HorizontalAlignment.Stretch
+                        ]
+
+                    Button.create [
+                        Button.theme ControlThemes.inlineButton.Value
+                        Button.content (
+                            StackPanel.create [
+                                StackPanel.horizontalAlignment HorizontalAlignment.Center
+                                StackPanel.orientation Orientation.Horizontal
+                                StackPanel.spacing 5
+                                StackPanel.children [
+                                    Image.create [
+                                        Image.width 24
+                                        Image.height 24
+                                        Image.source Icons.plus.Value
+                                    ]
+                                    TextBlock.create [
+                                        TextBlock.verticalAlignment VerticalAlignment.Center
+                                        TextBlock.text "add item"
+                                    ]
+                                ]
+                            ]
+                        )
+                        Button.onClick (fun _ ->
+                            let newItem = TodoItem.create ""
+                            AppState.items.Set (AppState.items.Current @ [newItem])
+                            AppState.activeItemId.Set (Some newItem.ItemId)
+                        )
+                    ]
+                ]
             ]
         )
-
 
     let mainView () =
         Component(fun ctx ->
 
             let hideDoneItems = ctx.usePassed AppState.hideDoneItems
 
+            ScrollViewer.create [
+                ScrollViewer.content (listView())
+            ]
+            //listView()
+
+            (*
             DockPanel.create [
                 DockPanel.children [
                     StackPanel.create [
                         StackPanel.dock Dock.Bottom
                         StackPanel.children [
-                            Button.create [
-                                Button.content "add item"
-                                Button.onClick (fun _ ->
-                                    let newItem = TodoItem.create ""
-                                    AppState.items.Set (AppState.items.Current @ [newItem])
-                                    AppState.activeItemId.Set (Some newItem.ItemId))
-                            ]
 
                             Button.create [
                                 Button.content (
@@ -244,12 +289,13 @@ module Views =
                     ]
                 ]
             ]
+            *)
         )
 
 type MainWindow() as this =
     inherit HostWindow()
     do
-        base.Title <- "BasicTemplate"
+        base.Title <- "TODO App"
         base.Width <- 400.0
         base.Height <- 400.0
         this.Content <- Views.mainView ()
