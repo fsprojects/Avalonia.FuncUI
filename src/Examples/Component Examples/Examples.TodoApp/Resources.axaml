@@ -1,0 +1,49 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Inline Button -->
+    <ControlTheme x:Key="InlineButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="8" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Rectangle
+                        Fill="{TemplateBinding Background}"
+                        RadiusX="5"
+                        RadiusY="5"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch" />
+
+                    <ContentPresenter
+                        x:Name="PART_ContentPresenter"
+                        Opacity="0.6"
+                        Content="{TemplateBinding Content}"
+                        Margin="5" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ ContentPresenter">
+            <Setter Property="ContentPresenter.Opacity" Value="1.0" />
+        </Style>
+
+        <Style Selector="^:pointerover">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Black" Opacity="0.05" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style Selector="^:pressed">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Black" Opacity="0.1" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </ControlTheme>
+
+</ResourceDictionary>

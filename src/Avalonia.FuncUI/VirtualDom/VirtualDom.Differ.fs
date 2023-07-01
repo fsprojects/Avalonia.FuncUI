@@ -103,7 +103,7 @@ module internal rec Differ =
                         | _ ->
                             ViewContentDelta.Multiple (diffContentMultiple (List.empty, nextMultipleContent))
 
-                | _ -> invalidOp "'last' must be of type content"
+                | _ -> ViewContentDelta.From nextContent.Content
 
             | _ -> invalidOp "'next' must be of type content"
 

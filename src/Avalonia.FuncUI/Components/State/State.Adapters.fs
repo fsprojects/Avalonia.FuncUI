@@ -6,20 +6,38 @@ open Avalonia.FuncUI
 type internal UniqueValueReadOnly<'value>
   ( src: IReadable<'value> ) =
 
-    let mutable current: 'value = src.Current
+    let initialValue = src.Current
+    let mutable lastSeenValues: (obj * 'value) array = Array.empty
 
     interface IReadable<'value> with
         member this.InstanceId with get () = src.InstanceId
         member this.InstanceType with get () = InstanceType.Create src
         member this.ValueType with get () = typeof<'value>
-        member this.Current with get () = current
+        member this.Current with get () = src.Current
         member this.Subscribe (handler: 'value -> unit) =
             src.Subscribe (fun value ->
-                (* meh, we need a better equals implementation. *)
-                if not (ComponentHelpers.safeFastEquals (current, value)) then
-                    current <- value
-                    handler value
+                let mutable idx = 0
+                let mutable found = false
+
+                while not found && idx < lastSeenValues.Length do
+                    let del, lastValue = lastSeenValues[idx]
+
+                    if del.Equals(handler :> obj) then
+                        found <- true
+
+                        (* meh, we need a better equals implementation. *)
+                        if not (ComponentHelpers.safeFastEquals (value, lastValue)) then
+                            lastSeenValues <- Array.append lastSeenValues [| handler :> obj, value |]
+                            handler value
+
+                    idx <- idx + 1
+
+                if not found then
+                    lastSeenValues <- Array.append lastSeenValues [| handler :> obj, value |]
+                    if not (ComponentHelpers.safeFastEquals (value, initialValue)) then
+                        handler value
             )
+
         member this.SubscribeAny (handler: obj -> unit) =
             (this :> IReadable<'value>).Subscribe handler
 
@@ -73,28 +91,28 @@ type internal ReadValueMap<'value, 'key when 'key : comparison>
     keyPath: 'value -> 'key ) =
 
     let disposable = new DisposableBag ()
-    let value: IReadable<_> =
-        let value = new UniqueValueReadOnly<_>(src)
-        disposable.Add value
-        value :> _
+
+    let value: IReadable<_> = src
 
     let makeMap items =
         items
         |> Seq.map (fun item -> keyPath item, item)
         |> Map.ofSeq
-    let mutable current: Map<'key, 'value> = makeMap value.Current
+
+    let mutable lastValue: Map<'key, 'value> = makeMap value.Current
 
     interface IReadable<Map<'key, 'value>> with
         member this.InstanceId with get () = value.InstanceId
         member this.InstanceType with get () = InstanceType.Create src
         member this.ValueType with get () = typeof<Map<'key, 'value>>
-        member this.Current with get () = current
+        member this.Current with get () = lastValue
         member this.Subscribe (handler: Map<'key, 'value> -> unit) =
             value.Subscribe (fun _ ->
                 let current' = makeMap value.Current
-                current <- current'
+                lastValue <- current'
                 handler current'
             )
+
         member this.SubscribeAny (handler: obj -> unit) =
             (this :> IReadable<_>).Subscribe handler
 
@@ -231,11 +249,22 @@ type internal TraversedValue<'value, 'key when 'key : comparison>
   ( wire: IWritable<Map<'key, 'value>>,
     key: 'key ) =
 
+    let mutable fallbackValue: 'value voption = ValueNone
+
     interface IWritable<'value> with
         member this.InstanceId with get () = wire.InstanceId
         member this.InstanceType with get () = InstanceType.Create wire
         member this.ValueType with get () = typeof<'value>
-        member this.Current with get () = wire.Current.[key]
+        member this.Current with get () =
+            match wire.Current.TryGetValue key with
+            | true, value ->
+                fallbackValue <- ValueSome value
+                value
+            | false, _ ->
+                match fallbackValue with
+                | ValueSome value -> value
+                | ValueNone -> failwith $"TraversedValue: No value found for key '%A{key}'"
+
 
         member this.Subscribe (handler: 'value -> unit) =
             wire.Subscribe (fun value ->

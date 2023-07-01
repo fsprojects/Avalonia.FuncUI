@@ -21,6 +21,7 @@ type Component (render: IComponentContext -> IView) as this =
 
     member private this.Update () : unit =
         Dispatcher.UIThread.Post (fun _ ->
+
             let nextViewElement = Some (render context)
 
             // reset internal context counter

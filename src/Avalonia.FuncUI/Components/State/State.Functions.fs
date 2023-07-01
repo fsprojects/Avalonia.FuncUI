@@ -15,8 +15,10 @@ module State =
     let sequenceBy (keyPath: 'value -> 'key) (wire: IWritable<list<'value>>) : list<IWritable<'value>> =
         let keyedWire = new ValueMap<'value, 'key>(wire, keyPath)
         [
-            for signal in wire.Current do
-                new TraversedValue<'value, 'key>(keyedWire, keyPath signal) :> IWritable<'value>
+            for item in wire.Current do
+                let tv = new TraversedValue<'value, 'key>(keyedWire, keyPath item)
+                let uv = new UniqueValue<_>(tv)
+                uv :> IWritable<'value>
         ]
 
     let tryFindByKey (keyPath: 'value -> 'key) (key: IReadable<'key>) (wire: IWritable<list<'value>>) : IWritable<'value option> =
