@@ -3,13 +3,13 @@
     <PropertyGroup>
         <OutputType>Exe</OutputType>
         <ProvisioningType>manual</ProvisioningType>
-        <TargetFramework>net6.0-ios</TargetFramework>
+        <TargetFramework>net7.0-ios</TargetFramework>
         <SupportedOSPlatformVersion>13.0</SupportedOSPlatformVersion>
 
         <!-- temporal workaround for our GL interface backend -->
         <UseInterpreter>True</UseInterpreter>
         <RuntimeIdentifier>iossimulator-x64</RuntimeIdentifier>
-        <PublishTrimmed>False</PublishTrimmed>
+        <PublishTrimmed>True</PublishTrimmed>
 
         <!-- (use for running on device)
         <RuntimeIdentifier>ios-arm64</RuntimeIdentifier>
