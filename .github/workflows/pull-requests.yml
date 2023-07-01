@@ -7,23 +7,27 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: macos-13
 
     steps:
+    - name: xCode
+      run: sudo xcode-select -s /Applications/Xcode_14.3.app/Contents/Developer/
+
     - uses: actions/checkout@v2
     - name: Setup .NET
+
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: |
           6.x.x
           7.x.x
-          
+
     - name: install workload ios
       run: dotnet workload install ios
-      
+
     - name: install workload wasm
       run: dotnet workload install wasm-tools
-      
+
     - name: Restore dependencies
       run: dotnet restore src/Avalonia.FuncUI.sln
     - name: Build
@@ -31,4 +35,4 @@ jobs:
     - name: Test
       run: dotnet test src/Avalonia.FuncUI.sln --no-build --verbosity normal
 
-      
+
