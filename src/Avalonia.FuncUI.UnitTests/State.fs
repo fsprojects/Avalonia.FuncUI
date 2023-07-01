@@ -40,6 +40,9 @@ module StateTests =
         let callsToAlice = ResizeArray<Account>()
         let callsToBob = ResizeArray<Account>()
 
+        let mutable expectedCallsToAlice = 0
+        let mutable expectedCallsToBob = 0
+
         let accounts: IWritable<Account list> = new State<_>(List.empty)
 
         accounts.Set [
@@ -70,12 +73,13 @@ module StateTests =
             { Account.Name = "Bob"; Balance = 0 }
         ]
 
-        Assert.Equal (2, callsToAlice.Count)
+        expectedCallsToAlice <- expectedCallsToAlice + 1
+
+        Assert.Equal (expectedCallsToAlice, callsToAlice.Count)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 99 }, Seq.last callsToAlice)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 99 }, aliceWire.Current)
 
-        Assert.Equal (1, callsToBob.Count)
-        Assert.Equal ({ Account.Name = "Bob"; Balance = 0 }, Seq.last callsToBob)
+        Assert.Equal (expectedCallsToBob, callsToBob.Count)
 
         (* Alice gets more money (via new sequenced wire) *)
         accounts
@@ -83,20 +87,22 @@ module StateTests =
         |> List.item 0
         |> fun state -> state.Set { state.Current with Balance = 101 }
 
-        Assert.Equal (3, callsToAlice.Count)
+        expectedCallsToAlice <- expectedCallsToAlice + 1
+
+        Assert.Equal (expectedCallsToAlice, callsToAlice.Count)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 101 }, Seq.last callsToAlice)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 101 }, aliceWire.Current)
 
-        Assert.Equal (2, callsToBob.Count)
-        Assert.Equal ({ Account.Name = "Bob"; Balance = 0 }, Seq.last callsToBob)
+        Assert.Equal (expectedCallsToBob, callsToBob.Count)
 
         (* Alice gets more money (via old wire *)
         aliceWire
         |> fun state -> state.Set { state.Current with Balance = 102 }
 
-        Assert.Equal (4, callsToAlice.Count)
+        expectedCallsToAlice <- expectedCallsToAlice + 1
+
+        Assert.Equal (expectedCallsToAlice, callsToAlice.Count)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 102 }, Seq.last callsToAlice)
         Assert.Equal ({ Account.Name = "Alice"; Balance = 102 }, aliceWire.Current)
 
-        Assert.Equal (3, callsToBob.Count)
-        Assert.Equal ({ Account.Name = "Bob"; Balance = 0 }, Seq.last callsToBob)
+        Assert.Equal (expectedCallsToBob, callsToBob.Count)
