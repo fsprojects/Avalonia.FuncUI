@@ -156,7 +156,6 @@
     <Compile Include="DSL\SelectableTextBlock.fs" />
     <Compile Include="DSL\DataGrid.fs" />
     <Compile Include="DSL\DragDrop.fs" />
-    <Compile Include="Environment.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -165,6 +164,7 @@
       <PackagePath>\</PackagePath>
     </None>
     <Compile Include="Experimantal\Experimental.Animations.fs" />
+    <Compile Include="Experimantal\Experimental.EnvironmentState.fs" />
   </ItemGroup>
 
 </Project>

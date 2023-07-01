@@ -4,6 +4,7 @@ open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Controls.Shapes
+open Avalonia.FuncUI.Experimental
 open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI.Types
 open Avalonia.Layout
@@ -11,6 +12,7 @@ open Avalonia.Media
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
+
 #nowarn "57"
 
 [<RequireQualifiedAccess>]
