@@ -50,6 +50,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		Directory.Build.props = Directory.Build.props
 		NuGet.config = NuGet.config
 		..\README.md = ..\README.md
+		..\.github\workflows\publish.yml = ..\.github\workflows\publish.yml
+		..\.github\workflows\pull-requests.yml = ..\.github\workflows\pull-requests.yml
 	EndProjectSection
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.InlineText", "Examples\Component Examples\Examples.InlineText\Examples.InlineText.fsproj", "{B8D8C84B-05AD-475B-BE81-A30544CE0149}"
