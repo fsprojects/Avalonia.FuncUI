@@ -27,7 +27,7 @@ type internal UniqueValueReadOnly<'value>
 
                         (* meh, we need a better equals implementation. *)
                         if not (ComponentHelpers.safeFastEquals (value, lastValue)) then
-                            lastSeenValues <- Array.append lastSeenValues [| handler :> obj, value |]
+                            lastSeenValues[idx] <- (handler :> obj, value)
                             handler value
 
                     idx <- idx + 1
