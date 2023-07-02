@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>FuncUI Mobile</string>
+	<string>TODO App</string>
 	<key>CFBundleIdentifier</key>
-	<string>JaggerJo.Avalonia-ControlCatalog</string>
+	<string>FuncUI.TodoApp</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>

@@ -2,8 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <OutputType>Exe</OutputType>
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +12,7 @@
         <AvaloniaResource Include="Assets\Icons\show.png" />
         <AvaloniaResource Include="Assets\Icons\hide.png" />
         <AvaloniaResource Include="Assets\Icons\save.png" />
+        <AvaloniaResource Include="Assets\AppIcon\app.png" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />

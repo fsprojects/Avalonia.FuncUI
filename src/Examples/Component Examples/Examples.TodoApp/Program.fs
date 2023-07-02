@@ -385,6 +385,11 @@ type App() =
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
             desktopLifetime.MainWindow <- MainWindow()
+            //desktopLifetime.MainWindow.Icon <- WindowIcon(new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/AppIcon/app.png"))))
+
+        | :? ISingleViewApplicationLifetime as singleViewLifetime ->
+            singleViewLifetime.MainView <- Views.mainView ()
+
         | _ -> ()
 
 [<RequireQualifiedAccess>]

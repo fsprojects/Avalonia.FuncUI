@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0-macos13.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Program.fs"/>
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="Info.plist" />
+        <ImageAsset Include="Resources\Assets.xcassets\AppIcon.appiconset\TodoAppIcon_512.png" />
+        <ImageAsset Include="Resources\Assets.xcassets\AppIcon.appiconset\TodoAppIcon.png" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\Component Examples\Examples.TodoApp\Examples.TodoApp.fsproj" />
+    </ItemGroup>
+
+</Project>
