@@ -28,12 +28,6 @@ module ItemsControl =
         static member itemTemplate<'t when 't :> ItemsControl>(value: IDataTemplate) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IDataTemplate>(ItemsControl.ItemTemplateProperty, value, ValueNone)
 
-        static member areHorizontalSnapPointsRegular<'t when 't :> ItemsControl>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(ItemsControl.AreHorizontalSnapPointsRegularProperty, value, ValueNone)
-
-        static member areVerticalSnapPointsRegular<'t when 't :> ItemsControl>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(ItemsControl.AreVerticalSnapPointsRegularProperty, value, ValueNone)
-
         static member onItemsChanged<'t when 't :> ItemsControl>(func: IEnumerable -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription(
                 ItemsControl.ItemsSourceProperty :> AvaloniaProperty<IEnumerable>,
