@@ -9,9 +9,9 @@ module Counter =
     
     type State = { count : int }
     let init() = { count = 0 }
-
+d
     type Msg = Increment | Decrement | Reset
-
+s
     let update (msg: Msg) (state: State) : State =
         match msg with
         | Increment -> { state with count = state.count + 1 }
