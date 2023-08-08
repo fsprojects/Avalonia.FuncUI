@@ -59,8 +59,8 @@ type Component (render: IComponentContext -> IView) as this =
 
         this.Update ()
 
-    override this.Finalize () =
-        base.Finalize ()
+    override this.OnDetachedFromLogicalTree (eventArgs: Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs) =
+        base.OnDetachedFromLogicalTree eventArgs
         (context :> IDisposable).Dispose ()
 
     override this.StyleKeyOverride = typeof<Border>
