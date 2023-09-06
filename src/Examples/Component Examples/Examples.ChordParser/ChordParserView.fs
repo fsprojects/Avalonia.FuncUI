@@ -31,6 +31,38 @@ type Msg =
     | Reset
     | SetTime
 
+type TimedMsg = { Time: DateTime; Message: Msg } with
+    static member message tm = tm.Message
+    static member stamp m = { Time = DateTime.UtcNow; Message = m }
+
+let withTimings (program : Program<'arg, 'model, Msg, 'view>) : Program<'arg, 'model, TimedMsg, 'view> =
+    let mapSnd f (a,b) = (a, f b)
+
+    let mapInit init =
+        init >> mapSnd (Cmd.map TimedMsg.stamp)
+
+    let mapUpdate update =
+        fun msg model ->
+            System.Diagnostics.Trace.WriteLine $"{msg.Message} at {msg.Time}"
+            update (TimedMsg.message msg) model |> mapSnd (Cmd.map TimedMsg.stamp)
+
+    let mapView view =
+        fun model dispatch -> view model (TimedMsg.stamp >> dispatch)
+
+    let mapSetState setState =
+        fun model dispatch -> setState model (TimedMsg.stamp >> dispatch)
+
+    let mapSub sub =
+        fun dispatch -> sub (TimedMsg.stamp >> dispatch)
+
+    let mapSubscribe subscribe =
+        fun model -> subscribe model |> List.map (mapSnd mapSub)
+
+    let mapTermination (predicate, terminate) =
+        TimedMsg.message >> predicate, terminate
+
+    Program.map mapInit mapUpdate mapView mapSetState mapSubscribe mapTermination program
+
 let init() = 
     { 
         InputChordChart = SampleCharts.autumnLeaves
@@ -77,9 +109,10 @@ let private subscriptions (model: Model) : Sub<Msg> =
     ]
 
 let view () = Component (fun ctx ->
-    let model, dispatch = ctx.useElmish(init, update, Program.withSubscription subscriptions)
+    let model, dispatch = ctx.useElmish (init, update,  Program.withSubscription subscriptions >> withTimings)
+    //let model, dispatch = ctx.useElmish(init, update, Program.withSubscription subscriptions) // if no timings are wanted
     //let model, dispatch = ctx.useElmish(init, update) // if no subscriptions are needed
-    
+
     Grid.create [
         Grid.rowDefinitions "20, *"
         Grid.columnDefinitions "*, 80, *"
