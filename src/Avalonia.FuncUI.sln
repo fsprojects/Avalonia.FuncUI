@@ -84,6 +84,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BasicTemplate", "Avalonia.F
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.TodoApp", "Examples\Component Examples\Examples.TodoApp\Examples.TodoApp.fsproj", "{70BDCE72-149A-435A-9910-E79DE329F978}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elmish Examples", "Elmish Examples", "{6D2C62FC-5634-4997-AF1F-2E8A5D27E117}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Elmish.Tetris", "Examples\Elmish Examples\Examples.Elmish.Tetris\Examples.Elmish.Tetris.fsproj", "{EC63B886-E809-4B74-B533-BFF3D60017C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -198,6 +202,10 @@ Global
 		{70BDCE72-149A-435A-9910-E79DE329F978}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70BDCE72-149A-435A-9910-E79DE329F978}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70BDCE72-149A-435A-9910-E79DE329F978}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC63B886-E809-4B74-B533-BFF3D60017C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC63B886-E809-4B74-B533-BFF3D60017C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC63B886-E809-4B74-B533-BFF3D60017C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC63B886-E809-4B74-B533-BFF3D60017C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -232,6 +240,8 @@ Global
 		{86429C85-F3D8-4F7D-A66F-24151C7236B9} = {37594D05-9BE4-40C2-AC5B-83B0AC9F7B15}
 		{BB03E86D-4DAF-468F-BD0C-D85D6641F02D} = {86429C85-F3D8-4F7D-A66F-24151C7236B9}
 		{70BDCE72-149A-435A-9910-E79DE329F978} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
+		{6D2C62FC-5634-4997-AF1F-2E8A5D27E117} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{EC63B886-E809-4B74-B533-BFF3D60017C9} = {6D2C62FC-5634-4997-AF1F-2E8A5D27E117}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
