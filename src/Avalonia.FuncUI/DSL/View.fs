@@ -105,7 +105,7 @@ type View () =
           View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = view.Outlet }
 
-     /// <summary>
+    /// <summary>
     /// Creates a new IView&lt;'view&gt; with the given attributes and outlet.
     /// <example>
     /// <code>
@@ -152,4 +152,26 @@ type View () =
           View.ViewKey = view.ViewKey
           View.Attrs = view.Attrs
           View.ConstructorArgs = constructorArgs
+          View.Outlet = view.Outlet }
+
+    /// <summary>
+    /// Creates a new IView&lt;'view&gt; with the given attributes.
+    /// <example>
+    /// <code>
+    /// [
+    ///     ...
+    /// ]
+    /// |&gt; MyView.create
+    /// |&gt; View.withAttrs [ Grid.row 1; Grid.column 2 ]
+    /// </code>
+    /// </example>
+    /// </summary>
+    static member withAttrs<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
+      ( attrs: IAttr<'view> list )
+      ( view: IView<'view> ) : IView<'view> =
+
+        { View.ViewType = view.ViewType
+          View.ViewKey = view.ViewKey
+          View.Attrs = view.Attrs @ attrs
+          View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = view.Outlet }
