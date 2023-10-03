@@ -19,34 +19,34 @@ type Component (render: IComponentContext -> IView) as this =
     member internal this.Context with get () = context
     member internal this.ComponentId with get () = componentId
 
-    member private this.Update () : unit =
-        Dispatcher.UIThread.Post (fun _ ->
+    member private this.UIThreadUpdate() : unit =
+        let nextViewElement = Some (render context)
 
-            let nextViewElement = Some (render context)
+        // reset internal context counter
+        context.AfterRender ()
 
-            // reset internal context counter
-            context.AfterRender ()
+        // update view
+        VirtualDom.updateBorderRoot (this, lastViewElement, nextViewElement)
+        lastViewElement <- nextViewElement
 
-            // update view
-            VirtualDom.updateBorderRoot (this, lastViewElement, nextViewElement)
-            lastViewElement <- nextViewElement
+        let nextViewAttrs = context.ComponentAttrs
 
-            let nextViewAttrs = context.ComponentAttrs
-
-            // update attrs
-            Patcher.patch (
-                this,
-                { Delta.ViewDelta.ViewType = typeof<Border>
-                  Delta.ViewDelta.ConstructorArgs = null
-                  Delta.ViewDelta.KeyDidChange = false
-                  Delta.ViewDelta.Outlet = ValueNone
-                  Delta.ViewDelta.Attrs = Differ.diffAttributes (lastViewAttrs, nextViewAttrs) }
-            )
-
-            lastViewAttrs <- nextViewAttrs
-
-            context.EffectQueue.ProcessAfterRender ()
+        // update attrs
+        Patcher.patch (
+            this,
+            { Delta.ViewDelta.ViewType = typeof<Border>
+              Delta.ViewDelta.ConstructorArgs = null
+              Delta.ViewDelta.KeyDidChange = false
+              Delta.ViewDelta.Outlet = ValueNone
+              Delta.ViewDelta.Attrs = Differ.diffAttributes (lastViewAttrs, nextViewAttrs) }
         )
+
+        lastViewAttrs <- nextViewAttrs
+
+        context.EffectQueue.ProcessAfterRender ()
+
+    member private this.Update () : unit =
+        Dispatcher.UIThread.Post (fun _ -> this.UIThreadUpdate ())
 
     override this.OnInitialized () =
         base.OnInitialized ()
@@ -57,7 +57,7 @@ type Component (render: IComponentContext -> IView) as this =
             )
         )
 
-        this.Update ()
+        this.UIThreadUpdate ()
 
     override this.OnDetachedFromLogicalTree (eventArgs: Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs) =
         base.OnDetachedFromLogicalTree eventArgs
