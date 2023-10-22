@@ -165,6 +165,8 @@
     </None>
     <Compile Include="Experimantal\Experimental.Animations.fs" />
     <Compile Include="Experimantal\Experimental.EnvironmentState.fs" />
+    <Compile Include="Experimantal\Experimental.Operators.fs" />
+    <Compile Include="Experimantal\Experimental.Hooks.fs" />
   </ItemGroup>
 
 </Project>
