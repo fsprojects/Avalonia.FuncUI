@@ -14,10 +14,12 @@
         <AvaloniaResource Include="Assets\Icons\show.png" />
         <AvaloniaResource Include="Assets\Icons\hide.png" />
         <AvaloniaResource Include="Assets\Icons\save.png" />
+        <AvaloniaResource Include="Assets\Icons\dog.svg" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+        <PackageReference Include="Avalonia.Svg.Skia" Version="11.0.0.3" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
         <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>

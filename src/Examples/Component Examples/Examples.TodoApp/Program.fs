@@ -15,6 +15,7 @@ open Avalonia.Media.Imaging
 open Avalonia.Media.Immutable
 open Avalonia.Platform
 open Avalonia.Styling
+open Avalonia.Svg.Skia
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
@@ -63,6 +64,8 @@ module Icons =
     let show = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/show.png")))
     let hide = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/hide.png")))
     let save = lazy new Bitmap(AssetLoader.Open(Uri("avares://Examples.TodoApp/Assets/Icons/save.png")))
+    let dog = lazy SvgImage(Source = SvgSource.Load("avares://Examples.TodoApp/Assets/Icons/dog.svg", null))
+
 
 [<RequireQualifiedAccess>]
 module ControlThemes =
@@ -72,7 +75,6 @@ module ControlThemes =
         | true, theme -> theme :?> ControlTheme
         | false, _ -> failwithf "Could not find theme 'InlineButton'"
     )
-
 
 module Views =
 
@@ -213,30 +215,39 @@ module Views =
             let items = ctx.usePassed AppState.items
             let hideDoneItems = ctx.usePassed AppState.hideDoneItems
 
-            StackPanel.create [
-                StackPanel.orientation Orientation.Vertical
-                StackPanel.verticalScrollBarVisibility ScrollBarVisibility.Visible
-                StackPanel.children [
-                    let items =
-                        items
-                        |> State.sequenceBy (fun item -> item.ItemId)
-                        |> List.filter (fun item ->
-                            if hideDoneItems.Current then
-                                not item.Current.Done
-                             else
-                                 true
-                        )
-
-                    for item in items do
-                        listItemView item
-
-                        Rectangle.create [
-                            Rectangle.fill Brushes.LightGray
-                            Rectangle.height 1.0
-                            Rectangle.horizontalAlignment HorizontalAlignment.Stretch
-                        ]
+            if items.Current.IsEmpty then
+                Image.create [
+                    Image.width 100
+                    Image.height 100
+                    Image.source Icons.dog.Value
+                    Image.verticalAlignment VerticalAlignment.Center
+                    Image.horizontalAlignment HorizontalAlignment.Center
                 ]
-            ]
+            else
+                StackPanel.create [
+                    StackPanel.orientation Orientation.Vertical
+                    StackPanel.verticalScrollBarVisibility ScrollBarVisibility.Visible
+                    StackPanel.children [
+                        let items =
+                            items
+                            |> State.sequenceBy (fun item -> item.ItemId)
+                            |> List.filter (fun item ->
+                                if hideDoneItems.Current then
+                                    not item.Current.Done
+                                 else
+                                     true
+                            )
+
+                        for item in items do
+                            listItemView item
+
+                            Rectangle.create [
+                                Rectangle.fill Brushes.LightGray
+                                Rectangle.height 1.0
+                                Rectangle.horizontalAlignment HorizontalAlignment.Stretch
+                            ]
+                    ]
+                ]
         )
 
     let toolbarView () =
@@ -347,6 +358,7 @@ module Views =
 
             DockPanel.create [
                 DockPanel.children [
+
                     (* toolbar *)
                     ContentControl.create [
                         ContentControl.dock Dock.Top
