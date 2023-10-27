@@ -77,7 +77,7 @@ type Views =
 type MainWindow() as this =
     inherit HostWindow()
     do
-        base.Title <- "Drawing App"
+        base.Title <- "DataGrid Playground"
         base.Width <- 500.0
         base.Height <- 500.0
         this.Content <- Views.main ()
