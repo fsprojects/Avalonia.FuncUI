@@ -109,6 +109,9 @@ module DataGridTextColumn =
         static member foreground<'t when 't :> DataGridTextColumn>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> DataGridTextColumn.foreground
 
+        static member foreground<'t when 't :> DataGridTextColumn>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> DataGridTextColumn.foreground
+
 
 [<AutoOpen>]
 module DataGridCheckBoxColumn =

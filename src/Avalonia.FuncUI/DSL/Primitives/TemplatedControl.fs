@@ -20,11 +20,17 @@ module TemplatedControl =
         static member background<'t when 't :> TemplatedControl>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> TemplatedControl.background
 
+        static member background<'t when 't :> TemplatedControl>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TemplatedControl.background
+
         static member borderBrush<'t when 't :> TemplatedControl>(value: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(TemplatedControl.BorderBrushProperty, value, ValueNone)
             
         static member borderBrush<'t when 't :> TemplatedControl>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> TemplatedControl.borderBrush
+
+        static member borderBrush<'t when 't :> TemplatedControl>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TemplatedControl.borderBrush
             
         static member borderThickness<'t when 't :> TemplatedControl>(value: Thickness) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Thickness>(TemplatedControl.BorderThicknessProperty, value, ValueNone)

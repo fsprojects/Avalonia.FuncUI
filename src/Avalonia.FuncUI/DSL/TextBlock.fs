@@ -23,6 +23,9 @@ module TextBlock =
             
         static member background<'t when 't :> TextBlock>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> TextBlock.background
+
+        static member background<'t when 't :> TextBlock>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TextBlock.background
         
         static member fontFamily<'t when 't :> TextBlock>(value: FontFamily) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<FontFamily>(TextBlock.FontFamilyProperty, value, ValueNone)
@@ -41,6 +44,9 @@ module TextBlock =
             
         static member foreground<'t when 't :> TextBlock>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> TextBlock.foreground
+
+        static member foreground<'t when 't :> TextBlock>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TextBlock.foreground
 
         static member inlines<'t when 't :> TextBlock>(value: InlineCollection) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<InlineCollection>(TextBlock.InlinesProperty, value, ValueNone)

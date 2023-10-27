@@ -37,8 +37,8 @@ module SplitView =
         static member paneBackground<'t when 't :> SplitView>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> SplitView.paneBackground
 
-        static member paneBackground<'t when 't :> SplitView>(value: Color) : IAttr<'t> =
-            value |> ImmutableSolidColorBrush |> SplitView.paneBackground
+        static member paneBackground<'t when 't :> SplitView>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> SplitView.paneBackground
 
         static member panePlacement<'t when 't :> SplitView>(value: SplitViewPanePlacement) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<SplitViewPanePlacement>(SplitView.PanePlacementProperty, value, ValueNone)

@@ -27,6 +27,9 @@ module Border =
             
         static member borderBrush<'t when 't :> Border>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Border.borderBrush
+
+        static member borderBrush<'t when 't :> Border>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> Border.borderBrush
             
         static member borderThickness<'t when 't :> Border>(value: Thickness) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Thickness>(Border.BorderThicknessProperty, value, ValueNone)

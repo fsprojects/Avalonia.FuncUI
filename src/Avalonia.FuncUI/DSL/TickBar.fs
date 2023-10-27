@@ -19,8 +19,8 @@ module TickBar =
         static member fill<'t when 't :> TickBar>(value: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(TickBar.FillProperty, value, ValueNone)
 
-        static member fill<'t when 't :> TickBar>(value: Color) : IAttr<'t> =
-            value |> ImmutableSolidColorBrush |> TickBar.fill
+        static member fill<'t when 't :> TickBar>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TickBar.fill
 
         static member fill<'t when 't :> TickBar>(color: string) : IAttr<'t> =
             color |> Color.Parse |> TickBar.fill
