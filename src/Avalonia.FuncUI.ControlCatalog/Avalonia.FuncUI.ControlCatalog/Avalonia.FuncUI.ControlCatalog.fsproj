@@ -13,6 +13,7 @@
         <Compile Include="Views\Tabs\WrapPanelDemo.fs" />
         <Compile Include="Views\Tabs\DataTemplateDemo.fs" />
         <Compile Include="Views\Tabs\GridDemo.fs" />
+        <Compile Include="Views\Tabs\GridSplitterDemo.fs" />
         <Compile Include="Views\Tabs\CanvasDemo.fs" />
         <Compile Include="Views\Tabs\ContextMenuDemo.fs" />
         <Compile Include="Views\Tabs\StylesDemo.fs" />
