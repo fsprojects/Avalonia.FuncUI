@@ -36,10 +36,12 @@ type Views =
                         DataGrid.dock Dock.Top
                         DataGrid.isReadOnly false
                         DataGrid.items data.Current
+
                         DataGrid.columns [
                             DataGridTextColumn.create [
                                 DataGridTextColumn.header "Name"
                                 DataGridTextColumn.binding (Binding ("Name", BindingMode.TwoWay))
+                                DataGridTextColumn.width (DataGridLength(2, DataGridLengthUnitType.Star))
                             ]
                             DataGridTemplateColumn.create [
                                 DataGridTemplateColumn.header "Name"
