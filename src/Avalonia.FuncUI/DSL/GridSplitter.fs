@@ -25,8 +25,8 @@ module GridSplitter =
         ///// <summary>
         ///// Gets or sets content that will be shown when ShowsPreview is enabled and user starts resize operation.
         ///// </summary>
-        //static member previewContent<'t when 't :> GridSplitter>(preview: ITemplate<TControl>) : IAttr<'t> =
-        //    AttrBuilder<'t>.CreateProperty<ITemplate<TControl>>(GridSplitter.PreviewContentProperty, preview, ValueNone)
+        static member previewContent<'t, 'c when 'c :> Control and 't :> GridSplitter>(preview: ITemplate<'c>) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<ITemplate<'c>>(GridSplitter.PreviewContentProperty, preview, ValueNone)
 
         /// <summary>
         /// Indicates which Columns or Rows the Splitter resizes. 
