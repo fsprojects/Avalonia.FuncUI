@@ -202,7 +202,7 @@ type Views =
 type MainWindow() as this =
     inherit HostWindow()
     do
-        base.Title <- "Drawing App"
+        base.Title <- "Environment App"
         base.Width <- 500.0
         base.Height <- 500.0
         this.Content <- Views.main ()
