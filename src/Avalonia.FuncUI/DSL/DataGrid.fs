@@ -68,6 +68,15 @@ module DataGridColumn =
         static member cellTheme<'t when 't :> DataGridColumn>(value: ControlTheme) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ControlTheme>(DataGridColumn.CellThemeProperty, value, ValueNone)
 
+        static member width<'t when 't :> DataGridColumn>(value: DataGridLength) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DataGridLength>(
+                name = "width",
+                value = value,
+                getter = ValueSome (fun column -> column.Width),
+                setter = ValueSome (fun (column, value) -> column.Width <- value),
+                comparer = ValueNone
+            )
+
 [<AutoOpen>]
 module DataGridBoundColumn =
 
