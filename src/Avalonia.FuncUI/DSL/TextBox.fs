@@ -38,17 +38,26 @@ module TextBox =
         static member selectionBrush<'t when 't :> TextBox>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> TextBox.selectionBrush
 
+        static member selectionBrush<'t when 't :> TextBox>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TextBox.selectionBrush
+
         static member selectionForegroundBrush<'t when 't :> TextBox>(value: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(TextBox.SelectionForegroundBrushProperty, value, ValueNone)
 
         static member selectionForegroundBrush<'t when 't :> TextBox>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> TextBox.selectionForegroundBrush
 
+        static member selectionForegroundBrush<'t when 't :> TextBox>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TextBox.selectionForegroundBrush
+
         static member caretBrush<'t when 't :> TextBox>(value: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(TextBox.CaretBrushProperty, value, ValueNone)
 
         static member caretBrush<'t when 't :> TextBox>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> TextBox.selectionBrush
+
+        static member caretBrush<'t when 't :> TextBox>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TextBox.selectionBrush
 
         static member selectionStart<'t when 't :> TextBox>(value: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(TextBox.SelectionStartProperty, value, ValueNone)

@@ -20,3 +20,6 @@ module Panel =
             
         static member background<'t when 't :> Panel>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Panel.background 
+
+        static member background<'t when 't :> Panel>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> Panel.background

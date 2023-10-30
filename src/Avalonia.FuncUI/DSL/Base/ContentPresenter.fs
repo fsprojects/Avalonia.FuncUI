@@ -21,11 +21,17 @@ module ContentPresenter =
         static member background<'t when 't :> ContentPresenter>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> ContentPresenter.background
 
+        static member background<'t when 't :> ContentPresenter>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> ContentPresenter.background
+
         static member borderBrush<'t when 't :> ContentPresenter>(brush: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(ContentPresenter.BorderBrushProperty, brush, ValueNone)
             
         static member borderBrush<'t when 't :> ContentPresenter>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> ContentPresenter.borderBrush
+
+        static member borderBrush<'t when 't :> ContentPresenter>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> ContentPresenter.borderBrush
             
         static member borderThickness<'t when 't :> ContentPresenter>(value: Thickness) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Thickness>(ContentPresenter.BorderThicknessProperty, value, ValueNone)
