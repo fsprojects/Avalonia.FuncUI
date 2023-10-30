@@ -16,6 +16,9 @@ module Shape =
             
         static member fill<'t when 't :> Shape>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Shape.fill
+
+        static member fill<'t when 't :> Shape>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> Shape.fill
         
         static member stretch<'t when 't :> Shape>(value: Stretch) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Stretch>(Shape.StretchProperty, value, ValueNone)
@@ -25,6 +28,9 @@ module Shape =
             
         static member stroke<'t when 't :> Shape>(color: string) : IAttr<'t> =
             color |> Color.Parse |> ImmutableSolidColorBrush |> Shape.stroke
+
+        static member stroke<'t when 't :> Shape>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> Shape.stroke
             
         static member strokeThickness<'t when 't :> Shape>(value: double) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<double>(Shape.StrokeThicknessProperty, value, ValueNone)

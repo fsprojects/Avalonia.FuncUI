@@ -18,6 +18,9 @@ module TextElement =
             
         static member background<'t when 't :> TextElement>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> TextElement.background
+
+        static member background<'t when 't :> TextElement>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TextElement.background
             
         static member fontFamily<'t when 't :> TextElement>(value: FontFamily) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<FontFamily>(TextElement.FontFamilyProperty, value, ValueNone)
@@ -39,3 +42,6 @@ module TextElement =
             
         static member foreground<'t when 't :> TextElement>(color: string) : IAttr<'t> =
             Color.Parse(color) |> ImmutableSolidColorBrush |> TextElement.foreground
+
+        static member foreground<'t when 't :> TextElement>(color: Color) : IAttr<'t> =
+            color |> ImmutableSolidColorBrush |> TextElement.foreground
