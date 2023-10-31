@@ -193,39 +193,6 @@ module GridSplitterDemo =
                         ]
                     ]
                 ]
-                //Grid.create [
-                //    Grid.columnDefinitions "1*,4,1*,1*"
-                //    Grid.rowDefinitions "1*,4,1*"
-                //    Grid.showGridLines true
-                //    Grid.children [
-                //        gridCellView 0 0 "A"
-                //        gridCellView 2 0 "B"
-                //        gridCellView 3 0 "C"
-                //        gridCellView 0 2 "D"
-                //        gridCellView 2 2 "E"
-                //        gridCellView 3 2 "F"
-                //        GridSplitter.create [
-                //            GridSplitter.dragIncrement state.dragIncrement
-                //            GridSplitter.keyboardIncrement state.keyboardIncrement
-                //            GridSplitter.showsPreview state.customPreview
-                //            GridSplitter.resizebehavior state.resizeBehavior
-                //            GridSplitter.resizeDirection state.resizeDirection
-                //            Grid.column 1
-                //            Grid.row 0
-                //            Grid.rowSpan 3
-                //        ]
-                //        GridSplitter.create [
-                //            GridSplitter.dragIncrement state.dragIncrement
-                //            GridSplitter.keyboardIncrement state.keyboardIncrement
-                //            GridSplitter.showsPreview state.customPreview
-                //            GridSplitter.resizebehavior state.resizeBehavior
-                //            GridSplitter.resizeDirection state.resizeDirection
-                //            Grid.column 0
-                //            Grid.row 1
-                //            Grid.columnSpan 3
-                //        ]
-                //    ]
-                //]
                 Grid.create [
                     Grid.columnDefinitions "1*,1*,1*"
                     Grid.rowDefinitions "1*,1*"
@@ -245,6 +212,18 @@ module GridSplitterDemo =
                             GridSplitter.resizebehavior state.resizeBehavior
                             GridSplitter.resizeDirection state.resizeDirection
                             Grid.column 1
+                            Grid.rowSpan 2
+                            Grid.horizontalAlignment HorizontalAlignment.Left
+                            Grid.verticalAlignment VerticalAlignment.Stretch
+                            Grid.width 5.0
+                        ]
+                        GridSplitter.create [
+                            GridSplitter.dragIncrement state.dragIncrement
+                            GridSplitter.keyboardIncrement state.keyboardIncrement
+                            GridSplitter.showsPreview state.customPreview
+                            GridSplitter.resizebehavior state.resizeBehavior
+                            GridSplitter.resizeDirection state.resizeDirection
+                            Grid.column 2
                             Grid.rowSpan 2
                             Grid.horizontalAlignment HorizontalAlignment.Left
                             Grid.verticalAlignment VerticalAlignment.Stretch
