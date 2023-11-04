@@ -75,16 +75,27 @@ type internal ReadValueMapped<'a, 'b>
         member this.Dispose () =
             ()
 
-type internal ValueMapped<'a, 'b>
-  ( src: IWritable<'a>,
-    mapFunc: 'a -> 'b,
-    mapBackFunc: 'b -> 'a ) =
-
-    inherit ReadValueMapped<'a, 'b>(src, mapFunc)
+type internal ValueMapped<'a, 'b>(src: IWritable<'a>, read: 'a -> 'b, write: 'a * 'b -> 'a) =
+    let mutable current: 'b = read src.Current
 
     interface IWritable<'b> with
-        member this.Set (value: 'b) : unit =
-            src.Set (mapBackFunc value)
+        member this.InstanceId with get () = src.InstanceId
+        member this.InstanceType with get () = InstanceType.Create src
+        member this.ValueType with get () = typeof<'b>
+        member this.Current with get () = current
+        member this.Subscribe (handler: 'b -> unit) =
+            src.Subscribe (fun value ->
+                current <- read value
+                handler current
+            )
+        member this.SubscribeAny (handler: obj -> unit) =
+            (this :> IReadable<'b>).Subscribe handler
+
+        member this.Set (value: 'b) =
+            src.Set(write(src.Current, value))
+
+        member this.Dispose () =
+            ()
 
 type internal ReadValueMap<'value, 'key when 'key : comparison>
   ( src: IReadable<'value list>,

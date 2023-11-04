@@ -44,6 +44,9 @@ module State =
     let readMap (mapFunc: 'a -> 'b) (value: IReadable<'a>) : IReadable<'b> =
         new ReadValueMapped<'a, 'b>(value, mapFunc) :> _
 
+    let map (read: 'a -> 'b) (write: 'a * 'b -> 'a) (state: IWritable<'a>) : IWritable<'b> =
+        new ValueMapped<'a, 'b>(state, read, write)
+
     let readTryFindByKey (keyPath: 'value -> 'key) (key: IReadable<'key>) (wire: IReadable<list<'value>>) : IReadable<'value option> =
         let keyedWire: IReadable<Map<'key, 'value>> = new ReadValueMap<'value, 'key>(wire, keyPath) :> _
         let keyFocusedWire: IReadable<'value option> = new ReadKeyFocusedValue<'value, 'key>(keyedWire, key) :> _
