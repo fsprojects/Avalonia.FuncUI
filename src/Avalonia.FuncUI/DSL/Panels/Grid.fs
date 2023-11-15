@@ -4,14 +4,15 @@ namespace Avalonia.FuncUI.DSL
 module ColumnDefinition =  
     open Avalonia.Controls
     
+    [<Struct>]
     [<RequireQualifiedAccess>]
     type ColumnWidth =
     /// Column is auto-sized to fit it's contents
     | Auto
     /// Column is sized in device independent pixels
-    | Pixel of float
+    | Pixel of widthInPixels: float
     /// Column is sized as a weighted proportion of available space
-    | Star of float
+    | Star of proportion: float
 
     type ColumnDefinition with
 
@@ -35,14 +36,15 @@ module ColumnDefinition =
 module RowDefinition =  
     open Avalonia.Controls
 
+    [<Struct>]
     [<RequireQualifiedAccess>]
     type RowHeight =
     /// Row is auto-sized to fit it's contents
     | Auto
     /// Row is sized in device independent pixels
-    | Pixel of float
+    | Pixel of heightInPixels: float
     /// Row is sized as a weighted proportion of available space
-    | Star of float
+    | Star of proportion: float
 
     type RowDefinition with
 
