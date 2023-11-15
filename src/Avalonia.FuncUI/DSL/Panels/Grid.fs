@@ -1,6 +1,70 @@
 namespace Avalonia.FuncUI.DSL
 
 [<AutoOpen>]
+module ColumnDefinition =  
+    open Avalonia.Controls
+    
+    [<Struct>]
+    [<RequireQualifiedAccess>]
+    type ColumnWidth =
+    /// Column is auto-sized to fit it's contents
+    | Auto
+    /// Column is sized in device independent pixels
+    | Pixel of widthInPixels: float
+    /// Column is sized as a weighted proportion of available space
+    | Star of proportion: float
+
+    type ColumnDefinition with
+
+        /// <summary>
+        /// Define the properties of a Grid column
+        /// </summary>
+        /// <param name="width">Specify column width as automatic, proportional or in pixels</param>
+        /// <param name="minWidth">Optional minimum column width in pixels</param>
+        /// <param name="maxWidth">Optional maximum column width in pixels</param>
+        static member create(width: ColumnWidth, ?minWidth: float, ?maxWidth: float) =
+            let columnDefinition = ColumnDefinition()
+            match width with
+            | ColumnWidth.Auto -> columnDefinition.Width <- GridLength(0.0, GridUnitType.Auto)
+            | ColumnWidth.Pixel width -> columnDefinition.Width <- GridLength(width, GridUnitType.Pixel)
+            | ColumnWidth.Star proportionalWidth -> columnDefinition.Width <- GridLength(proportionalWidth, GridUnitType.Star)
+            minWidth |> Option.iter (fun minW -> columnDefinition.MinWidth <- minW)
+            maxWidth |> Option.iter (fun maxW -> columnDefinition.MaxWidth <- maxW)
+            columnDefinition
+
+[<AutoOpen>]
+module RowDefinition =  
+    open Avalonia.Controls
+
+    [<Struct>]
+    [<RequireQualifiedAccess>]
+    type RowHeight =
+    /// Row is auto-sized to fit it's contents
+    | Auto
+    /// Row is sized in device independent pixels
+    | Pixel of heightInPixels: float
+    /// Row is sized as a weighted proportion of available space
+    | Star of proportion: float
+
+    type RowDefinition with
+
+        /// <summary>
+        /// Define the properties of a Grid row
+        /// </summary>
+        /// <param name="height">Specify row height as automatic, proportional or in pixels</param>
+        /// <param name="minHeight">Optional minimum row height in pixels</param>
+        /// <param name="maxHeight">Optional maximum row height in pixels</param>
+        static member create(height: RowHeight, ?minHeight: float, ?maxHeight: float) =
+            let rowDefinition = RowDefinition()
+            match height with
+            | RowHeight.Auto -> rowDefinition.Height <- GridLength(0.0, GridUnitType.Auto)
+            | RowHeight.Pixel height -> rowDefinition.Height <- GridLength(height, GridUnitType.Pixel)
+            | RowHeight.Star proportionalHeight -> rowDefinition.Height <- GridLength(proportionalHeight, GridUnitType.Star)
+            minHeight |> Option.iter (fun minH -> rowDefinition.MinHeight <- minH)
+            maxHeight |> Option.iter (fun maxH -> rowDefinition.MaxHeight <- maxH)
+            rowDefinition
+
+[<AutoOpen>]
 module Grid =  
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
@@ -108,3 +172,23 @@ module Grid =
 
         static member rowDefinitions<'t when 't :> Grid>(value: string) : IAttr<'t> =
             value |> RowDefinitions.Parse |> Grid.rowDefinitions 
+
+        /// <summary>
+        /// Add a list of column definitions to the grid
+        /// </summary>
+        /// <param name="columns">List of ColumnDefinition defining how the column widths should be divided</param>
+        static member columnDefinitions (columns: ColumnDefinition list) =
+            let colDefs = ColumnDefinitions()
+            columns
+            |> List.iter (fun column -> colDefs.Add(column))
+            Grid.columnDefinitions colDefs
+
+        /// <summary>
+        /// Add a list of row definitions to the grid
+        /// </summary>
+        /// <param name="rows">List of RowDefinition defining how the row heights should be divided</param>
+        static member rowDefinitions (rows: RowDefinition list) =
+            let rowDefs = RowDefinitions()
+            rows
+            |> List.iter (fun row -> rowDefs.Add(row))
+            Grid.rowDefinitions rowDefs
