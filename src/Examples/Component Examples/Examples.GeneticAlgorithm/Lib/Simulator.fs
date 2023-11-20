@@ -8,9 +8,9 @@ module Simulator =
   let canEnterActorCell actor target =
     match target with
     | Rabbit | Squirrel _ -> actor = Doggo // Dog can eat the squirrel or rabbit
-    | Doggo _ -> false // Nobody bugs the dog
-    | Tree _ -> actor = Squirrel true // Only allow if squirrel has an acorn
-    | Acorn _ -> actor = Squirrel false // Only allow if squirrel w/o acorn
+    | Doggo -> false // Nobody bugs the dog
+    | Tree -> actor = Squirrel true // Only allow if squirrel has an acorn
+    | Acorn -> actor = Squirrel false // Only allow if squirrel w/o acorn
 
   let moveActor state actor pos =
     let world = state.World

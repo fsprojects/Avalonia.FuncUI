@@ -81,7 +81,7 @@ module internal rec Patcher =
 
             match instanceProperty.Setter with
             | ValueSome setter -> setter (view, value)
-            | ValueNone _ -> failwithf "instance property ('%s') has no setter. " instanceProperty.Name
+            | ValueNone -> failwithf "instance property ('%s') has no setter. " instanceProperty.Name
 
     let private patchContentMultiple (view: AvaloniaObject, accessor: Accessor, delta: ViewDelta list) : unit =
         (* often lists only have a get accessor *)
