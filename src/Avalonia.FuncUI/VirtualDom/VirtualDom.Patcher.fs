@@ -89,7 +89,7 @@ module internal rec Patcher =
             if List.isEmpty delta then
                 collection.Clear()
             else
-                delta |> Seq.iteri (fun index viewElement ->
+                delta |> List.iteri (fun index viewElement ->
                     // try patch / reuse
                     if index + 1 <= collection.Count then
                         let item = collection.[index]
