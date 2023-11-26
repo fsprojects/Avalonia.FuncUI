@@ -46,7 +46,6 @@
     <Compile Include="Components\State\State.fs" />
     <Compile Include="Components\State\State.Adapters.fs" />
     <Compile Include="Components\State\State.Functions.fs" />
-    <Compile Include="Components\StaticComponent.fs" />
     <Compile Include="Components\Context\Context.EffectsHook.fs" />
     <Compile Include="Components\Context\Context.StateHook.fs" />
     <Compile Include="Components\Context\Context.fs" />
@@ -163,6 +162,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <Compile Include="Experimantal\Experimental.StaticComponent.fs" />
     <Compile Include="Experimantal\Experimental.Animations.fs" />
     <Compile Include="Experimantal\Experimental.EnvironmentState.fs" />
     <Compile Include="Experimantal\Experimental.Operators.fs" />
