@@ -19,11 +19,9 @@ jobs:
           6.x.x
           7.x.x
           
-    - name: install workload ios
-      run: dotnet workload install ios
       
-    - name: install workload wasm
-      run: dotnet workload install wasm-tools
+    - name: install workloads
+      run: dotnet workload restore
       
     - name: Build & Test
       run: dotnet test src/Avalonia.FuncUI.sln --verbosity normal
