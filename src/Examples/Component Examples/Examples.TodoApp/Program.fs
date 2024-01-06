@@ -78,11 +78,70 @@ module ControlThemes =
 
 module Views =
 
+    let areYouSureDialog (callback: bool -> unit) =
+        Border.create [
+            Border.verticalAlignment VerticalAlignment.Center
+            Border.horizontalAlignment HorizontalAlignment.Center
+            Border.background "white"
+            Border.padding 5
+            Border.cornerRadius 5
+            Border.child (
+                DockPanel.create [
+                    DockPanel.lastChildFill false
+                    DockPanel.children [
+                        TextBlock.create [
+                            TextBlock.dock Dock.Top
+                            TextBlock.text "are you sure?"
+                            TextBlock.fontSize 18.0
+                            TextBlock.padding 20
+                        ]
+
+                        UniformGrid.create [
+                            UniformGrid.dock Dock.Bottom
+                            UniformGrid.columns 2
+                            UniformGrid.rows 1
+                            UniformGrid.children [
+
+                                Button.create [
+                                    Button.theme ControlThemes.inlineButton.Value
+                                    Button.content (
+                                        TextBlock.create [
+                                            TextBlock.text "yes"
+                                            TextBlock.fontSize 18.0
+                                            TextBlock.foreground "#e74c3c"
+                                            TextBlock.horizontalAlignment HorizontalAlignment.Center
+                                        ]
+                                    )
+                                    Button.onClick (fun _ -> callback true)
+                                ]
+
+                                Button.create [
+                                    Button.theme ControlThemes.inlineButton.Value
+                                    Button.content (
+                                        TextBlock.create [
+                                            TextBlock.text "no"
+                                            TextBlock.fontSize 18.0
+                                            TextBlock.horizontalAlignment HorizontalAlignment.Center
+                                        ]
+                                    )
+                                    Button.onClick (fun _ -> callback false)
+                                ]
+                            ]
+                        ]
+
+                    ]
+                ]
+            )
+
+        ]
+
+
     let listItemView (item: IWritable<TodoItem>) =
         Component.create ($"item-%O{item.Current.ItemId}", fun ctx ->
             let activeItemId = ctx.usePassed AppState.activeItemId
             let item = ctx.usePassed item
             let title = ctx.useState item.Current.Title
+            let modalState = ctx.useModalState()
             let animation = ctx.useStateLazy(fun () ->
                 Animation()
                     .WithDuration(0.3)
@@ -172,20 +231,27 @@ module Views =
                                         ]
                                     )
                                     Button.onClick (fun args ->
-                                        if not (ctx.control.IsAnimating Component.OpacityProperty) then
-                                            ignore (
-                                                task {
-                                                    do! animation.Current.RunAsync ctx.control
+                                        modalState.Push (
+                                            areYouSureDialog (fun isSure ->
+                                                modalState.Pop ()
 
-                                                    Dispatcher.UIThread.Post (fun _ ->
-                                                        AppState.items.Current
-                                                        |> List.filter (fun i -> i.ItemId <> item.Current.ItemId)
-                                                        |> AppState.items.Set
-                                                    )
+                                                if isSure then
+                                                    if not (ctx.control.IsAnimating Component.OpacityProperty) then
+                                                        ignore (
+                                                            task {
+                                                                do! animation.Current.RunAsync ctx.control
 
-                                                    return ()
-                                                }
+                                                                Dispatcher.UIThread.Post (fun _ ->
+                                                                    AppState.items.Current
+                                                                    |> List.filter (fun i -> i.ItemId <> item.Current.ItemId)
+                                                                    |> AppState.items.Set
+                                                                )
+
+                                                                return ()
+                                                            }
+                                                        )
                                             )
+                                        )
                                     )
                                 ]
                             ]
@@ -355,22 +421,27 @@ module Views =
 
     let mainView () =
         Component(fun ctx ->
+            ModalHost.create [
+                ModalHost.mainContent (
+                    DockPanel.create [
+                        DockPanel.verticalAlignment VerticalAlignment.Stretch
+                        DockPanel.horizontalAlignment HorizontalAlignment.Stretch
+                        DockPanel.children [
 
-            DockPanel.create [
-                DockPanel.children [
+                            (* toolbar *)
+                            ContentControl.create [
+                                ContentControl.dock Dock.Top
+                                ContentControl.content (toolbarView())
+                            ]
 
-                    (* toolbar *)
-                    ContentControl.create [
-                        ContentControl.dock Dock.Top
-                        ContentControl.content (toolbarView())
+                            (* item list *)
+                            ScrollViewer.create [
+                                ScrollViewer.dock Dock.Top
+                                ScrollViewer.content (listView())
+                            ]
+                        ]
                     ]
-
-                    (* item list *)
-                    ScrollViewer.create [
-                        ScrollViewer.dock Dock.Top
-                        ScrollViewer.content (listView())
-                    ]
-                ]
+                )
             ]
         )
 

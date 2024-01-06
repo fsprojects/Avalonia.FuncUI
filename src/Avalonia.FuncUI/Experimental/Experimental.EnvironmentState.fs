@@ -12,17 +12,17 @@ open Avalonia.LogicalTree
 type EnvironmentState<'value> =
     internal {
         Name: string
-        DefaultValue: IWritable<'value> option
+        DefaultValue: 'value option
     }
 
-    static member Create (name: string, ?defaultValue: IWritable<'value>) : EnvironmentState<'value> =
+    static member Create (name: string, ?defaultValue: 'value) : EnvironmentState<'value> =
         { Name = name
           DefaultValue = defaultValue }
 
 [<AllowNullLiteral>]
 type EnvironmentStateProvider<'value>
   ( state: EnvironmentState<'value>,
-    providedState: IWritable<'value>) as this =
+    providedState: 'value) =
 
     inherit ContentControl ()
 
@@ -34,7 +34,7 @@ type EnvironmentStateProvider<'value>
 
 type EnvironmentStateProvider<'value> with
 
-    static member create (state: EnvironmentState<'value>, providedValue: IWritable<'value>, content: IView) =
+    static member create (state: EnvironmentState<'value>, providedValue: 'value, content: IView) =
         { View.ViewType = typeof<EnvironmentStateProvider<'value>>
           View.ViewKey = ValueNone
           View.Attrs = [ ContentControl.content content ]
@@ -44,7 +44,7 @@ type EnvironmentStateProvider<'value> with
 
 type EnvironmentState<'value> with
 
-    member this.provide (providedValue: IWritable<'value>, content: IView) =
+    member this.provide (providedValue: 'value, content: IView) =
         EnvironmentStateProvider<'value>.create(this, providedValue, content)
 
 [<RequireQualifiedAccess>]
@@ -73,14 +73,15 @@ module __ContextExtensions_useEnvHook =
 
     type IComponentContext with
 
-        member this.useEnvState (state: EnvironmentState<'value>, ?renderOnChange: bool) =
-           let obtainValue () =
-               match EnvironmentStateConsumer.tryFind (this.control, state), state.DefaultValue with
-               | ValueSome value, _ -> value
-               | ValueNone, Some defaultValue -> defaultValue
-               | ValueNone, None -> failwithf "No value provided for environment state '%s'" state.Name
+        member this.readEnvValue(state: EnvironmentState<'value>) : 'value =
+            match EnvironmentStateConsumer.tryFind (this.control, state), state.DefaultValue with
+            | ValueSome value, _ -> value
+            | ValueNone, Some defaultValue -> defaultValue
+            | ValueNone, None -> failwithf "No value provided for environment value '%s'" state.Name
 
+        member this.useEnvState(state: EnvironmentState<IWritable<'value>>, ?renderOnChange: bool) : IWritable<'value> =
            this.usePassedLazy (
-               obtainValue = obtainValue,
+               obtainValue = (fun () -> this.readEnvValue(state)),
                ?renderOnChange = renderOnChange
            )
+

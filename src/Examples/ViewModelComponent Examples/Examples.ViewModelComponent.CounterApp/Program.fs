@@ -4,6 +4,7 @@ open System.ComponentModel
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.FuncUI.Experimental
 open Avalonia.FuncUI.Types
 open Avalonia.Interactivity
 open Avalonia.Layout
