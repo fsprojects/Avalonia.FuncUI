@@ -90,6 +90,15 @@ module DataGridBoundColumn =
                 setter = ValueSome (fun (column, value) -> column.Binding <- value),
                 comparer = ValueNone
             )
+            
+        static member clipboardContentBinding<'t when 't :> DataGridBoundColumn>(binding: IBinding) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IBinding>(
+                name = "ClipboardContentBinding",
+                value = binding,
+                getter = ValueSome (fun column -> column.ClipboardContentBinding),
+                setter = ValueSome (fun (column, value) -> column.ClipboardContentBinding <- value),
+                comparer = ValueNone
+            )
 
 
 [<AutoOpen>]
