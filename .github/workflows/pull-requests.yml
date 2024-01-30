@@ -10,9 +10,7 @@ jobs:
     runs-on: macos-13
 
     steps:
-    - name: xCode
-      run: sudo xcode-select -s /Applications/Xcode_14.3.app/Contents/Developer/
-
+    
     - uses: actions/checkout@v2
     - name: Setup .NET
 
