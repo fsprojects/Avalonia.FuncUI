@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: xCode
-      run: sudo xcode-select -s /Applications/Xcode_14.3.app/Contents/Developer/
+      run: sudo xcode-select -s /Applications/Xcode_15.1.app/Contents/Developer/
 
     - uses: actions/checkout@v4
     - name: Setup .NET
