@@ -1,7 +1,5 @@
 namespace Avalonia.FuncUI.DSL
 
-open Avalonia
-open Avalonia.Controls.Documents
 open Avalonia.Controls.Templates
 open Avalonia.Data
 open Avalonia.Media
@@ -36,6 +34,21 @@ module DataGrid =
 
         static member canUserSortColumns<'t when 't :> DataGrid>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DataGrid.CanUserSortColumnsProperty, value, ValueNone)
+        
+        static member selectedIndex<'t when 't :> DataGrid>(index: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(DataGrid.SelectedIndexProperty, index, ValueNone)
+
+        static member selectedItem<'t when 't :> DataGrid>(item: obj) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<obj>(DataGrid.SelectedItemProperty, item, ValueNone)
+
+        static member selection<'t when 't :> DataGrid>(model: DataGridSelectionMode) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<DataGridSelectionMode>(DataGrid.SelectionModeProperty, model, ValueNone)
+
+        static member onSelectedItemChanged<'t when 't :> DataGrid>(func: obj -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<obj>(DataGrid.SelectedItemProperty, func, ?subPatchOptions = subPatchOptions)
+
+        static member onSelectionChanged<'t when 't :> DataGrid>(func: SelectionChangedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<SelectionChangedEventArgs>(DataGrid.SelectionChangedEvent, func, ?subPatchOptions = subPatchOptions)
 
         static member columns (columns: IView list) : IAttr<'t> =
             AttrBuilder<'t>.CreateContentMultiple(

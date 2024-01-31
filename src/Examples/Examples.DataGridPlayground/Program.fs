@@ -28,14 +28,26 @@ type Views =
                     Person("Bob", 22, true)
                 ]
             )
+            
+            let selectedItem = ctx.useState None
 
             DockPanel.create [
                 DockPanel.children [
-
+                    TextBlock.create [
+                        TextBlock.dock Dock.Top
+                        TextBlock.margin 10
+                        TextBlock.text $"""Selected: {(selectedItem.Current |> Option.defaultValue (Person("", 0, false))).Name}"""
+                    ]
                     DataGrid.create [
                         DataGrid.dock Dock.Top
                         DataGrid.isReadOnly false
                         DataGrid.items data.Current
+                        DataGrid.onSelectedItemChanged (fun item ->
+                            (match box item with
+                             | null -> None
+                             | :? Person as i -> Some i
+                             | _ -> failwith "Something went horribly wrong!")
+                            |> selectedItem.Set)
 
                         DataGrid.columns [
                             DataGridTextColumn.create [
