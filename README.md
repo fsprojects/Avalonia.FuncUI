@@ -70,18 +70,9 @@ The same counter as above but using the `Avalonia.FuncUI.Elmish` package:
 
 ```f#
 module Counter =
-
-    type CounterState = {
-        count : int
-    }
-
-    let init = {
-        count = 0
-    }
-
-    type Msg =
-        | Increment
-        | Decrement
+    type CounterState = { count : int }
+    let init = { count = 0 }
+    type Msg = Increment | Decrement
 
     let update (msg: Msg) (state: CounterState) : CounterState =
         match msg with
