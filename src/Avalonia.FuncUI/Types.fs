@@ -1,12 +1,12 @@
-﻿namespace rec Avalonia.FuncUI
+﻿namespace Avalonia.FuncUI
 
 open Avalonia
 open Avalonia.Controls
 open System
 open System.Threading
-open Avalonia.Data
+open System.Diagnostics.CodeAnalysis
 
-module Types =
+module rec Types =
 
     [<CustomEquality; NoComparison; Struct>]
     type PropertyAccessor =
@@ -153,11 +153,11 @@ module Types =
         abstract member ConstructorArgs: obj array with get
         abstract member Outlet: (AvaloniaObject -> unit) voption with get
 
-    type IView<'viewType> =
+    type IView<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>]'viewType> =
         inherit IView
         abstract member Attrs: IAttr<'viewType> list with get
 
-    type View<'viewType> =
+    type View<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>]'viewType> =
         { ViewType: Type
           ViewKey: string voption
           Attrs: IAttr<'viewType> list
