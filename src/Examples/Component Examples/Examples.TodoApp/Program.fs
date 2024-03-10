@@ -137,7 +137,7 @@ module Views =
 
 
     let listItemView (item: IWritable<TodoItem>) =
-        Component.create ($"item-%O{item.Current.ItemId}", fun ctx ->
+        Component.create (item.Current.ItemId, fun ctx ->
             let activeItemId = ctx.usePassed AppState.activeItemId
             let item = ctx.usePassed item
             let title = ctx.useState item.Current.Title

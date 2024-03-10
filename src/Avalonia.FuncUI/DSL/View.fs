@@ -40,14 +40,14 @@ type View () =
     /// </example>
     /// </summary>
     static member createWithKey<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
-      ( key: string )
+      ( key: obj )
       ( createView: IAttr<'view> list -> IView<'view>)
       ( attrs: IAttr<'view> list ) =
 
         let view = createView(attrs)
 
         { View.ViewType = typeof<'view>
-          View.ViewKey = ValueSome key
+          View.ViewKey = ValueSome { ViewKey.Key = key; ViewKey.Comparer = null }
           View.Attrs = view.Attrs
           View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = ValueNone }
@@ -96,11 +96,11 @@ type View () =
     /// </example>
     /// </summary>
     static member withKey<[<DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)>] 'view when 'view :> AvaloniaObject>
-      ( key: string )
+      ( key: obj )
       ( view: IView<'view> ) : IView<'view> =
 
         { View.ViewType = view.ViewType
-          View.ViewKey = ValueSome key
+          View.ViewKey = ValueSome { ViewKey.Key = key; ViewKey.Comparer = null }
           View.Attrs = view.Attrs
           View.ConstructorArgs = view.ConstructorArgs
           View.Outlet = view.Outlet }

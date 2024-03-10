@@ -1,5 +1,6 @@
 ﻿namespace rec Avalonia.FuncUI
 
+open System.Collections
 open Avalonia
 open Avalonia.Controls
 open System
@@ -62,7 +63,7 @@ module Types =
     [<CustomEquality; NoComparison>]
     type Subscription =
         { Name: string
-          Subscribe: Control  * Delegate -> CancellationTokenSource
+          Subscribe: Control * Delegate -> CancellationTokenSource
           Func: Delegate
           FuncType: Type
           Scope: obj }
@@ -146,9 +147,14 @@ module Types =
                 | InitFunction value -> ValueSome value
                 | _ -> ValueNone
 
+    [<Struct>]
+    type ViewKey =
+        { Key: obj
+          Comparer: IEqualityComparer }
+
     type IView =
         abstract member ViewType: Type with get
-        abstract member ViewKey: string voption
+        abstract member ViewKey: ViewKey voption
         abstract member Attrs: IAttr list with get
         abstract member ConstructorArgs: obj array with get
         abstract member Outlet: (AvaloniaObject -> unit) voption with get
@@ -159,7 +165,7 @@ module Types =
 
     type View<'viewType> =
         { ViewType: Type
-          ViewKey: string voption
+          ViewKey: ViewKey voption
           Attrs: IAttr<'viewType> list
           ConstructorArgs: obj array
           Outlet: (AvaloniaObject-> unit) voption }
