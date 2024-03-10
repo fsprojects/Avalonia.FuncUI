@@ -77,35 +77,6 @@ type internal StateHookViews =
             :> IView
         )
 
-    static member private stateHookSourcesView (hook: StateHook) =
-        Component.create ("state_hook_sources", fun _ctx ->
-            TreeView.create [
-                TreeView.itemTemplate (
-                    DataTemplateView<_>.create (
-                        (fun info -> Seq.ofList info.Source.InstanceType.Sources),
-                        (fun info ->
-                            StackPanel.create [
-                                StackPanel.orientation Orientation.Vertical
-                                StackPanel.spacing 5.0
-                                StackPanel.children [
-
-                                    TextBlock.create [
-                                        TextBlock.foreground "#2ecc71"
-                                        TextBlock.text $"{Reflector.fullTypeName(info.Source.GetType())}"
-                                    ]
-
-                                    StateHookViews.anyReadableView (info.Name, info.Source)
-                                ]
-                            ]
-                        )
-                    )
-
-                )
-                TreeView.dataItems hook.State.Value.InstanceType.Sources
-            ]
-            :> IView
-        )
-
     static member private stateHookHeader (hook: StateHook) =
         Component.create ($"state_hook_details_header_{hook.Identity}", fun ctx ->
             let currentValue = ctx.useState (hook.State.Value.CurrentAny, true)
@@ -160,22 +131,6 @@ type internal StateHookViews =
                 StackPanel.spacing 10.0
                 StackPanel.children [
                     StateHookViews.stateHookHeader hook
-
-                    match hook.State.Value.InstanceType with
-                    | InstanceType.Adapter _ ->
-                        TextBlock.create [
-                            TextBlock.text "Adapter sources:"
-                        ]
-
-                        StackPanel.create [
-                            StackPanel.orientation Orientation.Vertical
-                            StackPanel.spacing 5.0
-                            StackPanel.children [
-                                StateHookViews.stateHookSourcesView hook
-                            ]
-                        ]
-                    | _ ->
-                        ()
                 ]
             ]
             :> IView
@@ -190,41 +145,6 @@ type internal StateHookViews =
                         StackPanel.spacing 10.0
                         StackPanel.children [
                             StateHookViews.stateHookHeader hook
-
-                            if not hook.State.Value.InstanceType.Sources.IsEmpty then
-                                Button.create [
-                                    Button.content (
-                                        StackPanel.create [
-                                            StackPanel.orientation Orientation.Horizontal
-                                            StackPanel.spacing 5.0
-                                            StackPanel.children [
-                                                IconView.create (Icons.openInNewWindow, 16)
-                                                TextBlock.create [
-                                                    TextBlock.text "Details"
-                                                ]
-                                            ]
-                                        ]
-                                    )
-                                    Button.onClick (fun _ ->
-                                        let childWindow =
-                                            ChildWindow (
-                                                title = "hook details",
-                                                comp = (
-                                                    Component (fun _ctx ->
-                                                        ScrollViewer.create [
-                                                            ScrollViewer.padding 5.0
-                                                            ScrollViewer.content (
-                                                                StateHookViews.stateHookDetailsView hook
-                                                            )
-                                                        ]
-                                                        :> IView
-                                                    )
-                                                )
-                                            )
-
-                                        childWindow.Show ()
-                                    )
-                                ]
                         ]
                     ]
                 )

@@ -11,7 +11,6 @@ type internal UniqueValueReadOnly<'value>
 
     interface IReadable<'value> with
         member this.InstanceId with get () = src.InstanceId
-        member this.InstanceType with get () = InstanceType.Create src
         member this.ValueType with get () = typeof<'value>
         member this.Current with get () = src.Current
         member this.Subscribe (handler: 'value -> unit) =
@@ -61,7 +60,6 @@ type internal ReadValueMapped<'a, 'b>
 
     interface IReadable<'b> with
         member this.InstanceId with get () = src.InstanceId
-        member this.InstanceType with get () = InstanceType.Create src
         member this.ValueType with get () = typeof<'b>
         member this.Current with get () = current
         member this.Subscribe (handler: 'b -> unit) =
@@ -80,7 +78,6 @@ type internal ValueMapped<'a, 'b>(src: IWritable<'a>, read: 'a -> 'b, write: 'a 
 
     interface IWritable<'b> with
         member this.InstanceId with get () = src.InstanceId
-        member this.InstanceType with get () = InstanceType.Create src
         member this.ValueType with get () = typeof<'b>
         member this.Current with get () = current
         member this.Subscribe (handler: 'b -> unit) =
@@ -114,7 +111,6 @@ type internal ReadValueMap<'value, 'key when 'key : comparison>
 
     interface IReadable<Map<'key, 'value>> with
         member this.InstanceId with get () = value.InstanceId
-        member this.InstanceType with get () = InstanceType.Create src
         member this.ValueType with get () = typeof<Map<'key, 'value>>
         member this.Current with get () = lastValue
         member this.Subscribe (handler: Map<'key, 'value> -> unit) =
@@ -172,11 +168,6 @@ type internal ReadKeyFocusedValue<'value, 'key when 'key : comparison>
 
     interface IReadable<'value option> with
         member this.InstanceId with get () = value.InstanceId
-        member this.InstanceType with get () =
-            InstanceType.Create [
-                "src", src :> IAnyReadable
-                "key", key :> IAnyReadable
-            ]
         member this.ValueType with get () = typeof<'value option>
 
         member this.Current with get () = current
@@ -242,11 +233,6 @@ type internal FilteringValueList<'value, 'filter>
 
     interface IReadable<'value list> with
         member this.InstanceId with get () = value.InstanceId
-        member this.InstanceType with get () =
-            InstanceType.Create [
-                "src", src :> IAnyReadable
-                "filter", filter :> IAnyReadable
-            ]
         member this.ValueType with get () = typeof<'value list>
         member this.Current with get () = current
         member this.Subscribe (handler: 'value list -> unit) =
@@ -264,7 +250,6 @@ type internal TraversedValue<'value, 'key when 'key : comparison>
 
     interface IWritable<'value> with
         member this.InstanceId with get () = wire.InstanceId
-        member this.InstanceType with get () = InstanceType.Create wire
         member this.ValueType with get () = typeof<'value>
         member this.Current with get () =
             match wire.Current.TryGetValue key with

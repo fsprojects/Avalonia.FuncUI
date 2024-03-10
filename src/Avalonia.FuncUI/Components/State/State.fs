@@ -1,38 +1,6 @@
 namespace Avalonia.FuncUI
 
 open System
-open Avalonia.FuncUI
-
-
-/// Used to create a dependency graph of state values for debugging / visualization.
-[<Struct; RequireQualifiedAccess>]
-type InstanceType =
-    | Source
-    | Adapter of sources: Map<string, IAnyReadable>
-
-    member this.Sources with get () : InstanceSourceInfo list =
-        match this with
-        | Source -> List.empty
-        | Adapter sources ->
-            [
-                for src in sources do
-                    { InstanceSourceInfo.Name = src.Key
-                      InstanceSourceInfo.Source = src.Value }
-            ]
-
-    static member Create (sources: (string * IAnyReadable) list) : InstanceType =
-        sources
-        |> Map.ofList
-        |> InstanceType.Adapter
-
-    static member Create (src: IAnyReadable) : InstanceType =
-        Map.empty
-        |> Map.add "src" src
-        |> InstanceType.Adapter
-
-and InstanceSourceInfo =
-    { Name: string
-      Source: IAnyReadable }
 
 /// <summary>
 /// <para>
@@ -42,10 +10,9 @@ and InstanceSourceInfo =
 /// Used as the lowest common denominator for all state values that implement <c>IReadable&lt;'t&gt;</c>.
 /// </para>
 /// </summary>
-and IAnyReadable =
+type IAnyReadable =
     inherit IDisposable
     abstract InstanceId: Guid with get
-    abstract InstanceType: InstanceType with get
     abstract ValueType: Type with get
     abstract member SubscribeAny : (obj -> unit) -> IDisposable
 
@@ -74,7 +41,6 @@ type State<'value>(init: 'value) =
 
     interface IWritable<'value> with
         member this.InstanceId with get () = instanceId
-        member this.InstanceType with get () = InstanceType.Source
         member this.ValueType with get () = typeof<'value>
         member this.Current with get () = current
 
@@ -99,7 +65,6 @@ type ReadOnlyState<'value>(init: 'value) =
 
     interface IReadable<'value> with
         member this.InstanceId with get () = instanceId
-        member this.InstanceType with get () = InstanceType.Source
         member this.ValueType = typeof<'value>
         member this.Current with get () = init
         member this.Subscribe (_handler: 'value -> unit) =
