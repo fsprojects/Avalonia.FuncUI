@@ -8,12 +8,11 @@ open Avalonia.FuncUI.Library
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Hosts
 open Avalonia.Data
-open System.Linq.Expressions
 
 type DataTemplateView<'data, 'childData, 'view when 'view :> IView>
     (viewFunc: 'data -> 'view,
      matchFunc: ('data -> bool) voption,
-     itemsSource: Expression<Func<'data, 'childData seq>> voption,
+     itemsSource: Func<'data, 'childData seq> voption,
      supportsRecycling: bool) =
 
     member this.ViewFunc = viewFunc
@@ -39,7 +38,7 @@ type DataTemplateView<'data, 'childData, 'view when 'view :> IView>
             | ValueSome expression ->
                 match item with
                 | :? 'data as data ->
-                    InstancedBinding.OneTime(expression.Compile().Invoke(data))
+                    InstancedBinding.OneTime(expression.Invoke(data))
                 | _ -> null
 
         member this.Match (data: obj) : bool =
