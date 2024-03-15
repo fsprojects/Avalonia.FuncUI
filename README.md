@@ -104,6 +104,7 @@ Find more examples using Elmish in the [Elmish Examples folder](https://github.c
 
 The current co-maintainers of Avalonia.FuncUI are
 
+* @Numpsy
 * @JordanMarr
 * @sleepyfran
 * @JaggerJo (project originator)
