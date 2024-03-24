@@ -1,20 +1,19 @@
 namespace Examples.MusicPlayer
 
-
 module Songs =
     open System
     open System.IO
     open Types
+    open Avalonia.Platform.Storage
 
-    let populateSongs (paths: string array): Types.SongRecord array =
+    let populateSongs (paths: IStorageFile seq): Types.SongRecord array =
         paths
-        |> Array.Parallel.map FileInfo
-        |> Array.Parallel.map (fun info -> info.Name, info.FullName)
-        |> Array.Parallel.map (fun (name, path) ->
+        |> Seq.map (fun storageFile ->
             { id = Guid.NewGuid()
-              name = name
-              path = path
+              name = storageFile.Name
+              path = storageFile.Path.LocalPath
               createdAt = DateTime.Now })
+        |> Array.ofSeq
 
     let populateFromDirectory (path: string): Types.SongRecord array =
         match String.IsNullOrEmpty path with
@@ -29,3 +28,9 @@ module Songs =
                   name = name
                   path = path
                   createdAt = DateTime.Now })
+
+    let populateFromFolders(folders: IStorageFolder seq) =
+        folders
+        |> Seq.map _.Path.LocalPath
+        |> Seq.map populateFromDirectory
+        |> Array.concat

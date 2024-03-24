@@ -1,34 +1,39 @@
 namespace Examples.MusicPlayer
 
-
 module Dialogs =
-    open System
-    open Avalonia.Controls
+    open Avalonia
+    open Avalonia.Platform.Storage
+    open Avalonia.Threading
+    open System.Collections.Generic
 
-    let getMusicFilesDialog (filters: FileDialogFilter seq option) =
-        let dialog = OpenFileDialog()
+    let showMusicFilesDialog(provider: IStorageProvider, filters: FilePickerFileType list option) =
 
         let filters =
             match filters with
             | Some filter -> filter
             | None ->
-                let filter = FileDialogFilter()
-                filter.Extensions <-
-                    Collections.Generic.List
-                        (seq {
-                            "mp3"
-                            "wav" })
-                filter.Name <- "Music"
-                seq { filter }
+                let patterns = [ "*.mp3"; "*.wav" ]
+                let filter = FilePickerFileType("Music", Patterns = patterns)
+                [ filter ]
 
-        dialog.AllowMultiple <- true
-        dialog.Directory <- Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
-        dialog.Title <- "Select Your Music Files"
-        dialog.Filters <- System.Collections.Generic.List(filters)
-        dialog
+        let options = FilePickerOpenOptions(AllowMultiple = true, Title = "Select Your Music Files", FileTypeFilter = filters)
 
-    let getFolderDialog =
-        let dialog = OpenFolderDialog()
-        dialog.Directory <- Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
-        dialog.Title <- "Choose where to look up for music"
-        dialog
+        async {
+            let! musicFolder = provider.TryGetWellKnownFolderAsync Platform.Storage.WellKnownFolder.Music |> Async.AwaitTask
+            options.SuggestedStartLocation <- musicFolder
+
+            return!
+                Dispatcher.UIThread.InvokeAsync<IReadOnlyList<IStorageFile>>
+                    (fun _ -> provider.OpenFilePickerAsync(options)) |> Async.AwaitTask
+        }
+
+    let showMusicFolderDialog(provider: IStorageProvider) =
+        async {
+            let! musicFolder = provider.TryGetWellKnownFolderAsync Platform.Storage.WellKnownFolder.Music |> Async.AwaitTask
+            let options = FolderPickerOpenOptions(Title = "Choose where to look up for music", SuggestedStartLocation = musicFolder)
+            
+            return!
+                Dispatcher.UIThread.InvokeAsync<IReadOnlyList<IStorageFolder>>
+                    (fun _ -> provider.OpenFolderPickerAsync(options)) |> Async.AwaitTask
+
+        }
