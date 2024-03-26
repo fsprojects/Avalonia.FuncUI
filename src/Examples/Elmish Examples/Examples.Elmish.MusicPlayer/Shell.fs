@@ -185,8 +185,10 @@ module Shell =
     type ShellWindow() as this =
         inherit HostWindow()
         do
+            let iconPath = System.IO.Path.Combine("Assets", "Icons", "icon.ico")
+
             base.Title <- "Music Player in F# :)"
-            base.Icon <- WindowIcon("Assets\Icons\icon.ico")
+            base.Icon <- WindowIcon(iconPath)
             base.Width <- 800.0
             base.Height <- 600.0
             base.MinWidth <- 526.0
