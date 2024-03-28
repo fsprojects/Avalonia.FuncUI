@@ -84,7 +84,7 @@ module internal InspectorState =
 
         let removed = Set.difference last next
         for item in removed do
-            if item.Ref <> null then
+            if not (isNull (item.Ref)) then
                 ComponentHighlightAdorner.Remove item.Ref
 
         shared.Components.Set next

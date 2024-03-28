@@ -18,7 +18,7 @@ module rec VirtualDom =
 
     let updateRoot (host: ContentControl, last: IView option, next: IView option) =
         let root : Control voption =
-            if host.Content <> null then
+            if not (isNull (host.Content)) then
                 match host.Content with
                 | :? Control as control -> ValueSome control
                 | _ -> ValueNone
@@ -54,7 +54,7 @@ module rec VirtualDom =
     // TODO: share code with updateRoot
     let internal updateBorderRoot (host: Border, last: IView option, next: IView option) =
         let root : Control voption =
-            if host.Child <> null then
+            if not (isNull (host.Child)) then
                 ValueSome host.Child
             else
                 ValueNone
