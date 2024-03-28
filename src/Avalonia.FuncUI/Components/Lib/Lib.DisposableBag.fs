@@ -5,13 +5,13 @@ open System
 type internal DisposableBag () =
     let items = ResizeArray<IDisposable>()
     member this.Add (item: IDisposable) =
-        if item <> null then
+        if not (isNull item) then
             items.Add item
 
     interface IDisposable with
         member this.Dispose () =
             for item in items do
-                if item <> null then
+                if not (isNull item) then
                     item.Dispose ()
 
 

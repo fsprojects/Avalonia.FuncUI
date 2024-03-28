@@ -21,7 +21,7 @@ type internal ComponentHighlightAdorner (adornedElement: Component) =
 
         let layer = AdornerLayer.GetAdornerLayer adornedElement
 
-        if layer <> null then
+        if not (isNull layer) then
             let alreadyAttached =
                 layer.Children
                 |> Seq.toList // copy to be safe
@@ -39,7 +39,7 @@ type internal ComponentHighlightAdorner (adornedElement: Component) =
     static member Remove (adornedElement: Component) =
         let layer = AdornerLayer.GetAdornerLayer adornedElement
 
-        if layer <> null then
+        if not (isNull layer) then
             layer.Children
             |> Seq.toList // copy to be safe
             |> Seq.filter (fun c -> c.GetType() = typeof<ComponentHighlightAdorner>)

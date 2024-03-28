@@ -10,13 +10,13 @@ module internal ComponentHelpers =
         let ao: obj = a :> _
         let bo: obj = b :> _
 
-        if ao <> null then
-            if bo <> null then
+        if not (isNull ao) then
+            if not (isNull bo) then
                 ao.Equals(bo)
             else
                 false
         else
-            bo = null
+            isNull bo
 
 [<RequireQualifiedAccess>]
 module internal String =

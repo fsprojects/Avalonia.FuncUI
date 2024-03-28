@@ -62,7 +62,7 @@ type Views =
                                 StrokeLineCap = PenLineCap.Round
                             )
 
-                            if canvasOutlet.Current <> null then
+                            if not (isNull (canvasOutlet.Current)) then
                                 canvasOutlet.Current.Children.Add line
 
                         | None ->

@@ -14,7 +14,7 @@ module internal rec Patcher =
     open System.Threading
 
     let private shouldPatch (value: obj, viewElement: ViewDelta) =
-         value <> null
+         not (isNull value)
          && value.GetType() = viewElement.ViewType
          && not viewElement.KeyDidChange
 
@@ -226,7 +226,7 @@ module internal rec Patcher =
 
     let create (viewElement: ViewDelta) : AvaloniaObject =
         let control =
-            if viewElement.ConstructorArgs <> null && viewElement.ConstructorArgs.Length > 0 then
+            if not (isNull (viewElement.ConstructorArgs)) && viewElement.ConstructorArgs.Length > 0 then
                 (viewElement.ViewType, viewElement.ConstructorArgs)
                 |> Activator.CreateInstance
                 |> Utils.cast<AvaloniaObject>
