@@ -29,9 +29,6 @@ module Button =
         static member isDefault<'t when 't :> Button>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Button.IsDefaultProperty, value, ValueNone)
 
-        static member isPressed<'t when 't :> Button>(value: bool) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<bool>(Button.IsPressedProperty, value, ValueNone)
-
         static member onIsPressedChanged<'t when 't :> Button>(func: bool -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<bool>(Button.IsPressedProperty, func, ?subPatchOptions = subPatchOptions)
 
