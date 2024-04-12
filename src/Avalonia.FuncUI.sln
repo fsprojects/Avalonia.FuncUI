@@ -88,6 +88,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elmish Examples", "Elmish E
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Elmish.Tetris", "Examples\Elmish Examples\Examples.Elmish.Tetris\Examples.Elmish.Tetris.fsproj", "{EC63B886-E809-4B74-B533-BFF3D60017C9}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ComponentPlayground", "Examples\Examples.ComponentPlayground\Examples.ComponentPlayground.fsproj", "{FA4E81D2-1083-43E1-99E3-0F4EA31B3701}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -206,6 +208,10 @@ Global
 		{EC63B886-E809-4B74-B533-BFF3D60017C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC63B886-E809-4B74-B533-BFF3D60017C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC63B886-E809-4B74-B533-BFF3D60017C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA4E81D2-1083-43E1-99E3-0F4EA31B3701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA4E81D2-1083-43E1-99E3-0F4EA31B3701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA4E81D2-1083-43E1-99E3-0F4EA31B3701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA4E81D2-1083-43E1-99E3-0F4EA31B3701}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -242,6 +248,7 @@ Global
 		{70BDCE72-149A-435A-9910-E79DE329F978} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{6D2C62FC-5634-4997-AF1F-2E8A5D27E117} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
 		{EC63B886-E809-4B74-B533-BFF3D60017C9} = {6D2C62FC-5634-4997-AF1F-2E8A5D27E117}
+		{FA4E81D2-1083-43E1-99E3-0F4EA31B3701} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}

@@ -56,6 +56,7 @@
     <Compile Include="Helpers.fs" />
     <Compile Include="DSL\ViewBuilder.fs" />
     <Compile Include="DSL\AttrBuilder.fs" />
+    <Compile Include="DSL\Component.fs" />
     <Compile Include="DSL\View.fs" />
     <Compile Include="DSL\Base\AvaloniaObject.fs" />
 
