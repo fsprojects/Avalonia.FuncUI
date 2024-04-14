@@ -1,10 +1,16 @@
 ﻿namespace Examples.CounterApp
-
+open System
 open Avalonia
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.Media
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
 open Avalonia.Controls
+
+module Helpers =
+
+    let randomColor () : string =
+        String.Format("#{0:X6}", Random.Shared.Next(0x1000000));
 
 module Main =
     open Avalonia.Controls
@@ -12,14 +18,36 @@ module Main =
     open Avalonia.FuncUI.DSL
     open Avalonia.Layout
 
-    let counterView (count: int) =
-        Component.create (fun ctx ->
+    let counterViewNegativeIndicator () =
+        Component.create (fun _ ->
             TextBlock.create [
-                TextBlock.dock Dock.Top
-                TextBlock.fontSize 48.0
+                TextBlock.fontSize 24.0
                 TextBlock.verticalAlignment VerticalAlignment.Center
                 TextBlock.horizontalAlignment HorizontalAlignment.Center
-                TextBlock.text (string count)
+                TextBlock.background (SolidColorBrush.Parse (Helpers.randomColor()))
+                TextBlock.text "Negative"
+            ]
+        )
+
+    let counterView (count: int) =
+        Component.create (fun _ ->
+            StackPanel.create [
+                StackPanel.dock Dock.Top
+                StackPanel.spacing 5
+                StackPanel.orientation Orientation.Horizontal
+                StackPanel.horizontalAlignment HorizontalAlignment.Center
+                StackPanel.children [
+
+                    TextBlock.create [
+                        TextBlock.fontSize 48.0
+                        TextBlock.verticalAlignment VerticalAlignment.Center
+                        TextBlock.horizontalAlignment HorizontalAlignment.Center
+                        TextBlock.text (string count)
+                    ]
+
+                    if count < 0 then
+                        counterViewNegativeIndicator ()
+                ]
             ]
         )
 

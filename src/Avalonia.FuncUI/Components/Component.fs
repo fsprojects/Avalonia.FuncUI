@@ -6,6 +6,7 @@ open System.Diagnostics.CodeAnalysis
 open Avalonia
 open Avalonia.Controls
 open Avalonia.FuncUI
+open Avalonia.FuncUI.Library
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom
 open Avalonia.Threading
@@ -16,27 +17,32 @@ type Component (render: IComponentContext -> IView) as this =
     inherit ComponentBase ()
 
     static let _RenderFunctionProperty =
-        AvaloniaProperty.RegisterDirect<Component, Func<IComponentContext, IView>>(
+        AvaloniaProperty.RegisterDirect<Component, IComponentContext -> IView>(
             name = "RenderFunction",
-            getter = Func<Component, Func<IComponentContext, IView>>(_.RenderFunction),
+            getter = Func<Component, IComponentContext -> IView>(_.RenderFunction),
             setter = (fun this value -> this.RenderFunction <- value)
         )
 
     static do
-        let _ = _RenderFunctionProperty.Changed.AddClassHandler<Component, Func<IComponentContext, IView>>(fun this e ->
-            this.ForceRender()
+        let _ = _RenderFunctionProperty.Changed.AddClassHandler<Component, IComponentContext -> IView>(fun this e ->
+            let capturesState = RenderFunctionAnalysis.capturesState(e.NewValue.Value)
 
+            if capturesState then
+                this.ForceRender()
         )
         ()
-    let mutable _renderFunction: Func<IComponentContext, IView> = render
+
+    let mutable _renderFunction = render
 
     static member RenderFunctionProperty = _RenderFunctionProperty
 
     member this.RenderFunction
         with get() = _renderFunction
         and set(value) =
-            let didChange = this.SetAndRaise(Component.RenderFunctionProperty, &_renderFunction, value)
+            let oldValue = _renderFunction
+            _renderFunction <- value
+            let _ = this.RaisePropertyChanged(Component.RenderFunctionProperty, oldValue, value)
             ()
 
     override this.Render ctx =
-        _renderFunction.Invoke ctx
+        _renderFunction ctx

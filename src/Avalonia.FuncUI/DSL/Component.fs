@@ -9,7 +9,7 @@ open Avalonia.FuncUI.Types
 type Component with
 
     static member internal renderFunction<'t when 't :> Component>(value: IComponentContext -> IView) : IAttr<'t> =
-        AttrBuilder<'t>.CreateProperty<Func<IComponentContext, IView>>(Component.RenderFunctionProperty, value, ValueNone)
+        AttrBuilder<'t>.CreateProperty<IComponentContext -> IView>(Component.RenderFunctionProperty, value, ValueNone)
 
     static member create(key: string, render: IComponentContext -> IView) : IView<Component> =
         { View.ViewType = typeof<Component>
