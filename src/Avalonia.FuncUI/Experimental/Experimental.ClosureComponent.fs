@@ -1,10 +1,11 @@
-namespace Avalonia.FuncUI
+namespace Avalonia.FuncUI.Experimental
 
 open System
 open System.Diagnostics.CodeAnalysis
 open Avalonia
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
+open Avalonia.FuncUI.Builder
 
 /// Component that works well with a render function that captures state.
 [<AllowNullLiteral>]
@@ -42,3 +43,37 @@ type ClosureComponent (render: IComponentContext -> IView) as this =
 
     override this.Render ctx =
         _renderFunction ctx
+
+
+
+[<AutoOpen>]
+module __ClosureComponentExtensions =
+
+    type ClosureComponent with
+
+        static member internal renderFunction<'t when 't :> ClosureComponent>(value: IComponentContext -> IView) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IComponentContext -> IView>(ClosureComponent.RenderFunctionProperty, value, ValueNone)
+
+        static member create(key: string, render: IComponentContext -> IView) : IView<ClosureComponent> =
+            let view: View<ClosureComponent> =
+              { View.ViewType = typeof<ClosureComponent>
+                View.ViewKey = ValueSome key
+                View.Attrs = [
+                  ClosureComponent.renderFunction render
+                ]
+                View.Outlet = ValueNone
+                View.ConstructorArgs = [| render :> obj |] }
+
+            view :> IView<ClosureComponent>
+
+        static member create(render: IComponentContext -> IView) : IView<ClosureComponent> =
+            let view: View<ClosureComponent> =
+              { View.ViewType = typeof<ClosureComponent>
+                View.ViewKey = ValueNone
+                View.Attrs = [
+                  ClosureComponent.renderFunction render
+                ]
+                View.Outlet = ValueNone
+                View.ConstructorArgs = [| render :> obj |] }
+
+            view :> IView<ClosureComponent>
