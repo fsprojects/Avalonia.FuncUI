@@ -19,7 +19,6 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
-          6.x.x
           8.x.x
 
     - name: install workloads
