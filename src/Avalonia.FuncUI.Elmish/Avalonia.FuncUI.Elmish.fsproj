@@ -11,6 +11,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Avalonia FuncUI Elmish</Title>
     <PackageVersion>$(FuncUIVersion)</PackageVersion>
+    <Description>Elmish integration for Avalonia.FuncUI</Description>
     <PackageIcon>nuget_icon.png</PackageIcon>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
