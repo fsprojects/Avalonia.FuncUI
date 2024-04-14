@@ -15,28 +15,28 @@ open Avalonia.Threading
 type Component (render: IComponentContext -> IView) as this =
     inherit ComponentBase ()
 
-    static let RenderFunctionProperty =
-        AvaloniaProperty.RegisterDirect<Component, IComponentContext -> IView>(
+    static let _RenderFunctionProperty =
+        AvaloniaProperty.RegisterDirect<Component, Func<IComponentContext, IView>>(
             name = "RenderFunction",
-            getter = Func<Component, IComponentContext -> IView>(_.RenderFunction),
+            getter = Func<Component, Func<IComponentContext, IView>>(_.RenderFunction),
             setter = (fun this value -> this.RenderFunction <- value)
         )
 
     static do
-        let _ = RenderFunctionProperty.Changed.AddClassHandler<Component, IComponentContext -> IView>(fun this e ->
+        let _ = _RenderFunctionProperty.Changed.AddClassHandler<Component, Func<IComponentContext, IView>>(fun this e ->
             this.ForceRender()
 
         )
         ()
+    let mutable _renderFunction: Func<IComponentContext, IView> = render
 
-    let mutable _renderFunction: IComponentContext -> IView = render
+    static member RenderFunctionProperty = _RenderFunctionProperty
 
     member this.RenderFunction
         with get() = _renderFunction
         and set(value) =
-            let didChange = this.SetAndRaise(RenderFunctionProperty, ref _renderFunction, value)
-            _renderFunction <- value
+            let didChange = this.SetAndRaise(Component.RenderFunctionProperty, &_renderFunction, value)
             ()
 
     override this.Render ctx =
-        _renderFunction ctx
+        _renderFunction.Invoke ctx
