@@ -5,6 +5,7 @@ open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.Media
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI.Hosts
+open Avalonia.FuncUI.Experimental
 open Avalonia.Controls
 
 module Helpers =
@@ -19,7 +20,7 @@ module Main =
     open Avalonia.Layout
 
     let counterViewNegativeIndicator () =
-        Component.create (fun _ ->
+        Component.create ("indicator", fun _ ->
             TextBlock.create [
                 TextBlock.fontSize 24.0
                 TextBlock.verticalAlignment VerticalAlignment.Center
@@ -30,7 +31,19 @@ module Main =
         )
 
     let counterView (count: int) =
-        Component.create (fun _ ->
+        ClosureComponent.create (fun ctx ->
+            let innerCount = ctx.useState count
+
+            ctx.useEffect (
+                handler = (fun () ->
+                    Console.WriteLine($"CounterView rendered (count: {count}, innerCount: {innerCount.Current})")
+
+                    if innerCount.Current <> count then
+                        innerCount .= count
+                ),
+                triggers = [ EffectTrigger.AfterRender ]
+            )
+
             StackPanel.create [
                 StackPanel.dock Dock.Top
                 StackPanel.spacing 5

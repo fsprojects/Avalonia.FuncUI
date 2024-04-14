@@ -51,6 +51,7 @@
     <Compile Include="Components\Context\Context.fs" />
     <Compile Include="Components\ComponentBase.fs" />
     <Compile Include="Components\Component.fs" />
+    <Compile Include="Components\ClosureComponent.fs" />
     <Compile Include="Hosts.fs" />
     <Compile Include="DataTemplateView.fs" />
     <Compile Include="Helpers.fs" />
