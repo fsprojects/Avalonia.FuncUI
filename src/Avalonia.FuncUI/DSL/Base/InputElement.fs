@@ -6,6 +6,33 @@ module InputElement =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     open Avalonia.Input
+    open Avalonia.Input.TextInput
+
+    module private Internals =
+        open System.Linq
+        open System.Collections.Generic
+        let patchKeyBindings (keyBindings: List<KeyBinding>) (newValues: KeyBinding list) =
+            if List.isEmpty newValues then
+                keyBindings.Clear()
+            else
+                Seq.toList keyBindings
+                |> List.except newValues
+                |> List.iter (keyBindings.Remove >> ignore) 
+
+                for newIndex, binding in List.indexed newValues do
+                    let oldIndex = keyBindings |> Seq.tryFindIndex ((=) binding)
+
+                    match oldIndex with
+                    | Some oldIndex when oldIndex = newIndex -> ()
+                    | Some oldIndex ->
+                        keyBindings.RemoveAt(oldIndex)
+                        keyBindings.Insert(newIndex, binding)
+                    | None -> keyBindings.Insert(newIndex, binding)
+
+        let compareKeyBindings (a:obj, b:obj) =
+            let a = a :?> list<KeyBinding>
+            let b = b :?> list<KeyBinding>
+            Enumerable.SequenceEqual(a, b)
 
     type InputElement with
         static member focusable<'t when 't :> InputElement>(value: bool) : IAttr<'t> =
@@ -19,7 +46,22 @@ module InputElement =
       
         static member isHitTestVisible<'t when 't :> InputElement>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(InputElement.IsHitTestVisibleProperty, value, ValueNone)
-            
+
+        static member isTabStop<'t when 't :> InputElement>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(InputElement.IsTabStopProperty, value, ValueNone)
+
+        static member tabIndex<'t when 't :> InputElement>(value: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(InputElement.TabIndexProperty, value, ValueNone)
+
+        static member keyBindings<'t when 't :> InputElement>(value: KeyBinding list) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.KeyBindings
+            let getter: 't -> KeyBinding list = (fun control -> Seq.toList control.KeyBindings)
+            let setter: 't * KeyBinding list -> unit = (fun (control, value) -> Internals.patchKeyBindings control.KeyBindings value)
+            let compare: obj * obj -> bool = Internals.compareKeyBindings
+            let factory = fun () -> []
+
+            AttrBuilder<'t>.CreateProperty<KeyBinding list>(name, value, ValueSome getter, ValueSome setter, ValueSome compare, factory)
+
         static member onGotFocus<'t when 't :> InputElement>(func: GotFocusEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<GotFocusEventArgs>(InputElement.GotFocusEvent, func, ?subPatchOptions = subPatchOptions)
             
@@ -34,7 +76,10 @@ module InputElement =
             
         static member onTextInput<'t when 't :> InputElement>(func: TextInputEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<TextInputEventArgs>(InputElement.TextInputEvent, func, ?subPatchOptions = subPatchOptions)
-            
+
+        static member onTextInputMethodClientRequested<'t when 't :> InputElement>(func: TextInputMethodClientRequestedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<TextInputMethodClientRequestedEventArgs>(InputElement.TextInputMethodClientRequestedEvent, func, ?subPatchOptions = subPatchOptions)
+
         static member onPointerEntered<'t when 't :> InputElement>(func: PointerEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<PointerEventArgs>(InputElement.PointerEnteredEvent, func, ?subPatchOptions = subPatchOptions)
             
@@ -58,6 +103,9 @@ module InputElement =
             
         static member onTapped<'t when 't :> InputElement>(func: TappedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<TappedEventArgs>(InputElement.TappedEvent, func, ?subPatchOptions = subPatchOptions)
-            
+
+        static member onHolding<'t when 't :> InputElement>(func: HoldingRoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<HoldingRoutedEventArgs>(InputElement.HoldingEvent, func, ?subPatchOptions = subPatchOptions)
+
         static member onDoubleTapped<'t when 't :> InputElement>(func: TappedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<TappedEventArgs>(InputElement.DoubleTappedEvent, func, ?subPatchOptions = subPatchOptions)
