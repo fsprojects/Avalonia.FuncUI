@@ -64,6 +64,7 @@
     <Compile Include="DSL\Base\IStyleHost.fs" />
     <Compile Include="DSL\Base\Visual.fs" />
     <Compile Include="DSL\Base\InputElement.fs" />
+    <Compile Include="DSL\Base\IDataTemplateHost.fs" />
     <Compile Include="DSL\Base\Control.fs" />
     <Compile Include="DSL\Base\StyledElement.fs" />
     <Compile Include="DSL\Base\Panel.fs" />
