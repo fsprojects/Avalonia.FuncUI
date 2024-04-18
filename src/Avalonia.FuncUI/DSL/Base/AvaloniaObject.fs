@@ -3,9 +3,12 @@ namespace Avalonia.FuncUI.DSL
 open Avalonia
 open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
+open System.Threading
 
 [<AutoOpen>]
 module AvaloniaObject =
+    open Avalonia.FuncUI.Types
+    open Avalonia.FuncUI.Builder
 
     type AvaloniaObject with
 
@@ -30,6 +33,16 @@ module AvaloniaObject =
             Attr.InitFunction {
                 InitFunction.Function = (fun (control: obj) -> func (control :?> 't))
             }
+
+        static member onPropertyChanged<'t when 't :> AvaloniaObject>(func: AvaloniaPropertyChangedEventArgs -> unit, ?subPatchOptions)  : IAttr<'t> =
+            let factory: AvaloniaObject * (AvaloniaPropertyChangedEventArgs -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable = control.PropertyChanged.Subscribe(func)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+
+            AttrBuilder<'t>.CreateSubscription<AvaloniaPropertyChangedEventArgs>("PropertyChanged", factory, func, ?subPatchOptions = subPatchOptions)
 
         member this.Bind(prop: DirectPropertyBase<'value>, readable: #IReadable<'value>) : unit =
             let _ = this.Bind(property = prop, source = readable.ImmediateObservable)
