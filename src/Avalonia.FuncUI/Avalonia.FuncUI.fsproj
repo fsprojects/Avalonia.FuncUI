@@ -99,6 +99,7 @@
     <Compile Include="DSL\Shapes\Path.fs" />
     <Compile Include="DSL\Calendar\Calendar.fs" />
     <Compile Include="DSL\Calendar\CalendarDatePicker.fs" />
+    <Compile Include="DSL\Documents\Inline.fs" />
     <Compile Include="DSL\Documents\Run.fs" />
     <Compile Include="DSL\Documents\Span.fs" />
     <Compile Include="DSL\Documents\Bold.fs" />
