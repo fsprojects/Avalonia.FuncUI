@@ -4,9 +4,14 @@ open Avalonia.Media.Immutable
 [<AutoOpen>]
 module TextBlock =
     open Avalonia
+    open Avalonia.Automation
+    open Avalonia.Automation.Peers
     open Avalonia.Controls
     open Avalonia.Controls.Documents
+    open Avalonia.Layout
     open Avalonia.Media
+    open Avalonia.Media.TextFormatting
+    open Avalonia.Metadata
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
@@ -27,6 +32,9 @@ module TextBlock =
         static member background<'t when 't :> TextBlock>(color: Color) : IAttr<'t> =
             color |> ImmutableSolidColorBrush |> TextBlock.background
 
+        static member baselineOffset<'t when 't :> TextBlock>(value: double) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<double>(TextBlock.BaselineOffsetProperty, value, ValueNone)
+
         static member fontFamily<'t when 't :> TextBlock>(value: FontFamily) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<FontFamily>(TextBlock.FontFamilyProperty, value, ValueNone)
 
@@ -38,6 +46,9 @@ module TextBlock =
 
         static member fontWeight<'t when 't :> TextBlock>(value: FontWeight) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<FontWeight>(TextBlock.FontWeightProperty, value, ValueNone)
+
+        static member fontStretch<'t when 't :> TextBlock>(value: FontStretch) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<FontStretch>(TextBlock.FontStretchProperty, value, ValueNone)
 
         static member foreground<'t when 't :> TextBlock>(value: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(TextBlock.ForegroundProperty, value, ValueNone)
@@ -57,6 +68,9 @@ module TextBlock =
 
         static member lineHeight<'t when 't :> TextBlock>(value: float) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<float>(TextBlock.LineHeightProperty, value, ValueNone)
+
+        static member lineSpacing<'t when 't :> TextBlock>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(TextBlock.LetterSpacingProperty, value, ValueNone)
 
         static member maxLines<'t when 't :> TextBlock>(value: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(TextBlock.MaxLinesProperty, value, ValueNone)
