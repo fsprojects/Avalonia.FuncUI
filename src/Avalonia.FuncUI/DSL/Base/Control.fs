@@ -3,6 +3,8 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module Control =
     open Avalonia.Controls
+    open Avalonia.Controls.Primitives
+    open Avalonia.Interactivity
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
 
@@ -32,3 +34,28 @@ module Control =
         static member contextMenu<'t when 't :> Control>(menu: ContextMenu) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ContextMenu>(Control.ContextMenuProperty, menu, ValueNone)
 
+        static member contextFlyout<'t when 't :> Control>(flyoutView: IView<FlyoutBase> option) : IAttr<'t> =
+            let view =
+                match flyoutView with
+                | Some view -> Some (view :> IView)
+                | None -> None
+
+            AttrBuilder<'t>.CreateContentSingle(Control.ContextFlyoutProperty, view)
+
+        static member contextFlyout<'t when 't :> Control>(flyoutView: IView<FlyoutBase>) : IAttr<'t> =
+            AttrBuilder<'t>.CreateContentSingle(Control.ContextFlyoutProperty, Some (flyoutView :> IView))
+
+        static member contextFlyout<'t when 't :> Control>(flyout: FlyoutBase) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<FlyoutBase>(Control.ContextFlyoutProperty, flyout, ValueNone)
+
+        static member onContextRequested<'t when 't :> Control>(func: ContextRequestedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<ContextRequestedEventArgs>(Control.ContextRequestedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onLoaded<'t when 't :> Control>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Control.LoadedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onUnloaded<'t when 't :> Control>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Control.UnloadedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onSizeChanged<'t when 't :> Control>(func: SizeChangedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<SizeChangedEventArgs>(Control.SizeChangedEvent, func, ?subPatchOptions = subPatchOptions)
