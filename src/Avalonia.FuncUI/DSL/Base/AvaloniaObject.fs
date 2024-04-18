@@ -35,6 +35,7 @@ module AvaloniaObject =
             }
 
         static member onPropertyChanged<'t when 't :> AvaloniaObject>(func: AvaloniaPropertyChangedEventArgs -> unit, ?subPatchOptions)  : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.PropertyChanged
             let factory: AvaloniaObject * (AvaloniaPropertyChangedEventArgs -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
@@ -42,7 +43,7 @@ module AvaloniaObject =
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<AvaloniaPropertyChangedEventArgs>("PropertyChanged", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<AvaloniaPropertyChangedEventArgs>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         member this.Bind(prop: DirectPropertyBase<'value>, readable: #IReadable<'value>) : unit =
             let _ = this.Bind(property = prop, source = readable.ImmediateObservable)

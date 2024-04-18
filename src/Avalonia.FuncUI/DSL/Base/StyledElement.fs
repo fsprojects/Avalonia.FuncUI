@@ -89,6 +89,7 @@ module StyledElement =
 
     type StyledElement with
         static member onAttachedToLogicalTree<'t when 't :> StyledElement>(func:LogicalTreeAttachmentEventArgs -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.AttachedToLogicalTree
             let factory: AvaloniaObject * (LogicalTreeAttachmentEventArgs -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
@@ -96,9 +97,10 @@ module StyledElement =
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<LogicalTreeAttachmentEventArgs>("AttachedToLogicalTree", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<LogicalTreeAttachmentEventArgs>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member onDetachedFromLogicalTree<'t when 't :> StyledElement>(func:LogicalTreeAttachmentEventArgs -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.DetachedFromLogicalTree
             let factory: AvaloniaObject * (LogicalTreeAttachmentEventArgs -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
@@ -106,9 +108,10 @@ module StyledElement =
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<LogicalTreeAttachmentEventArgs>("DetachedFromLogicalTree", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<LogicalTreeAttachmentEventArgs>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member onDataContextChanged<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.DataContextChanged
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
@@ -117,9 +120,10 @@ module StyledElement =
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<'t>("DataContextChanged", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member onInitialized<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.Initialized
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
@@ -127,9 +131,10 @@ module StyledElement =
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
             
-            AttrBuilder<'t>.CreateSubscription<'t>("Initialized", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member onResourcesChanged<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.ResourcesChanged
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
@@ -137,9 +142,10 @@ module StyledElement =
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<'t>("ResourcesChanged", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member onActualThemeVariantChanged<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.ActualThemeVariantChanged
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
@@ -147,7 +153,7 @@ module StyledElement =
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<'t>("ActualThemeVariantChanged", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member dataContext<'t when 't :> StyledElement>(dataContext: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(StyledElement.DataContextProperty, dataContext, ValueNone)

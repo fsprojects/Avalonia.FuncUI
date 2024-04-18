@@ -11,24 +11,26 @@ module Visual =
             
     type Visual with
         static member onAttachedToVisualTree<'t when 't :> Visual>(func: VisualTreeAttachmentEventArgs -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.AttachedToVisualTree
             let factory: AvaloniaObject * (VisualTreeAttachmentEventArgs -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
-                    let control = control :?> Visual
+                    let control = control :?> 't
                     let disposable = control.AttachedToVisualTree.Subscribe(func)
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<VisualTreeAttachmentEventArgs>("AttachedToVisualTree", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<VisualTreeAttachmentEventArgs>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member onDetachedFromVisualTree<'t when 't :> Visual>(func: VisualTreeAttachmentEventArgs -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.DetachedFromVisualTree
             let factory:AvaloniaObject * (VisualTreeAttachmentEventArgs -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
-                    let control = control :?> Visual
+                    let control = control :?> 't
                     let disposable = control.DetachedFromVisualTree.Subscribe(func)
 
                     token.Register(fun () -> disposable.Dispose()) |> ignore)
 
-            AttrBuilder<'t>.CreateSubscription<VisualTreeAttachmentEventArgs>("DetachedFromVisualTree", factory, func, ?subPatchOptions = subPatchOptions)
+            AttrBuilder<'t>.CreateSubscription<VisualTreeAttachmentEventArgs>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member clipToBounds<'t when 't :> Visual>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Visual.ClipToBoundsProperty, value, ValueNone)
