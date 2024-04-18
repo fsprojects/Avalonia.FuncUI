@@ -8,8 +8,10 @@ module StyledElement =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     open Avalonia.Styling
+    open Avalonia.LogicalTree
+    open System.Threading
 
-    module private Internals =
+    module internal ClassesInternals =
         open System.Linq
 
         /// pseudoclasse is classe beginning with a ':' character.
@@ -86,6 +88,67 @@ module StyledElement =
             Enumerable.SequenceEqual(a, b)
 
     type StyledElement with
+        static member onAttachedToLogicalTree<'t when 't :> StyledElement>(func:LogicalTreeAttachmentEventArgs -> unit, ?subPatchOptions) =
+            let factory: AvaloniaObject * (LogicalTreeAttachmentEventArgs -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable = control.AttachedToLogicalTree.Subscribe(func)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+
+            AttrBuilder<'t>.CreateSubscription<LogicalTreeAttachmentEventArgs>("AttachedToLogicalTree", factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onDetachedFromLogicalTree<'t when 't :> StyledElement>(func:LogicalTreeAttachmentEventArgs -> unit, ?subPatchOptions) =
+            let factory: AvaloniaObject * (LogicalTreeAttachmentEventArgs -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable = control.DetachedFromLogicalTree.Subscribe(func)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+
+            AttrBuilder<'t>.CreateSubscription<LogicalTreeAttachmentEventArgs>("DetachedFromLogicalTree", factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onDataContextChanged<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable =
+                        control.DataContextChanged.Subscribe(fun _ -> func control)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+
+            AttrBuilder<'t>.CreateSubscription<'t>("DataContextChanged", factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onInitialized<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable = control.Initialized.Subscribe(fun _ -> func control)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+            
+            AttrBuilder<'t>.CreateSubscription<'t>("Initialized", factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onResourcesChanged<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable = control.ResourcesChanged.Subscribe(fun _ -> func control)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+
+            AttrBuilder<'t>.CreateSubscription<'t>("ResourcesChanged", factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onActualThemeVariantChanged<'t when 't :> StyledElement>(func: 't -> unit, ?subPatchOptions) =
+            let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable = control.ActualThemeVariantChanged.Subscribe(fun _ -> func control)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+
+            AttrBuilder<'t>.CreateSubscription<'t>("ActualThemeVariantChanged", factory, func, ?subPatchOptions = subPatchOptions)
+
         static member dataContext<'t when 't :> StyledElement>(dataContext: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(StyledElement.DataContextProperty, dataContext, ValueNone)
             
@@ -103,21 +166,21 @@ module StyledElement =
 
             let setter: ('t * Classes -> unit) =
                 (fun (control, value) ->
-                    Internals.patchStandardClasses control.Classes value)
+                    ClassesInternals.patchStandardClasses control.Classes value)
 
-            let compare = Internals.compareClasses<Classes>
+            let compare = ClassesInternals.compareClasses<Classes>
 
             let factory = (fun () -> Classes())
 
             AttrBuilder<'t>.CreateProperty<Classes>("Classes", value, ValueSome getter, ValueSome setter, ValueSome compare, factory)
 
         static member classes<'t when 't :> StyledElement>(classes: string list) : IAttr<'t> =
-            let getter: ('t -> (string list)) =(fun control -> Seq.toList control.Classes)
+            let getter: ('t -> (string list)) = (fun control -> Seq.toList control.Classes)
 
             let setter: ('t * string list -> unit) =
-                (fun (control, values) -> Internals.patchStandardClasses control.Classes values)
+                (fun (control, values) -> ClassesInternals.patchStandardClasses control.Classes values)
 
-            let compare = Internals.compareClasses<string list>
+            let compare = ClassesInternals.compareClasses<string list>
 
             let factory = fun () -> []
 
