@@ -5,6 +5,7 @@ open Avalonia.Controls.Primitives
 [<AutoOpen>]
 module StyledElement =  
     open Avalonia
+    open Avalonia.FuncUI
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     open Avalonia.Styling
@@ -191,6 +192,53 @@ module StyledElement =
             let factory = fun () -> []
 
             AttrBuilder<'t>.CreateProperty<string list>("Classes", classes, ValueSome getter, ValueSome setter, ValueSome compare, factory)
+
+        /// Use 'classes' instead when possible.
+        static member styles<'t when 't :> StyledElement>(value: Styles) : IAttr<'t> =
+            let getter: ('t -> Styles) = (fun control -> control.Styles)
+
+            let setter: ('t * Styles -> unit) =
+                (fun (control, value) ->
+                    Setters.avaloniaList control.Styles value
+                    control.Styles.Resources <- value.Resources)
+
+            let compare: (obj * obj -> bool) =
+                fun (a, b) ->
+                    match a, b with
+                    | (:? Styles as a), (:? Styles as b) ->
+                        System.Linq.Enumerable.SequenceEqual(a, b)
+                        && System.Linq.Enumerable.SequenceEqual(a.Resources, b.Resources)
+                        && System.Linq.Enumerable.SequenceEqual(
+                            a.Resources.MergedDictionaries,
+                            b.Resources.MergedDictionaries
+                        )
+                        && System.Linq.Enumerable.SequenceEqual(
+                            a.Resources.ThemeDictionaries,
+                            b.Resources.ThemeDictionaries
+                        )
+                    | _ -> a = b
+
+            let factory = fun () -> Styles()
+
+            AttrBuilder<'t>.CreateProperty<Styles>("Styles", value, ValueSome getter, ValueSome setter, ValueSome compare, factory)
+
+        /// Use 'classes' instead when possible.
+        static member styles<'t when 't :> StyledElement>(styles: IStyle list) : IAttr<'t> =
+            let getter: ('t -> (IStyle list)) = (fun control -> control.Styles |> Seq.toList)
+
+            let setter: ('t * IStyle list -> unit) =
+                (fun (control, value) -> Setters.avaloniaList control.Styles value)
+
+            let compare: (obj * obj -> bool) =
+                fun (a, b) ->
+                    match a, b with
+                    | (:? list<IStyle> as a), (:? list<IStyle> as b) -> System.Linq.Enumerable.SequenceEqual(a, b)
+                    | _ -> a = b
+
+            let factory = fun () -> []
+
+            AttrBuilder<'t>.CreateProperty<IStyle list>("Styles", styles, ValueSome getter, ValueSome setter, ValueSome compare, factory)
+
 
         static member resources<'t when 't :> StyledElement>(value: IResourceDictionary) : IAttr<'t> =
             let getter : ('t -> IResourceDictionary) = (fun control -> control.Resources)
