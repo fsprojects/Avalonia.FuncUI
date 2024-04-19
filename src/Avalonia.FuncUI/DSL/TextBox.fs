@@ -8,6 +8,7 @@ module TextBox =
     open Avalonia.Media
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
+    open Avalonia.Interactivity
 
     let create (attrs: IAttr<TextBox> list): IView<TextBox> =
         ViewBuilder.Create<TextBox>(attrs)
@@ -68,11 +69,74 @@ module TextBox =
         static member maxLength<'t when 't :> TextBox>(value: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(TextBox.MaxLengthProperty, value, ValueNone)
 
+        static member maxLines<'t when 't :> TextBox>(value: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(TextBox.MaxLinesProperty, value, ValueNone)
+
+        static member letterSpacing<'t when 't :> TextBox>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(TextBox.LetterSpacingProperty, value, ValueNone)
+
+        static member lineHeight<'t when 't :> TextBox>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(TextBox.LineHeightProperty, value, ValueNone)
         static member text<'t when 't :> TextBox>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(TextBox.TextProperty, value, ValueNone)
 
+        static member selectedText<'t when 't :> TextBox>(value: string) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.SelectedText
+            let getter: 't -> string = fun control -> control.SelectedText
+            let setter: 't * string -> unit = fun (control, value) -> control.SelectedText <- value
+
+            AttrBuilder<'t>.CreateProperty<string>(name, value, ValueSome getter, ValueSome setter, ValueNone, (fun () -> ""))
+        
+        static member innerLeftContent<'t when 't :> TextBox>(text: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(TextBox.InnerLeftContentProperty, text, ValueNone)
+
+        static member innerLeftContent<'t when 't :> TextBox>(value: obj) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<obj>(TextBox.InnerLeftContentProperty, value, ValueNone)
+
+        static member innerLeftContent<'t when 't :> TextBox>(view: IView option) : IAttr<'t> =
+            AttrBuilder<'t>.CreateContentSingle(TextBox.InnerLeftContentProperty, view)
+
+        static member innerLeftContent<'t when 't :> TextBox>(view: IView) : IAttr<'t> =
+            Some view |> TextBox.innerLeftContent
+
+        static member innerRightContent<'t when 't :> TextBox>(text: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(TextBox.InnerRightContentProperty, text, ValueNone)
+
+        static member innerRightContent<'t when 't :> TextBox>(value: obj) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<obj>(TextBox.InnerRightContentProperty, value, ValueNone)
+
+        static member innerRightContent<'t when 't :> TextBox>(view: IView option) : IAttr<'t> =
+            AttrBuilder<'t>.CreateContentSingle(TextBox.InnerRightContentProperty, view)
+
+        static member innerRightContent<'t when 't :> TextBox>(view: IView) : IAttr<'t> =
+            Some view |> TextBox.innerRightContent
+
+        static member revealPassword<'t when 't :> TextBox>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(TextBox.RevealPasswordProperty, value, ValueNone)
+
+        static member isUndoEnabled<'t when 't :> TextBox>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(TextBox.IsUndoEnabledProperty, value, ValueNone)
+
+        static member undoLimit<'t when 't :> TextBox>(value: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(TextBox.UndoLimitProperty, value, ValueNone)
+        
+        static member onCopyingToClipboard<'t when 't :> TextBox>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(TextBox.CopyingToClipboardEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onCuttingToClipboard<'t when 't :> TextBox>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(TextBox.CuttingToClipboardEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onPastingFromClipboard<'t when 't :> TextBox>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(TextBox.PastingFromClipboardEvent, func, ?subPatchOptions = subPatchOptions)
+
         static member onTextChanged<'t when 't :> TextBox>(func: string -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<string>(TextBox.TextProperty, func, ?subPatchOptions = subPatchOptions)
+
+        static member onTextChanged<'t when 't :> TextBox>(func: TextChangedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<TextChangedEventArgs>(TextBox.TextChangedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onTextChanging<'t when 't :> TextBox>(func: TextChangingEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<TextChangingEventArgs>(TextBox.TextChangingEvent, func, ?subPatchOptions = subPatchOptions)
 
         static member textAlignment<'t when 't :> TextBox>(alignment: TextAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<TextAlignment>(TextBox.TextAlignmentProperty, alignment, ValueNone)
