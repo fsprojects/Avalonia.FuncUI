@@ -7,6 +7,7 @@ module Layoutable =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     open Avalonia.Layout
+    open System
               
     type Layoutable with
         static member onEffectiveViewportChanged<'t when 't :> Layoutable>(func: EffectiveViewportChangedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
@@ -25,9 +26,11 @@ module Layoutable =
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
-                    let disposable = control.LayoutUpdated.Subscribe(fun _ -> func control)
+                    let handler = EventHandler(fun s _ -> func (s :?> 't))
+                    let event = control.LayoutUpdated
 
-                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore)
             
             AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 

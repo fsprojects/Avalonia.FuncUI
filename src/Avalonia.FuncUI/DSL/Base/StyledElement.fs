@@ -11,6 +11,7 @@ module StyledElement =
     open Avalonia.Styling
     open Avalonia.LogicalTree
     open System.Threading
+    open System
 
     module internal ClassesInternals =
         open System.Linq
@@ -116,10 +117,11 @@ module StyledElement =
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
-                    let disposable =
-                        control.DataContextChanged.Subscribe(fun _ -> func control)
-
-                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+                    let hander = EventHandler(fun s e -> func (s :?> 't))
+                    let event = control.DataContextChanged
+                    
+                    event.AddHandler(hander)
+                    token.Register(fun () -> event.RemoveHandler(hander)) |> ignore)
 
             AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
@@ -128,9 +130,11 @@ module StyledElement =
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
-                    let disposable = control.Initialized.Subscribe(fun _ -> func control)
+                    let handler = EventHandler(fun s e -> func (s :?> 't))
+                    let event = control.Initialized
 
-                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore)
             
             AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
@@ -139,9 +143,11 @@ module StyledElement =
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
-                    let disposable = control.ResourcesChanged.Subscribe(fun _ -> func control)
+                    let handler = EventHandler<_>(fun s e -> func (s :?> 't))
+                    let event = control.ResourcesChanged
 
-                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore)
 
             AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
@@ -150,9 +156,11 @@ module StyledElement =
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
-                    let disposable = control.ActualThemeVariantChanged.Subscribe(fun _ -> func control)
+                    let handler = EventHandler(fun s e -> func (s :?> 't))
+                    let event = control.ActualThemeVariantChanged
 
-                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore)
 
             AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
