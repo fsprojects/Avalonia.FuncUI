@@ -143,7 +143,7 @@ module StyledElement =
             let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
                 (fun (control, func, token) ->
                     let control = control :?> 't
-                    let handler = EventHandler<_>(fun s e -> func (s :?> 't))
+                    let handler = EventHandler<ResourcesChangedEventArgs>(fun s e -> func (s :?> 't))
                     let event = control.ResourcesChanged
 
                     event.AddHandler(handler)

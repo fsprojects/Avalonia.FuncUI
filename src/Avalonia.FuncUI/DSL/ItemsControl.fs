@@ -44,7 +44,7 @@ module ItemsControl =
             let factory: AvaloniaObject * ('t * ContainerPreparedEventArgs -> unit) * CancellationToken -> unit =
                 fun (control, func, token) ->
                     let control = control :?> 't
-                    let handler = EventHandler<_>(fun s e -> func(s :?> 't, e))
+                    let handler = EventHandler<ContainerPreparedEventArgs>(fun s e -> func(s :?> 't, e))
                     let event = control.ContainerPrepared
 
                     event.AddHandler(handler)
@@ -57,7 +57,7 @@ module ItemsControl =
             let factory: AvaloniaObject * ('t * ContainerIndexChangedEventArgs -> unit) * CancellationToken -> unit =
                 fun (control, func, token) ->
                     let control = control :?> 't
-                    let handler = EventHandler<_>(fun s e -> func(s :?> 't, e))
+                    let handler = EventHandler<ContainerIndexChangedEventArgs>(fun s e -> func(s :?> 't, e))
                     let event = control.ContainerIndexChanged
 
                     event.AddHandler(handler)
@@ -70,7 +70,7 @@ module ItemsControl =
             let factory: AvaloniaObject * ('t * ContainerClearingEventArgs -> unit) * CancellationToken -> unit =
                 fun (control, func, token) ->
                     let control = control :?> 't
-                    let handler = EventHandler<_>(fun s e -> func(s :?> 't, e))
+                    let handler = EventHandler<ContainerClearingEventArgs>(fun s e -> func(s :?> 't, e))
                     let event = control.ContainerClearing
 
                     event.AddHandler(handler)
