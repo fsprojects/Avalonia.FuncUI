@@ -19,7 +19,17 @@ module StyledElement =
         /// pseudoclasse is classe beginning with a ':' character.
         let isPseudoClass (s: string) = s.StartsWith(":")
 
-        /// Update `Classes`'s standard classes with new values. 
+        /// <summary>
+        /// Update `Classes`'s standard classes with new values.
+        /// </summary>
+        /// 
+        /// <remarks>
+        /// `Classes` is mixed standard classes and pseudoclasses(beginning with a ':' character). 
+        ///
+        /// pseudoclasses may only setting by the control's protected <see cref="StyledElement.PseudoClasses"/> property itself.
+        /// If set by external, it will be throw exception.
+        /// Therefore, when updating from the external, it is necessary to avoid setting the pseudoclasses directly.
+        /// </remarks>
         let patchStandardClasses (classes: Classes) (newValues: string seq) =
 
             let (|PseudoClass|_|) (s: string) =
