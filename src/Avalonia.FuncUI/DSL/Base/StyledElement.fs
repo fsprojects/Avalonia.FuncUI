@@ -16,8 +16,8 @@ module StyledElement =
     module internal ClassesInternals =
         open System.Linq
 
-        /// pseudoclasse is classe beginning with a ':' character.
-        let isPseudoClass (s: string) = s.StartsWith(":")
+        /// pseudoclass is beginning with a ':' character.
+        let isPseudoClass (s: string) = s.StartsWith(':')
 
         /// <summary>
         /// Update `Classes`'s standard classes with new values.
