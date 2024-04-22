@@ -129,11 +129,9 @@ module TextBox =
         static member onPastingFromClipboard<'t when 't :> TextBox>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(TextBox.PastingFromClipboardEvent, func, ?subPatchOptions = subPatchOptions)
 
+        /// Create a `TextBox.TextProperty` Subscription. Not `TextBox.TextChangedEvent` Subscription. 
         static member onTextChanged<'t when 't :> TextBox>(func: string -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<string>(TextBox.TextProperty, func, ?subPatchOptions = subPatchOptions)
-
-        static member onTextChanged<'t when 't :> TextBox>(func: TextChangedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<TextChangedEventArgs>(TextBox.TextChangedEvent, func, ?subPatchOptions = subPatchOptions)
 
         static member onTextChanging<'t when 't :> TextBox>(func: TextChangingEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<TextChangingEventArgs>(TextBox.TextChangingEvent, func, ?subPatchOptions = subPatchOptions)
