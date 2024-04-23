@@ -247,15 +247,9 @@ module StyledElement =
             let setter: ('t * IStyle list -> unit) =
                 (fun (control, value) -> Setters.avaloniaList control.Styles value)
 
-            let compare: (obj * obj -> bool) =
-                fun (a, b) ->
-                    match a, b with
-                    | (:? list<IStyle> as a), (:? list<IStyle> as b) -> System.Linq.Enumerable.SequenceEqual(a, b)
-                    | _ -> a = b
-
             let factory = fun () -> []
 
-            AttrBuilder<'t>.CreateProperty<IStyle list>("Styles", styles, ValueSome getter, ValueSome setter, ValueSome compare, factory)
+            AttrBuilder<'t>.CreateProperty<IStyle list>("Styles", styles, ValueSome getter, ValueSome setter, ValueNone, factory)
 
 
         static member resources<'t when 't :> StyledElement>(value: IResourceDictionary) : IAttr<'t> =

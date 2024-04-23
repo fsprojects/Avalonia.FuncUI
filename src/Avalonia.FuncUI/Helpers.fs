@@ -21,7 +21,28 @@ module AvaloniaExtensions =
 
 module internal Setters =
     open Avalonia.Collections
-    open Avalonia.Controls
+    open System.Collections.Generic
+
+    /// Update list<'t>.
+    let iList<'t when 't : equality> (list: IList<'t>) (newItems: seq<'t>) =
+        if Seq.isEmpty newItems then
+            list.Clear()
+        else if list.Count = 0 then
+            for item in newItems do
+                list.Add(item)
+        else
+            for item in list |> Seq.except newItems do 
+                list.Remove(item) |> ignore
+            
+            for newIndex, newItem in Seq.indexed newItems do
+                let oldIndex = list |> Seq.tryFindIndex ((=) newItem)
+                
+                match oldIndex with
+                | Some oldIndex when oldIndex = newIndex -> ()
+                | Some oldIndex ->
+                    list.RemoveAt(oldIndex)
+                    list.Insert(newIndex, newItem)
+                | None -> list.Insert(newIndex, newItem)
 
     /// Update list with minimal CollectionChanged.
     let avaloniaList<'t when 't : equality> (list: IAvaloniaList<'t>) (newItems: seq<'t>) =
