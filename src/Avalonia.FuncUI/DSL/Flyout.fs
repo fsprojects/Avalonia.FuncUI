@@ -139,7 +139,7 @@ module Flyout =
             let setter : ('t * Classes -> unit) = (fun (control, value) ->
                 ClassesInternals.patchStandardClasses control.FlyoutPresenterClasses value)
             
-            let compare = ClassesInternals.compareClasses<string list>
+            let compare = ClassesInternals.compareClasses<Classes>
 
             let factory = (fun () -> Classes())
             
@@ -194,7 +194,7 @@ module MenuFlyout =
             let setter : ('t * Classes -> unit) = (fun (control, value) ->
                 ClassesInternals.patchStandardClasses control.FlyoutPresenterClasses value)
             
-            let compare = ClassesInternals.compareClasses<string list>
+            let compare = ClassesInternals.compareClasses<Classes>
 
             let factory = (fun () -> Classes())
             
