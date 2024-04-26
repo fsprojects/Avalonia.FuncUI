@@ -103,6 +103,3 @@ module __ContextExtensions_useModal =
 
         member this.useModalState() : ModalHostState =
             this.readEnvValue ModalHost.State
-
-
-
