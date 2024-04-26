@@ -68,16 +68,26 @@ module private EnvironmentStateConsumer =
             else
                 tryFindNext (ancestor, state)
 
+
+[<AutoOpen>]
+module __Control_useEnvValue =
+
+    type Control with
+
+        member this.readEnvValue(state: EnvironmentState<'value>) : 'value =
+            match EnvironmentStateConsumer.tryFind (this, state), state.DefaultValue with
+            | ValueSome value, _ -> value
+            | ValueNone, Some defaultValue -> defaultValue
+            | ValueNone, None -> failwithf "No value provided for environment value '%s'" state.Name
+
+
 [<AutoOpen>]
 module __ContextExtensions_useEnvHook =
 
     type IComponentContext with
 
         member this.readEnvValue(state: EnvironmentState<'value>) : 'value =
-            match EnvironmentStateConsumer.tryFind (this.control, state), state.DefaultValue with
-            | ValueSome value, _ -> value
-            | ValueNone, Some defaultValue -> defaultValue
-            | ValueNone, None -> failwithf "No value provided for environment value '%s'" state.Name
+            this.control.readEnvValue(state)
 
         member this.useEnvState(state: EnvironmentState<IWritable<'value>>, ?renderOnChange: bool) : IWritable<'value> =
            this.usePassedLazy (
