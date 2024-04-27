@@ -17,3 +17,6 @@ module Image =
             
         static member stretch<'t when 't :> Image>(value: Stretch) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Stretch>(Image.StretchProperty, value, ValueNone)
+        
+        static member stretchDirection<'t when 't :> Image>(value: StretchDirection) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<StretchDirection>(Image.StretchDirectionProperty, value, ValueNone)

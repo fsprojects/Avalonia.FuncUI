@@ -76,11 +76,10 @@ module MainView =
                     TabItem.header "SplitView Demo"
                     TabItem.content (ViewBuilder.Create<SplitViewDemo.Host>([]))
                 ]
-                // ToDo: return it back when styles will be worked
-                //TabItem.create [
-                //    TabItem.header "Styles Demo"
-                //    TabItem.content (ViewBuilder.Create<StylesDemo.Host>([]))
-                //]
+                TabItem.create [
+                   TabItem.header "Styles Demo"
+                   TabItem.content (ViewBuilder.Create<StylesDemo.Host>([]))
+                ]
                 TabItem.create [
                     TabItem.header "TextBox Demo"
                     TabItem.content (ViewBuilder.Create<TextBoxDemo.Host>([]))

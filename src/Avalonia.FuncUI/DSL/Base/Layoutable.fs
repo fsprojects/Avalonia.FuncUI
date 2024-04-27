@@ -2,12 +2,38 @@ namespace Avalonia.FuncUI.DSL
 
 [<AutoOpen>]
 module Layoutable =  
+    open System.Threading
     open Avalonia
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     open Avalonia.Layout
+    open System
               
     type Layoutable with
+        static member onEffectiveViewportChanged<'t when 't :> Layoutable>(func: EffectiveViewportChangedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.EffectiveViewportChanged
+            let factory: AvaloniaObject * (EffectiveViewportChangedEventArgs -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let disposable = control.EffectiveViewportChanged.Subscribe(func)
+
+                    token.Register(fun () -> disposable.Dispose()) |> ignore)
+            
+            AttrBuilder<'t>.CreateSubscription<EffectiveViewportChangedEventArgs>(name, factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onLayoutUpdated<'t when 't :> Layoutable>(func: 't -> unit, ?subPatchOptions) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.LayoutUpdated
+            let factory: AvaloniaObject * ('t -> unit) * CancellationToken -> unit =
+                (fun (control, func, token) ->
+                    let control = control :?> 't
+                    let handler = EventHandler(fun s _ -> func (s :?> 't))
+                    let event = control.LayoutUpdated
+
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore)
+            
+            AttrBuilder<'t>.CreateSubscription<'t>(name, factory, func, ?subPatchOptions = subPatchOptions)
+
         static member width<'t when 't :> Layoutable>(value: double) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<double>(Layoutable.WidthProperty, value, ValueNone)
             
