@@ -112,5 +112,9 @@ module MainView =
                     TabItem.header "WrapPanel Demo"
                     TabItem.content (ViewBuilder.Create<WrapPanelDemo.Host>([]))
                 ]
+                TabItem.create [
+                    TabItem.header "Attached Event Demo"
+                    TabItem.content (ViewBuilder.Create<AttachedEventDemo.Host>([]))
+                ]
             ]
         ]
