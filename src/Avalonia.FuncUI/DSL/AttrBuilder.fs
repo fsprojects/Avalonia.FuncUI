@@ -48,6 +48,8 @@ module private Helpers =
 
 type Comparer = obj * obj -> bool
 
+type SubscriptionFactory<'arg> = AvaloniaObject * ('arg -> unit) * CancellationToken -> unit
+
 [<AbstractClass; Sealed>]
 type AttrBuilder<'view>() =
 
