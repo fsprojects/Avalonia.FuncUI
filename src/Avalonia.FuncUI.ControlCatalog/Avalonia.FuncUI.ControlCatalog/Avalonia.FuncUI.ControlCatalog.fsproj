@@ -27,6 +27,7 @@
         <Compile Include="Views\Tabs\WindowMenuDemo.fs" />
         <Compile Include="Views\Tabs\FlyoutDemo.fs" />
         <Compile Include="Views\Tabs\DragDropDemo.fs" />
+        <Compile Include="Views\Tabs\AttachedEventDemo.fs" />
         <Compile Include="Views\MainView.fs" />
 		<Compile Include="ControlCatalog.fs" />
         <AvaloniaResource Include="**\*.xaml" />
