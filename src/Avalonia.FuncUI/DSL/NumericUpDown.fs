@@ -7,6 +7,8 @@ module NumericUpDown =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
+    open Avalonia.Data.Converters
+    open Avalonia.Layout
 
     let create (attrs: IAttr<NumericUpDown> list): IView<NumericUpDown> =
         ViewBuilder.Create<NumericUpDown>(attrs)
@@ -76,6 +78,9 @@ module NumericUpDown =
 
             AttrBuilder<'t>.CreateProperty<string>("Text", value, ValueSome getter, ValueSome setter, ValueNone)
 
+        static member textConverter<'t when 't :> NumericUpDown>(value: IValueConverter) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IValueConverter>(NumericUpDown.TextConverterProperty, value, ValueNone)
+
         static member onTextChanged<'t when 't :> NumericUpDown>(func: string -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<string>(NumericUpDown.TextProperty, func, ?subPatchOptions = subPatchOptions)
 
@@ -91,4 +96,8 @@ module NumericUpDown =
         static member watermark<'t when 't :> NumericUpDown>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(NumericUpDown.WatermarkProperty, value, ValueNone)
 
+        static member horizontalContentAlignment<'t when 't :> NumericUpDown>(value: HorizontalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(NumericUpDown.HorizontalContentAlignmentProperty, value, ValueNone)
 
+        static member verticalContentAlignment<'t when 't :> NumericUpDown>(value: VerticalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<VerticalAlignment>(NumericUpDown.VerticalContentAlignmentProperty, value, ValueNone)
