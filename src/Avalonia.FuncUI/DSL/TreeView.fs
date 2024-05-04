@@ -11,6 +11,21 @@ module TreeView =
         ViewBuilder.Create<TreeView>(attrs)
 
     type TreeView with
+        /// <summary>
+        /// Occurs when the control's selection changes.
+        /// </summary>
+        static member onSelectionChanged<'t when 't :> TreeView>(func: SelectionChangedEventArgs -> unit, ?subPatchOptions) =
+            let name = nameof Unchecked.defaultof<'t>.SelectionChanged
+            let factory: SubscriptionFactory<SelectionChangedEventArgs> = 
+                fun (control, func, token) ->
+                    let control = control :?> 't
+                    let handler = System.EventHandler<SelectionChangedEventArgs>(fun s e -> func e)
+                    let event = control.SelectionChanged
+
+                    event.AddHandler(handler)
+                    token.Register(fun _ -> event.RemoveHandler(handler)) |> ignore
+            
+            AttrBuilder<'t>.CreateSubscription<SelectionChangedEventArgs>(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         /// <summary>
         /// Sets a value indicating whether to automatically scroll to newly selected items.
