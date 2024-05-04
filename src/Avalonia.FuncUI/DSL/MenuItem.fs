@@ -44,6 +44,9 @@ module MenuItem =
         static member isSubMenuOpen<'t when 't :> MenuItem>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(MenuItem.IsSubMenuOpenProperty, value, ValueNone)
 
+        static member staysOpenOnClick<'t when 't :> MenuItem>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(MenuItem.StaysOpenOnClickProperty, value, ValueNone)
+
         static member onIsSubMenuOpenChanged<'t when 't :> MenuItem>(func: bool -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<bool>(MenuItem.IsSubMenuOpenProperty, func, ?subPatchOptions = subPatchOptions)
 
