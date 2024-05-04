@@ -83,6 +83,7 @@
     <Compile Include="DSL\Primitives\Thumb.fs" />
     <Compile Include="DSL\Primitives\AccessText.fs" />
     <Compile Include="DSL\Primitives\ScrollBar.fs" />
+    <Compile Include="DSL\Primitives\CalendarItem.fs" />
     <Compile Include="DSL\Primitives\TextElement.fs" />
     <Compile Include="DSL\Panels\Canvas.fs" />
     <Compile Include="DSL\Panels\DockPanel.fs" />
@@ -96,7 +97,6 @@
     <Compile Include="DSL\Shapes\Polyline.fs" />
     <Compile Include="DSL\Shapes\Polygon.fs" />
     <Compile Include="DSL\Shapes\Path.fs" />
-    <Compile Include="DSL\Calendar\CalendarItem.fs" />
     <Compile Include="DSL\Calendar\Calendar.fs" />
     <Compile Include="DSL\Calendar\CalendarDatePicker.fs" />
     <Compile Include="DSL\Documents\TextDecoration.fs" />
