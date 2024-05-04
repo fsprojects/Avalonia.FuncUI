@@ -141,6 +141,7 @@
     <Compile Include="DSL\MenuItem.fs" />
     <Compile Include="DSL\GridSplitter.fs" />
     <Compile Include="DSL\DatePickerPresenter.fs" />
+    <Compile Include="DSL\TimePickerPresenter.fs" />
     <Compile Include="DSL\ProgressBar.fs" />
     <Compile Include="DSL\ScrollViewer.fs" />
     <Compile Include="DSL\Separator.fs" />
