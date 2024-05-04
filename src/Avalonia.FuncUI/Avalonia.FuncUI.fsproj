@@ -84,6 +84,7 @@
     <Compile Include="DSL\Primitives\AccessText.fs" />
     <Compile Include="DSL\Primitives\ScrollBar.fs" />
     <Compile Include="DSL\Primitives\CalendarItem.fs" />
+    <Compile Include="DSL\Primitives\PickerPresenterBase.fs" />
     <Compile Include="DSL\Primitives\TextElement.fs" />
     <Compile Include="DSL\Panels\Canvas.fs" />
     <Compile Include="DSL\Panels\DockPanel.fs" />
