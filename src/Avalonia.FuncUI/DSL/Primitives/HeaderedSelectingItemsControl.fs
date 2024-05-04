@@ -3,6 +3,7 @@ namespace Avalonia.FuncUI.DSL
 [<AutoOpen>]
 module HeaderedSelectingItemsControl =
     open Avalonia.Controls.Primitives
+    open Avalonia.Controls.Templates
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     
@@ -21,3 +22,6 @@ module HeaderedSelectingItemsControl =
             
         static member header<'t when 't :> HeaderedSelectingItemsControl>(value: IView) : IAttr<'t> =
             value |> Some |> HeaderedSelectingItemsControl.header
+
+        static member headerTemplate<'t when 't :> HeaderedSelectingItemsControl>(value: IDataTemplate) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(HeaderedSelectingItemsControl.HeaderTemplateProperty, value, ValueNone)
