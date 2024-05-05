@@ -6,7 +6,7 @@ module ProgressBar =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-   
+
     let create (attrs: IAttr<ProgressBar> list): IView<ProgressBar> =
         ViewBuilder.Create<ProgressBar>(attrs)
 
@@ -20,3 +20,6 @@ module ProgressBar =
 
         static member showProgressText<'t when 't :> ProgressBar>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(ProgressBar.ShowProgressTextProperty, value, ValueNone)
+
+        static member progressTextFormat<'t when 't :> ProgressBar>(value: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(ProgressBar.ProgressTextFormatProperty, value, ValueNone)
