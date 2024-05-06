@@ -99,6 +99,7 @@
     <Compile Include="DSL\Shapes\Polyline.fs" />
     <Compile Include="DSL\Shapes\Polygon.fs" />
     <Compile Include="DSL\Shapes\Path.fs" />
+    <Compile Include="DSL\Shapes\Sector.fs" />
     <Compile Include="DSL\Calendar\Calendar.fs" />
     <Compile Include="DSL\Calendar\CalendarDatePicker.fs" />
     <Compile Include="DSL\Documents\TextDecoration.fs" />
