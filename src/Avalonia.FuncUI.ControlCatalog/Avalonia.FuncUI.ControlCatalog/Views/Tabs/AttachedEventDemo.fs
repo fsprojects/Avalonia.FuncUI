@@ -38,7 +38,7 @@ module AttachedEventDemo =
         | :? 't as t when t.Name = name -> Some t
         | _ -> None
 
-    let sprintRoutedEvent (s: #Interactive) (e: #RoutedEventArgs) =
+    let sprintRoutedEvent (s: Interactive) (e: #RoutedEventArgs) =
         let time = System.DateTime.Now.ToString ("HH:mm:ss.fff")
 
         let sender =
