@@ -71,6 +71,7 @@
     <Compile Include="DSL\Base\Animatable.fs" />
     <Compile Include="DSL\Base\RenderOptions.fs" />
     <Compile Include="DSL\Primitives\LightDismissOverlayLayer.fs" />
+    <Compile Include="DSL\Primitives\VisualLayerManager.fs" />
     <Compile Include="DSL\Primitives\TemplatedControl.fs" />
     <Compile Include="DSL\Primitives\HeaderedContentControl.fs" />
     <Compile Include="DSL\Primitives\HeaderedSelectingItemsControl.fs" />
