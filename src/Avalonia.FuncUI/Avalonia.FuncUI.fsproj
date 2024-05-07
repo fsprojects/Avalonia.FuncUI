@@ -133,6 +133,7 @@
     <Compile Include="DSL\Decorator.fs" />
     <Compile Include="DSL\Border.fs" />
     <Compile Include="DSL\ExperimentalAcrylicBorder.fs" />
+    <Compile Include="DSL\ThemeVariantScope.fs" />
     <Compile Include="DSL\DataValidationErrors.fs" />
     <Compile Include="DSL\ComboBoxItem.fs" />
     <Compile Include="DSL\ComboBox.fs" />
