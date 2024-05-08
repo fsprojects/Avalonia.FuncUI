@@ -59,6 +59,16 @@ module DataGrid =
             )
 
 [<AutoOpen>]
+module DataGridFrozenGrid =
+    open Avalonia.Controls.Primitives
+    let create (attrs: IAttr<DataGridFrozenGrid> list): IView<DataGridFrozenGrid> =
+        ViewBuilder.Create<DataGridFrozenGrid>(attrs)
+    
+    type Control with
+        static member isFrozen<'t when 't :> Control>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(DataGridFrozenGrid.IsFrozenProperty, value, ValueNone)
+
+[<AutoOpen>]
 module DataGridColumn =
 
     let create (attrs: IAttr<DataGridColumn> list): IView<DataGridColumn> =
