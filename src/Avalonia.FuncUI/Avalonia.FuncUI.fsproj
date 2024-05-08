@@ -74,6 +74,7 @@
     <Compile Include="DSL\Primitives\VisualLayerManager.fs" />
     <Compile Include="DSL\Primitives\AdornerLayer.fs" />
     <Compile Include="DSL\Primitives\OverlayLayer.fs" />
+    <Compile Include="DSL\Primitives\ChromeOverlayLayer.fs" />
     <Compile Include="DSL\Primitives\TemplatedControl.fs" />
     <Compile Include="DSL\Primitives\HeaderedContentControl.fs" />
     <Compile Include="DSL\Primitives\HeaderedSelectingItemsControl.fs" />
