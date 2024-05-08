@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <TrimmerRootAssembly Include="Avalonia.FuncUI.ControlCatalog" />
+  </ItemGroup>
+	
 </Project>
