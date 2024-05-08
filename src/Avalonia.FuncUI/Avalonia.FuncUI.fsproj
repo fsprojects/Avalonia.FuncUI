@@ -95,6 +95,7 @@
     <Compile Include="DSL\Panels\Grid.fs" />
     <Compile Include="DSL\Panels\StackPanel.fs" />
     <Compile Include="DSL\Panels\ReversibleStackPanel.fs" />
+    <Compile Include="DSL\Panels\VirtualizingCarouselPanel.fs" />
     <Compile Include="DSL\Panels\WrapPanel.fs" />
     <Compile Include="DSL\Shapes\Shape.fs" />
     <Compile Include="DSL\Shapes\Arc.fs" />
