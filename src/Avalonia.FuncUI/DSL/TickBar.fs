@@ -8,12 +8,13 @@ module TickBar =
     open Avalonia.Media
     open Avalonia.Media.Immutable
     open Avalonia.Layout
+    open Avalonia.FuncUI
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
-    
+
     let create (attrs: IAttr<TickBar> list): IView<TickBar> =
         ViewBuilder.Create<TickBar>(attrs)
-     
+
     type TickBar with
 
         static member fill<'t when 't :> TickBar>(value: IBrush) : IAttr<'t> =
@@ -50,4 +51,10 @@ module TickBar =
             AttrBuilder<'t>.CreateProperty<float AvaloniaList>(TickBar.TicksProperty, value, ValueNone)
 
         static member ticks<'t when 't :> TickBar>(value: seq<float>) : IAttr<'t> =
-            value |> AvaloniaList |> TickBar.ticks
+            let name = nameof Unchecked.defaultof<'t>.Ticks
+            let getter: 't -> seq<float> = (fun control -> control.Ticks)
+            let setter: 't * seq<float> -> unit = (fun (control, value) -> Setters.avaloniaList control.Ticks value)
+            let compare: obj * obj -> bool = fun (a, b) -> EqualityComparers.compareSeq<_,float>(a, b)
+            let factory = fun () -> Seq.empty
+
+            AttrBuilder<'t>.CreateProperty<seq<float>>(name, value, ValueSome getter, ValueSome setter, ValueSome compare, factory)
