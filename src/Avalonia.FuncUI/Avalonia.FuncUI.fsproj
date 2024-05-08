@@ -70,6 +70,7 @@
     <Compile Include="DSL\Base\ContentPresenter.fs" />
     <Compile Include="DSL\Base\ScrollContentPresenter.fs" />
     <Compile Include="DSL\Base\ItemsPresenter.fs" />
+    <Compile Include="DSL\Base\TextPresenter.fs" />
     <Compile Include="DSL\Base\Animatable.fs" />
     <Compile Include="DSL\Base\RenderOptions.fs" />
     <Compile Include="DSL\Primitives\LightDismissOverlayLayer.fs" />
