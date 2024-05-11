@@ -123,6 +123,7 @@
     <Compile Include="DSL\Documents\Underline.fs" />
     <Compile Include="DSL\Documents\InlineUIContainer.fs" />
     <Compile Include="DSL\Buttons\Button.fs" />
+    <Compile Include="DSL\Buttons\DropDownButton.fs" />
     <Compile Include="DSL\Buttons\ButtonSpinner.fs" />
     <Compile Include="DSL\Buttons\SplitButton.fs" />
     <Compile Include="DSL\Buttons\RadioButton.fs" />
