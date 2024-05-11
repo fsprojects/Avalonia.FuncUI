@@ -19,5 +19,9 @@ module DataValidationErrors =
             AttrBuilder<'t>.CreateProperty(DataValidationErrors.HasErrorsProperty, hasErrors, ValueNone)
             
     type DataValidationErrors with
+
+        static member owner<'t when 't :> DataValidationErrors>(value: Control) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty(DataValidationErrors.OwnerProperty, value, ValueNone)
+
         static member errorTemplate<'t when 't :> DataValidationErrors>(template: IDataTemplate) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty(DataValidationErrors.ErrorTemplateProperty, template, ValueNone)
