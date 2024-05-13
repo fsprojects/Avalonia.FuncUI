@@ -150,6 +150,7 @@
     <Compile Include="DSL\DataValidationErrors.fs" />
     <Compile Include="DSL\ComboBoxItem.fs" />
     <Compile Include="DSL\ComboBox.fs" />
+    <Compile Include="DSL\RefreshContainer.fs" />
     <Compile Include="DSL\Carousel.fs" />
     <Compile Include="DSL\NativeControlHost.fs" />
     <Compile Include="DSL\Image.fs" />
