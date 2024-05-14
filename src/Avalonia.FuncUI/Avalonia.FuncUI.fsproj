@@ -130,6 +130,7 @@
     <Compile Include="DSL\Buttons\SplitButton.fs" />
     <Compile Include="DSL\Buttons\RadioButton.fs" />
     <Compile Include="DSL\Buttons\ToggleButton.fs" />
+    <Compile Include="DSL\Buttons\ToggleSplitButton.fs" />
     <Compile Include="DSL\Buttons\ToggleSwitch.fs" />
     <Compile Include="DSL\Buttons\CheckBox.fs" />
     <Compile Include="DSL\Remote\RemoteWidget.fs" />
