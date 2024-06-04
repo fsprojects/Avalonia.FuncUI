@@ -3,6 +3,8 @@
 [<AutoOpen>]
 module SplitView =
     open Avalonia.Controls
+    open Avalonia.Controls.Templates
+    open Avalonia.Interactivity
     open Avalonia.Media
     open Avalonia.Media.Immutable
     open Avalonia.FuncUI.Types
@@ -11,7 +13,19 @@ module SplitView =
     let create (attrs: IAttr<SplitView> list): IView<SplitView> =
         ViewBuilder.Create<SplitView>(attrs)
 
-    type SplitView with            
+    type SplitView with
+
+        static member onPaneClosed<'t when 't :> SplitView>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(SplitView.PaneClosedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onPaneClosing<'t when 't :> SplitView>(func: CancelRoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<CancelRoutedEventArgs>(SplitView.PaneClosingEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onPaneOpened<'t when 't :> SplitView>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(SplitView.PaneOpenedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onPaneOpening<'t when 't :> SplitView>(func: CancelRoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<CancelRoutedEventArgs>(SplitView.PaneOpeningEvent, func, ?subPatchOptions = subPatchOptions)
 
         static member content<'t when 't :> SplitView>(value: IView option) : IAttr<'t> =
             AttrBuilder<'t>.CreateContentSingle(SplitView.ContentProperty, value)
@@ -48,6 +62,9 @@ module SplitView =
 
         static member pane<'t when 't :> SplitView>(value: IView) : IAttr<'t> =
             value |> Some |> SplitView.pane
+
+        static member paneTemplate<'t when 't :> SplitView>(value: IDataTemplate) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(SplitView.PaneTemplateProperty, value, ValueNone)
 
         static member useLightDismissOverlayMode<'t when 't :> SplitView>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(SplitView.UseLightDismissOverlayModeProperty, value, ValueNone)

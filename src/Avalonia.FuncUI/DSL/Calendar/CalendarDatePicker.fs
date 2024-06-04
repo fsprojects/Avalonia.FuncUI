@@ -4,6 +4,7 @@
 module CalendarDatePicker =
     open System
     open Avalonia.Controls
+    open Avalonia.Layout
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     
@@ -11,7 +12,46 @@ module CalendarDatePicker =
         ViewBuilder.Create<CalendarDatePicker>(attrs)
      
     type CalendarDatePicker with
-  
+
+        static member onCalendarClosed<'t when 't :> CalendarDatePicker>(func: 't -> unit, ?subPatchOptions) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.CalendarClosed
+            let factory: SubscriptionFactory<'t> =
+                fun (control, func, token) ->
+                    let control = control :?> 't
+                    let handler = EventHandler(fun s e -> func (s :?> 't))
+                    let event = control.CalendarClosed
+
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore
+            
+            AttrBuilder<'t>.CreateSubscription(name, factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onCalendarOpened<'t when 't :> CalendarDatePicker>(func: 't -> unit, ?subPatchOptions) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.CalendarOpened
+            let factory: SubscriptionFactory<'t> =
+                fun (control, func, token) ->
+                    let control = control :?> 't
+                    let handler = EventHandler(fun s e -> func (s :?> 't))
+                    let event = control.CalendarOpened
+
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore
+            
+            AttrBuilder<'t>.CreateSubscription(name, factory, func, ?subPatchOptions = subPatchOptions)
+
+        static member onDateValidationError<'t when 't :> CalendarDatePicker>(func: CalendarDatePickerDateValidationErrorEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.DateValidationError
+            let factory: SubscriptionFactory<CalendarDatePickerDateValidationErrorEventArgs> =
+                fun (control, func, token) ->
+                    let control = control :?> 't
+                    let handler = EventHandler<CalendarDatePickerDateValidationErrorEventArgs>(fun s e -> func e)
+                    let event = control.DateValidationError
+
+                    event.AddHandler(handler)
+                    token.Register(fun () -> event.RemoveHandler(handler)) |> ignore
+            
+            AttrBuilder<'t>.CreateSubscription(name, factory, func, ?subPatchOptions = subPatchOptions)
+
         static member displayDate<'t when 't :> CalendarDatePicker>(value: DateTime) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<DateTime>(CalendarDatePicker.DisplayDateProperty, value, ValueNone)
 
@@ -72,3 +112,8 @@ module CalendarDatePicker =
         static member useFloatingWatermark<'t when 't :> CalendarDatePicker>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(CalendarDatePicker.UseFloatingWatermarkProperty, value, ValueNone)
 
+        static member horizontalContentAlignment<'t when 't :> CalendarDatePicker>(value: HorizontalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(CalendarDatePicker.HorizontalContentAlignmentProperty, value, ValueNone)
+
+        static member verticalContentAlignment<'t when 't :> CalendarDatePicker>(value: VerticalAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<VerticalAlignment>(CalendarDatePicker.VerticalContentAlignmentProperty, value, ValueNone)

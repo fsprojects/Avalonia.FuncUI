@@ -4,6 +4,7 @@
 module Expander =
     open Avalonia.Animation
     open Avalonia.Controls
+    open Avalonia.Interactivity
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
    
@@ -11,6 +12,18 @@ module Expander =
         ViewBuilder.Create<Expander>(attrs)
 
     type Expander with            
+
+        static member onCollapsed<'t when 't :> Expander>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Expander.CollapsedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onCollapsing<'t when 't :> Expander>(func: CancelRoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<CancelRoutedEventArgs>(Expander.CollapsingEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onExpanded<'t when 't :> Expander>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(Expander.ExpandedEvent, func, ?subPatchOptions = subPatchOptions)
+
+        static member onExpanding<'t when 't :> Expander>(func: CancelRoutedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<CancelRoutedEventArgs>(Expander.ExpandingEvent, func, ?subPatchOptions = subPatchOptions)
 
         static member contentTransition<'t when 't :> Expander>(value: IPageTransition) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IPageTransition>(Expander.ContentTransitionProperty, value, ValueNone)

@@ -54,7 +54,7 @@ module CanvasDemo =
                     Line.startPoint (120.0, 185.0)
                     Line.endPoint (30.0, 115.0)
                     Line.strokeLineCap PenLineCap.Round
-                    Line.strokeJoinCap PenLineJoin.Bevel
+                    Line.strokeJoin PenLineJoin.Bevel
                     Line.stroke "red"
                     Line.strokeThickness 2.0
                 ]

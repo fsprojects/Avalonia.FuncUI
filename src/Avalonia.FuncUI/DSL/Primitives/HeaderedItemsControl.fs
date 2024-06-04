@@ -3,6 +3,7 @@
 [<AutoOpen>]
 module HeaderedItemsControl =
     open Avalonia.Controls.Primitives
+    open Avalonia.Controls.Templates
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     
@@ -22,3 +23,6 @@ module HeaderedItemsControl =
             
         static member header<'t when 't :> HeaderedItemsControl>(value: IView) : IAttr<'t> =
             value |> Some |> HeaderedItemsControl.header
+
+        static member headerTemplate<'t when 't :> HeaderedItemsControl>(value: IDataTemplate) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(HeaderedItemsControl.HeaderTemplateProperty, value, ValueNone)
