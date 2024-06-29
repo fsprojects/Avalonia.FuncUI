@@ -1,16 +1,16 @@
 # Lifetime
 
-Every FuncUI view is backed by an Avalonia Control. Even when attributes of a view change, the backing control does not change. Instead changes are mirrored to the backing Control. This is often called "patching".
+Every FuncUI view is backed by an Avalonia Control. Even when attributes of a view change, the backing control does not change. Instead, changes are mirrored to the backing Control. This is often called "patching".
 
 <img src="../.gitbook/assets/file.excalidraw.svg" alt="" class="gitbook-drawing">
 
-Views don't hold a reference to their backing avalonia control. The backing control is determined by the view structore.&#x20;
+Views don't hold a reference to their backing Avalonia control. The backing control is determined by the view structure.&#x20;
 
 <img src="../.gitbook/assets/file.excalidraw (1).svg" alt="" class="gitbook-drawing">
 
-This means if the structore changes the backing control also does change. FuncUI will ensure the new backing control is patched / has all attributes set as specified in the view.
+This means if the structure changes the backing control also does change. FuncUI will ensure the new backing control is patched / has all attributes set as specified in the view.
 
-If the view type in the structure does not match the view tyoe in the backing structure a new backing control is created.
+If the view type in the structure does not match the view type in the backing structure a new backing control is created.
 
 <img src="../.gitbook/assets/file.excalidraw (2).svg" alt="" class="gitbook-drawing">
 
@@ -20,7 +20,7 @@ Only backing views of the same type can be reused when the view structure change
 
 ## Keyed Views
 
-Sometimes you need more control over the reuse of backing controls. This can be archived by specifying a view key.\
+Sometimes you need more control over the reuse of backing controls. This can be achieved by specifying a view key.\
 \
 If the view key changes a new backing view is created, no patching is attempted.&#x20;
 

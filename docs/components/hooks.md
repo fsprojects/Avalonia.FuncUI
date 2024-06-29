@@ -2,7 +2,7 @@
 
 ### useState
 
-This is the most basic hook which allows you to create an instance of a value which can be both read and updated in your component's code, the state is kept between renders and any updates to it will cause it to re-render by default
+This is the most basic hook which allows you to create an instance of a value which can be both read and updated in your component's code, the state is kept between renders and any updates to it will cause it to re-render by default.
 
 ```fsharp
 Component(fun ctx ->
@@ -57,7 +57,7 @@ Component("use-effect-component", fun ctx ->
 )
 ```
 
-We can also re-execute these handlers if we make them dependant of any readable values, for example let us try to compute the sum of the ages of a user list whenever the user list changes.
+We can also re-execute these handlers if we make them dependent on any readable values, for example let us try to compute the sum of the ages of a user list whenever the user list changes.
 
 ```fsharp
 Component("use-effect-component", fun ctx ->
@@ -102,9 +102,9 @@ As is in the source comments:
 
 > Readable state value that can be subscribed to.
 
-Readables are values which you can subscribe to get updates, this are common values used
+Readables are values to which you can subscribe to get updates, these are commonly used values.
 
-An example would be the following
+An example would be the following:
 
 ```fsharp
 Component(fun ctx ->
@@ -116,7 +116,7 @@ Component(fun ctx ->
 )
 ```
 
-At this point this component will be pretty much static, it won't ever be re-rendered because there are no changes to it's state.
+At this point this component will be pretty much static, it won't ever be re-rendered because there are no changes to its state.
 
 ### IWritable<'T>
 
@@ -130,7 +130,7 @@ As is in the source comments:
 
 > Readable and writable state value that can be subscribed to.
 
-If we take the previous example and add mutations it would look like the following:
+If we take the previous example and add mutations, it would look like the following:
 
 ```fsharp
 Component(fun ctx ->

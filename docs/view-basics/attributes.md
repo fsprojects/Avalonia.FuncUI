@@ -32,7 +32,7 @@ In the example below the handler function captures `current` . When the button i
 
 <figure><img src="../.gitbook/assets/Screenshot 2023-11-10 at 09.34.54.png" alt=""><figcaption></figcaption></figure>
 
-Capturing state that changes over time should be avoided is most cases. You can provide FuncUI with a way of knowing when to update your handler function. \
+Capturing state that changes over time should be avoided in most cases. You can provide FuncUI with a way of knowing when to update your handler function. \
 \
 Update handler function on render if current value changed:
 
@@ -52,7 +52,7 @@ Button.onClick (
 )
 ```
 
-By default the handler function is only updated if the underlaying delegate type changes.
+By default, the handler function is only updated if the underlying delegate type changes.
 
 ### 🧲 Attached Properties
 
