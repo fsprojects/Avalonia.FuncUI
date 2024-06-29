@@ -2,7 +2,7 @@
 
 ## How do I obtain the reference of a Control?
 
-There are 2 recommended ways of obtaining the reference of an underlaying control. \
+There are 2 recommended ways of obtaining the reference of an underlying control. \
 
 
 ### 1. Execute code on control creation
@@ -68,7 +68,7 @@ Component(fun ctx ->
 
 ## How do I restrict what a user can input in a TextBox / AutoCompleteBox / InputElement ?
 
-This is possible by intercepting the [TextInputEvent](https://reference.avaloniaui.net/api/Avalonia.Input/InputElement/FEA4DB21) and modifying its event args. It's important to attache the handler to the tunnelled event. More details about event routing can be found [here](https://docs.avaloniaui.net/docs/input/routed-events#routing-strategies). \
+This is possible by intercepting the [TextInputEvent](https://reference.avaloniaui.net/api/Avalonia.Input/InputElement/FEA4DB21) and modifying its event args. It's important to attach the handler to the tunnelled event. More details about event routing can be found [here](https://docs.avaloniaui.net/docs/input/routed-events#routing-strategies). \
 \
 In the example below whatever a user types in a TextBox will end up as uppercase text.&#x20;
 

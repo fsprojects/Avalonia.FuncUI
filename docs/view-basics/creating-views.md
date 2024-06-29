@@ -1,10 +1,10 @@
 # Creating views
 
-There are multipe ways of creating a view for a certain control. They all have in common that the resulting type is `IView` or `IView<'t>`.
+There are multiple ways of creating a view for a certain control. They all have in common that the resulting type is `IView` or `IView<'t>`.
 
 ## Creating views for common controls
 
-FuncUI provides functions for creating standard avalonia controls. The create function always follows the same pattern.\
+FuncUI provides functions for creating standard Avalonia controls. The create function always follows the same pattern.\
 
 
 <pre class="language-fsharp" data-title="internal - signature"><code class="lang-fsharp"><strong>module Button =
@@ -27,7 +27,7 @@ So the create function for a `TextBlock` is `TextBlock.create`, for a `StackPane
 
 ## Creating views for custom controls
 
-Even without creating bindings for a control you can create and embedd it in a view.&#x20;
+Even without creating bindings for a control you can create and embed it in a view.&#x20;
 
 ```fsharp
 View.createGeneric<MyCustomControl> [
@@ -37,7 +37,7 @@ View.createGeneric<MyCustomControl> [
 
 ### Passing constructor arguments
 
-Sometimes controls dont have a unit constructor and need constructor arguments. Here is how you  can pass them.
+Sometimes controls don't have a unit constructor and need constructor arguments. Here is how you  can pass them.
 
 ```fsharp
 [

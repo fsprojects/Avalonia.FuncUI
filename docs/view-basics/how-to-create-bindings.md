@@ -1,6 +1,6 @@
 # How to create bindings
 
-Creating bindings for avalonia controls is fairly easy. You just need to know a little bit about the source of the control and its public properties/events.
+Creating bindings for Avalonia controls is fairly easy. You just need to know a little bit about the source of the control and its public properties/events.
 
 You can create bindings for any public styled/direct properties for example the `IsPressed` [Property of Button.cs](https://github.com/AvaloniaUI/Avalonia/blob/master/src/Avalonia.Controls/Button.cs#L78)
 

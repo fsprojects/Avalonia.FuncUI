@@ -6,7 +6,7 @@ There are two ways of creating a component.&#x20;
 
 ## Component (fun ctx -> ...)
 
-Creating a component using the regular constructor of the `Component` class. `Component` inherits from `Border` and therefor can be used like any other Avalonia control.
+Creating a component using the regular constructor of the `Component` class. `Component` inherits from `Border` and therefore can be used like any other Avalonia control.
 
 ```fsharp
 // create a Component that can be directly used in a Avalonia app
@@ -32,7 +32,7 @@ control.Content <- component
 
 ## Component.create ("key", fun ctx -> ...)
 
-Declaratlvely describes a component. Can be embedded in other views as this returns an `IView`
+Declaratively describes a component. Can be embedded in other views as this returns an `IView`
 
 ```fsharp
 let greetingView (): IView = 

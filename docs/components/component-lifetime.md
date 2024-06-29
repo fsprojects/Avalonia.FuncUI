@@ -52,7 +52,7 @@ type Views () =
         )
 ```
 
-Instead of removing the `Button` from the Virtual DOM we can also just set `isVisible` accordingly. This does not change the location of the `randomColorView` and will keep it's identity.
+Instead of removing the `Button` from the Virtual DOM we can also just set `isVisible` accordingly. This does not change the location of the `randomColorView` and will keep its identity.
 
 ```fsharp
 ..    
@@ -81,7 +81,7 @@ Instead of removing the `Button` from the Virtual DOM we can also just set `isVi
 
 ## Component Identity - Key
 
-A Components identity can be explicitly changed by changing it's key. This is useful when the location is stable, but you still want to get a new component in some cases.&#x20;
+A Components identity can be explicitly changed by changing its key. This is useful when the location is stable, but you still want to get a new component in some cases.&#x20;
 
 ```fsharp
 type Views () =
