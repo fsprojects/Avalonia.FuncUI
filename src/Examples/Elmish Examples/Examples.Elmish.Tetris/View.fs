@@ -109,7 +109,7 @@ module View =
                         [ TextBlock.fontSize 16.
                           TextBlock.horizontalAlignment HorizontalAlignment.Center
                           TextBlock.width 350.
-                          TextBlock.text (sprintf "Score: %d " state.score) ] ] ]
+                          TextBlock.text ($"Score: %d{state.score}" ) ] ] ]
 
     let howToPlayView =
         StackPanel.create
