@@ -44,10 +44,10 @@ module internal Extensions =
                 let handler = EventHandler<'args>(fun _ e ->
                     observer.OnNext e
                 )
-                
+
                 // subscribe to event changes so they can be pushed to subscribers
                 this.AddDisposableHandler(routedEvent, handler, routedEvent.RoutingStrategies)
             )
-            
+
             { new IObservable<'args>
               with member this.Subscribe(observer: IObserver<'args>) = sub.Invoke(observer) }
