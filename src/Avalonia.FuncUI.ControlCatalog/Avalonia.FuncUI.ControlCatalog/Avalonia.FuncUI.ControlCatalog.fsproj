@@ -40,7 +40,7 @@
 
     <ItemGroup>
       <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-      <PackageReference Include="Bogus" Version="28.4.1" />
+      <PackageReference Include="Bogus" Version="35.6.0" />
     </ItemGroup>
 
 </Project>
