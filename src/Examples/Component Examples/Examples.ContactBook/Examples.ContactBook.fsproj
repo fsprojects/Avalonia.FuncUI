@@ -25,7 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Bogus" Version="34.0.1" />
+      <PackageReference Include="Bogus" Version="35.6.0" />
       <TrimmerRootAssembly Include="Bogus" />
     </ItemGroup>
 
