@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Version>$(FuncUIVersion)</Version>
     <Authors>JaggerJo</Authors>
     <Product>Avalonia.FuncUI.Elmish</Product>
@@ -33,10 +33,6 @@
 
   <ItemGroup>
     <PackageReference Include="Elmish" Version="4.0.0" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
