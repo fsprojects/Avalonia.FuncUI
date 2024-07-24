@@ -29,7 +29,7 @@ module DragDropDemo =
     let doDrag (e, dragCount) =
         async {
             let dragData = DataObject()
-            dragData.Set(DataFormats.Text, sprintf "You have dragged text %d times" dragCount)
+            dragData.Set(DataFormats.Text, $"You have dragged text %d{dragCount} times")
 
             let! result = Dispatcher.UIThread.InvokeAsync<DragDropEffects>
                               (fun _ -> DragDrop.DoDragDrop(e, dragData, DragDropEffects.Copy)) |> Async.AwaitTask
