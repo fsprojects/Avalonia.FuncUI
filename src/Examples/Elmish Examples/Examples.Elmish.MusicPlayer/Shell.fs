@@ -7,11 +7,13 @@ module Shell =
     open Avalonia.Controls
     open Avalonia.Input
     open Avalonia.Layout
+    open Avalonia.Platform.Storage
     open Avalonia.FuncUI.Elmish
     open Avalonia.FuncUI.Hosts
     open Avalonia.FuncUI.DSL
     open LibVLCSharp.Shared
     open Examples.MusicPlayer
+    open System.Collections.Generic
 
     type State =
         { title: string
@@ -24,8 +26,8 @@ module Shell =
         | SetTitle of string
         | OpenFiles
         | OpenFolder
-        | AfterSelectFolder of string
-        | AfterSelectFiles of string array
+        | AfterSelectFolder of IReadOnlyList<IStorageFolder>
+        | AfterSelectFiles of IReadOnlyList<IStorageFile>
         (* Handle Media Player Events *)
         | Playing
         | Paused
@@ -122,15 +124,13 @@ module Shell =
             window.Title <- title
             { state with title = title }, Cmd.none
         | OpenFiles ->
-            let dialog = Dialogs.getMusicFilesDialog None
-            let showDialog window = dialog.ShowAsync(window) |> Async.AwaitTask
-            state, Cmd.OfAsync.perform showDialog window AfterSelectFiles
+            let showDialog storageProvider = Dialogs.showMusicFilesDialog (storageProvider, None)
+            state, Cmd.OfAsync.perform showDialog window.StorageProvider AfterSelectFiles
         | OpenFolder ->
-            let dialog = Dialogs.getFolderDialog
-            let showDialog window = dialog.ShowAsync(window) |> Async.AwaitTask
-            state, Cmd.OfAsync.perform showDialog window AfterSelectFolder
-        | AfterSelectFolder path ->
-            let songs = Songs.populateFromDirectory path |> Array.toList
+            let showDialog storageProvider = Dialogs.showMusicFolderDialog storageProvider
+            state, Cmd.OfAsync.perform showDialog window.StorageProvider AfterSelectFolder
+        | AfterSelectFolder paths ->
+            let songs = Songs.populateFromFolders paths |> Array.toList
             state, Cmd.map PlaylistMsg (Cmd.ofMsg (Playlist.Msg.AddFiles songs))
         | AfterSelectFiles paths ->
             let songs = Songs.populateSongs paths |> Array.toList
@@ -185,8 +185,10 @@ module Shell =
     type ShellWindow() as this =
         inherit HostWindow()
         do
+            let iconPath = System.IO.Path.Combine("Assets", "Icons", "icon.ico")
+
             base.Title <- "Music Player in F# :)"
-            base.Icon <- WindowIcon("Assets\Icons\icon.ico")
+            base.Icon <- WindowIcon(iconPath)
             base.Width <- 800.0
             base.Height <- 600.0
             base.MinWidth <- 526.0
