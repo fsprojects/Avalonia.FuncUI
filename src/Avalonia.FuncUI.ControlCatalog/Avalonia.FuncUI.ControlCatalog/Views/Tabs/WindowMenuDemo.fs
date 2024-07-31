@@ -31,10 +31,12 @@ module WindowMenuDemo =
                                 MenuItem.create [
                                     MenuItem.header "Light"
                                     MenuItem.onClick (fun _ -> "#e74c3c" |> SetColor |> dispatch)
+                                    MenuItem.toggleType MenuItemToggleType.Radio
                                 ]
                                 MenuItem.create [
                                     MenuItem.header "Dark"
                                     MenuItem.onClick (fun _ -> "#c0392b" |> SetColor |> dispatch)
+                                    MenuItem.toggleType MenuItemToggleType.Radio
                                 ]  
                             ]
                         ] 
