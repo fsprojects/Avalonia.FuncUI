@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <PackageType>Template</PackageType>
-    <PackageVersion>1.0.0-rc1.1.0</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <PackageId>Avalonia.FuncUI.Templates</PackageId>
     <Title>Avalonia.FuncUI Templates</Title>
     <Authors>Josua Jäger, Kevin Schneider, Angel Daniel Munoz Gonzalez</Authors>
