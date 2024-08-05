@@ -161,7 +161,7 @@ module DataTemplateDemo =
                 TextBlock.create [
                     TextBlock.dock Dock.Top
                     TextBlock.margin 5.0
-                    TextBlock.text (sprintf "Total Products: %i" state.Products.Length)
+                    TextBlock.text ($"Total Products: %i{state.Products.Length}")
                 ]    
                 
                 productDetailsView state.Selected dispatch
