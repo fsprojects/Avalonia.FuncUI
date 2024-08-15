@@ -2,6 +2,7 @@ namespace Avalonia.FuncUI
 
 open System
 open System.Collections.Generic
+open Microsoft.FSharp.Core
 
 [<RequireQualifiedAccess>]
 module internal ComponentHelpers =
@@ -38,3 +39,32 @@ module internal CommonExtensions =
     type Guid with
         member this.StringValue with get () = this.ToString()
         static member Unique with get () = Guid.NewGuid()
+
+
+[<RequireQualifiedAccess>]
+module internal RenderFunctionAnalysis =
+    open System
+    open System.Reflection
+    open System.Collections.Concurrent
+
+    let internal cache = ConcurrentDictionary<Type, bool>()
+
+    let private flags =
+        BindingFlags.Instance |||
+        BindingFlags.NonPublic |||
+        BindingFlags.Public
+
+    let capturesState (func : obj) : bool =
+        let type' = func.GetType()
+
+        let hasValue, value = cache.TryGetValue type'
+
+        match hasValue with
+        | true -> value
+        | false ->
+            let capturesState =
+                type'.GetConstructors(flags)
+                |> Array.map (fun info -> info.GetParameters().Length)
+                |> Array.exists (fun parameterLength -> parameterLength > 0)
+
+            cache.AddOrUpdate(type', capturesState, (fun identifier lastValue -> capturesState))

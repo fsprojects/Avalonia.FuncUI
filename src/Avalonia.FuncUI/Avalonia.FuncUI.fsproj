@@ -52,6 +52,7 @@
     <Compile Include="Helpers.fs" />
     <Compile Include="DSL\ViewBuilder.fs" />
     <Compile Include="DSL\AttrBuilder.fs" />
+    <Compile Include="DSL\Component.fs" />
     <Compile Include="DSL\View.fs" />
     <Compile Include="DSL\Base\AvaloniaObject.fs" />
 
@@ -196,6 +197,7 @@
     <Compile Include="Experimental\Experimental.EnvironmentState.fs" />
     <Compile Include="Experimental\Experimental.Operators.fs" />
     <Compile Include="Experimental\Experimental.Hooks.fs" />
+    <Compile Include="Experimental\Experimental.ClosureComponent.fs" />
   </ItemGroup>
 
 </Project>
