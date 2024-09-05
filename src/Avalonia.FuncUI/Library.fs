@@ -37,6 +37,29 @@ module internal Extensions =
             let disposable = Observable.subscribe callback this
             token.Register(fun () -> disposable.Dispose()) |> ignore
 
+        member this.SkipFirst() =
+            { new IObservable<'a> with
+                member __.Subscribe(observer: IObserver<'a>) =
+                    let skipFirstObserver =
+                        let mutable isFirst = true
+
+                        { new IObserver<'a> with
+                            member __.OnNext(value) =
+                                if isFirst then
+                                    isFirst <- false
+                                else
+                                    observer.OnNext(value)
+
+                            member __.OnError(error) =
+                                observer.OnError(error)
+
+                            member __.OnCompleted() =
+                                observer.OnCompleted()
+                        }
+
+                    this.Subscribe(skipFirstObserver)
+            }
+
     type Interactive with
         member this.GetObservable<'args when 'args :> RoutedEventArgs>(routedEvent: RoutedEvent<'args>) : IObservable<'args> =
             let sub = Func<IObserver<'args>, IDisposable>(fun observer ->
@@ -44,10 +67,10 @@ module internal Extensions =
                 let handler = EventHandler<'args>(fun _ e ->
                     observer.OnNext e
                 )
-                
+
                 // subscribe to event changes so they can be pushed to subscribers
                 this.AddDisposableHandler(routedEvent, handler, routedEvent.RoutingStrategies)
             )
-            
+
             { new IObservable<'args>
               with member this.Subscribe(observer: IObserver<'args>) = sub.Invoke(observer) }
