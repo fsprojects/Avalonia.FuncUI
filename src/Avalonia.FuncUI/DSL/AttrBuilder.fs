@@ -235,6 +235,8 @@ type AttrBuilder<'view>() =
             let cts = new CancellationTokenSource()
             control
                 .GetObservable(property)
+                // GetObservable immediately emits the current value. We're not interested in that, so we skip the first value.
+                .SkipFirst()
                 .Subscribe(func, cts.Token)
             cts
 
@@ -261,6 +263,8 @@ type AttrBuilder<'view>() =
             let cts = new CancellationTokenSource()
             control
                 .GetObservable(property)
+                 // GetObservable immediately emits the current value. We're not interested in that, so we skip the first value.
+                .SkipFirst()
                 .Subscribe(func, cts.Token)
             cts
 
