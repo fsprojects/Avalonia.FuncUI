@@ -2,8 +2,7 @@
 
 ## How do I obtain the reference of a Control?
 
-There are 2 recommended ways of obtaining the reference of an underlying control. \
-
+There are 2 recommended ways of obtaining the reference of an underlying control. \\
 
 ### 1. Execute code on control creation
 
@@ -64,13 +63,11 @@ Component(fun ctx ->
 )
 ```
 
-
-
 ## How do I restrict what a user can input in a TextBox / AutoCompleteBox / InputElement ?
 
-This is possible by intercepting the [TextInputEvent](https://reference.avaloniaui.net/api/Avalonia.Input/InputElement/FEA4DB21) and modifying its event args. It's important to attach the handler to the tunnelled event. More details about event routing can be found [here](https://docs.avaloniaui.net/docs/input/routed-events#routing-strategies). \
+This is possible by intercepting the [TextInputEvent](https://reference.avaloniaui.net/api/Avalonia.Input/InputElement/FEA4DB21) and modifying its event args. It's important to attach the handler to the tunnelled event. More details about event routing can be found [here](https://docs.avaloniaui.net/docs/input/routed-events#routing-strategies).\
 \
-In the example below whatever a user types in a TextBox will end up as uppercase text.&#x20;
+In the example below whatever a user types in a TextBox will end up as uppercase text.
 
 ```fsharp
 TextBox.create [
@@ -111,4 +108,56 @@ let renderToFile (target : Control, path : string) =
     target.Arrange(Rect(size)) 
     bitmap.Render(target) 
     bitmap.Save(path) 
+```
+
+## Managing Focus
+
+<figure><img src=".gitbook/assets/CleanShot 2024-09-08 at 15.00.12.gif" alt="" width="345"><figcaption></figcaption></figure>
+
+```fsharp
+Component.create ("view", fun ctx ->
+    let textBoxA = ctx.useState<TextBox>(null, renderOnChange = false)
+    let textBoxB = ctx.useState<TextBox>(null, renderOnChange = false)
+    let textBoxAFocus = ctx.useState(false, renderOnChange = true)
+    let textBoxBFocus = ctx.useState(false, renderOnChange = true)
+    StackPanel.create [
+        StackPanel.margin 10
+        StackPanel.spacing 10
+        StackPanel.children [
+            TextBox.create [
+                TextBox.init textBoxA.Set
+                TextBox.onGotFocus (fun _ -> textBoxAFocus.Set true)
+                TextBox.onLostFocus (fun _ -> textBoxAFocus.Set false)
+            ]
+            TextBox.create [
+                TextBox.init textBoxB.Set
+                TextBox.onGotFocus (fun _ -> textBoxAFocus.Set true)
+                TextBox.onLostFocus (fun _ -> textBoxAFocus.Set false)
+            ]
+            StackPanel.create [
+                StackPanel.orientation Orientation.Horizontal
+                StackPanel.margin 10
+                StackPanel.spacing 10
+                StackPanel.children [
+                    Button.create [
+                        Button.content "Focus A"
+                        Button.background (if textBoxAFocus.Current then Brushes.Green else Brushes.Red)
+                        Button.onClick (fun _ ->
+                            let _ = textBoxA.Current.Focus()
+                            ()
+                        )
+                    ]
+                    Button.create [
+                        Button.content "Focus B"
+                        Button.background (if textBoxBFocus.Current then Brushes.Green else Brushes.Red)
+                        Button.onClick (fun _ ->
+                            let _ = textBoxB.Current.Focus()
+                            ()
+                        )
+                    ]
+                ]
+            ]
+        ]
+    ]
+)
 ```
