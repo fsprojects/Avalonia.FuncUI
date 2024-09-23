@@ -112,8 +112,9 @@ The current co-maintainers of Avalonia.FuncUI are
 The default maintainer account for projects under "fsprojects" is @fsprojectsgit - F# Community Project Incubation Space (repo management)
 
 # Commercial Support
+**Provided by [Voynoic Systems GmbH](https://www.voyonic-systems.de)**
 
-Please reach out to mail@jaggerjo.com if you need a commercial support contract or are interested in contract work.
+Please reach out to contact@voyonic-systmes.de if you need a commercial support contract or are interested in contract work.
 
 # Star History 
 
