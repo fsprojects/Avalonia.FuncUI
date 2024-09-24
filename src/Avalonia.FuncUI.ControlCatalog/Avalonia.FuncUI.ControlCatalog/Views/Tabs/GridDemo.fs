@@ -48,8 +48,8 @@ module GridDemo =
                     )
                 ]
                 Grid.create [
-                    Grid.columnDefinitions (sprintf "%i, 1*" state.cellWidth)
-                    Grid.rowDefinitions (sprintf "%i, 1*" state.cellHeight)
+                    Grid.columnDefinitions ($"%i{state.cellWidth}, 1*")
+                    Grid.rowDefinitions ($"%i{state.cellHeight}, 1*")
                     Grid.showGridLines true
                     Grid.children [
                         Border.create [
