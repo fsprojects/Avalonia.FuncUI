@@ -28,7 +28,11 @@ jobs:
       run: dotnet restore src/Avalonia.FuncUI.sln
     - name: Build
       run: dotnet build src/Avalonia.FuncUI.sln --no-restore
+
     - name: Test
       run: dotnet test src/Avalonia.FuncUI.sln --no-build --verbosity normal
+    
+    - name: Build Templates
+      run: pushd ./src/Avalonia.FuncUI.Templates && chmod +x ./test-templates.ps1 && pwsh ./test-templates.ps1 && popd
 
 
