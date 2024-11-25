@@ -7,7 +7,7 @@ module DragDrop =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
 
-    type DragDrop with
+    type Control with
 
         static member onDragEnter<'t when 't :> Control> (func: DragEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<DragEventArgs>
