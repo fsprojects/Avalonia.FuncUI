@@ -5,7 +5,6 @@ module ColumnDefinition =
     open Avalonia.Controls
     
     [<Struct>]
-    [<RequireQualifiedAccess>]
     type ColumnWidth =
     /// Column is auto-sized to fit it's contents
     | Auto
@@ -37,7 +36,6 @@ module RowDefinition =
     open Avalonia.Controls
 
     [<Struct>]
-    [<RequireQualifiedAccess>]
     type RowHeight =
     /// Row is auto-sized to fit it's contents
     | Auto

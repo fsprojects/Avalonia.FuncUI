@@ -17,7 +17,7 @@ type StateHookError =
                 "    This usually means a component key should have changed, but it didn't."
             ]
 
-[<RequireQualifiedAccess; Struct; IsReadOnly>]
+[<Struct; IsReadOnly>]
 type StateHookValueResolver =
     | Const of constant: IAnyReadable
     | Lazy of factory: (unit -> IAnyReadable)

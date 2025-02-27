@@ -5,7 +5,7 @@ open Avalonia.FuncUI
 
 
 /// Used to create a dependency graph of state values for debugging / visualization.
-[<Struct; RequireQualifiedAccess>]
+[<Struct>]
 type InstanceType =
     | Source
     | Adapter of sources: Map<string, IAnyReadable>
