@@ -65,6 +65,10 @@ module MainView =
                     TabItem.content (ViewBuilder.Create<GridSplitterDemo.Host>([]))
                 ]
                 TabItem.create [
+                    TabItem.header "HyperlinkButton Demo"
+                    TabItem.content (ViewBuilder.Create<HyperlinkButtonDemo.Host>([]))
+                ]
+                TabItem.create [
                     TabItem.header "NumericUpDown Demo"
                     TabItem.content (ViewBuilder.Create<NumericUpDownDemo.Host>([]))
                 ]
