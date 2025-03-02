@@ -129,6 +129,7 @@
     <Compile Include="DSL\Buttons\ToggleSplitButton.fs" />
     <Compile Include="DSL\Buttons\ToggleSwitch.fs" />
     <Compile Include="DSL\Buttons\CheckBox.fs" />
+    <Compile Include="DSL\Buttons\HyperlinkButton.fs" />
     <Compile Include="DSL\Remote\RemoteWidget.fs" />
     <Compile Include="DSL\RepeatButton.fs" />
     <Compile Include="DSL\DatePicker.fs" />
