@@ -78,11 +78,11 @@ module DragDropDemo =
                                 Border.create
                                     [ Border.classes [ "drop" ]
                                       Border.padding 16.0
-                                      DragDrop.allowDrop true
+                                      Control.allowDrop true
                                       Border.child
                                           (TextBlock.create
                                               [ TextBlock.text state.dropText
-                                                DragDrop.onDrop (fun e ->
+                                                Control.onDrop (fun e ->
                                                     if e.Data.Contains(DataFormats.Text) then
                                                         Dropped(e.Data.GetText()) |> dispatch
                                                     elif e.Data.Contains(DataFormats.Files) then
@@ -92,7 +92,7 @@ module DragDropDemo =
                                                             |> String.concat Environment.NewLine)
                                                         |> dispatch
                                                     )
-                                                DragDrop.onDragOver (fun e ->
+                                                Control.onDragOver (fun e ->
                                                     e.DragEffects <-
                                                         if e.Data.Contains(DataFormats.Text)
                                                            || e.Data.Contains(DataFormats.Files) then
