@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [RadioButton](https://docs.avaloniaui.net/docs/controls/radiobutton) and [RadioButton API](http://reference.avaloniaui.net/api/Avalonia.Controls/RadioButton/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [RadioButton.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/RadioButton.fs)
+> For Avalonia.FuncUI's DSL properties you can check [RadioButton.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Buttons/RadioButton.fs)
 
 The RadioButton is a control that allows a user to choose a single value between different options
 

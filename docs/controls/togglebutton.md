@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [ToggleButton](https://docs.avaloniaui.net/docs/controls/togglebutton) and [ToggleButton API](http://reference.avaloniaui.net/api/Avalonia.Controls.Primitives/ToggleButton/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [ToggleButton.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/ToggleButton.fs)
+> For Avalonia.FuncUI's DSL properties you can check [ToggleButton.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Buttons/ToggleButton.fs)
 
 If you are looking for a button to behave more like a checkbox you can use a `ToggleButton`. A `ToggleButton` toggles between checked and unchecked on click.
 

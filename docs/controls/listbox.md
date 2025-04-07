@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [ListBox](https://docs.avaloniaui.net/docs/controls/listbox) and [ListBox API](http://reference.avaloniaui.net/api/Avalonia.Controls/ListBox/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [ListBox.fs](../../src/Avalonia.FuncUI.DSL/ListBox.fs)
+> For Avalonia.FuncUI's DSL properties you can check [ListBox.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/ListBox.fs)
 
 The list box is a multi-line control box for allowing a user to choose value.
 

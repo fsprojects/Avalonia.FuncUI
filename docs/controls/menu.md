@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [Menu API](http://reference.avaloniaui.net/api/Avalonia.Controls/Menu/) and [Menu](http://docs.avaloniaui.net/docs/controls/menu) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [Menu.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Menu.fs)
+> For Avalonia.FuncUI's DSL properties you can check [Menu.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Menu.fs)
 
 The menu control allows you to add a list of buttons in a horizontal manner which supports sub-items, it's usually put at the top of the application inside a DockPanel, but it can be placed anywhere in the application.
 
@@ -58,7 +58,7 @@ Menu.create [
 
 **Set Icons**
 
-To add Icons to the menu item you just need to provide an [Image](http://avaloniaui.net/docs/controls/image), you can check this [sample](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Shell.fs#L162) which uses an extension method defined in [this file](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Examples/Examples.MusicPlayer/Extensions.fs#L5)
+To add Icons to the menu item you just need to provide an [Image](http://avaloniaui.net/docs/controls/image), you can check this [sample](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Examples/Elmish%20Examples/Examples.Elmish.MusicPlayer/Shell.fs#L160) which uses an extension method defined in [this file](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Examples/Elmish%20Examples/Examples.Elmish.MusicPlayer/Extensions.fs#L22)
 
 ```fsharp
 let icon = (* obtain an Image instance *)

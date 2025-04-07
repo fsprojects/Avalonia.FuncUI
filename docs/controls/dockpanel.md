@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [DockPanel](https://docs.avaloniaui.net/docs/controls/dockpanel) and [DockPanel API](http://reference.avaloniaui.net/api/Avalonia.Controls/DockPanel/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [DockPanel.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Panels/DockPanel.fs)
+> For Avalonia.FuncUI's DSL properties you can check [DockPanel.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Panels/DockPanel.fs)
 
 The DockPanel is a layout construct that allows docking its children to the different sides of it.
 

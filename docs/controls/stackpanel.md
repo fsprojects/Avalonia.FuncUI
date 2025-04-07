@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [StackPanel](https://docs.avaloniaui.net/docs/controls/stackpanel) and [StackPanel API](http://reference.avaloniaui.net/api/Avalonia.Controls/StackPanel/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [StackPanel.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Panels/StackPanel.fs)
+> For Avalonia.FuncUI's DSL properties you can check [StackPanel.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Panels/StackPanel.fs)
 
 The StackPanel is a layout construct that stacks its children in horizontal or vertical direction.
 

@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [TabControl](http://docs.avaloniaui.net/docs/controls/tabcontrol) and [TabControl API](http://reference.avaloniaui.net/api/Avalonia.Controls/TabControl/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [TabControl.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/TabControl.fs)
+> For Avalonia.FuncUI's DSL properties you can check [TabControl.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/TabControl.fs)
 
 The [TabControl](http://docs.avaloniaui.net/docs/controls/tabcontrol) offers you a way to present content inside your application, each tab contains a different set of controls.
 
@@ -41,7 +41,7 @@ TabControl.create [
 
 **Set HostControl as content**
 
-You can also include individual Elmish Controls as the content of your tabs by using the [ViewBuilder](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.ControlCatalog/Views/MainView.fs#L36). Visit the [example](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.ControlCatalog/Views/MainView.fs) to see it in action
+You can also include individual Elmish Controls as the content of your tabs by using the [ViewBuilder](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog/Views/MainView.fs#L36). Visit the [example](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog/Views/MainView.fs) to see it in action
 
 ```fsharp
 // counter.fs

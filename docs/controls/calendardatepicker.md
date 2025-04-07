@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [CalendarDatePicker API](http://reference.avaloniaui.net/api/Avalonia.Controls/CalendarDatePicker/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [CalendarDatePicker.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Calendar/CalendarDatePicker.fs)
+> For Avalonia.FuncUI's DSL properties you can check [CalendarDatePicker.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Calendar/CalendarDatePicker.fs)
 
 The CalendarDatePicker control is a single date picker that displays a calendar, it is also possible to enter a date via the TextBox the control has
 
