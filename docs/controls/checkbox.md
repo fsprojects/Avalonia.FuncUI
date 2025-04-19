@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [CheckBox](https://docs.avaloniaui.net/docs/controls/checkbox) and [CheckBox API](http://reference.avaloniaui.net/api/Avalonia.Controls/CheckBox/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [CheckBox.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/CheckBox.fs)
+> For Avalonia.FuncUI's DSL properties you can check [CheckBox.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Buttons/CheckBox.fs)
 
 The checkbox is a control that allows a user to represent boolean values or the absense of a value
 

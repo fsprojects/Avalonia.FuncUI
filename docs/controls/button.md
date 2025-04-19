@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [Button](https://docs.avaloniaui.net/docs/controls/button) and [Button API](http://reference.avaloniaui.net/api/Avalonia.Controls/Button/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [Button.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Button.fs)
+> For Avalonia.FuncUI's DSL properties you can check [Button.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Buttons/Button.fs)
 
 Buttons are basic controls for any application you may build, buttons are often used to trigger an action.
 
