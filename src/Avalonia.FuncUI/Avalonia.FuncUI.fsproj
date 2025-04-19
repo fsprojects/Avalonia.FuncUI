@@ -7,7 +7,7 @@
     <Product>Avalonia.FuncUI</Product>
     <PackageId>Avalonia.FuncUI</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/FuncUI/Avalonia.FuncUI</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/fsprojects/Avalonia.FuncUI</PackageProjectUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Title>Avalonia FuncUI</Title>
     <PackageVersion>$(FuncUIVersion)</PackageVersion>
