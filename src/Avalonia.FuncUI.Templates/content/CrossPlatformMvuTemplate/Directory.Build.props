@@ -8,7 +8,7 @@
     <ApplicationTitle>AvaTitleParameter</ApplicationTitle>
     <!-- #endif -->
     <!-- Avalonia versions -->
-    <AvaloniaVersion>11.0.0-rc1.1</AvaloniaVersion>
-    <AvaloniaFuncUIVersion>1.0.0-rc1.1.0</AvaloniaFuncUIVersion>
+    <AvaloniaVersion>11.0.0</AvaloniaVersion>
+    <AvaloniaFuncUIVersion>1.0.0</AvaloniaFuncUIVersion>
   </PropertyGroup>
 </Project>
