@@ -92,6 +92,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.SettingFocus", "Ex
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.TreeDataGrid", "Avalonia.FuncUI.TreeDataGrid\Avalonia.FuncUI.TreeDataGrid.fsproj", "{44CEE173-0C6F-F12A-063B-EE64187DC6CD}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.TreeDataGridPlayground", "Examples\Component Examples\Examples.TreeDataGridPlayground\Examples.TreeDataGridPlayground.fsproj", "{D95060A4-0F27-46FE-8D31-C875974EE742}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -218,6 +220,10 @@ Global
 		{44CEE173-0C6F-F12A-063B-EE64187DC6CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44CEE173-0C6F-F12A-063B-EE64187DC6CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44CEE173-0C6F-F12A-063B-EE64187DC6CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95060A4-0F27-46FE-8D31-C875974EE742}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95060A4-0F27-46FE-8D31-C875974EE742}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95060A4-0F27-46FE-8D31-C875974EE742}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95060A4-0F27-46FE-8D31-C875974EE742}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -255,6 +261,7 @@ Global
 		{6D2C62FC-5634-4997-AF1F-2E8A5D27E117} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
 		{EC63B886-E809-4B74-B533-BFF3D60017C9} = {6D2C62FC-5634-4997-AF1F-2E8A5D27E117}
 		{2C7F4542-65CE-4EC6-9876-C1C2215EE006} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
+		{D95060A4-0F27-46FE-8D31-C875974EE742} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
