@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Version>$(FuncUIVersion)</Version>
+    <Product>Avalonia.FuncUI.TreeDataGrid</Product>
+    <PackageId>Avalonia.FuncUI.TreeDataGrid</PackageId>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>Avalonia FuncUI TreeDataGrid</Title>
+    <PackageVersion>$(FuncUIVersion)</PackageVersion>
+    <Description>TreeDataGrid bindings for Avalonia.FuncUI</Description>
+    <PackageIcon>nuget_icon.png</PackageIcon>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\github\img\nuget_icon.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Controls.TreeDataGrid" Version="11.1.1" />
+    <PackageReference Update="FSharp.Core" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+  </ItemGroup>
+
+</Project>
