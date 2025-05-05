@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [TextBlock](https://docs.avaloniaui.net/docs/controls/textblock) and [TextBlock API](http://reference.avaloniaui.net/api/Avalonia.Controls/TextBlock/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [TextBlock.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/TextBlock.fs)
+> For Avalonia.FuncUI's DSL properties you can check [TextBlock.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/TextBlock.fs)
 
 The textblock control allows you to present text within the application.
 

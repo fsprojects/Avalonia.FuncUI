@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [Expander](https://docs.avaloniaui.net/docs/controls/expander) and [Expander API](http://reference.avaloniaui.net/api/Avalonia.Controls/Expander/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [Expander.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Expander.fs)
+> For Avalonia.FuncUI's DSL properties you can check [Expander.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Expander.fs)
 
 The Expander (known as accordion as well) is a control that allows a user to show or hide content to make more room for relevant information or to show detailed information about the current view
 

@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [TextBox](https://docs.avaloniaui.net/docs/controls/textbox) and [TextBox API](http://reference.avaloniaui.net/api/Avalonia.Controls/TextBox/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [TextBox.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/TextBox.fs)
+> For Avalonia.FuncUI's DSL properties you can check [TextBox.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/TextBox.fs)
 
 The textbox is a control that allows a user to input strings.
 

@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [Border](https://docs.avaloniaui.net/docs/controls/border) and [Border Api](http://reference.avaloniaui.net/api/Avalonia.Controls/Border/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [Border.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Border.fs)
+> For Avalonia.FuncUI's DSL properties you can check [Border.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Border.fs)
 
 The Border control allows you to decorate child controls
 
