@@ -8,20 +8,20 @@
 
 ## Step 1: Empty Console App
 
-Create a new F# console application targeting .net 6 or higher.&#x20;
+Create a new F# console application targeting .net 8 or higher.&#x20;
 
 ## Step 2: Packages
 
-&#x20;Reference the following packages [Avalonia.Desktop](https://www.nuget.org/packages/Avalonia.Desktop/11.0.0-preview5), [Avalonia.Themes.Fluent](https://www.nuget.org/packages/Avalonia.Themes.Fluent/11.0.0-preview5) and [Avalonia.FuncUI](https://www.nuget.org/packages/Avalonia.FuncUI/0.6.0-preview7).
+&#x20;Reference the following packages [Avalonia.Desktop](https://www.nuget.org/packages/Avalonia.Desktop/11.1.0), [Avalonia.Themes.Fluent](https://www.nuget.org/packages/Avalonia.Themes.Fluent/11.1.0) and [Avalonia.FuncUI](https://www.nuget.org/packages/Avalonia.FuncUI/1.5.1).
 
 {% tabs %}
 {% tab title="dotnet CLI" %}
 Run the following commands in your project directory:
 
 ```bash
-dotnet add package Avalonia.Desktop --version 11.0.0
-dotnet add package Avalonia.Themes.Fluent --version 11.0.0
-dotnet add package Avalonia.FuncUI --version 1.0.0
+dotnet add package Avalonia.Desktop --version 11.1.0
+dotnet add package Avalonia.Themes.Fluent --version 11.1.0
+dotnet add package Avalonia.FuncUI --version 1.5.1
 ```
 {% endtab %}
 
@@ -29,9 +29,9 @@ dotnet add package Avalonia.FuncUI --version 1.0.0
 Paste the following package references to your fsproject file:
 
 ```html
-<PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
-<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
-<PackageReference Include="Avalonia.FuncUI" Version="1.0.0" />
+<PackageReference Include="Avalonia.Desktop" Version="11.1.0" />
+<PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.0" />
+<PackageReference Include="Avalonia.FuncUI" Version="1.5.1" />
 ```
 {% endtab %}
 {% endtabs %}
