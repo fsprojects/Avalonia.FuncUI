@@ -21,7 +21,10 @@ module Border =
 
         static member background<'t when 't :> Border>(color: Color) : IAttr<'t> =
             color |> ImmutableSolidColorBrush |> Border.background
-            
+          
+        static member backgroundSizing<'t when 't :> Border>(sizing: BackgroundSizing) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<BackgroundSizing>(Border.BackgroundSizingProperty, sizing, ValueNone)
+
         static member borderBrush<'t when 't :> Border>(brush: IBrush) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IBrush>(Border.BorderBrushProperty, brush, ValueNone)
             
