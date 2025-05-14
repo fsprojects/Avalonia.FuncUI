@@ -24,6 +24,9 @@ jobs:
       
     - name: Build & Test
       run: dotnet test src/Avalonia.FuncUI.sln --verbosity normal
+
+    - name: Build Templates
+      run: pushd ./src/Avalonia.FuncUI.Templates && chmod +x ./test-templates.ps1 && pwsh ./test-templates.ps1 && popd
       
     - name: Build for release
       run: dotnet build src/Avalonia.FuncUI/Avalonia.FuncUI.fsproj -c Release
@@ -33,3 +36,4 @@ jobs:
       
     - name: Publish base project and Elmish NuGets (if this version was not published before)
       run: dotnet nuget push src/**/bin/Release/*.nupkg -s https://api.nuget.org/v3/index.json -k ${{ secrets.NUGET_API_KEY }} --skip-duplicate
+    
