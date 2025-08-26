@@ -8,6 +8,7 @@ open Avalonia.FuncUI.Elmish
 open Avalonia.FuncUI.ControlCatalog.Views
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
+open Avalonia.FuncUI.DSL
 open Avalonia.Controls
 
 type MainWindow() as this =
@@ -26,6 +27,24 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
+        let menu = NativeMenu.create [
+                    NativeMenu.items [
+                        NativeMenuItem.create [
+                            NativeMenuItem.header "File"
+                            NativeMenuItem.isChecked true
+                            NativeMenuItem.isEnabled false
+                        ]
+                    ]
+                ]
+        let tray =
+            TrayIcon.create [
+                TrayIcon.toolTipText "Control Catalog"
+                TrayIcon.menu menu
+            ]
+        let icon = Avalonia.FuncUI.VirtualDom.VirtualDom.createObject tray :?> TrayIcon
+        let icons  = TrayIcons()
+        icons.Add(icon)
+        TrayIcon.SetIcons(this, icons)
         this.Styles.Add (FluentTheme())
         this.Styles.Load "avares://Avalonia.FuncUI.ControlCatalog/Styles/TabControl.xaml"
 
