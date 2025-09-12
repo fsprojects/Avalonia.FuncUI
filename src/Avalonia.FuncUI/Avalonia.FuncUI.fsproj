@@ -133,7 +133,6 @@
     <Compile Include="DSL\Flyout.fs" />
     <Compile Include="DSL\ItemsControl.fs" />
     <Compile Include="DSL\ContentControl.fs" />
-    <Compile Include="DSL\Window.fs" />
     <Compile Include="DSL\TransitioningContentControl.fs" />
     <Compile Include="DSL\BindingEvaluator.fs" />
     <Compile Include="DSL\AutoCompleteBox.fs" />
@@ -182,6 +181,8 @@
     <Compile Include="DSL\DataGrid.fs" />
     <Compile Include="DSL\PathIcon.fs" />
     <Compile Include="DSL\DragDrop.fs" />
+    <Compile Include="DSL\Window.fs" />
+    <Compile Include="DSL\KeyBinding.fs" />
   </ItemGroup>
 
   <ItemGroup>

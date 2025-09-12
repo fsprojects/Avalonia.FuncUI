@@ -21,3 +21,6 @@ module Window =
             
         static member sizeToContent<'t when 't :> Window>(value: SizeToContent) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<SizeToContent>(Window.SizeToContentProperty, value, ValueNone)
+
+        static member windowState<'t when 't :> Window>(value: WindowState) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<WindowState>(Window.WindowStateProperty, value, ValueNone)
