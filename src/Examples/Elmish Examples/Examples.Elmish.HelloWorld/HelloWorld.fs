@@ -8,11 +8,11 @@ module HelloWorld =
     type State = string
     let init() = "World"
 
-    type Msg = Update of string
+    type Msg = NameChanged of string
 
-    let update (msg: Msg) (state: State) : State =
+    let update (msg: Msg) (_state: State) : State =
         match msg with
-        | Update str -> str
+        | NameChanged name -> name
     
     let view (state: State) (dispatch) =
         Window.create [
@@ -29,7 +29,7 @@ module HelloWorld =
                         ]
                         TextBox.create [
                             TextBox.text state
-                            TextBox.onTextChanged (Update >> dispatch)
+                            TextBox.onTextChanged (NameChanged >> dispatch)
                         ]
                     ]
                 ]
