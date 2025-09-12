@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [Window](https://docs.avaloniaui.net/docs/controls/window) and [Window API](http://reference.avaloniaui.net/api/Avalonia.Controls/Window/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [Window.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Window.fs)
+> For Avalonia.FuncUI's DSL properties you can check [Window.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Window.fs).
 
 Window corresponds to your application's host window, and allows you to set top-level properties like window title and key bindings.
 
