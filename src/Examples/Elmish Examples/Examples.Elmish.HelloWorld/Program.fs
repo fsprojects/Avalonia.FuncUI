@@ -1,24 +1,16 @@
 ﻿namespace Examples.CounterApp
 
 open Avalonia
-open Avalonia.Controls
-open Avalonia.Themes.Fluent
-open Elmish
-open Avalonia.FuncUI.Hosts
-open Avalonia.FuncUI
-open Avalonia.FuncUI.Elmish
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.FuncUI.Hosts
+open Avalonia.FuncUI.Elmish
+open Avalonia.Themes.Fluent
+
+open Elmish
 
 type MainWindow() as this =
     inherit HostWindow()
     do
-        base.Title <- "Counter Example"
-        base.Icon <- WindowIcon(System.IO.Path.Combine("Assets","Icons", "icon.ico"))
-        base.Height <- 400.0
-        base.Width <- 400.0
-
-        //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
-        //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
         Elmish.Program.mkSimple HelloWorld.init HelloWorld.update HelloWorld.view
         |> Program.withHost this
         |> Program.withConsoleTrace

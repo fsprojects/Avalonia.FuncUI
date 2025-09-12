@@ -1,5 +1,7 @@
 namespace Examples.CounterApp
 
+open System.IO
+
 open Avalonia.FuncUI.DSL
 open Avalonia.Input
 
@@ -28,9 +30,14 @@ module HelloWorld =
         | FullScreen fullScreen ->
             { state with FullScreen = fullScreen }
     
+    let icon =
+        Path.Combine("Assets", "Icons", "icon.ico")
+            |> WindowIcon
+
     let view (state: State) (dispatch) =
         Window.create [
             Window.title $"Hello {state}!"
+            Window.icon icon
             Window.sizeToContent SizeToContent.WidthAndHeight
             Window.windowState (
                 if state.FullScreen then WindowState.FullScreen
