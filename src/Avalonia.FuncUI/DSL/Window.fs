@@ -3,7 +3,6 @@ namespace Avalonia.FuncUI.DSL
 open Avalonia.Controls
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.Builder
-open Avalonia.Platform
 
 [<AutoOpen>]
 module Window =
