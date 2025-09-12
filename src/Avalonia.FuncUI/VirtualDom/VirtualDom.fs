@@ -17,14 +17,6 @@ module rec VirtualDom =
         Patcher.patch(root, delta)
 
     let updateRoot (host: ContentControl, last: IView option, next: IView option) =
-        let root : Control voption =
-            if host.Content <> null then
-                match host.Content with
-                | :? Control as control -> ValueSome control
-                | _ -> ValueNone
-            else
-                ValueNone
-
         let delta : ViewDelta voption =
             match last with
             | Some last ->
@@ -35,21 +27,33 @@ module rec VirtualDom =
                 match next with
                 | Some next -> ViewDelta.From next |> ValueSome
                 | None -> ValueNone
+        
+        match host, delta with
+        | :? Window as windowHost, ValueSome viewDelta when viewDelta.ViewType.IsSubclassOf(typeof<Window>) || viewDelta.ViewType = typeof<Window> ->
+            Patcher.patch(windowHost, viewDelta)
+        | _ ->
+            let root : Control voption =
+                if host.Content <> null then
+                    match host.Content with
+                    | :? Control as control -> ValueSome control
+                    | _ -> ValueNone
+                else
+                    ValueNone
 
-        match root with
-        | ValueSome control ->
-            match delta with
-            | ValueSome delta ->
-                match control.GetType () = delta.ViewType && not delta.KeyDidChange with
-                | true -> Patcher.patch (control, delta)
-                | false -> host.Content <- Patcher.create delta
+            match root with
+            | ValueSome control ->
+                match delta with
+                | ValueSome delta ->
+                    match control.GetType () = delta.ViewType && not delta.KeyDidChange with
+                    | true -> Patcher.patch (control, delta)
+                    | false -> host.Content <- Patcher.create delta
+                | ValueNone ->
+                    host.Content <- null
+
             | ValueNone ->
-                host.Content <- null
-
-        | ValueNone ->
-            match delta with
-            | ValueSome delta -> host.Content <- Patcher.create delta
-            | ValueNone -> host.Content <- null
+                match delta with
+                | ValueSome delta -> host.Content <- Patcher.create delta
+                | ValueNone -> host.Content <- null
 
     // TODO: share code with updateRoot
     let internal updateBorderRoot (host: Border, last: IView option, next: IView option) =
