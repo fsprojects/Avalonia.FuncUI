@@ -2,11 +2,11 @@ namespace Examples.CounterApp
 
 open System.IO
 
+open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.Input
 
 module HelloWorld =
-    open Avalonia.Controls
     
     type State =
         {
