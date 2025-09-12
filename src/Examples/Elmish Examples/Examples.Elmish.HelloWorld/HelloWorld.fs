@@ -2,28 +2,27 @@ namespace Examples.CounterApp
 
 open Avalonia.FuncUI.DSL
 
-module Counter =
+module HelloWorld =
     open Avalonia.Controls
-    open Avalonia.Layout
     
-    type State = NoState
-    let init() = NoState
+    type State = string
+    let init() = "World"
 
-    type Msg = NoMsg
+    type Msg = Update of string
 
     let update (msg: Msg) (state: State) : State =
         match msg with
-        | NoMsg -> state
+        | Update str -> str
     
     let view (state: State) (dispatch) =
         Window.create [
-            Window.title "Hello World"
+            Window.title $"Hello {state}"
             Window.width 400
             Window.height 200
             Window.child (
                 TextBox.create [
-                    TextBox.text "Hello from FuncUI!"
-                    TextBox.isReadOnly true
+                    TextBox.text state
+                    TextBox.onTextChanged (Update >> dispatch)
                 ]
             )
         ]
