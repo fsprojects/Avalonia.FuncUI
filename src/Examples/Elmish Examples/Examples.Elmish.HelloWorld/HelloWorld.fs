@@ -36,7 +36,7 @@ module HelloWorld =
 
     let view (state: State) (dispatch) =
         Window.create [
-            Window.title $"Hello {state}!"
+            Window.title $"Hello {state.Name}!"
             Window.icon icon
             Window.sizeToContent SizeToContent.WidthAndHeight
             Window.windowState (
