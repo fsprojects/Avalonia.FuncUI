@@ -181,6 +181,8 @@
     <Compile Include="DSL\DataGrid.fs" />
     <Compile Include="DSL\PathIcon.fs" />
     <Compile Include="DSL\DragDrop.fs" />
+    <Compile Include="DSL\Window.fs" />
+    <Compile Include="DSL\KeyBinding.fs" />
   </ItemGroup>
 
   <ItemGroup>
