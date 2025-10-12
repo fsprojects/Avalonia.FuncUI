@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [ToggleSwitch API](http://reference.avaloniaui.net/api/Avalonia.Controls/ToggleSwitch/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [ToggleSwitch.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/ToggleSwitch.fs)
+> For Avalonia.FuncUI's DSL properties you can check [ToggleSwitch.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Buttons/ToggleSwitch.fs)
 
 A `ToggleSwitch` is a switch that toggles between on (checked) and off (unchecked) states. This control functions similarly to a CheckBox but displays the content with an on/off slider instead.
 
