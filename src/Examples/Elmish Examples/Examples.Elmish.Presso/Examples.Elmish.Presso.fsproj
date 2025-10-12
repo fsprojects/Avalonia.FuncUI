@@ -9,6 +9,9 @@
     <ItemGroup>
         <AvaloniaResource Include="**\*.xaml" />
         <AvaloniaResource Include="Assets\*" />
+        <Content Include="Assets\Icons\icon.ico">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
@@ -22,14 +25,5 @@
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
         <ProjectReference Include="..\..\..\Avalonia.FuncUI.Elmish\Avalonia.FuncUI.Elmish.fsproj" />
         <ProjectReference Include="..\..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-    </ItemGroup>
-    
-    <ItemGroup>
-      <Content Include="Assets\Icons\icon.ico">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </Content>
     </ItemGroup>
 </Project>
