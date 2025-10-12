@@ -11,39 +11,37 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Elmish", "A
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.fsproj", "{2EE61E50-F492-4024-85D3-D310D05B4D72}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.Elmish", "Examples.Elmish", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elmish", "Elmish", "{F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.CounterApp", "Examples\Elmish Examples\Examples.Elmish.CounterApp\Examples.Elmish.CounterApp.fsproj", "{972EEE7D-CB1F-4A22-B10F-D7375F700A79}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.CounterApp", "Examples\Elmish\Examples.Elmish.CounterApp\Examples.Elmish.CounterApp.fsproj", "{972EEE7D-CB1F-4A22-B10F-D7375F700A79}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.GameOfLife", "Examples\Elmish Examples\Examples.Elmish.GameOfLife\Examples.Elmish.GameOfLife.fsproj", "{D328F897-16D3-43CA-A746-3744DC6BA050}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.GameOfLife", "Examples\Elmish\Examples.Elmish.GameOfLife\Examples.Elmish.GameOfLife.fsproj", "{D328F897-16D3-43CA-A746-3744DC6BA050}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{681AB0E5-A733-4CFE-872A-10B810DAF86D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ControlCatalog", "ControlCatalog", "{5DB968C6-935E-41AC-A252-644B4886AF8A}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.ClockApp", "Examples\Elmish Examples\Examples.Elmish.ClockApp\Examples.Elmish.ClockApp.fsproj", "{1401B46D-1F14-4D29-8E45-96E62D46405F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.ClockApp", "Examples\Elmish\Examples.Elmish.ClockApp\Examples.Elmish.ClockApp.fsproj", "{1401B46D-1F14-4D29-8E45-96E62D46405F}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.Presso", "Examples\Elmish Examples\Examples.Elmish.Presso\Examples.Elmish.Presso.fsproj", "{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.Presso", "Examples\Elmish\Examples.Elmish.Presso\Examples.Elmish.Presso.fsproj", "{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.MusicPlayer", "Examples\Elmish Examples\Examples.Elmish.MusicPlayer\Examples.Elmish.MusicPlayer.fsproj", "{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Elmish.MusicPlayer", "Examples\Elmish\Examples.Elmish.MusicPlayer\Examples.Elmish.MusicPlayer.fsproj", "{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.Component", "Examples.Component", "{F50826CE-D9BC-45CF-A110-C42225B75AD3}"
-EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Presso", "Examples\Component Examples\Examples.Presso\Examples.Presso.fsproj", "{64F427DB-02F2-499C-B4F2-25BC18F65E85}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.Presso", "Examples\Examples.Presso\Examples.Presso.fsproj", "{64F427DB-02F2-499C-B4F2-25BC18F65E85}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.GeneticAlgorithm", "Examples\Component Examples\Examples.GeneticAlgorithm\Examples.GeneticAlgorithm.fsproj", "{769FB456-1B73-4D6C-BA86-47DB484E3651}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.GeneticAlgorithm", "Examples\Examples.GeneticAlgorithm\Examples.GeneticAlgorithm.fsproj", "{769FB456-1B73-4D6C-BA86-47DB484E3651}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ContactBook", "Examples\Component Examples\Examples.ContactBook\Examples.ContactBook.fsproj", "{8212649E-0ECD-49CD-BBBA-13AC0151666A}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ContactBook", "Examples\Examples.ContactBook\Examples.ContactBook.fsproj", "{8212649E-0ECD-49CD-BBBA-13AC0151666A}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.Diagnostics", "Avalonia.FuncUI.Diagnostics\Avalonia.FuncUI.Diagnostics.fsproj", "{01358560-224C-4675-B87E-BD35930771A9}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.DrawingApp", "Examples\Component Examples\Examples.DrawingApp\Examples.DrawingApp.fsproj", "{EB476DAF-C691-46B4-84FC-CA64E4C64A1A}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.DrawingApp", "Examples\Examples.DrawingApp\Examples.DrawingApp.fsproj", "{EB476DAF-C691-46B4-84FC-CA64E4C64A1A}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ChordParser", "Examples\Component Examples\Examples.ChordParser\Examples.ChordParser.fsproj", "{BF5DC7CC-7ABF-40AB-97DD-6774C17FE005}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.ChordParser", "Examples\Examples.ChordParser\Examples.ChordParser.fsproj", "{BF5DC7CC-7ABF-40AB-97DD-6774C17FE005}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.CounterApp", "Examples\Component Examples\Examples.CounterApp\Examples.CounterApp.fsproj", "{5CC37986-D6E0-438B-B895-BC82DFD22307}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.CounterApp", "Examples\Examples.CounterApp\Examples.CounterApp.fsproj", "{5CC37986-D6E0-438B-B895-BC82DFD22307}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solution Items", "{8D86289C-50B3-43AF-AAE0-2DD5A8267433}"
 	ProjectSection(SolutionItems) = preProject
@@ -54,19 +52,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Solution Items", "_Solutio
 		..\.github\workflows\pull-requests.yml = ..\.github\workflows\pull-requests.yml
 	EndProjectSection
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.InlineText", "Examples\Component Examples\Examples.InlineText\Examples.InlineText.fsproj", "{B8D8C84B-05AD-475B-BE81-A30544CE0149}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Examples.InlineText", "Examples\Examples.InlineText\Examples.InlineText.fsproj", "{B8D8C84B-05AD-475B-BE81-A30544CE0149}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.ViewModelComponent", "Examples.ViewModelComponent", "{24AD0B82-9D10-4929-8FFE-E5E048C11842}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.ViewModelComponent.CounterApp", "Examples\ViewModelComponent Examples\Examples.ViewModelComponent.CounterApp\Examples.ViewModelComponent.CounterApp.fsproj", "{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Experimantal", "Experimantal", "{24AD0B82-9D10-4929-8FFE-E5E048C11842}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog.Desktop", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.Desktop\Avalonia.FuncUI.ControlCatalog.Desktop.fsproj", "{4121CB46-AEBD-4047-B032-8682ADFF02A6}"
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Avalonia.FuncUI.ControlCatalog.Browser", "Avalonia.FuncUI.ControlCatalog\Avalonia.FuncUI.ControlCatalog.Browser\Avalonia.FuncUI.ControlCatalog.Browser.fsproj", "{01631D41-54F9-4815-8B26-9F1BEEC22F7A}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples.Mobile", "Examples.Mobile", "{AD6796F9-45CA-4FBA-9673-E6FC9214C80D}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{AD6796F9-45CA-4FBA-9673-E6FC9214C80D}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.EnvApp", "Examples\Component Examples\Examples.EnvApp\Examples.EnvApp.fsproj", "{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.EnvApp", "Examples\Examples.EnvApp\Examples.EnvApp.fsproj", "{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.DataGridPlayground", "Examples\Examples.DataGridPlayground\Examples.DataGridPlayground.fsproj", "{71C50981-2E3D-476B-9FA5-971671A9BB7A}"
 EndProject
@@ -82,13 +78,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Embedded", "Embedded", "{86
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BasicTemplate", "Avalonia.FuncUI.Templates\content\BasicTemplate\BasicTemplate.fsproj", "{BB03E86D-4DAF-468F-BD0C-D85D6641F02D}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.TodoApp", "Examples\Component Examples\Examples.TodoApp\Examples.TodoApp.fsproj", "{70BDCE72-149A-435A-9910-E79DE329F978}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.TodoApp", "Examples\Examples.TodoApp\Examples.TodoApp.fsproj", "{70BDCE72-149A-435A-9910-E79DE329F978}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elmish Examples", "Elmish Examples", "{6D2C62FC-5634-4997-AF1F-2E8A5D27E117}"
-EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Elmish.Tetris", "Examples\Elmish Examples\Examples.Elmish.Tetris\Examples.Elmish.Tetris.fsproj", "{EC63B886-E809-4B74-B533-BFF3D60017C9}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Elmish.Tetris", "Examples\Elmish\Examples.Elmish.Tetris\Examples.Elmish.Tetris.fsproj", "{EC63B886-E809-4B74-B533-BFF3D60017C9}"
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.SettingFocus", "Examples\Examples.SettingFocus\Examples.SettingFocus.fsproj", "{2C7F4542-65CE-4EC6-9876-C1C2215EE006}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Experimental.ViewModelComponent.CounterApp", "Examples\Experimental\Examples.Experimental.ViewModelComponent.CounterApp\Examples.Experimental.ViewModelComponent.CounterApp.fsproj", "{C59DF473-A6F9-4D94-9308-9381F36CB71D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,10 +160,6 @@ Global
 		{B8D8C84B-05AD-475B-BE81-A30544CE0149}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8D8C84B-05AD-475B-BE81-A30544CE0149}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8D8C84B-05AD-475B-BE81-A30544CE0149}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4121CB46-AEBD-4047-B032-8682ADFF02A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4121CB46-AEBD-4047-B032-8682ADFF02A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4121CB46-AEBD-4047-B032-8682ADFF02A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -212,6 +204,10 @@ Global
 		{2C7F4542-65CE-4EC6-9876-C1C2215EE006}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C7F4542-65CE-4EC6-9876-C1C2215EE006}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C7F4542-65CE-4EC6-9876-C1C2215EE006}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C59DF473-A6F9-4D94-9308-9381F36CB71D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C59DF473-A6F9-4D94-9308-9381F36CB71D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C59DF473-A6F9-4D94-9308-9381F36CB71D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C59DF473-A6F9-4D94-9308-9381F36CB71D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -225,30 +221,28 @@ Global
 		{1401B46D-1F14-4D29-8E45-96E62D46405F} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{7A0CA9E2-AFB8-4BA0-A725-F80EB98717C4} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
 		{C9BF89F2-6DE8-4F37-A6AD-6D40E982F265} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
-		{F50826CE-D9BC-45CF-A110-C42225B75AD3} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
-		{64F427DB-02F2-499C-B4F2-25BC18F65E85} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{769FB456-1B73-4D6C-BA86-47DB484E3651} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{8212649E-0ECD-49CD-BBBA-13AC0151666A} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{EB476DAF-C691-46B4-84FC-CA64E4C64A1A} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{BF5DC7CC-7ABF-40AB-97DD-6774C17FE005} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{5CC37986-D6E0-438B-B895-BC82DFD22307} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{B8D8C84B-05AD-475B-BE81-A30544CE0149} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{24AD0B82-9D10-4929-8FFE-E5E048C11842} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
-		{1F3A7A69-5D68-4DB1-B1EF-A845ABB255EC} = {24AD0B82-9D10-4929-8FFE-E5E048C11842}
 		{4121CB46-AEBD-4047-B032-8682ADFF02A6} = {5DB968C6-935E-41AC-A252-644B4886AF8A}
 		{01631D41-54F9-4815-8B26-9F1BEEC22F7A} = {5DB968C6-935E-41AC-A252-644B4886AF8A}
 		{AD6796F9-45CA-4FBA-9673-E6FC9214C80D} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
-		{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{71C50981-2E3D-476B-9FA5-971671A9BB7A} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
 		{8E3586BB-D43F-4FD7-9F8E-05F55EAEE850} = {681AB0E5-A733-4CFE-872A-10B810DAF86D}
 		{222A135C-23A4-471B-8A6A-630B7EEFAD4F} = {AD6796F9-45CA-4FBA-9673-E6FC9214C80D}
 		{1EEA7F36-3DCD-4A42-BE59-1E02E1B8E3BE} = {37594D05-9BE4-40C2-AC5B-83B0AC9F7B15}
 		{86429C85-F3D8-4F7D-A66F-24151C7236B9} = {37594D05-9BE4-40C2-AC5B-83B0AC9F7B15}
 		{BB03E86D-4DAF-468F-BD0C-D85D6641F02D} = {86429C85-F3D8-4F7D-A66F-24151C7236B9}
-		{70BDCE72-149A-435A-9910-E79DE329F978} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
-		{6D2C62FC-5634-4997-AF1F-2E8A5D27E117} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
-		{EC63B886-E809-4B74-B533-BFF3D60017C9} = {6D2C62FC-5634-4997-AF1F-2E8A5D27E117}
-		{2C7F4542-65CE-4EC6-9876-C1C2215EE006} = {F50826CE-D9BC-45CF-A110-C42225B75AD3}
+		{EC63B886-E809-4B74-B533-BFF3D60017C9} = {F6F4AAF7-2BDA-4D2F-B78D-F6D8A03F660E}
+		{BF5DC7CC-7ABF-40AB-97DD-6774C17FE005} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{8212649E-0ECD-49CD-BBBA-13AC0151666A} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{5CC37986-D6E0-438B-B895-BC82DFD22307} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{71C50981-2E3D-476B-9FA5-971671A9BB7A} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{EB476DAF-C691-46B4-84FC-CA64E4C64A1A} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{90E18FDC-8B2A-4C21-B60D-B5B7A14648A3} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{769FB456-1B73-4D6C-BA86-47DB484E3651} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{B8D8C84B-05AD-475B-BE81-A30544CE0149} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{64F427DB-02F2-499C-B4F2-25BC18F65E85} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{2C7F4542-65CE-4EC6-9876-C1C2215EE006} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{70BDCE72-149A-435A-9910-E79DE329F978} = {84811DB3-C276-4F0D-B3BA-78B88E2C6EF0}
+		{C59DF473-A6F9-4D94-9308-9381F36CB71D} = {24AD0B82-9D10-4929-8FFE-E5E048C11842}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4630E817-6780-4C98-9379-EA3B45224339}
