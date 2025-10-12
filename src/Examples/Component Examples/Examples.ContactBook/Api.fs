@@ -10,7 +10,7 @@ module Examples.ContactBook.Api
         async {
             use httpClient = new HttpClient()
             let! bytes =
-                $"https://source.unsplash.com/random/?%s{gender}"
+                $"https://thispersondoesnotexist.com/"
                 |> httpClient.GetByteArrayAsync
                 |> Async.AwaitTask
 

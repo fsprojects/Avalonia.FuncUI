@@ -1,7 +1,6 @@
 namespace Examples.ContactBook
 
 open System
-open System.Runtime.CompilerServices
 open System.Timers
 open Avalonia
 open Avalonia.Animation
@@ -9,53 +8,16 @@ open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
 open Avalonia.FuncUI
 open Avalonia.FuncUI.DSL
+open Avalonia.FuncUI.Experimental
 open Avalonia.FuncUI.Types
 open Avalonia.Layout
-open Avalonia.FuncUI
-open Avalonia.Media
 
 [<AutoOpen>]
 module CustomHooks =
 
-    [<RequireQualifiedAccess>]
-    type Deferred<'t> =
-        | NotStartedYet
-        | Pending
-        | Resolved of 't
-        | Failed of exn
-
     type IComponentContext with
 
-        member this.useAsync<'signal>(init: Async<'signal>) : IWritable<Deferred<'signal>> =
-            let state = this.useState (Deferred.NotStartedYet, true)
-
-            this.useEffect (
-                handler = (fun _ ->
-                    match state.Current with
-                    | Deferred.NotStartedYet ->
-                        state.Set Deferred.Pending
-
-                        Async.StartImmediate (
-                            async {
-                                let! result = Async.Catch init
-
-                                match result with
-                                | Choice1Of2 value -> state.Set (Deferred.Resolved value)
-                                | Choice2Of2 exn -> state.Set (Deferred.Failed exn)
-                            }
-                        )
-
-                    | _ ->
-                        ()
-                ),
-                triggers = [ EffectTrigger.AfterInit ]
-            )
-
-            state
-
-    type IComponentContext with
-
-        member inline ctx.useDeferred<'a>(outer: IWritable<'a>, delay: int) =
+        member inline ctx.useDebounce<'a>(outer: IWritable<'a>, delay: int) =
             let inner = ctx.useState (outer.Current)
 
             ctx.useEffect (
@@ -102,7 +64,7 @@ type Views =
         Component.create ("contact list", fun ctx ->
             let contacts = ctx.usePassedRead contacts
             let filter = ctx.usePassed filter
-            let filterDeferred = ctx.useDeferred (filter, 1_000)
+            let filterDeferred = ctx.useDebounce (filter, 1_000)
             let selectedId = ctx.usePassed selectedId
 
             DockPanel.create [
@@ -216,7 +178,7 @@ type Views =
     static member contactView (contact: IReadable<Contact>) =
         Component.create ("contact-view", fun ctx ->
             let contact = ctx.usePassedRead contact
-            let image = ctx.useAsync (Api.randomImage contact.Current.Gender)
+            let image = ctx.useDeferred (Api.randomImage contact.Current.Gender, []) 
 
             StackPanel.create [
                 StackPanel.orientation Orientation.Vertical
@@ -233,7 +195,7 @@ type Views =
                         TextBlock.create [
                             TextBlock.text $"{e.Message}"
                         ]
-                    | Deferred.Pending | Deferred.NotStartedYet ->
+                    | Deferred.InProgress | Deferred.HasNotStartedYet ->
                         ProgressBar.create [
                             ProgressBar.isEnabled true
                             ProgressBar.isIndeterminate true
@@ -369,11 +331,6 @@ type Views =
                 DockPanel.lastChildFill true
                 DockPanel.clipToBounds true
                 DockPanel.children [
-                    TextBlock.create [
-                        TextBox.dock Dock.Top
-                        TextBlock.text $"{contact.Current}"
-                    ]
-
                     TransitioningContentControl.create [
                         TransitioningContentControl.pageTransition (CrossFade(TimeSpan.FromMilliseconds 300.0))
                         TransitioningContentControl.content (
@@ -441,27 +398,6 @@ type Views =
                 ]
             )
 
-            //ctx.useEffect(
-            //    handler = (fun _ ->
-            //        printfn "filter changed"
-            //    ),
-            //    deps = [ filter.Any() ]
-            //)
-    //
-            //ctx.useEffect(
-            //    handler = (fun _ ->
-            //        printfn "selection changed | filter changed"
-            //    ),
-            //    deps = [ filter.Any(); selectedId.Any() ]
-            //)
-
-            //ctx.useEffect(
-            //    handler = (fun _ ->
-            //        printfn "⏸ --- called after render"
-            //    ),
-            //    deps = [ ctx.OnRender.Any() ]
-            //)
-
             let filteredContacts =
                 contacts
                 |> State.readFilter filter (fun contact filter ->
@@ -479,12 +415,6 @@ type Views =
                 DockPanel.children [
                     Views.contactListView (filteredContacts, selectedId, filter)
                     Views.contactDetailsView selectedContact
-
-                    TextBlock.create [
-                        TextBlock.dock Dock.Top
-                        TextBlock.foreground Brushes.Orange
-                        TextBlock.text $"{selectedId.Current} {selectedContact.Current}"
-                    ]
                 ]
             ]
             :> IView
