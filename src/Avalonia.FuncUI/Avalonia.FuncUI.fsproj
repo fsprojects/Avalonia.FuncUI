@@ -154,8 +154,11 @@
     <Compile Include="DSL\ListBoxItem.fs" />
     <Compile Include="DSL\MenuBase.fs" />
     <Compile Include="DSL\Menu.fs" />
+    <Compile Include="DSL\NativeMenu.fs" />
     <Compile Include="DSL\ContextMenu.fs" />
     <Compile Include="DSL\MenuItem.fs" />
+    <Compile Include="DSL\NativeMenuItem.fs" />
+    <Compile Include="DSL\TrayIcon.fs" />
     <Compile Include="DSL\GridSplitter.fs" />
     <Compile Include="DSL\DatePickerPresenter.fs" />
     <Compile Include="DSL\TimePickerPresenter.fs" />

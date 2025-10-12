@@ -4,13 +4,17 @@ open Avalonia.Controls
 
 open Avalonia.FuncUI.Types
 open Avalonia.FuncUI.VirtualDom.Delta
+open Avalonia
 
 module rec VirtualDom =
+    let createObject (view: IView) : AvaloniaObject =
+        view
+        |> ViewDelta.From
+        |> Patcher.create
 
     let create (view: IView) : Control =
         view
-        |> ViewDelta.From
-        |> Patcher.create :?> Control
+        |> createObject :?> Control
 
     let update (root: Control, last: IView, next: IView) : unit =
         let delta = Differ.diff(last, next)
