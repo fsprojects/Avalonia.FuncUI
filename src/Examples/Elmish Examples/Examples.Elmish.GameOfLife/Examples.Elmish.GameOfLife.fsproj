@@ -7,12 +7,23 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <AvaloniaResource Include="**\*.xaml" />
+        <AvaloniaResource Include="Assets\*" />
+        <Content Include="Assets\Icons\icon.ico">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    
+    <ItemGroup>
         <Compile Include="Lib.fs" />
         <Compile Include="BoardPosition.fs" />
         <Compile Include="BoardMatrix.fs" />
         <Compile Include="Board.fs" />
         <Compile Include="Main.fs" />
         <Compile Include="Program.fs" />
+        <Content Include="Assets\Icons\icon.ico">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
