@@ -65,7 +65,7 @@ type Components =
         )
 ```
 
-Find more examples using components in the [Components Examples folder](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples/Component%20Examples).
+Find more examples using components in the [Components Examples folder](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/docs/components).
 
 ### Example using Elmish
 The same counter as above but using the `Avalonia.FuncUI.Elmish` package:
