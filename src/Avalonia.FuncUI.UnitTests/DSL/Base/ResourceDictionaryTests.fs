@@ -257,3 +257,60 @@ module ResourceDictionaryTests =
             let updatedTextBlock = Assert.containsKey target key :?> TextBlock
             Assert.Equal(initialTextBlock, updatedTextBlock)
             Assert.Equal(updatedText, updatedTextBlock.Text)
+
+    module ``mergedDictionaries`` =
+        [<Fact>]
+        let ``can set merged dictionaries`` () =
+            let initView = ResourceDictionary.create []
+            let target = VirtualDom.create initView
+
+            let dict1 =
+                ResourceDictionary.create [ ResourceDictionary.keyValue ("key1", "value1") ]
+
+            let dict2 =
+                ResourceDictionary.create [ ResourceDictionary.keyValue ("key2", "value2") ]
+
+            let updatedView =
+                ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ dict1; dict2 ] ]
+
+            VirtualDom.update target initView updatedView
+
+            Assert.containsKeyWithValue target "key1" "value1"
+            Assert.containsKeyWithValue target "key2" "value2"
+
+        [<Fact>]
+        let ``TryGetResource should find resource from later merged dictionary`` () =
+            let initView = ResourceDictionary.create []
+            let target = VirtualDom.create initView
+
+            let sameKey = "sharedKey"
+
+            let dict1 =
+                ResourceDictionary.create [ ResourceDictionary.keyValue (sameKey, "valueFromDict1") ]
+
+            let dict2 =
+                ResourceDictionary.create [ ResourceDictionary.keyValue (sameKey, "valueFromDict2") ]
+
+            let updatedView =
+                ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ dict1; dict2 ] ]
+
+            VirtualDom.update target initView updatedView
+
+            Assert.containsKeyWithValue target sameKey "valueFromDict2"
+
+    [<Fact>]
+    let ``TryGetResource should find itself before merged dictionaries`` () =
+        let initView = ResourceDictionary.create []
+        let target = VirtualDom.create initView
+
+        let key = "myKey"
+
+        let updatedView =
+            ResourceDictionary.create
+                [ ResourceDictionary.keyValue (key, "valueFromMainDict")
+                  ResourceDictionary.mergedDictionaries
+                      [ ResourceDictionary.create [ ResourceDictionary.keyValue (key, "valueFromMergedDict") ] ] ]
+
+        VirtualDom.update target initView updatedView
+
+        Assert.containsKeyWithValue target key "valueFromMainDict"
