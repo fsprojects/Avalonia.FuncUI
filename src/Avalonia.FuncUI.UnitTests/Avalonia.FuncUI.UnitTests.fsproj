@@ -16,6 +16,7 @@
     <Compile Include="VirtualDom\VirtualDom.ModuleTests.fs" />
     <Compile Include="VirtualDom\VirtualDom.DifferTests.fs" />
     <Compile Include="VirtualDom\VirtualDom.PatcherTests.fs" />
+    <Compile Include="DSL\Base\ResourceDictionaryTests.fs" />
     <Compile Include="DSL\Base\StyledElementTests.fs" />
     <Compile Include="State.fs" />
     <Compile Include="Program.fs" />
