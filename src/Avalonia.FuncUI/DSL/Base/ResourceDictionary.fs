@@ -6,6 +6,7 @@ module ResourceDictionary =
     open Avalonia.Controls
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
+    open Avalonia.Styling
 
     let create (attrs: IAttr<ResourceDictionary> list) : IView<ResourceDictionary> =
         ViewBuilder.Create<ResourceDictionary>(attrs)
@@ -55,3 +56,20 @@ module ResourceDictionary =
 
             AttrBuilder<'t>
                 .CreateContentMultiple(name, ValueSome getter, ValueNone, dictionaries)
+
+        static member themeDictionariesKeyValue<'t, 'v when 't :> ResourceDictionary and 'v :> IThemeVariantProvider>(key: ThemeVariant, view: IView<'v>) : IAttr<'t> =
+            let name = $"ThemeDictionaries.{key.Key}"
+            let singleContent = Some(view :> IView)
+            let getter: ('t -> obj) = (fun control ->
+                match control.ThemeDictionaries.TryGetValue(key) with
+                | true, value -> value
+                | false,_ -> null)
+
+            let setter: ('t * obj -> unit) =
+                (fun (control, value) ->
+                    match value with
+                    | null -> control.ThemeDictionaries.Remove(key) |> ignore
+                    | _ -> control.ThemeDictionaries.[key] <- value :?> IThemeVariantProvider)
+
+            AttrBuilder<'t>
+                .CreateContentSingle(name, ValueSome getter, ValueSome setter, singleContent)
