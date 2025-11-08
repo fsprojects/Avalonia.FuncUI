@@ -284,12 +284,16 @@ type AttrBuilder<'view>() =
       ( routedEvent: RoutedEvent<'arg>,
         func: 'arg -> unit,
         ?subPatchOptions: SubPatchOptions ) : IAttr<'view> =
+        let isValiedViewType =
+          typeof<'view>.IsAssignableTo(typeof<Interactive>)
+        if not isValiedViewType then
+          invalidOp $"{nameof<'view>} con't create RoutedEvent subscriptions. It must be derived from Interactive."
 
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: Control, _handler: 'h) =
+        let subscribeFunc (control: AvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
-            control
+            (control :?> Interactive)
                 .GetObservable(routedEvent)
                 .Subscribe(func, cts.Token)
             cts

@@ -18,7 +18,7 @@ module internal rec Patcher =
          && value.GetType() = viewElement.ViewType
          && not viewElement.KeyDidChange
 
-    let private patchSubscription (view: Control, attr: SubscriptionDelta) : unit =
+    let private patchSubscription (view: AvaloniaObject, attr: SubscriptionDelta) : unit =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
             | null ->
@@ -215,11 +215,7 @@ module internal rec Patcher =
             match attr with
             | AttrDelta.Property property -> patchProperty (view, property)
             | AttrDelta.Content content -> patchContent (view, content)
-            | AttrDelta.Subscription subscription ->
-                match view with
-                | :? Control as control ->
-                    patchSubscription (control, subscription)
-                | _ -> failwith "Only controls can have subscriptions"
+            | AttrDelta.Subscription subscription -> patchSubscription (view, subscription)
             | AttrDelta.SetupFunction _ ->
                 // setup/init functions are only called on control creation
                 ()
@@ -244,7 +240,7 @@ module internal rec Patcher =
         for attr in viewElement.Attrs do
             match attr with
             | AttrDelta.Content content -> Patcher.patchContent (control, content)
-            | AttrDelta.Subscription s -> Patcher.patchSubscription ((control :?> Control), s)
+            | AttrDelta.Subscription s -> Patcher.patchSubscription (control, s)
             | AttrDelta.Property property -> Patcher.patchProperty (control, property)
             | AttrDelta.SetupFunction setupFunction -> setupFunction.Function(control)
 

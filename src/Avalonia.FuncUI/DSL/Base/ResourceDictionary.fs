@@ -57,13 +57,17 @@ module ResourceDictionary =
             AttrBuilder<'t>
                 .CreateContentMultiple(name, ValueSome getter, ValueNone, dictionaries)
 
-        static member themeDictionariesKeyValue<'t, 'v when 't :> ResourceDictionary and 'v :> IThemeVariantProvider>(key: ThemeVariant, view: IView<'v>) : IAttr<'t> =
+        static member themeDictionariesKeyValue<'t, 'v when 't :> ResourceDictionary and 'v :> IThemeVariantProvider>
+            (key: ThemeVariant, view: IView<'v>)
+            : IAttr<'t> =
             let name = $"ThemeDictionaries.{key.Key}"
             let singleContent = Some(view :> IView)
-            let getter: ('t -> obj) = (fun control ->
-                match control.ThemeDictionaries.TryGetValue(key) with
-                | true, value -> value
-                | false,_ -> null)
+
+            let getter: ('t -> obj) =
+                (fun control ->
+                    match control.ThemeDictionaries.TryGetValue(key) with
+                    | true, value -> value
+                    | false, _ -> null)
 
             let setter: ('t * obj -> unit) =
                 (fun (control, value) ->

@@ -21,6 +21,7 @@ module ResourceDictionaryTests =
 
     module private Assert =
         open Avalonia.Styling
+
         let containsThemeKey (dict: ResourceDictionary) (theme: ThemeVariant) (key: obj) =
             let isFound, value = dict.TryGetResource(key, theme)
             Assert.True(isFound, $"ResourceDictionary does not contain expected key: {key} for theme: {theme}.")
@@ -33,22 +34,42 @@ module ResourceDictionaryTests =
 
         let notContainsThemeKey (dict: ResourceDictionary) (theme: ThemeVariant) (key: obj) =
             let isFound, value = dict.TryGetResource(key, theme)
-            Assert.False(isFound, $"ResourceDictionary unexpectedly contains key: {key} for theme: {theme}. Found value: {value}")
+
+            Assert.False(
+                isFound,
+                $"ResourceDictionary unexpectedly contains key: {key} for theme: {theme}. Found value: {value}"
+            )
 
         let notContainsKey (dict: ResourceDictionary) (key: obj) =
             let isFound, value = dict.TryGetResource(key, null)
             Assert.False(isFound, $"ResourceDictionary unexpectedly contains key: {key}. Found value: {value}")
 
-        let containsThemeKeyAndValueEqualWith (dict: ResourceDictionary) (theme: ThemeVariant) (key: 'k) (expectedValue: 'v) (converter: obj -> 'v) =
+        let containsThemeKeyAndValueEqualWith
+            (dict: ResourceDictionary)
+            (theme: ThemeVariant)
+            (key: 'k)
+            (expectedValue: 'v)
+            (converter: obj -> 'v)
+            =
             let actualValue = containsThemeKey dict theme key
             let expectedValue = box expectedValue
 
             Assert.Equal(expectedValue, converter actualValue)
-        
-        let containsThemeKeyAndValueEqual (dict: ResourceDictionary) (theme: ThemeVariant) (key: 'k) (expectedValue: 'v) =
+
+        let containsThemeKeyAndValueEqual
+            (dict: ResourceDictionary)
+            (theme: ThemeVariant)
+            (key: 'k)
+            (expectedValue: 'v)
+            =
             containsThemeKeyAndValueEqualWith dict theme key expectedValue (fun o -> o :?> 'v)
 
-        let containsKeyAndValueEqualWith (dict: ResourceDictionary) (key: 'k) (expectedValue: 'v) (converter: obj -> 'v) =
+        let containsKeyAndValueEqualWith
+            (dict: ResourceDictionary)
+            (key: 'k)
+            (expectedValue: 'v)
+            (converter: obj -> 'v)
+            =
             let actualValue = containsKey dict key
             let expectedValue = box expectedValue
 
@@ -335,22 +356,148 @@ module ResourceDictionaryTests =
 
     module ``themeDictionariesKeyValue`` =
         open Avalonia.Styling
+
         [<Fact>]
         let ``can set theme dictionaries key value`` () =
             let key = "themeKey"
             let darkValue = "darkValue"
             let lightValue = "lightValue"
+
             let view =
                 ResourceDictionary.create
-                    [ ResourceDictionary.themeDictionariesKeyValue
-                        ( ThemeVariant.Dark,
-                          ResourceDictionary.create
-                              [ ResourceDictionary.keyValue (key, darkValue) ] )
-                      ResourceDictionary.themeDictionariesKeyValue
-                        ( ThemeVariant.Light,
-                          ResourceDictionary.create
-                              [ ResourceDictionary.keyValue (key, lightValue) ] ) ]
+                    [ ResourceDictionary.themeDictionariesKeyValue (
+                          ThemeVariant.Dark,
+                          ResourceDictionary.create [ ResourceDictionary.keyValue (key, darkValue) ]
+                      )
+                      ResourceDictionary.themeDictionariesKeyValue (
+                          ThemeVariant.Light,
+                          ResourceDictionary.create [ ResourceDictionary.keyValue (key, lightValue) ]
+                      ) ]
+
             let target = VirtualDom.create view
- 
+
             Assert.containsThemeKeyAndValueEqual target ThemeVariant.Dark key darkValue
             Assert.containsThemeKeyAndValueEqual target ThemeVariant.Light key lightValue
+
+
+    module ``onResourceObservable`` =
+        open Avalonia.Styling
+
+        [<Fact>]
+        let ``when Owner is not set, callback is not fired`` () =
+            let key = "observableKey"
+            let value = "observableValue"
+            let mutable isCalled = false
+
+            let callback (_: obj option) = isCalled <- true
+
+            let initView =
+                ResourceDictionary.create
+                    [ ResourceDictionary.onResourceObservable (key, callback)
+                      ResourceDictionary.keyValue (key, value) ]
+
+            let target = VirtualDom.create initView
+            Assert.Null(target.Owner)
+
+            // No Owner set, so callback should not be called
+            Assert.False(isCalled, "Callback was unexpectedly called when Owner is not set.")
+
+
+        [<Fact>]
+        let ``when Owner is set, callback is fired`` () =
+            let target = ResourceDictionary()
+            let host = StyledElement()
+            host.Resources <- target
+            Assert.NotNull(target.Owner)
+
+            let key = "observableKey"
+            let initialValue = "initialValue"
+            let updatedValue = "updatedValue"
+
+            let mutable observedValue: obj option = Some( box "no value changed." )
+            let callback v = observedValue <- v
+
+            let initView =
+                ResourceDictionary.create
+                    [ ResourceDictionary.onResourceObservable (key, callback) ]
+            
+            VirtualDom.update target (ResourceDictionary.create []) initView
+
+            // No initial value set, so observedValue should be None
+            Assert.Equal(None, observedValue)
+
+            let updatedView1 =
+                ResourceDictionary.create
+                    [ ResourceDictionary.keyValue (key, initialValue)
+                      ResourceDictionary.onResourceObservable (key, callback) ]
+
+            VirtualDom.update target initView updatedView1
+
+
+            // Initial notification
+            Assert.Equal(Some(box initialValue), observedValue)
+
+            let updatedView2 =
+                ResourceDictionary.create
+                    [ ResourceDictionary.onResourceObservable (key, callback)
+                      ResourceDictionary.keyValue (key, updatedValue) ]
+
+            VirtualDom.update target updatedView1 updatedView2
+
+            // Notification after update
+            Assert.Equal(Some(box updatedValue), observedValue)
+
+        [<Fact>]
+        let ``defaultThemeVariant tests`` () =
+            let target = ResourceDictionary()
+            let host = StyledElement()
+            host.Resources <- target
+
+            let key = "themeObservableKey"
+            let darkValue = "darkValue"
+            let lightValue = "lightValue"
+
+            let mutable observedValue: obj option = None
+            let callback v = observedValue <- v
+
+            let initView =
+                ResourceDictionary.create
+                    [ ResourceDictionary.themeDictionariesKeyValue (
+                          ThemeVariant.Dark,
+                          ResourceDictionary.create [ ResourceDictionary.keyValue (key, darkValue) ]
+                      )
+                      ResourceDictionary.themeDictionariesKeyValue (
+                          ThemeVariant.Light,
+                          ResourceDictionary.create [ ResourceDictionary.keyValue (key, lightValue) ]
+                      )
+                      ResourceDictionary.onResourceObservable (
+                          key,
+                          callback,
+                          defaultThemeVariant = ThemeVariant.Dark
+                      ) ]
+
+            VirtualDom.update target (ResourceDictionary.create []) initView
+
+            // Initial notification with Dark theme
+            Assert.Equal(Some(box darkValue), observedValue)
+
+            let updatedView =
+                ResourceDictionary.create
+                    [ ResourceDictionary.themeDictionariesKeyValue (
+                          ThemeVariant.Dark,
+                          ResourceDictionary.create [ ResourceDictionary.keyValue (key, darkValue) ]
+                      )
+                      ResourceDictionary.themeDictionariesKeyValue (
+                          ThemeVariant.Light,
+                          ResourceDictionary.create [ ResourceDictionary.keyValue (key, lightValue) ]
+                      )
+                      ResourceDictionary.onResourceObservable (
+                          key,
+                          callback,
+                          defaultThemeVariant = ThemeVariant.Light
+                      ) ]
+
+            VirtualDom.update target initView updatedView
+
+            // Notification after update with Light theme
+            Assert.Equal(Some(box lightValue), observedValue)

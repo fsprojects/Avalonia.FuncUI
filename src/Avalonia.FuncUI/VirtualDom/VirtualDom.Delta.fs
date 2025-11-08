@@ -62,7 +62,7 @@ module internal rec Delta =
     [<CustomEquality; NoComparison>]
     type SubscriptionDelta =
         { Name: string
-          Subscribe: Control * Delegate -> CancellationTokenSource
+          Subscribe: AvaloniaObject * Delegate -> CancellationTokenSource
           Func: Delegate option }
 
         override this.Equals (other: obj) : bool =
