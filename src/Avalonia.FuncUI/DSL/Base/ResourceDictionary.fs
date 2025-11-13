@@ -77,3 +77,58 @@ module ResourceDictionary =
 
             AttrBuilder<'t>
                 .CreateContentSingle(name, ValueSome getter, ValueSome setter, singleContent)
+
+
+module ResourceInclude =
+    open System
+    open Avalonia.Controls
+    open Avalonia.FuncUI.Types
+    open Avalonia.Styling
+    open Avalonia.Markup.Xaml.Styling
+    open Avalonia.FuncUI.Builder
+
+    type ResourceIncludeWrapper() =
+        inherit ResourceProvider()
+
+        member val private Inner = ResourceInclude(baseUri = null) with get, set
+        member this.Source
+            with get() = this.Inner.Source
+            and set(value) =
+                match this.Inner.Source with
+                | null -> this.Inner.Source <- value
+                | _ when this.Inner.Source = value -> ()
+                | _ ->
+                    // ResourceInclude never updates inner when Source is changed,
+                    // so we need to create a new instance to reflect the change.
+                    this.Inner <- ResourceInclude(baseUri = null, Source = value)
+
+        override this.HasResources: bool =
+            (this.Inner :> IResourceProvider).HasResources
+        override this.OnAddOwner(owner: IResourceHost): unit =
+            (this.Inner :> IResourceProvider).AddOwner(owner)
+        override this.OnRemoveOwner(owner: IResourceHost): unit =
+            (this.Inner :> IResourceProvider).RemoveOwner(owner)
+
+        override this.TryGetResource(key: obj, theme: ThemeVariant, value: byref<obj>): bool =
+            (this.Inner :> IResourceProvider).TryGetResource(key, theme, &value)
+        
+        static member source<'t when 't :> ResourceIncludeWrapper>(source: Uri) : IAttr<'t> =
+            let name = nameof Unchecked.defaultof<'t>.Source
+
+            let getter: ('t -> Uri) = (fun control -> control.Source)
+
+            let setter: ('t * Uri -> unit) =
+                (fun (control, value) -> control.Source <- value)
+
+            AttrBuilder<'t>
+                .CreateProperty<Uri>(name, source, ValueSome getter, ValueSome setter, ValueNone)
+        
+    let create (attrs: IAttr<ResourceIncludeWrapper> list) : IView<ResourceIncludeWrapper> =
+        ViewBuilder.Create<ResourceIncludeWrapper>(attrs)
+    let fromUri ( source: Uri) : IView<ResourceIncludeWrapper> =
+        create [
+            ResourceIncludeWrapper.source source
+        ]
+
+    let fromString ( source: string) : IView<ResourceIncludeWrapper> =
+        Uri source |> fromUri

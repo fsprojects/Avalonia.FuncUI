@@ -10,6 +10,25 @@ module ResourceDictionaryTests =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.VirtualDom
 
+    module private Headless =
+        open System
+        open System.Threading
+        open System.Threading.Tasks
+        open Avalonia.Headless
+
+        let useSession () =
+            typeof<Application> |> HeadlessUnitTestSession.StartNew
+
+        let dispatch fn =
+            use session = useSession ()
+            let action = Action fn
+            session.Dispatch(action, CancellationToken.None)
+
+        let dispatchAsync fn =
+            use session = useSession ()
+            let action = Func<Task>(fun () -> fn)
+            session.Dispatch(action, CancellationToken.None)
+
     module private VirtualDom =
         open Avalonia.FuncUI.Builder
 
@@ -298,6 +317,9 @@ module ResourceDictionaryTests =
             Assert.Equal(updatedText, updatedTextBlock.Text)
 
     module ``mergedDictionaries`` =
+        open System
+        open Avalonia.Media
+
         [<Fact>]
         let ``can set merged dictionaries`` () =
             let initView = ResourceDictionary.create []
@@ -336,6 +358,58 @@ module ResourceDictionaryTests =
             VirtualDom.update target initView updatedView
 
             Assert.containsKeyAndValueEqual target sameKey "valueFromDict2"
+
+        [<Fact>]
+        let ``can add ResourcesInclude to merged dictionaries`` () =
+            Headless.dispatch (fun () ->
+                let initView = ResourceDictionary.create []
+                let target = VirtualDom.create initView
+                let host = StyledElement()
+                host.Resources <- target
+
+                let assertResources kv =
+                    for (key, color) in kv do
+                        let brush = Assert.containsKey target key |> Assert.IsType<SolidColorBrush>
+                        Assert.Equal(color, brush.Color)
+
+                let include1 =
+                    ResourceInclude.fromUri (new Uri("avares://Avalonia.FuncUI.UnitTests/Assets/TestResources1.xaml"))
+
+                let updatedView =
+                    ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include1 ] ]
+
+                VirtualDom.update target initView updatedView
+
+                let include1KeyValues =
+                    [ ("BrushA", Colors.Red); ("BrushB", Colors.Green); ("BrushC", Colors.Blue) ]
+
+                // Assert initial resources from include1
+                assertResources include1KeyValues
+
+                let include2 =
+                    ResourceInclude.fromString "avares://Avalonia.FuncUI.UnitTests/Assets/TestResources2.xaml"
+
+                // Add another ResourceInclude
+                let updatedView2 =
+                    ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include1; include2 ] ]
+
+                VirtualDom.update target updatedView updatedView2
+
+                let include2KeyValues =
+                    [ ("BrushA", Colors.White); ("BrushB", Colors.Black); ("BrushC", Colors.Gray) ]
+
+                // Now the values should come from include2
+                assertResources include2KeyValues
+
+                // Switch the order of includes
+                let updatedView3 =
+                    ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include2; include1 ] ]
+
+                VirtualDom.update target updatedView2 updatedView3
+
+                // Now the values should come from include1 again
+                assertResources include1KeyValues)
+
 
     [<Fact>]
     let ``TryGetResource should find itself before merged dictionaries`` () =
@@ -414,13 +488,12 @@ module ResourceDictionaryTests =
             let initialValue = "initialValue"
             let updatedValue = "updatedValue"
 
-            let mutable observedValue: obj option = Some( box "no value changed." )
+            let mutable observedValue: obj option = Some(box "no value changed.")
             let callback v = observedValue <- v
 
             let initView =
-                ResourceDictionary.create
-                    [ ResourceDictionary.onResourceObservable (key, callback) ]
-            
+                ResourceDictionary.create [ ResourceDictionary.onResourceObservable (key, callback) ]
+
             VirtualDom.update target (ResourceDictionary.create []) initView
 
             // No initial value set, so observedValue should be None
@@ -470,11 +543,7 @@ module ResourceDictionaryTests =
                           ThemeVariant.Light,
                           ResourceDictionary.create [ ResourceDictionary.keyValue (key, lightValue) ]
                       )
-                      ResourceDictionary.onResourceObservable (
-                          key,
-                          callback,
-                          defaultThemeVariant = ThemeVariant.Dark
-                      ) ]
+                      ResourceDictionary.onResourceObservable (key, callback, defaultThemeVariant = ThemeVariant.Dark) ]
 
             VirtualDom.update target (ResourceDictionary.create []) initView
 
@@ -491,11 +560,7 @@ module ResourceDictionaryTests =
                           ThemeVariant.Light,
                           ResourceDictionary.create [ ResourceDictionary.keyValue (key, lightValue) ]
                       )
-                      ResourceDictionary.onResourceObservable (
-                          key,
-                          callback,
-                          defaultThemeVariant = ThemeVariant.Light
-                      ) ]
+                      ResourceDictionary.onResourceObservable (key, callback, defaultThemeVariant = ThemeVariant.Light) ]
 
             VirtualDom.update target initView updatedView
 
