@@ -123,7 +123,7 @@ module ResourceDictionaryTests =
             Assert.notContainsKey target key
 
         [<Fact>]
-        let ``can set null value`` =
+        let ``can set null value`` () =
             let initView = ResourceDictionary.create []
             let target = VirtualDom.create initView
 
