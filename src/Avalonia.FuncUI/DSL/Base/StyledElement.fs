@@ -269,6 +269,31 @@ module StyledElement =
 
             AttrBuilder<'t>.CreateContentSingle(name, ValueSome getter, ValueSome setter,singleContent)
 
+        /// <summary>
+        /// Create subscription from `StyledElement.GetResourceObservable`.
+        /// </summary>
+        /// <remarks>
+        /// - Observation result is wrapped in `option` type: `None` for `null` or `AvaloniaProperty.UnsetValue`, `Some value` otherwise.
+        /// </remarks>
+        static member onResourceObservable<'t when 't :> StyledElement>(key: obj, func: obj option -> unit, ?subPatchOptions) : IAttr<'t> =
+            let name = $"{typeof<'t>.Name}.ResourceObservable.{key}"
+
+            let factory: SubscriptionFactory<obj option> =
+                fun (control, func, token) ->
+                    let callback (v: obj) =
+                        match v with
+                        | null -> None
+                        | v when v = AvaloniaProperty.UnsetValue -> None
+                        | _ -> Some v
+                        |> func
+
+                    let subscription =
+                        (control :?> 't).GetResourceObservable(key).Subscribe(callback)
+
+                    token.Register(fun () -> subscription.Dispose()) |> ignore
+            
+            AttrBuilder<'t>.CreateSubscription<obj option>(name, factory, func, ?subPatchOptions = subPatchOptions)
+
         // Attached properties related to text input
         
         static member contentType<'t when 't :> StyledElement>(value) : IAttr<'t> =

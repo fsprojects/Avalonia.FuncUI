@@ -11,7 +11,7 @@ module StyledElementTests =
 
     module StyledElement =
         // create function here for tests
-        let create (attrs: IAttr<StyledElement> list): IView<StyledElement> =
+        let create (attrs: IAttr<StyledElement> list) : IView<StyledElement> =
             ViewBuilder.Create<StyledElement>(attrs)
 
     let twoAttrs<'x, 't> (attr: 'x -> IAttr<'t>) a b =
@@ -214,3 +214,39 @@ module StyledElementTests =
             VirtualDom.update target initView updatedView
 
             Assert.Equal(42, assertResource "key2")
+
+    module ``onResourceObservable`` =
+
+        [<Fact>]
+        let ``observes resource changes with multiple types`` () =
+            let mutable observedValue: obj option = Some(box "no value changed.")
+            let callback v = observedValue <- v
+
+            let key = "testKey"
+
+            let mutable currentView =
+                StyledElement.create [ StyledElement.onResourceObservable (key, callback) ]
+
+            let target = VirtualDom.create currentView
+
+            Assert.Equal(None, observedValue)
+
+            let updateValueAndAssert value =
+                let value = box value
+
+                let updatedView =
+                    StyledElement.create
+                        [ StyledElement.onResourceObservable (key, callback)
+                          StyledElement.resources (
+                              ResourceDictionary.create [ ResourceDictionary.keyValue (key, value) ]
+                          ) ]
+
+                VirtualDom.update target currentView updatedView
+
+                Assert.Equal(Some value, observedValue)
+
+                currentView <- updatedView
+
+            updateValueAndAssert "Hello, World!"
+            updateValueAndAssert 12345
+            updateValueAndAssert [ 1; 2; 3; 4; 5 ]
