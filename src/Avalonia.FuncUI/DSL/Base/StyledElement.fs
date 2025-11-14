@@ -258,7 +258,17 @@ module StyledElement =
             let factory = fun () -> ResourceDictionary() :> IResourceDictionary
             
             AttrBuilder<'t>.CreateProperty<IResourceDictionary>("Resources", value, ValueSome getter, ValueSome setter, ValueNone, factory)
-            
+        
+        static member resources<'t when 't :> StyledElement>(view: IView) : IAttr<'t> =
+            let name = "ResourcesProperty"
+            let singleContent = Some view
+            let getter: ('t -> obj) = fun control -> control.Resources :> obj
+            let setter: ('t * obj -> unit) =
+                fun (control, value) ->
+                    control.Resources <- value :?> IResourceDictionary
+
+            AttrBuilder<'t>.CreateContentSingle(name, ValueSome getter, ValueSome setter,singleContent)
+
         // Attached properties related to text input
         
         static member contentType<'t when 't :> StyledElement>(value) : IAttr<'t> =

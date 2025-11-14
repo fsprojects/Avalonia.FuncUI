@@ -5,100 +5,9 @@ open Avalonia.Controls
 open global.Xunit
 
 module ResourceDictionaryTests =
-    open Avalonia.FuncUI.VirtualDom
     open Avalonia.FuncUI.DSL
-    open Avalonia.FuncUI.Types
-    open Avalonia.FuncUI.VirtualDom
-
-    module private Headless =
-        open System
-        open System.Threading
-        open System.Threading.Tasks
-        open Avalonia.Headless
-
-        let useSession () =
-            typeof<Application> |> HeadlessUnitTestSession.StartNew
-
-        let dispatch fn =
-            use session = useSession ()
-            let action = Action fn
-            session.Dispatch(action, CancellationToken.None)
-
-        let dispatchAsync fn =
-            use session = useSession ()
-            let action = Func<Task>(fun () -> fn)
-            session.Dispatch(action, CancellationToken.None)
-
-    module private VirtualDom =
-        open Avalonia.FuncUI.Builder
-
-        let create<'t when 't :> AvaloniaObject> (view: IView<'t>) : 't = VirtualDom.createObject view :?> 't
-
-        let update<'t when 't :> AvaloniaObject> (target: 't) (last: IView<'t>) (next: IView<'t>) : unit =
-            let diff = Differ.diff (last, next)
-            Patcher.patch (target, diff)
-
-    module private Assert =
-        open Avalonia.Styling
-
-        let containsThemeKey (dict: ResourceDictionary) (theme: ThemeVariant) (key: obj) =
-            let isFound, value = dict.TryGetResource(key, theme)
-            Assert.True(isFound, $"ResourceDictionary does not contain expected key: {key} for theme: {theme}.")
-            value
-
-        let containsKey (dict: ResourceDictionary) (key: obj) =
-            let isFound, value = dict.TryGetResource(key, null)
-            Assert.True(isFound, $"ResourceDictionary does not contain expected key: {key}.")
-            value
-
-        let notContainsThemeKey (dict: ResourceDictionary) (theme: ThemeVariant) (key: obj) =
-            let isFound, value = dict.TryGetResource(key, theme)
-
-            Assert.False(
-                isFound,
-                $"ResourceDictionary unexpectedly contains key: {key} for theme: {theme}. Found value: {value}"
-            )
-
-        let notContainsKey (dict: ResourceDictionary) (key: obj) =
-            let isFound, value = dict.TryGetResource(key, null)
-            Assert.False(isFound, $"ResourceDictionary unexpectedly contains key: {key}. Found value: {value}")
-
-        let containsThemeKeyAndValueEqualWith
-            (dict: ResourceDictionary)
-            (theme: ThemeVariant)
-            (key: 'k)
-            (expectedValue: 'v)
-            (converter: obj -> 'v)
-            =
-            let actualValue = containsThemeKey dict theme key
-            let expectedValue = box expectedValue
-
-            Assert.Equal(expectedValue, converter actualValue)
-
-        let containsThemeKeyAndValueEqual
-            (dict: ResourceDictionary)
-            (theme: ThemeVariant)
-            (key: 'k)
-            (expectedValue: 'v)
-            =
-            containsThemeKeyAndValueEqualWith dict theme key expectedValue (fun o -> o :?> 'v)
-
-        let containsKeyAndValueEqualWith
-            (dict: ResourceDictionary)
-            (key: 'k)
-            (expectedValue: 'v)
-            (converter: obj -> 'v)
-            =
-            let actualValue = containsKey dict key
-            let expectedValue = box expectedValue
-
-            Assert.Equal(expectedValue, converter actualValue)
-
-        let containsKeyAndValueEqual (dict: ResourceDictionary) (key: 'k) (expectedValue: 'v) =
-            containsKeyAndValueEqualWith dict key expectedValue (fun o -> o :?> 'v)
 
     module ``keyValue`` =
-
 
         [<Fact>]
         let ``can set`` () =
@@ -108,19 +17,19 @@ module ResourceDictionaryTests =
             let key = "myKey"
             let value = "myValue"
 
-            Assert.notContainsKey target key
+            Assert.ResourceDictionary.notContainsKey target key
 
             let updatedView =
                 ResourceDictionary.create [ ResourceDictionary.keyValue (key, value) ]
 
             VirtualDom.update target initView updatedView
 
-            Assert.containsKeyAndValueEqual target key value
+            Assert.ResourceDictionary.containsKeyAndValueEqual target key value
 
             let revertedView = ResourceDictionary.create []
             VirtualDom.update target updatedView revertedView
 
-            Assert.notContainsKey target key
+            Assert.ResourceDictionary.notContainsKey target key
 
         [<Fact>]
         let ``can set null value`` () =
@@ -129,16 +38,16 @@ module ResourceDictionaryTests =
 
             let key = "myKey"
             let value = null
-            Assert.notContainsKey target key
+            Assert.ResourceDictionary.notContainsKey target key
 
             let updatedView =
                 ResourceDictionary.create [ ResourceDictionary.keyValue (key, value = value) ]
 
             VirtualDom.update target initView updatedView
-            Assert.containsKeyAndValueEqual target key value
+            Assert.ResourceDictionary.containsKeyAndValueEqual target key value
 
             VirtualDom.update target updatedView initView
-            Assert.notContainsKey target key
+            Assert.ResourceDictionary.notContainsKey target key
 
 
         [<Fact>]
@@ -155,7 +64,7 @@ module ResourceDictionaryTests =
             let initView = createView initialValue
             let target = VirtualDom.create initView
 
-            Assert.containsKeyAndValueEqual target key initialValue
+            Assert.ResourceDictionary.containsKeyAndValueEqual target key initialValue
 
             List.fold
                 (fun lastView acc ->
@@ -163,12 +72,12 @@ module ResourceDictionaryTests =
                     | Choice1Of2(nextValue: obj) ->
                         let updatedView = createView nextValue
                         VirtualDom.update target lastView updatedView
-                        Assert.containsKeyAndValueEqual target key nextValue
+                        Assert.ResourceDictionary.containsKeyAndValueEqual target key nextValue
                         updatedView
                     | Choice2Of2(nextValue, expected, converter) ->
                         let updatedView = createViewWithIView nextValue
                         VirtualDom.update target lastView updatedView
-                        Assert.containsKeyAndValueEqualWith target key expected converter
+                        Assert.ResourceDictionary.containsKeyAndValueEqualWith target key expected converter
                         updatedView)
                 initView
                 [ Choice1Of2 42
@@ -192,15 +101,15 @@ module ResourceDictionaryTests =
 
             let target = VirtualDom.create initView
 
-            Assert.containsKeyAndValueEqual target initialKey value
+            Assert.ResourceDictionary.containsKeyAndValueEqual target initialKey value
 
             let updatedView =
                 ResourceDictionary.create [ ResourceDictionary.keyValue (updatedKey, value) ]
 
             VirtualDom.update target initView updatedView
 
-            Assert.notContainsKey target initialKey
-            Assert.containsKeyAndValueEqual target updatedKey value
+            Assert.ResourceDictionary.notContainsKey target initialKey
+            Assert.ResourceDictionary.containsKeyAndValueEqual target updatedKey value
 
 
         [<Fact>]
@@ -219,8 +128,8 @@ module ResourceDictionaryTests =
 
             let target = VirtualDom.create initView
 
-            Assert.containsKeyAndValueEqual target key1 value1
-            Assert.containsKeyAndValueEqual target key2 value2
+            Assert.ResourceDictionary.containsKeyAndValueEqual target key1 value1
+            Assert.ResourceDictionary.containsKeyAndValueEqual target key2 value2
 
             let updatedView =
                 ResourceDictionary.create
@@ -229,27 +138,27 @@ module ResourceDictionaryTests =
 
             VirtualDom.update target initView updatedView
 
-            Assert.containsKeyAndValueEqual target key1 updatedValue1
-            Assert.containsKeyAndValueEqual target key2 updatedValue2
+            Assert.ResourceDictionary.containsKeyAndValueEqual target key1 updatedValue1
+            Assert.ResourceDictionary.containsKeyAndValueEqual target key2 updatedValue2
 
             let revertedView = ResourceDictionary.create []
             VirtualDom.update target updatedView revertedView
 
-            Assert.notContainsKey target key1
-            Assert.notContainsKey target key2
+            Assert.ResourceDictionary.notContainsKey target key1
+            Assert.ResourceDictionary.notContainsKey target key2
 
         [<Fact>]
         let ``can set with IView`` () =
             let assertResourceTextEquals dict key expectedText =
-                Assert.containsKeyAndValueEqualWith dict key expectedText (fun o -> (o :?> TextBlock).Text)
+                Assert.ResourceDictionary.containsKeyAndValueEqualWith dict key expectedText (fun o ->
+                    (o :?> TextBlock).Text)
 
             let initView = ResourceDictionary.create []
             let target = VirtualDom.create initView
 
             let key = "myKey"
 
-            Assert.notContainsKey target key
-
+            Assert.ResourceDictionary.notContainsKey target key
             let initText = "Hello, World!"
             let valueView = TextBlock.create [ TextBlock.text initText ]
 
@@ -272,7 +181,7 @@ module ResourceDictionaryTests =
             let revertedView = ResourceDictionary.create []
             VirtualDom.update target updatedView revertedView
 
-            Assert.notContainsKey target key
+            Assert.ResourceDictionary.notContainsKey target key
 
         [<Fact>]
         let ``with object creates new instance on update`` () =
@@ -284,13 +193,18 @@ module ResourceDictionaryTests =
 
             let initialView = view ()
             let target = VirtualDom.create initialView
-            let initialTextBlock = Assert.containsKey target key :?> TextBlock
+
+            let initialTextBlock =
+                Assert.ResourceDictionary.containsKey target key :?> TextBlock
+
             Assert.Equal(text, initialTextBlock.Text)
 
             let updatedView = view ()
             VirtualDom.update target initialView updatedView
 
-            let updatedTextBlock = Assert.containsKey target key :?> TextBlock
+            let updatedTextBlock =
+                Assert.ResourceDictionary.containsKey target key :?> TextBlock
+
             Assert.NotEqual(initialTextBlock, updatedTextBlock)
             Assert.Equal(text, updatedTextBlock.Text)
 
@@ -306,13 +220,18 @@ module ResourceDictionaryTests =
 
             let initialView = view initialText
             let target = VirtualDom.create initialView
-            let initialTextBlock = Assert.containsKey target key :?> TextBlock
+
+            let initialTextBlock =
+                Assert.ResourceDictionary.containsKey target key :?> TextBlock
+
             Assert.Equal(initialText, initialTextBlock.Text)
 
             let updatedView = view updatedText
             VirtualDom.update target initialView updatedView
 
-            let updatedTextBlock = Assert.containsKey target key :?> TextBlock
+            let updatedTextBlock =
+                Assert.ResourceDictionary.containsKey target key :?> TextBlock
+
             Assert.Equal(initialTextBlock, updatedTextBlock)
             Assert.Equal(updatedText, updatedTextBlock.Text)
 
@@ -336,8 +255,8 @@ module ResourceDictionaryTests =
 
             VirtualDom.update target initView updatedView
 
-            Assert.containsKeyAndValueEqual target "key1" "value1"
-            Assert.containsKeyAndValueEqual target "key2" "value2"
+            Assert.ResourceDictionary.containsKeyAndValueEqual target "key1" "value1"
+            Assert.ResourceDictionary.containsKeyAndValueEqual target "key2" "value2"
 
         [<Fact>]
         let ``TryGetResource should find resource from later merged dictionary`` () =
@@ -357,7 +276,7 @@ module ResourceDictionaryTests =
 
             VirtualDom.update target initView updatedView
 
-            Assert.containsKeyAndValueEqual target sameKey "valueFromDict2"
+            Assert.ResourceDictionary.containsKeyAndValueEqual target sameKey "valueFromDict2"
 
         [<Fact>]
         let ``can add ResourcesInclude to merged dictionaries`` () =
@@ -369,7 +288,10 @@ module ResourceDictionaryTests =
 
                 let assertResources kv =
                     for (key, color) in kv do
-                        let brush = Assert.containsKey target key |> Assert.IsType<SolidColorBrush>
+                        let brush =
+                            Assert.ResourceDictionary.containsKey target key
+                            |> Assert.IsType<SolidColorBrush>
+
                         Assert.Equal(color, brush.Color)
 
                 let include1 =
@@ -426,7 +348,7 @@ module ResourceDictionaryTests =
 
         VirtualDom.update target initView updatedView
 
-        Assert.containsKeyAndValueEqual target key "valueFromMainDict"
+        Assert.ResourceDictionary.containsKeyAndValueEqual target key "valueFromMainDict"
 
     module ``themeDictionariesKeyValue`` =
         open Avalonia.Styling
@@ -450,8 +372,8 @@ module ResourceDictionaryTests =
 
             let target = VirtualDom.create view
 
-            Assert.containsThemeKeyAndValueEqual target ThemeVariant.Dark key darkValue
-            Assert.containsThemeKeyAndValueEqual target ThemeVariant.Light key lightValue
+            Assert.ResourceDictionary.containsThemeKeyAndValueEqual target ThemeVariant.Dark key darkValue
+            Assert.ResourceDictionary.containsThemeKeyAndValueEqual target ThemeVariant.Light key lightValue
 
 
     module ``onResourceObservable`` =
