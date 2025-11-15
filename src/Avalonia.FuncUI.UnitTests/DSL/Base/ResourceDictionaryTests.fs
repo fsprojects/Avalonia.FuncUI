@@ -66,28 +66,29 @@ module ResourceDictionaryTests =
 
             Assert.ResourceDictionary.containsKeyAndValueEqual target key initialValue
 
-            List.fold
-                (fun lastView acc ->
-                    match acc with
-                    | Choice1Of2(nextValue: obj) ->
-                        let updatedView = createView nextValue
-                        VirtualDom.update target lastView updatedView
-                        Assert.ResourceDictionary.containsKeyAndValueEqual target key nextValue
-                        updatedView
-                    | Choice2Of2(nextValue, expected, converter) ->
-                        let updatedView = createViewWithIView nextValue
-                        VirtualDom.update target lastView updatedView
-                        Assert.ResourceDictionary.containsKeyAndValueEqualWith target key expected converter
-                        updatedView)
-                initView
-                [ Choice1Of2 42
-                  Choice1Of2 "a string"
-                  Choice1Of2 null
-                  Choice1Of2 3.14
-                  Choice2Of2(TextBlock.create [ TextBlock.text "Hello" ], "Hello", fun o -> (o :?> TextBlock).Text)
-                  Choice1Of2 true
-                  Choice1Of2(TextBox(Text = "Hello, World!"))
-                  Choice1Of2(ContentControl(Content = Button(Content = "Click Me"))) ]
+            let updateAndAssertObj value currentView =
+                let updatedView = createView value
+                VirtualDom.update target currentView updatedView
+                Assert.ResourceDictionary.containsKeyAndValueEqual target key value
+                updatedView
+            
+            let updateAndAssertIView value expected converter currentView =
+                let updatedView = createViewWithIView value
+                VirtualDom.update target currentView updatedView
+                Assert.ResourceDictionary.containsKeyAndValueEqualWith target key expected converter
+                updatedView
+            
+            initView
+            |> updateAndAssertObj 42
+            |> updateAndAssertObj "a string"
+            |> updateAndAssertIView (Button.create [ Button.content "Click Me" ]) "Click Me" (fun o -> (o :?> Button).Content :?> string)
+            |> updateAndAssertObj null
+            |> updateAndAssertObj 3.14
+            |> updateAndAssertIView (TextBlock.create [ TextBlock.text "Hello" ]) "Hello" (fun o -> (o :?> TextBlock).Text)
+            |> updateAndAssertObj true
+            |> updateAndAssertObj (TextBox(Text = "Hello, World!"))
+            |> updateAndAssertObj (ContentControl(Content = Button(Content = "Click Me")))
+            |> ignore
 
 
         [<Fact>]
