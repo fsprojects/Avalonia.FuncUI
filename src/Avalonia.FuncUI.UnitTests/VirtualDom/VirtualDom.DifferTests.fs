@@ -5,6 +5,7 @@ module DifferTests =
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.VirtualDom
     open Avalonia.Controls
+    open Avalonia.Headless.XUnit
     open Xunit
     open Avalonia.Layout
     open Avalonia.Media
@@ -77,7 +78,7 @@ module DifferTests =
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``Diff Content Single`` () =
         let last =
             Button.create [
@@ -146,7 +147,7 @@ module DifferTests =
         // just to make sure the types are actually comparable
         Assert.True(not (delta <> result))
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``Diff Content Multiple`` () =
         let last =
             StackPanel.create [

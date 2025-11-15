@@ -2,6 +2,7 @@ namespace Avalonia.FuncUI.UnitTests.DSL
 
 open Avalonia
 open Avalonia.Controls
+open Avalonia.Headless.XUnit
 open global.Xunit
 
 module StyledElementTests =
@@ -20,7 +21,7 @@ module StyledElementTests =
     module ``classes`` =
         open Avalonia.FuncUI.VirtualDom
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with string list`` () =
             let valueList () = [ "class1"; "class2" ]
 
@@ -32,7 +33,7 @@ module StyledElementTests =
 
             Assert.Empty stringList
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with same classes instance`` () =
             let classes = Classes()
             classes.Add "class1"
@@ -43,7 +44,7 @@ module StyledElementTests =
 
             Assert.Empty sameClassesInstance
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with different classes instance`` () =
             let classes1 = Classes()
             classes1.Add "class1"
@@ -67,7 +68,7 @@ module StyledElementTests =
             s.Setters.Add(Setter(Control.TagProperty, "foo"))
             s :> IStyle
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with style list has same style instance`` () =
             let style = initStyle ()
 
@@ -82,7 +83,7 @@ module StyledElementTests =
             Assert.Empty styleList
 
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with style list has different style instance`` () =
 
             let style1 = initStyle ()
@@ -102,7 +103,7 @@ module StyledElementTests =
 
             | _ -> Assert.Fail $"Not expected delta\n{styleList}"
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with Styles property has same instance`` () =
             let style = initStyle ()
 
@@ -117,7 +118,7 @@ module StyledElementTests =
 
             Assert.Empty styleList
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with Styles property has different Styles instance has same style instance`` () =
             let style = initStyle ()
 
@@ -134,7 +135,7 @@ module StyledElementTests =
 
             Assert.Empty styleList
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``equality with Styles property has different Styles instance has different style instance`` () =
             let style1 = initStyle ()
             let style2 = initStyle ()
@@ -165,7 +166,7 @@ module StyledElementTests =
             Assert.True isFound
             Assert.IsType<'t>(resValue)
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``con set empty dictionary`` () =
             let initView =
                 StyledElement.create [ StyledElement.resources (ResourceDictionary.create []) ]
@@ -174,7 +175,7 @@ module StyledElementTests =
 
             Assert.False target.Resources.HasResources
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can set dictionary with values`` () =
             let initView =
                 StyledElement.create
@@ -193,7 +194,7 @@ module StyledElementTests =
             Assert.Equal("value1", assertResource "key1")
             Assert.Equal(42, assertResource "key2")
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can update dictionary`` () =
             let initView =
                 StyledElement.create
@@ -217,7 +218,7 @@ module StyledElementTests =
 
     module ``onResourceObservable`` =
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``observes resource changes with multiple types`` () =
             let mutable observedValue: obj option = Some(box "no value changed.")
             let callback v = observedValue <- v

@@ -9,10 +9,11 @@ module ModuleTests =
     open Avalonia.FuncUI.VirtualDom
     open Avalonia.FuncUI.DSL
     open Avalonia.FuncUI
+    open Avalonia.Headless.XUnit
     open Xunit
     open System
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``integration test 1`` () =
         let view =
             StackPanel.create [
@@ -65,7 +66,7 @@ module ModuleTests =
         Assert.Equal(Nullable(true), (stackpanel.Children.[2] :?> CheckBox).IsChecked)
         ()
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``integration test 2`` () =
         let view =
             StackPanel.create [
@@ -147,7 +148,7 @@ module ModuleTests =
         Assert.Equal(Nullable(false), (stackpanel.Children.[2] :?> CheckBox).IsChecked)
         ()
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``integration test 'VirtualDom.updateRoot' (from null to Button to TextBlock)`` () =
         let view : IView =
             Button.create [
@@ -179,7 +180,7 @@ module ModuleTests =
         ()
 
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``integration test 'VirtualDom.updateRoot' (from null to Button to null)`` () =
         let view : IView =
             Button.create [
@@ -202,7 +203,7 @@ module ModuleTests =
         Assert.Equal(null, host.Content)
         ()
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``integration test 'VirtualDom.updateRoot' (reuse/patch button)`` () =
         let view : IView =
             Button.create [

@@ -13,9 +13,10 @@ module PatcherTests =
     open Avalonia.FuncUI.DSL
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.VirtualDom
+    open Avalonia.Headless.XUnit
     open Xunit
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``Patch Properties`` () =
 
         let delta : Delta.ViewDelta =
@@ -45,7 +46,7 @@ module PatcherTests =
         Assert.Equal("some text", control.Text)
         Assert.Equal(14.0, control.FontSize)
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``Patch Styles, Classes or Resources`` () =
         let stylesGetter: AvaloniaObject -> obj = (fun c -> (c :?> StyledElement).Styles :> obj)
         let stylesSetter: AvaloniaObject * obj -> unit =
@@ -112,7 +113,7 @@ module PatcherTests =
         Assert.Equal(0, control.Classes.Count)
         Assert.Equal(0, control.Resources.Count)
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``Patch Content Single`` () =
 
         let delta : Delta.ViewDelta =
@@ -159,7 +160,7 @@ module PatcherTests =
         Assert.Equal("some text", textblock.Text)
         Assert.Equal(15.0, textblock.FontSize)
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``Patch Content Multiple`` () =
         let delta : Delta.ViewDelta =
             {
@@ -252,7 +253,7 @@ module PatcherTests =
         let button = stackpanel.Children.[2] :?> Button
         Assert.Equal(SolidColorBrush.Parse("green").ToImmutable() :> IBrush, button.Background)
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``Patch Custom Subscription`` () =
         /// Capture list for factory called.
         let factoryCaptures = ResizeArray()

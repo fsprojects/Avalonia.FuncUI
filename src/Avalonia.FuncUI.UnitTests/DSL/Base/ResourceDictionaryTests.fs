@@ -2,6 +2,7 @@ namespace Avalonia.FuncUI.UnitTests.DSL
 
 open Avalonia
 open Avalonia.Controls
+open Avalonia.Headless.XUnit
 open global.Xunit
 
 module ResourceDictionaryTests =
@@ -9,7 +10,7 @@ module ResourceDictionaryTests =
 
     module ``keyValue`` =
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can set`` () =
             let initView = ResourceDictionary.create []
             let target = VirtualDom.create initView
@@ -31,7 +32,7 @@ module ResourceDictionaryTests =
 
             Assert.ResourceDictionary.notContainsKey target key
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can set null value`` () =
             let initView = ResourceDictionary.create []
             let target = VirtualDom.create initView
@@ -50,7 +51,7 @@ module ResourceDictionaryTests =
             Assert.ResourceDictionary.notContainsKey target key
 
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can update value`` () =
             let key = "myKey"
 
@@ -71,27 +72,29 @@ module ResourceDictionaryTests =
                 VirtualDom.update target currentView updatedView
                 Assert.ResourceDictionary.containsKeyAndValueEqual target key value
                 updatedView
-            
+
             let updateAndAssertIView value expected converter currentView =
                 let updatedView = createViewWithIView value
                 VirtualDom.update target currentView updatedView
                 Assert.ResourceDictionary.containsKeyAndValueEqualWith target key expected converter
                 updatedView
-            
+
             initView
             |> updateAndAssertObj 42
             |> updateAndAssertObj "a string"
-            |> updateAndAssertIView (Button.create [ Button.content "Click Me" ]) "Click Me" (fun o -> (o :?> Button).Content :?> string)
+            |> updateAndAssertIView (Button.create [ Button.content "Click Me" ]) "Click Me" (fun o ->
+                (o :?> Button).Content :?> string)
             |> updateAndAssertObj null
             |> updateAndAssertObj 3.14
-            |> updateAndAssertIView (TextBlock.create [ TextBlock.text "Hello" ]) "Hello" (fun o -> (o :?> TextBlock).Text)
+            |> updateAndAssertIView (TextBlock.create [ TextBlock.text "Hello" ]) "Hello" (fun o ->
+                (o :?> TextBlock).Text)
             |> updateAndAssertObj true
             |> updateAndAssertObj (TextBox(Text = "Hello, World!"))
             |> updateAndAssertObj (ContentControl(Content = Button(Content = "Click Me")))
             |> ignore
 
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can update key`` () =
             let initialKey = "initialKey"
             let updatedKey = "updatedKey"
@@ -113,7 +116,7 @@ module ResourceDictionaryTests =
             Assert.ResourceDictionary.containsKeyAndValueEqual target updatedKey value
 
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can set multiple`` () =
             let key1 = "key1"
             let value1 = "value1"
@@ -148,7 +151,7 @@ module ResourceDictionaryTests =
             Assert.ResourceDictionary.notContainsKey target key1
             Assert.ResourceDictionary.notContainsKey target key2
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can set with IView`` () =
             let assertResourceTextEquals dict key expectedText =
                 Assert.ResourceDictionary.containsKeyAndValueEqualWith dict key expectedText (fun o ->
@@ -184,7 +187,7 @@ module ResourceDictionaryTests =
 
             Assert.ResourceDictionary.notContainsKey target key
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``with object creates new instance on update`` () =
             let key = "myKey"
             let text = "TextBlock Text"
@@ -209,7 +212,7 @@ module ResourceDictionaryTests =
             Assert.NotEqual(initialTextBlock, updatedTextBlock)
             Assert.Equal(text, updatedTextBlock.Text)
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``with IView reuses existing instance when patchable`` () =
             let key = "myKey"
             let initialText = "Initial Text"
@@ -240,7 +243,7 @@ module ResourceDictionaryTests =
         open System
         open Avalonia.Media
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can set merged dictionaries`` () =
             let initView = ResourceDictionary.create []
             let target = VirtualDom.create initView
@@ -259,7 +262,7 @@ module ResourceDictionaryTests =
             Assert.ResourceDictionary.containsKeyAndValueEqual target "key1" "value1"
             Assert.ResourceDictionary.containsKeyAndValueEqual target "key2" "value2"
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``TryGetResource should find resource from later merged dictionary`` () =
             let initView = ResourceDictionary.create []
             let target = VirtualDom.create initView
@@ -279,62 +282,61 @@ module ResourceDictionaryTests =
 
             Assert.ResourceDictionary.containsKeyAndValueEqual target sameKey "valueFromDict2"
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can add ResourcesInclude to merged dictionaries`` () =
-            Headless.dispatch (fun () ->
-                let initView = ResourceDictionary.create []
-                let target = VirtualDom.create initView
-                let host = StyledElement()
-                host.Resources <- target
+            let initView = ResourceDictionary.create []
+            let target = VirtualDom.create initView
+            let host = StyledElement()
+            host.Resources <- target
 
-                let assertResources kv =
-                    for (key, color) in kv do
-                        let brush =
-                            Assert.ResourceDictionary.containsKey target key
-                            |> Assert.IsType<SolidColorBrush>
+            let assertResources kv =
+                for (key, color) in kv do
+                    let brush =
+                        Assert.ResourceDictionary.containsKey target key
+                        |> Assert.IsType<SolidColorBrush>
 
-                        Assert.Equal(color, brush.Color)
+                    Assert.Equal(color, brush.Color)
 
-                let include1 =
-                    ResourceInclude.fromUri (new Uri("avares://Avalonia.FuncUI.UnitTests/Assets/TestResources1.xaml"))
+            let include1 =
+                ResourceInclude.fromUri (new Uri("avares://Avalonia.FuncUI.UnitTests/Assets/TestResources1.xaml"))
 
-                let updatedView =
-                    ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include1 ] ]
+            let updatedView =
+                ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include1 ] ]
 
-                VirtualDom.update target initView updatedView
+            VirtualDom.update target initView updatedView
 
-                let include1KeyValues =
-                    [ ("BrushA", Colors.Red); ("BrushB", Colors.Green); ("BrushC", Colors.Blue) ]
+            let include1KeyValues =
+                [ ("BrushA", Colors.Red); ("BrushB", Colors.Green); ("BrushC", Colors.Blue) ]
 
-                // Assert initial resources from include1
-                assertResources include1KeyValues
+            // Assert initial resources from include1
+            assertResources include1KeyValues
 
-                let include2 =
-                    ResourceInclude.fromString "avares://Avalonia.FuncUI.UnitTests/Assets/TestResources2.xaml"
+            let include2 =
+                ResourceInclude.fromString "avares://Avalonia.FuncUI.UnitTests/Assets/TestResources2.xaml"
 
-                // Add another ResourceInclude
-                let updatedView2 =
-                    ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include1; include2 ] ]
+            // Add another ResourceInclude
+            let updatedView2 =
+                ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include1; include2 ] ]
 
-                VirtualDom.update target updatedView updatedView2
+            VirtualDom.update target updatedView updatedView2
 
-                let include2KeyValues =
-                    [ ("BrushA", Colors.White); ("BrushB", Colors.Black); ("BrushC", Colors.Gray) ]
+            let include2KeyValues =
+                [ ("BrushA", Colors.White); ("BrushB", Colors.Black); ("BrushC", Colors.Gray) ]
 
-                // Now the values should come from include2
-                assertResources include2KeyValues
+            // Now the values should come from include2
+            assertResources include2KeyValues
 
-                // Switch the order of includes
-                let updatedView3 =
-                    ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include2; include1 ] ]
+            // Switch the order of includes
+            let updatedView3 =
+                ResourceDictionary.create [ ResourceDictionary.mergedDictionaries [ include2; include1 ] ]
 
-                VirtualDom.update target updatedView2 updatedView3
+            VirtualDom.update target updatedView2 updatedView3
 
-                // Now the values should come from include1 again
-                assertResources include1KeyValues)
+            // Now the values should come from include1 again
+            assertResources include1KeyValues
 
 
-    [<Fact>]
+    [<AvaloniaFact>]
     let ``TryGetResource should find itself before merged dictionaries`` () =
         let initView = ResourceDictionary.create []
         let target = VirtualDom.create initView
@@ -354,7 +356,7 @@ module ResourceDictionaryTests =
     module ``themeDictionariesKeyValue`` =
         open Avalonia.Styling
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``can set theme dictionaries key value`` () =
             let key = "themeKey"
             let darkValue = "darkValue"
@@ -380,7 +382,7 @@ module ResourceDictionaryTests =
     module ``onResourceObservable`` =
         open Avalonia.Styling
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``when Owner is not set, callback is not fired`` () =
             let key = "observableKey"
             let value = "observableValue"
@@ -400,7 +402,7 @@ module ResourceDictionaryTests =
             Assert.False(isCalled, "Callback was unexpectedly called when Owner is not set.")
 
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``when Owner is set, callback is fired`` () =
             let target = ResourceDictionary()
             let host = StyledElement()
@@ -443,7 +445,7 @@ module ResourceDictionaryTests =
             // Notification after update
             Assert.Equal(Some(box updatedValue), observedValue)
 
-        [<Fact>]
+        [<AvaloniaFact>]
         let ``defaultThemeVariant tests`` () =
             let target = ResourceDictionary()
             let host = StyledElement()

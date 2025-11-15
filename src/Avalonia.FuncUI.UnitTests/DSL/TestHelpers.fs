@@ -1,25 +1,16 @@
 namespace Avalonia.FuncUI.UnitTests.DSL
 
 open Avalonia
+open Avalonia.Headless
 
-module Headless =
-    open System
-    open System.Threading
-    open System.Threading.Tasks
-    open Avalonia.Headless
+type TestAppBuilder() =
+    static member BuildAvaloniaApp() =
+        AppBuilder.Configure<Application>()
+            .UseHeadless(new AvaloniaHeadlessPlatformOptions())
 
-    let useSession () =
-        typeof<Application> |> HeadlessUnitTestSession.StartNew
-
-    let dispatch fn =
-        use session = useSession ()
-        let action = Action fn
-        session.Dispatch(action, CancellationToken.None)
-
-    let dispatchAsync fn =
-        use session = useSession ()
-        let action = Func<Task>(fun () -> fn)
-        session.Dispatch(action, CancellationToken.None)
+// Registers the test application builder for all tests in this assembly
+[<assembly: AvaloniaTestApplication(typeof<TestAppBuilder>)>]
+do ()
 
 module VirtualDom =
     open Avalonia.FuncUI.VirtualDom
