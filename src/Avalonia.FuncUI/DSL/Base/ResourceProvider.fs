@@ -13,7 +13,7 @@ module ResourceProvider =
         /// Create subscription from `'view.GetResourceObservable`.
         /// </summary>
         /// <remarks>
-        /// - If `'view.Orner` is `null`, `func` is never called.
+        /// - If `'view.Owner` is `null`, `func` is never called.
         /// - Observation result is wrapped in `option` type: `None` for `null` or `AvaloniaProperty.UnsetValue`, `Some value` otherwise.
         /// </remarks>
         static member onResourceObservable<'t when 't :> ResourceProvider>

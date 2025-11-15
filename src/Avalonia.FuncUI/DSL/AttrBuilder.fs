@@ -277,17 +277,18 @@ type AttrBuilder<'view>() =
         }
         attr :> IAttr<'view>
 
-     /// <summary>
+    /// <summary>
     /// Create a Routed Event Subscription Attribute for a Routed Event
     /// </summary>
+    /// <exception cref="System.InvalidOperationException">Thrown if `'view` is not derived from Interactive.</exception>
     static member CreateSubscription<'arg when 'arg :> RoutedEventArgs>
       ( routedEvent: RoutedEvent<'arg>,
         func: 'arg -> unit,
         ?subPatchOptions: SubPatchOptions ) : IAttr<'view> =
-        let isValiedViewType =
+        let isValidViewType =
           typeof<'view>.IsAssignableTo(typeof<Interactive>)
-        if not isValiedViewType then
-          invalidOp $"{nameof<'view>} con't create RoutedEvent subscriptions. It must be derived from Interactive."
+        if not isValidViewType then
+          invalidOp $"{nameof<'view>} can't create RoutedEvent subscriptions. It must be derived from Interactive."
 
         // subscribe to avalonia property
         // TODO: extract to helpers module
