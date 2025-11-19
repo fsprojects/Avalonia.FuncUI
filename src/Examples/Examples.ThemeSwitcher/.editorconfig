@@ -1,0 +1,10 @@
+[*.fs]
+fsharp_space_before_uppercase_invocation = true
+
+# Write a comment by starting the line with a '#'
+[*.{fs,fsx,fsi}]
+fsharp_bar_before_discriminated_union_declaration = true
+
+# Apply specific settings for a targeted subfolder
+[Main.fs]
+fsharp_experimental_elmish = true
