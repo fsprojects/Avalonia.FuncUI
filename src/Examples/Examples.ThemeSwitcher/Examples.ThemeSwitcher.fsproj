@@ -8,9 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Content Include="Assets\Icons\icon.ico">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+        <AvaloniaResource Include="Assets\Icons\icon.ico" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Compile Include="DSL/ColorView.fs" />
         <Compile Include="DSL/ColorPicker.fs" />
         <Compile Include="Main.fs" />
@@ -21,7 +22,7 @@
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.1.0" />
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.1.1" />
         <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
 
