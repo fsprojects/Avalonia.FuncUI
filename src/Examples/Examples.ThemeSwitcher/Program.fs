@@ -27,6 +27,10 @@ type App() =
         this.Styles.Load "avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml"
         this.RequestedThemeVariant <- Styling.ThemeVariant.Dark
 
+#if DEBUG
+        this.AttachDeveloperTools() |> ignore
+#endif
+
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
