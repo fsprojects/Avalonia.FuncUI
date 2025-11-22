@@ -28,18 +28,18 @@ type App() =
     inherit Application()
 
     override this.Initialize() =
-        this.Styles.Add (FluentTheme ())
+        this.Styles.Add(FluentTheme())
         this.Styles.Load "avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml"
         this.RequestedThemeVariant <- Styling.ThemeVariant.Dark
 
 #if DEBUG
-        this.AttachDeveloperTools () |> ignore
+        this.AttachDeveloperTools() |> ignore
 #endif
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with
         | :? IClassicDesktopStyleApplicationLifetime as desktopLifetime ->
-            let mainWindow = MainWindow ()
+            let mainWindow = MainWindow()
             desktopLifetime.MainWindow <- mainWindow
         | _ -> ()
 
@@ -47,4 +47,4 @@ module Program =
 
     [<EntryPoint>]
     let main (args: string[]) =
-        AppBuilder.Configure<App>().UsePlatformDetect().UseSkia().StartWithClassicDesktopLifetime (args)
+        AppBuilder.Configure<App>().UsePlatformDetect().UseSkia().StartWithClassicDesktopLifetime(args)

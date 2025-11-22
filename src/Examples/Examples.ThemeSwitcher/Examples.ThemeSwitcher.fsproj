@@ -22,7 +22,10 @@
         <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
         <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
-        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.1.1" />
+        <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.1.1" >
+          <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+          <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </PackageReference>
         <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
     </ItemGroup>
 
