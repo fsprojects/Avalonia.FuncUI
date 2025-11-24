@@ -27,6 +27,10 @@
           <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
         </PackageReference>
         <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+        <ProjectReference Include="..\..\Avalonia.FuncUI.Diagnostics\Avalonia.FuncUI.Diagnostics.fsproj" >
+          <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+          <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+        </ProjectReference>
     </ItemGroup>
 
 </Project>
