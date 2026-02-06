@@ -1,7 +1,8 @@
 <Project>
   <PropertyGroup>
-    <AvaloniaVersion>12.0.999-cibuild0059182-alpha</AvaloniaVersion>
-	  <AvaloniaDataGridVersion>11.3.7</AvaloniaDataGridVersion>
+    <AvaloniaVersion>12.0.999-cibuild0061987-alpha</AvaloniaVersion>
+	  <AvaloniaDataGridVersion>12.0.999-cibuild0061786-alpha</AvaloniaDataGridVersion>
+    <AvaloniaDiagnosticsVersion>12.0.999-cibuild0061243-alpha</AvaloniaDiagnosticsVersion>
     <FuncUIVersion>1.5.2</FuncUIVersion>
   </PropertyGroup>
 	

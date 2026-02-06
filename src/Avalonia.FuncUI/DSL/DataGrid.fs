@@ -105,8 +105,8 @@ module DataGridBoundColumn =
 
     type DataGridBoundColumn with
 
-        static member binding<'t when 't :> DataGridBoundColumn>(binding: IBinding) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBinding>(
+        static member binding<'t when 't :> DataGridBoundColumn>(binding: BindingBase) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<BindingBase>(
                 name = "Binding",
                 value = binding,
                 getter = ValueSome (fun column -> column.Binding),
@@ -114,8 +114,8 @@ module DataGridBoundColumn =
                 comparer = ValueNone
             )
             
-        static member clipboardContentBinding<'t when 't :> DataGridBoundColumn>(binding: IBinding) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBinding>(
+        static member clipboardContentBinding<'t when 't :> DataGridBoundColumn>(binding: BindingBase) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<BindingBase>(
                 name = "ClipboardContentBinding",
                 value = binding,
                 getter = ValueSome (fun column -> column.ClipboardContentBinding),

@@ -20,8 +20,8 @@ module ItemsControl =
 
     type ItemsControl with
 
-        static member displayMemberBinding<'t when 't :> ItemsControl>(value: IBinding) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBinding>(ItemsControl.DisplayMemberBindingProperty, value, ValueNone)
+        static member displayMemberBinding<'t when 't :> ItemsControl>(value: BindingBase) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<BindingBase>(ItemsControl.DisplayMemberBindingProperty, value, ValueNone)
 
         static member viewItems<'t when 't :> ItemsControl>(views: IView list) : IAttr<'t> =
             let getter : ('t -> obj) = (fun control -> control.Items :> obj)
