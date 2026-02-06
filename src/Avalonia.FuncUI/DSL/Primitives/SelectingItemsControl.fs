@@ -30,8 +30,8 @@ module SelectingItemsControl =
         static member selectedItem<'t when 't :> SelectingItemsControl>(item: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(SelectingItemsControl.SelectedItemProperty, item, ValueNone)
 
-        static member selectedValueBinding<'t when 't  :> SelectingItemsControl>(binding: IBinding) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<IBinding>(SelectingItemsControl.SelectedValueBindingProperty, binding, ValueNone)
+        static member selectedValueBinding<'t when 't  :> SelectingItemsControl>(binding: BindingBase) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<BindingBase>(SelectingItemsControl.SelectedValueBindingProperty, binding, ValueNone)
 
         static member selectedValue<'t when 't :> SelectingItemsControl>(value: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(SelectingItemsControl.SelectedValueProperty, value, ValueNone)

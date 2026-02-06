@@ -52,7 +52,7 @@ type Views =
                         DataGrid.columns [
                             DataGridTextColumn.create [
                                 DataGridTextColumn.header "Name"
-                                DataGridTextColumn.binding (Binding ("Name", BindingMode.TwoWay))
+                                DataGridTextColumn.binding (ReflectionBinding ("Name", Mode = BindingMode.TwoWay))
                                 DataGridTextColumn.width (DataGridLength(2, DataGridLengthUnitType.Star))
                             ]
                             DataGridTemplateColumn.create [
@@ -68,7 +68,7 @@ type Views =
                                     DataTemplateView<_>.create (fun (data: Person) ->
                                         TextBox.create [
                                             TextBox.init (fun t ->
-                                                t.Bind(TextBox.TextProperty, Binding("Name", BindingMode.TwoWay)) |> ignore
+                                                t.Bind(TextBox.TextProperty, ReflectionBinding("Name", Mode = BindingMode.TwoWay)) |> ignore
                                             )
                                         ]
                                     )
