@@ -137,8 +137,9 @@ let view () = Component (fun ctx ->
                         StackPanel.children [
                             CheckBox.create [
                                 CheckBox.isChecked model.UCase
-                                CheckBox.onChecked (fun _ -> dispatch (SetUCase true))
-                                CheckBox.onUnchecked (fun _ -> dispatch (SetUCase false))
+                                CheckBox.onIsCheckedChanged(
+                                    (fun _ -> dispatch (SetUCase (not model.UCase))),
+                                    SubPatchOptions.OnChangeOf model)
                             ]
                             TextBlock.create [
                                 TextBlock.verticalAlignment VerticalAlignment.Center

@@ -96,16 +96,12 @@ module DatePickerDemo =
                                     CheckBox.content "DayVisible"
                                     CheckBox.isChecked state.isDayVisible
                                     
-                                    CheckBox.onChecked(fun _ ->
-                                        true 
+                                    CheckBox.onIsCheckedChanged((fun _ ->
+                                        state.isDayVisible 
+                                        |> not
                                         |> Msg.SetIsDayVisible
-                                        |> dispatch
-                                    )
-
-                                    CheckBox.onUnchecked(fun _ ->
-                                        false
-                                        |> Msg.SetIsDayVisible
-                                        |> dispatch
+                                        |> dispatch),
+                                        SubPatchOptions.OnChangeOf state
                                     )
                                 ]
 
@@ -134,16 +130,12 @@ module DatePickerDemo =
                                     CheckBox.content "MonthVisible"
                                     CheckBox.isChecked state.isMonthVisible
                                     
-                                    CheckBox.onChecked(fun _ ->
-                                        true 
+                                    CheckBox.onIsCheckedChanged((fun _ ->
+                                        state.isMonthVisible
+                                        |> not
                                         |> Msg.SetIsMonthVisible
-                                        |> dispatch
-                                    )
-
-                                    CheckBox.onUnchecked(fun _ ->
-                                        false
-                                        |> Msg.SetIsMonthVisible
-                                        |> dispatch
+                                        |> dispatch),
+                                        SubPatchOptions.OnChangeOf state
                                     )
                                 ]
 
@@ -174,16 +166,12 @@ module DatePickerDemo =
                                     CheckBox.content "YearVisible"
                                     CheckBox.isChecked state.isYearVisible
                                     
-                                    CheckBox.onChecked(fun _ ->
-                                        true 
+                                    CheckBox.onIsCheckedChanged((fun _ ->
+                                        state.isYearVisible 
+                                        |> not
                                         |> Msg.SetIsYearVisible
-                                        |> dispatch
-                                    )
-
-                                    CheckBox.onUnchecked(fun _ ->
-                                        false
-                                        |> Msg.SetIsYearVisible
-                                        |> dispatch
+                                        |> dispatch),
+                                        SubPatchOptions.OnChangeOf state
                                     )
                                 ]
 

@@ -262,8 +262,7 @@ module Views =
                             CheckBox.dock Dock.Left
                             CheckBox.isChecked item.Current.Done
                             CheckBox.horizontalAlignment HorizontalAlignment.Stretch
-                            CheckBox.onChecked (fun _ -> item.Set { item.Current with Done = true })
-                            CheckBox.onUnchecked (fun _ -> item.Set { item.Current with Done = false })
+                            CheckBox.onIsCheckedChanged  (fun _ -> item.Set { item.Current with Done = not item.Current.Done })
                             CheckBox.content (
                                 TextBlock.create [
                                     TextBlock.fontSize 18.0

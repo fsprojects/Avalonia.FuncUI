@@ -188,8 +188,9 @@ module GridSplitterDemo =
                             ToggleSwitch.onContent "Enabled"
                             ToggleSwitch.offContent "Disabled"
                             ToggleSwitch.isChecked state.customPreview
-                            ToggleSwitch.onChecked (fun _ -> SetCustomPreview true |> dispatch)
-                            ToggleSwitch.onUnchecked (fun _ -> SetCustomPreview false |> dispatch)
+                            ToggleSwitch.onIsCheckedChanged (
+                                (fun _ -> SetCustomPreview (not state.customPreview) |> dispatch),
+                                SubPatchOptions.OnChangeOf state)
                         ]
                     ]
                 ]
