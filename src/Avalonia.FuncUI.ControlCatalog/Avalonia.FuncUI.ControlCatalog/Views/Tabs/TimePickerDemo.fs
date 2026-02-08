@@ -12,19 +12,25 @@ module TimePickerDemo =
       { time: TimeSpan Nullable
         header: string
         minuteIncrement: int
-        clockIdentifier: string }
+        clockIdentifier: string 
+        secondIncrement: int
+        useSeconds: bool }
 
     let init () = 
         { time = Nullable(DateTime.Today.TimeOfDay)
           header = "Header"
           minuteIncrement = 1
-          clockIdentifier = "12HourClock" }
+          clockIdentifier = "12HourClock"
+          secondIncrement = 1 
+          useSeconds = false }
 
     type Msg =
     | SetTime of TimeSpan Nullable
     | SetHeader of string
     | SetMinuteIncrement of int
     | SetClockIdentifier of string
+    | SetSecondIncrement of int
+    | SetUseSeconds of bool
 
     let update (msg: Msg) (state: State) : State =
         match msg with
@@ -32,6 +38,8 @@ module TimePickerDemo =
         | SetHeader header -> { state with header = header }
         | SetMinuteIncrement m -> { state with minuteIncrement = m }
         | SetClockIdentifier ci -> { state with clockIdentifier = ci }
+        | SetSecondIncrement s -> { state with secondIncrement = s }
+        | SetUseSeconds b -> { state with useSeconds = b }
 
     let view (state: State) (dispatch) =
         StackPanel.create [
@@ -44,8 +52,10 @@ module TimePickerDemo =
                 TimePicker.create [
                     TimePicker.clockIdentifier state.clockIdentifier
                     TimePicker.minuteIncrement state.minuteIncrement
+                    TimePicker.secondIncrement state.secondIncrement
 
                     TimePicker.selectedTime state.time
+                    TimePicker.useSeconds state.useSeconds
 
                     TimePicker.onSelectedTimeChanged (
                         Msg.SetTime >> dispatch
@@ -68,6 +78,22 @@ module TimePickerDemo =
                     )
                 ]
                 
+                TextBlock.create [
+                    TextBlock.text "Seconds increment:"
+                ]
+
+                TextBox.create [
+                    TextBox.text (state.secondIncrement |> string)
+                    TextBox.onTextChanged (fun txt ->
+                        match Int32.TryParse txt with
+                        | true, i -> 
+                            i
+                            |> Msg.SetSecondIncrement
+                            |> dispatch
+                        | _ ->()
+                    )
+                ]
+
                 TextBox.create [
                     TextBox.watermark "Header"
                     TextBox.text state.header
@@ -96,6 +122,19 @@ module TimePickerDemo =
                     ComboBox.onSelectedItemChanged(
                         tryUnbox
                         >> Option.iter(Msg.SetClockIdentifier >> dispatch)
+                    )
+                ]
+
+                CheckBox.create [
+                    CheckBox.content "Use Seconds"
+                    CheckBox.isChecked state.useSeconds
+                    
+                    CheckBox.onIsCheckedChanged ((fun args ->
+                        state.useSeconds
+                        |> not 
+                        |> Msg.SetUseSeconds
+                        |> dispatch),
+                        SubPatchOptions.OnChangeOf state
                     )
                 ]
             ]
