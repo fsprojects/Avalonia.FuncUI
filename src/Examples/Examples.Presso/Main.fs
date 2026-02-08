@@ -72,8 +72,11 @@ module Main =
                             for i in [ 250<ml> .. 250<ml> .. 1000<ml> ] do
                                 RadioButton.create [
                                     RadioButton.horizontalAlignment HorizontalAlignment.Stretch
-                                    RadioButton.onChecked (fun _ ->
-                                        state.Set { state.Current with water = i }
+                                    RadioButton.onIsCheckedChanged(fun args ->
+                                        match args.Source with
+                                        | :? RadioButton as selection when selection.IsChecked.GetValueOrDefault() = true ->
+                                            state.Set { state.Current with water = i }
+                                        | _ -> ()
                                     )
                                     RadioButton.content (sprintf "%i ml" i)
                                     RadioButton.classes [ "water" ]
@@ -123,9 +126,13 @@ module Main =
                                     brush
                                 )
                                 RadioButton.horizontalAlignment HorizontalAlignment.Stretch
-                                RadioButton.onChecked (fun _ ->
-                                    state.Set { state.Current with method = BrewingMethod.General }
+                                RadioButton.onIsCheckedChanged(fun args ->
+                                    match args.Source with
+                                    | :? RadioButton as selection when selection.IsChecked.GetValueOrDefault() = true ->
+                                        state.Set { state.Current with method = BrewingMethod.General }
+                                    | _ -> ()
                                 )
+
                                 RadioButton.groupName "brewing_method"
                                 RadioButton.content "General"
                                 RadioButton.classes [ "brewing_method" ]
@@ -138,8 +145,11 @@ module Main =
                                     brush
                                 )
                                 RadioButton.horizontalAlignment HorizontalAlignment.Stretch
-                                RadioButton.onChecked (fun _ ->
-                                    state.Set { state.Current with method = BrewingMethod.ColdBrew }
+                                RadioButton.onIsCheckedChanged(fun args ->
+                                    match args.Source with
+                                    | :? RadioButton as selection when selection.IsChecked.GetValueOrDefault() = true ->
+                                        state.Set { state.Current with method = BrewingMethod.ColdBrew }
+                                    | _ -> ()
                                 )
                                 RadioButton.content "Cold Brew"
                                 RadioButton.groupName "brewing_method"
@@ -153,8 +163,11 @@ module Main =
                                     brush
                                 )
                                 RadioButton.horizontalAlignment HorizontalAlignment.Stretch
-                                RadioButton.onChecked (fun _ ->
-                                    state.Set { state.Current with method = BrewingMethod.FrenchPress }
+                                RadioButton.onIsCheckedChanged(fun args ->
+                                    match args.Source with
+                                    | :? RadioButton as selection when selection.IsChecked.GetValueOrDefault() = true ->
+                                        state.Set { state.Current with method = BrewingMethod.FrenchPress }
+                                    | _ -> ()
                                 )
                                 RadioButton.content "French Press"
                                 RadioButton.groupName "brewing_method"
@@ -168,8 +181,11 @@ module Main =
                                     brush
                                 )
                                 RadioButton.horizontalAlignment HorizontalAlignment.Stretch
-                                RadioButton.onChecked (fun _ ->
-                                    state.Set { state.Current with method = BrewingMethod.PourOver }
+                                RadioButton.onIsCheckedChanged(fun args ->
+                                    match args.Source with
+                                    | :? RadioButton as selection when selection.IsChecked.GetValueOrDefault() = true ->
+                                        state.Set { state.Current with method = BrewingMethod.PourOver }
+                                    | _ -> ()
                                 )
                                 RadioButton.content "Pour Over"
                                 RadioButton.groupName "brewing_method"
@@ -207,8 +223,11 @@ module Main =
                                 UniformGrid.columns 2
                                 UniformGrid.children [
                                     RadioButton.create [
-                                        RadioButton.onChecked (fun _ ->
-                                            state.Set { state.Current with strength = Strength.Regular }
+                                        RadioButton.onIsCheckedChanged(fun args ->
+                                            match args.Source with
+                                            | :? RadioButton as selection when selection.IsChecked.GetValueOrDefault() = true->
+                                                state.Set { state.Current with strength = Strength.Regular }
+                                            | _ -> ()
                                         )
                                         RadioButton.content "Regular"
                                         RadioButton.groupName "strength"
@@ -217,8 +236,11 @@ module Main =
                                         RadioButton.horizontalAlignment HorizontalAlignment.Stretch
                                     ]
                                     RadioButton.create [
-                                        RadioButton.onChecked (fun _ ->
-                                            state.Set { state.Current with strength = Strength.Strong }
+                                        RadioButton.onIsCheckedChanged(fun args ->
+                                            match args.Source with
+                                            | :? RadioButton as selection when selection.IsChecked.GetValueOrDefault() = true ->
+                                                state.Set { state.Current with strength = Strength.Strong }
+                                            | _ -> ()
                                         )
                                         RadioButton.content "Strong"
                                         RadioButton.groupName "strength"
