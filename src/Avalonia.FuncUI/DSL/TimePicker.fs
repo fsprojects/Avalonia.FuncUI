@@ -17,9 +17,15 @@ module TimePicker =
         
         static member minuteIncrement<'t when 't :> TimePicker>(value: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(TimePicker.MinuteIncrementProperty, value, ValueNone)
+
+        static member secondIncrement<'t when 't :> TimePicker>(value: int) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<int>(TimePicker.SecondIncrementProperty, value, ValueNone)
         
         static member selectedTime<'t when 't :> TimePicker>(value: Nullable<TimeSpan>) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<TimeSpan Nullable>(TimePicker.SelectedTimeProperty, value, ValueNone)
         
         static member onSelectedTimeChanged<'t when 't :> TimePicker>(func: Nullable<TimeSpan> -> unit, ?subPatchOptions) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription<TimeSpan Nullable>(TimePicker.SelectedTimeProperty, func, ?subPatchOptions = subPatchOptions)
+
+        static member useSeconds<'t when 't :> TimePicker>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(TimePicker.UseSecondsProperty, value, ValueNone)
