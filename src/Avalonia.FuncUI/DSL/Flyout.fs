@@ -160,6 +160,9 @@ module Flyout =
         static member flyoutPresenterTheme<'t when 't :> Flyout>(theme: ControlTheme) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ControlTheme>(Flyout.FlyoutPresenterThemeProperty, theme, ValueNone)
 
+        static member contentTemplate<'t when 't :> Flyout>(value : IDataTemplate): IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IDataTemplate>(Flyout.ContentTemplateProperty, value, ValueNone)
+
 [<AutoOpen>]
 module MenuFlyout =
     open System.Collections

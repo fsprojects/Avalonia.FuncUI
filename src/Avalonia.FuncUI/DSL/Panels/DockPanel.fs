@@ -17,3 +17,9 @@ module DockPanel =
     type DockPanel with
         static member lastChildFill<'t when 't :> DockPanel>(fill: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(DockPanel.LastChildFillProperty, fill, ValueNone)
+
+        static member horizontalSpacing<'t when 't :> DockPanel>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(DockPanel.HorizontalSpacingProperty, value, ValueNone)
+
+        static member verticalSpacing<'t when 't :> DockPanel>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(DockPanel.VerticalSpacingProperty, value, ValueNone)

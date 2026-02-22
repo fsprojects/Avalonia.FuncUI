@@ -19,3 +19,12 @@ module WrapPanel =
            
         static member orientation<'t when 't :> WrapPanel>(orientation: Orientation) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Orientation>(WrapPanel.OrientationProperty, orientation, ValueNone)
+
+        static member itemsAlignment<'t when 't :> WrapPanel>(alignment: WrapPanelItemsAlignment) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<WrapPanelItemsAlignment>(WrapPanel.ItemsAlignmentProperty, alignment, ValueNone)
+
+        static member itemSpacing<'t when 't :> WrapPanel>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(WrapPanel.ItemSpacingProperty, value, ValueNone)
+
+        static member lineSpacing<'t when 't :> WrapPanel>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(WrapPanel.LineSpacingProperty, value, ValueNone)

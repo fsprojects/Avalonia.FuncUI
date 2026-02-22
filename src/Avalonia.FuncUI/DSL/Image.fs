@@ -6,6 +6,7 @@ module Image =
     open Avalonia.FuncUI.Builder
     open Avalonia.FuncUI.Types
     open Avalonia.Media
+    open Avalonia.Media.Imaging
 
     let create (attrs: IAttr<Image> list): IView<Image> =
         ViewBuilder.Create<Image>(attrs)
@@ -20,3 +21,6 @@ module Image =
         
         static member stretchDirection<'t when 't :> Image>(value: StretchDirection) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<StretchDirection>(Image.StretchDirectionProperty, value, ValueNone)
+
+        static member blendMode<'t when 't :> Image>(value: BitmapBlendingMode) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<BitmapBlendingMode>(Image.BlendModeProperty, value, ValueNone)

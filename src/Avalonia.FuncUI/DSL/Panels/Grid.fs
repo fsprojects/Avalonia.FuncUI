@@ -192,3 +192,15 @@ module Grid =
             rows
             |> List.iter (fun row -> rowDefs.Add(row))
             Grid.rowDefinitions rowDefs
+
+        /// <summary>
+        /// Specifies the spacing between rows.
+        /// </summary>
+        static member rowSpacing<'t when 't :> Grid>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(Grid.RowSpacingProperty, value, ValueNone)
+
+        /// <summary>
+        /// Specifies the spacing between columns.
+        /// </summary>
+        static member columnSpacing<'t when 't :> Grid>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(Grid.ColumnSpacingProperty, value, ValueNone)
