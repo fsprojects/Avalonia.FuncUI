@@ -75,32 +75,25 @@ module SplitViewDemo =
                                 CheckBox.create [
                                     CheckBox.content "IsPaneOpen"
                                     CheckBox.isChecked state.isPaneOpen
-                                    CheckBox.onChecked(fun _ ->
-                                        true
-                                        |> Msg.SetIsPaneOpen
-                                        |> dispatch
-                                    )
 
-                                    CheckBox.onUnchecked(fun _ ->
-                                        false
+                                    CheckBox.onIsCheckedChanged((fun _ ->
+                                        state.isPaneOpen
+                                        |> not
                                         |> Msg.SetIsPaneOpen
-                                        |> dispatch
+                                        |> dispatch),
+                                        SubPatchOptions.OnChangeOf state
                                     )
                                 ]
 
                                 CheckBox.create [
                                     CheckBox.content "UseLightDismissOverlayMode"
                                     CheckBox.isChecked state.useLightDismissOverlayMode
-                                    CheckBox.onChecked(fun _ ->
-                                        true
+                                    CheckBox.onIsCheckedChanged((fun _ ->
+                                        state.useLightDismissOverlayMode
+                                        |> not
                                         |> Msg.SetUseLightDismissOverlayMode
-                                        |> dispatch
-                                    )
-
-                                    CheckBox.onUnchecked(fun _ ->
-                                        false
-                                        |> Msg.SetUseLightDismissOverlayMode
-                                        |> dispatch
+                                        |> dispatch),
+                                        SubPatchOptions.OnChangeOf state
                                     )
                                 ]
 
@@ -110,16 +103,12 @@ module SplitViewDemo =
                                     ToggleSwitch.content "SplitViewPanePlacement"
                                     ToggleSwitch.isChecked (state.panePlacement = SplitViewPanePlacement.Left)
                                     
-                                    ToggleSwitch.onChecked(fun _ ->
-                                        SplitViewPanePlacement.Left
-                                        |> Msg.SetPanePlacement
-                                        |> dispatch
-                                    )
+                                    ToggleSwitch.onIsCheckedChanged((fun _ ->
 
-                                    ToggleSwitch.onUnchecked (fun _ ->
-                                        SplitViewPanePlacement.Right
+                                        if state.panePlacement = SplitViewPanePlacement.Left then SplitViewPanePlacement.Right else SplitViewPanePlacement.Left
                                         |> Msg.SetPanePlacement
-                                        |> dispatch
+                                        |> dispatch),
+                                        SubPatchOptions.OnChangeOf state
                                     )
                                 ]
                             

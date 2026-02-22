@@ -195,12 +195,7 @@ type Views =
                     CheckBox.create [
                         CheckBox.content "Show Heat Map"
                         CheckBox.isChecked showHeatMap.Current
-                        CheckBox.onChecked (fun _args ->
-                            showHeatMap.Set true
-                        )
-                        CheckBox.onUnchecked (fun _args ->
-                            showHeatMap.Set false
-                        )
+                        CheckBox.onIsCheckedChanged(fun _ -> showHeatMap.Set (not showHeatMap.Current))
                         CheckBox.horizontalAlignment HorizontalAlignment.Stretch
                     ]
 

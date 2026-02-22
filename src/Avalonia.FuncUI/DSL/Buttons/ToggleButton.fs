@@ -26,12 +26,15 @@ module ToggleButton =
         
         static member onIsCheckedChanged<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.IsCheckedChangedEvent, func, ?subPatchOptions = subPatchOptions)
-            
+   
+        [<Obsolete "This construct is deprecated. Use IsCheckedChangedEvent instead.">]
         static member onChecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.CheckedEvent, func, ?subPatchOptions = subPatchOptions)
             
+        [<Obsolete "This construct is deprecated. Use IsCheckedChangedEvent instead.">]
         static member onUnchecked<'t when 't :> ToggleButton>(func: RoutedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.UncheckedEvent, func, ?subPatchOptions = subPatchOptions)
 
+        [<Obsolete "This construct is deprecated. Use IsCheckedChangedEvent instead.">]
         static member onIndeterminate<'t when 't :> ToggleButton>(func : RoutedEventArgs -> unit, ?subPatchOptions) : IAttr<'t> =
             AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(ToggleButton.IndeterminateEvent, func, ?subPatchOptions = subPatchOptions)

@@ -144,16 +144,12 @@ module TickBarDemo =
 
                             CheckBox.content "IsDirectionReversed"
                             CheckBox.isChecked state.isDirectionReversed
-                            CheckBox.onChecked(fun _ ->
-                                true
+                            CheckBox.onIsCheckedChanged((fun _ ->
+                                state.isDirectionReversed
+                                |> not
                                 |> Msg.SetIsDirectionReversed
-                                |> dispatch
-                            )
-
-                            CheckBox.onUnchecked(fun _ ->
-                                false
-                                |> Msg.SetIsDirectionReversed
-                                |> dispatch
+                                |> dispatch),
+                                SubPatchOptions.OnChangeOf state
                             )
                         ]
 
@@ -166,16 +162,11 @@ module TickBarDemo =
                             ToggleSwitch.offContent Orientation.Vertical
                             ToggleSwitch.isChecked (state.orientation = Orientation.Horizontal)
                             
-                            ToggleSwitch.onChecked(fun _ ->
-                                Orientation.Horizontal
+                            ToggleSwitch.onIsCheckedChanged((fun _ ->
+                                if state.orientation = Orientation.Horizontal then Orientation.Vertical else Orientation.Horizontal
                                 |> Msg.SetOrientation
-                                |> dispatch
-                            )
-
-                            ToggleSwitch.onUnchecked (fun _ ->
-                                Orientation.Vertical
-                                |> Msg.SetOrientation
-                                |> dispatch
+                                |> dispatch),
+                                SubPatchOptions.OnChangeOf state
                             )
                         ]
 
