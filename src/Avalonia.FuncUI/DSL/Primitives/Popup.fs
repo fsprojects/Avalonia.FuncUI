@@ -110,3 +110,9 @@ module Popup =
 
         static member windowManagerAddShadowHint<'t when 't :> Popup>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(Popup.WindowManagerAddShadowHintProperty, value, ValueNone)
+
+        static member shouldUseOverlayLayer<'t when 't :> Popup>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(Popup.ShouldUseOverlayLayerProperty, value, ValueNone)
+
+        static member isUsingOverlayLayer<'t when 't :> Popup>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(Popup.IsUsingOverlayLayerProperty, value, ValueNone)
