@@ -281,3 +281,6 @@ module StyledElement =
             
         static member lowercase<'t when 't :> StyledElement>(value) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.LowercaseProperty, value, ValueNone)
+
+        static member showSuggestions<'t when 't :> StyledElement>(value) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(Avalonia.Input.TextInput.TextInputOptions.ShowSuggestionsProperty , value, ValueNone)
