@@ -46,12 +46,8 @@ module AutoCompleteBox =
         static member isDropDownOpen<'t when 't :> AutoCompleteBox>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(AutoCompleteBox.IsDropDownOpenProperty, value, ValueNone)
 
-        static member valueMemberBinding<'t when 't :> AutoCompleteBox>(binding: IBinding) : IAttr<'t> =
-            let name = nameof Unchecked.defaultof<'t>.ValueMemberBinding
-            let getter: 't -> IBinding = (fun control -> control.ValueMemberBinding)
-            let setter: 't * IBinding -> unit = (fun (control, value) -> control.ValueMemberBinding <- value)
-
-            AttrBuilder<'t>.CreateProperty<IBinding>(name, binding, ValueSome getter, ValueSome setter, ValueNone)
+        static member valueMemberBinding<'t when 't :> AutoCompleteBox>(binding: BindingBase) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<_>(AutoCompleteBox.ValueMemberBindingProperty, binding, ValueNone)
 
         static member selectedItem<'t when 't :> AutoCompleteBox>(value: obj) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<obj>(AutoCompleteBox.SelectedItemProperty, value, ValueNone)
@@ -167,3 +163,4 @@ module AutoCompleteBox =
 
         static member asyncPopulator<'t when 't :> AutoCompleteBox>(populator: Func<string, CancellationToken, Task<seq<obj>>>) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<_>(AutoCompleteBox.AsyncPopulatorProperty, populator, ValueNone)
+
