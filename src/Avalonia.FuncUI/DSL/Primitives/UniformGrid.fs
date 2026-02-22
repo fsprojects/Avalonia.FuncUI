@@ -28,3 +28,15 @@ module UniformGrid =
         /// </summary>
         static member firstColumn<'t when 't :> UniformGrid>(value: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(UniformGrid.FirstColumnProperty, value, ValueNone)
+
+        /// <summary>
+        /// Specifies the spacing between rows.
+        /// </summary>
+        static member rowSpacing<'t when 't :> UniformGrid>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(UniformGrid.RowSpacingProperty, value, ValueNone)
+
+        /// <summary>
+        /// Specifies the spacing between columns.
+        /// </summary>
+        static member columnSpacing<'t when 't :> UniformGrid>(value: float) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<float>(UniformGrid.ColumnSpacingProperty, value, ValueNone)
