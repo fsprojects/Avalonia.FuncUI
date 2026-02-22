@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [TimePicker](https://docs.avaloniaui.net/docs/controls/timepicker) and [TimePicker API](http://reference.avaloniaui.net/api/Avalonia.Controls/TimePicker/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [TimePicker.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/TimePicker.fs)
+> For Avalonia.FuncUI's DSL properties you can check [TimePicker.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/TimePicker.fs)
 
 The TimePicker control allows the user to pick a time value.
 

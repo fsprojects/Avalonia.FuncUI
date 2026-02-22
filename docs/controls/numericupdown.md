@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [NumericUpDown](https://docs.avaloniaui.net/docs/controls/numericupdown) and [NumericUpDown API](http://reference.avaloniaui.net/api/Avalonia.Controls/NumericUpDown/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [NumericUpDown.fs](../../src/Avalonia.FuncUI.DSL/NumericUpDown.fs)
+> For Avalonia.FuncUI's DSL properties you can check [NumericUpDown.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/NumericUpDown.fs)
 
 The NumericUpDown is an editable numeric input field. The control has a up and down button spinner attached, used to increment and decrement the value in the input field. The value can also be incremented or decremented using the arrow keys or the mouse wheel when the control is selected.
 

@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [ProgressBar](https://docs.avaloniaui.net/docs/controls/progressbar) and [ProgressBar API](http://reference.avaloniaui.net/api/Avalonia.Controls/ProgressBar/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [ProgressBar.fs](../../src/Avalonia.FuncUI.DSL/ProgressBar.fs)
+> For Avalonia.FuncUI's DSL properties you can check [ProgressBar.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/ProgressBar.fs)
 
 The ProgressBar control allow for showing dynamic progress status.
 

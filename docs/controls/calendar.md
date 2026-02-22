@@ -2,7 +2,7 @@
 
 > _Note_: You can check the Avalonia docs for the [Calendar](https://docs.avaloniaui.net/docs/controls/calendar) and [Calendar API](http://reference.avaloniaui.net/api/Avalonia.Controls/Calendar/) if you need more information.
 >
-> For Avalonia.FuncUI's DSL properties you can check [Calendar.fs](https://github.com/AvaloniaCommunity/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI.DSL/Calendar/Calendar.fs)
+> For Avalonia.FuncUI's DSL properties you can check [Calendar.fs](https://github.com/fsprojects/Avalonia.FuncUI/blob/master/src/Avalonia.FuncUI/DSL/Calendar/Calendar.fs)
 
 The Calendar control is a standard Calendar control for users to select date(s) or date ranges.
 
