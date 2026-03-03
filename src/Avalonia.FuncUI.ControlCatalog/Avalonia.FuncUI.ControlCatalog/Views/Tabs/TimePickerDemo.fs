@@ -95,7 +95,7 @@ module TimePickerDemo =
                 ]
 
                 TextBox.create [
-                    TextBox.watermark "Header"
+                    TextBox.placeHolderText "Header"
                     TextBox.text state.header
                     TextBox.onTextChanged (
                         Msg.SetHeader >> dispatch
