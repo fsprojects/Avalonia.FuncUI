@@ -32,13 +32,15 @@ type DataTemplateView<'data, 'childData, 'view when 'view :> IView>
         (this.ViewFunc.GetType(), this.SupportsRecycling).GetHashCode()
 
     interface ITreeDataTemplate with
-        member this.ItemsSelector (item: obj) : InstancedBinding =
+        // member this.ItemsSelector (item: obj) : InstancedBinding =
+        member this.BindChildren(target: AvaloniaObject, targetProperty: AvaloniaProperty, item) : IDisposable =
             match this.ItemsSource with
             | ValueNone -> null
             | ValueSome expression ->
                 match item with
                 | :? 'data as data ->
-                    InstancedBinding.OneTime(expression.Invoke(data))
+                    target.SetCurrentValue(targetProperty, expression.Invoke(data))
+                    { new IDisposable with member this.Dispose() = () }
                 | _ -> null
 
         member this.Match (data: obj) : bool =

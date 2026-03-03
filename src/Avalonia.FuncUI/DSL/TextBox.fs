@@ -142,6 +142,7 @@ module TextBox =
         static member textWrapping<'t when 't :> TextBox>(value: TextWrapping) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<TextWrapping>(TextBox.TextWrappingProperty, value, ValueNone)
 
+        [<System.Obsolete("Use useFloatingPlaceholder instead")>]
         static member useFloatingWatermark<'t when 't :> TextBox>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(TextBox.UseFloatingWatermarkProperty, value, ValueNone)
 
@@ -151,5 +152,12 @@ module TextBox =
         static member verticalContentAlignment<'t when 't :> TextBox>(value: VerticalAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<VerticalAlignment>(TextBox.VerticalContentAlignmentProperty, value, ValueNone)
 
+        [<System.Obsolete("Use placeHolderText instead")>]
         static member watermark<'t when 't :> TextBox>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(TextBox.WatermarkProperty, value, ValueNone)
+
+        static member placeHolderText<'t when 't :> TextBox>(value: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(TextBox.PlaceholderTextProperty, value, ValueNone)
+
+        static member useFloatingPlaceholder<'t when 't :> TextBox>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(TextBox.UseFloatingPlaceholderProperty, value, ValueNone)

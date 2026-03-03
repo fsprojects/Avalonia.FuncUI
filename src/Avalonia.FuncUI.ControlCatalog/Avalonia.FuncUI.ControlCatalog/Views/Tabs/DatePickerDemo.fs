@@ -150,7 +150,7 @@ module DatePickerDemo =
                                     Grid.row 2
                                     Grid.column 1
 
-                                    TextBox.watermark "MonthFormat"
+                                    TextBox.placeHolderText "MonthFormat"
                                     TextBox.isReadOnly (state.isMonthVisible |> not)
                                     
                                     TextBox.text state.monthFormat
@@ -197,7 +197,7 @@ module DatePickerDemo =
                         ]
                         
                         TextBox.create [
-                            TextBox.watermark "Header"
+                            TextBox.placeHolderText "Header"
                             TextBox.text state.header
                             TextBox.onTextChanged (
                                 Msg.SetHeader >> dispatch
