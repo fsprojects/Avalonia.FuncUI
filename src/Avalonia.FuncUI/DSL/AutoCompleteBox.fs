@@ -22,8 +22,12 @@ module AutoCompleteBox =
         static member onSelectionChanged<'t when 't :> AutoCompleteBox>(func: SelectionChangedEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<_>(AutoCompleteBox.SelectionChangedEvent, func, ?subPatchOptions = subPatchOptions)
 
+        [<Obsolete("Use placeHolderText instead")>]
         static member watermark<'t when 't :> AutoCompleteBox>(watermark: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(AutoCompleteBox.WatermarkProperty, watermark, ValueNone)
+
+        static member placeHolderText<'t when 't :> AutoCompleteBox>(value: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(AutoCompleteBox.PlaceholderTextProperty, value, ValueNone)
 
         static member minimumPrefixLength<'t when 't :> AutoCompleteBox>(length: int) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<int>(AutoCompleteBox.MinimumPrefixLengthProperty, length, ValueNone)
