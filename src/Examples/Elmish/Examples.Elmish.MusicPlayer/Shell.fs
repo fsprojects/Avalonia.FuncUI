@@ -193,7 +193,7 @@ module Shell =
             base.Height <- 600.0
             base.MinWidth <- 526.0
             base.MinHeight <- 526.0
-            this.SystemDecorations <- SystemDecorations.Full
+            this.WindowDecorations <- WindowDecorations.Full
             
 
             //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
