@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="$(AvaloniaDataGridVersion)" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,11 +65,8 @@
     <Compile Include="DSL\Base\TextPresenter.fs" />
     <Compile Include="DSL\Base\Animatable.fs" />
     <Compile Include="DSL\Base\RenderOptions.fs" />
-    <Compile Include="DSL\Primitives\LightDismissOverlayLayer.fs" />
-    <Compile Include="DSL\Primitives\VisualLayerManager.fs" />
     <Compile Include="DSL\Primitives\AdornerLayer.fs" />
     <Compile Include="DSL\Primitives\OverlayLayer.fs" />
-    <Compile Include="DSL\Primitives\ChromeOverlayLayer.fs" />
     <Compile Include="DSL\Primitives\TemplatedControl.fs" />
     <Compile Include="DSL\Primitives\HeaderedContentControl.fs" />
     <Compile Include="DSL\Primitives\HeaderedSelectingItemsControl.fs" />
@@ -126,7 +123,6 @@
     <Compile Include="DSL\Buttons\ToggleSwitch.fs" />
     <Compile Include="DSL\Buttons\CheckBox.fs" />
     <Compile Include="DSL\Buttons\HyperlinkButton.fs" />
-    <Compile Include="DSL\Remote\RemoteWidget.fs" />
     <Compile Include="DSL\RepeatButton.fs" />
     <Compile Include="DSL\DatePicker.fs" />
     <Compile Include="DSL\TimePicker.fs" />
