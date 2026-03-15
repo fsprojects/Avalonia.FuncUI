@@ -24,7 +24,7 @@ module TextBoxDemo =
             StackPanel.spacing 10.0
             StackPanel.children [
                 TextBox.create [
-                  TextBox.watermark state.watermark
+                  TextBox.placeHolderText state.watermark
                   TextBox.horizontalAlignment HorizontalAlignment.Stretch
                 ]
 

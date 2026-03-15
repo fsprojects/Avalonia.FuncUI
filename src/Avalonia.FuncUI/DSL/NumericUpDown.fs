@@ -93,8 +93,12 @@ module NumericUpDown =
         static member onValueChanged<'t when 't :> NumericUpDown>(func: System.Nullable<decimal> -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<System.Nullable<decimal>>(NumericUpDown.ValueProperty, func, ?subPatchOptions = subPatchOptions)
 
+        [<System.Obsolete("Use placeHolderText instead")>]
         static member watermark<'t when 't :> NumericUpDown>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(NumericUpDown.WatermarkProperty, value, ValueNone)
+
+        static member placeHolderText<'t when 't :> NumericUpDown>(value: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(NumericUpDown.PlaceholderTextProperty, value, ValueNone)
 
         static member horizontalContentAlignment<'t when 't :> NumericUpDown>(value: HorizontalAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<HorizontalAlignment>(NumericUpDown.HorizontalContentAlignmentProperty, value, ValueNone)

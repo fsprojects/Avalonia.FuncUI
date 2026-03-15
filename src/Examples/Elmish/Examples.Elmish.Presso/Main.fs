@@ -1,8 +1,5 @@
 namespace Examples.Presso
 
-open Avalonia.Controls.Shapes
-open Avalonia.Media
-
 module Main =
     open Avalonia.Controls
     open Avalonia.Controls.Primitives

@@ -6,6 +6,7 @@ open Avalonia
 open Avalonia.Controls
 open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Types
+open Avalonia.Input.Platform
 open Avalonia.Layout
 open Avalonia.Media
 

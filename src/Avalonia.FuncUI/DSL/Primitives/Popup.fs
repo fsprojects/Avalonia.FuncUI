@@ -88,11 +88,6 @@ module Popup =
 
         static member placementRect<'t when 't :> Popup>(value: Rect option) : IAttr<'t> =
             value |> Option.toNullable |> Popup.placementRect
-
-        [<Obsolete "use 'placement' instead">]
-        static member placementMode<'t when 't :> Popup>(value: PlacementMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<PlacementMode>(Popup.PlacementModeProperty, value, ValueNone)
-
         static member placementTarget<'t when 't :> Popup>(value: Control) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<Control>(Popup.PlacementTargetProperty, value, ValueNone)
 

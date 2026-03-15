@@ -80,21 +80,6 @@ module Flyout =
 
         static member overlayInputPassThroughElement<'t when 't :> PopupFlyoutBase>(value: IInputElement) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<IInputElement>(PopupFlyoutBase.OverlayInputPassThroughElementProperty, value, ValueNone)
-        
-        static member onPopupHostChanged<'t when 't :> PopupFlyoutBase>(func: IPopupHost voption -> unit, ?subPatchOptions) : IAttr<'t> =
-            let name = (nameof Unchecked.defaultof<IPopupHostProvider>.add_PopupHostChanged).Substring(4)
-            let factory: AvaloniaObject * (IPopupHost voption -> unit) * CancellationToken -> unit = 
-                (fun (control, func, token) ->
-                    let control = (control :?> 't) :> IPopupHostProvider
-                    let hander (host:IPopupHost) =
-                        match host with
-                        | null -> func ValueNone
-                        | host -> func (ValueSome host)
-
-                    control.add_PopupHostChanged hander
-                    token.Register(fun () -> control.remove_PopupHostChanged hander) |> ignore)
-            
-            AttrBuilder<'t>.CreateSubscription(name, factory, func, ?subPatchOptions = subPatchOptions)
 
         static member onOpening<'t when 't :> PopupFlyoutBase>(func: 't -> unit, ?subPatchOptions) : IAttr<'t> =
             let name = nameof Unchecked.defaultof<'t>.Opening

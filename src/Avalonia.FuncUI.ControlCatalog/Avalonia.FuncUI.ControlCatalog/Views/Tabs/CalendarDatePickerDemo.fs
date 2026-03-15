@@ -53,7 +53,7 @@ module CalendarDatePickerDemo =
                   CalendarDatePicker.selectedDateFormat state.selectedFormat
                   if state.customFormat.Length > 0 then 
                    CalendarDatePicker.customDateFormatString state.customFormat
-                  CalendarDatePicker.watermark state.watermark
+                  CalendarDatePicker.placeHolderText state.watermark
                   CalendarDatePicker.horizontalAlignment HorizontalAlignment.Stretch
                 ]
 

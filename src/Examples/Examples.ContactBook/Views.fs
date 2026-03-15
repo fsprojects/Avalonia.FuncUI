@@ -75,7 +75,7 @@ type Views =
 
                     TextBox.create [
                         TextBox.dock Dock.Top
-                        TextBox.watermark "search.."
+                        TextBox.placeHolderText "search.."
                         TextBox.text (Option.defaultValue String.Empty filter.Current)
                         TextBox.onTextChanged (fun text ->
                             if Some text <> filter.Current then
@@ -89,7 +89,7 @@ type Views =
 
                     TextBox.create [
                         TextBox.dock Dock.Top
-                        TextBox.watermark "search deferred.."
+                        TextBox.placeHolderText "search deferred.."
                         TextBox.text (Option.defaultValue String.Empty filterDeferred.Current)
                         TextBox.onTextChanged (fun text ->
                             if Some text <> filterDeferred.Current then
@@ -142,8 +142,8 @@ type Views =
 
                     TextBox.create [
                         TextBox.dock Dock.Top
-                        TextBox.watermark "Full Name"
-                        TextBox.useFloatingWatermark true
+                        TextBox.placeHolderText "Full Name"
+                        TextBox.useFloatingPlaceholder true
                         TextBox.text contact.Current.FullName
                         TextBox.onTextChanged (fun text ->
                             contact.Set { contact.Current with FullName = text }
@@ -152,8 +152,8 @@ type Views =
 
                     TextBox.create [
                         TextBox.dock Dock.Top
-                        TextBox.watermark "Mail"
-                        TextBox.useFloatingWatermark true
+                        TextBox.placeHolderText "Mail"
+                        TextBox.useFloatingPlaceholder true
                         TextBox.text contact.Current.Mail
                         TextBox.onTextChanged (fun text ->
                             contact.Set { contact.Current with Mail = text }
@@ -162,8 +162,8 @@ type Views =
 
                     TextBox.create [
                         TextBox.dock Dock.Top
-                        TextBox.watermark "Phone"
-                        TextBox.useFloatingWatermark true
+                        TextBox.placeHolderText "Phone"
+                        TextBox.useFloatingPlaceholder true
                         TextBox.text contact.Current.Phone
                         TextBox.onTextChanged (fun text ->
                             contact.Set { contact.Current with Phone = text }

@@ -9,6 +9,7 @@ module Control =
     open Avalonia.FuncUI
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
+    open Avalonia.Input
 
     let create (attrs: IAttr<Control> list): IView<Control> =
         ViewBuilder.Create<Control>(attrs)
