@@ -266,3 +266,6 @@ src/docs/_public
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# BenchmarkDotNet artifacts
+src/Avalonia.FuncUI.Benchmarks/BenchmarkDotNet.Artifacts/**
