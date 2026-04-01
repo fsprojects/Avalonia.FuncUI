@@ -31,6 +31,8 @@ FuncUI mostly consists of:
 
 - 📚 [Documentation](https://funcui.avaloniaui.net/)
 
+- 📖 [Control Catalog (Samples of available controls)](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog.Desktop)
+
 - 📓 [Examples](https://github.com/fsprojects/Avalonia.FuncUI/tree/master/src/Examples)
 
 ## Contributing
