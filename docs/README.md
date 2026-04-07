@@ -19,8 +19,8 @@ Create a new F# console application targeting .net 8 or higher.&#x20;
 Run the following commands in your project directory:
 
 ```bash
-dotnet add package Avalonia.Desktop --version 11.3.0
-dotnet add package Avalonia.Themes.Fluent --version 11.3.0
+dotnet add package Avalonia.Desktop --version 12.0.0
+dotnet add package Avalonia.Themes.Fluent --version 12.0.0
 dotnet add package Avalonia.FuncUI --version 1.6.0
 ```
 {% endtab %}
@@ -29,8 +29,8 @@ dotnet add package Avalonia.FuncUI --version 1.6.0
 Paste the following package references to your fsproject file:
 
 ```html
-<PackageReference Include="Avalonia.Desktop" Version="11.3.0" />
-<PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.0" />
+<PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
+<PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
 <PackageReference Include="Avalonia.FuncUI" Version="1.6.0" />
 ```
 {% endtab %}

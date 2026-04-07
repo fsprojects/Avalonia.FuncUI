@@ -199,9 +199,7 @@ module Shell =
             //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
             //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
             let player = PlayerLib.getEmptyPlayer
-#if DEBUG
-            this.AttachDevTools(KeyGesture(Key.F12))
-#endif
+
             Program.mkProgram init (update this player) view
             |> Program.withHost this
             |> Program.withSubscription (Subs.registerSubscriptions player)

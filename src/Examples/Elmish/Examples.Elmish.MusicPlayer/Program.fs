@@ -28,4 +28,7 @@ module Program =
             .Configure<App>()
             .UsePlatformDetect()
             .UseSkia()
+#if DEBUG
+            .WithDeveloperTools()
+#endif
             .StartWithClassicDesktopLifetime(args)
