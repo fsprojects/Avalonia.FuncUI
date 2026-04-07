@@ -7,6 +7,8 @@ module View =
     open Avalonia.FuncUI.DSL
 
     // Select Rectangle Demo
+    //
+    // This demo illustrates basic canvas interactivity with the "Tapped" Pointer event.
 
     let rectangleSelectView id =
         Component.create(id, fun ctx ->
@@ -43,6 +45,12 @@ module View =
         )
 
     // Drag Rectangle Demo
+    //
+    // This demo illustrates a less trivial kind of canvas interactivity with more Pointer events.
+    // It demonstrates two important constructs:
+    //
+    // * SubPatchOptions to make sure stale data isn't stuck in event handlers' captured variables.
+    // * ctx.control to retrieve the current control for Avalonia's PointerEventArgs
 
     type RectData = {
         x: float
@@ -92,6 +100,8 @@ module View =
                             Rectangle.fill rectColor
                             Rectangle.onPointerPressed (
                                 func = (fun args ->
+                                    // PointerEventArgs.GetPosition expects a control.
+                                    // Notice how we retrieve it with ctx.control!
                                     let pointerPos = args.GetPosition ctx.control
                                     let newDragState = Dragging {
                                         draggedRectIndex = rectIndex;
@@ -100,9 +110,17 @@ module View =
                                     }
                                     dragState.Set newDragState
                                 ),
+                                // Since the event handler captures rectData, it needs
+                                // to be updated on render to avoid stale data being
+                                // stuck in it.
+                                //
+                                // This line configures the update of the handler
+                                // function when rectData changes.
                                 subPatchOptions = SubPatchOptions.OnChangeOf rectData
                             )
                             Rectangle.onPointerMoved (fun args ->
+                                // PointerEventArgs.GetPosition expects a control.
+                                // Notice how we retrieve it with ctx.control!
                                 let pointerPos = args.GetPosition ctx.control
                                 match dragState.Current with
                                 | Dragging dragData ->
