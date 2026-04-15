@@ -27,12 +27,12 @@ module DragDropDemo =
         | Dropped of string
 
     let doDrag (e, dragCount) =
-        async {
+        task {
             use dragData = new DataTransfer()
             dragData.Add(DataTransferItem.Create(DataFormat.Text, $"You have dragged text %d{dragCount} times"))
 
             let! result = Dispatcher.UIThread.InvokeAsync<DragDropEffects>
-                              (fun _ -> DragDrop.DoDragDropAsync(e, dragData, DragDropEffects.Copy)) |> Async.AwaitTask
+                              (fun _ -> DragDrop.DoDragDropAsync(e, dragData, DragDropEffects.Copy))
             return match result with
                    | DragDropEffects.Copy -> "The text was copied"
                    | DragDropEffects.Link -> "The text was linked"
@@ -44,7 +44,7 @@ module DragDropDemo =
         match msg with
         | BeginDrag e ->
             let dragCount = state.dragCount + 1
-            { state with dragCount = dragCount }, Cmd.OfAsync.perform doDrag (e, dragCount) Dragged
+            { state with dragCount = dragCount }, Cmd.OfTask.perform doDrag (e, dragCount) Dragged
         | Dragged s ->
             { state with dragText = s }, Cmd.none
         | Dropped s -> { state with dropText = s }, Cmd.none
