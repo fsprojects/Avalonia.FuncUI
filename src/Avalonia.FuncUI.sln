@@ -78,6 +78,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.SettingFocus", "Ex
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Examples.Experimental.ViewModelComponent.CounterApp", "Examples\Experimental\Examples.Experimental.ViewModelComponent.CounterApp\Examples.Experimental.ViewModelComponent.CounterApp.fsproj", "{C59DF473-A6F9-4D94-9308-9381F36CB71D}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Avalonia.FuncUI.DataGrid", "Avalonia.FuncUI.DataGrid\Avalonia.FuncUI.DataGrid.fsproj", "{C3DC5FCF-33FD-49D2-9FB8-E536E38D756A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -192,6 +194,10 @@ Global
 		{C59DF473-A6F9-4D94-9308-9381F36CB71D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C59DF473-A6F9-4D94-9308-9381F36CB71D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C59DF473-A6F9-4D94-9308-9381F36CB71D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3DC5FCF-33FD-49D2-9FB8-E536E38D756A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3DC5FCF-33FD-49D2-9FB8-E536E38D756A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3DC5FCF-33FD-49D2-9FB8-E536E38D756A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3DC5FCF-33FD-49D2-9FB8-E536E38D756A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

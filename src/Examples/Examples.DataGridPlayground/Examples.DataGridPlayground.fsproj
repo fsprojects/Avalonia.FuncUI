@@ -11,6 +11,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Avalonia.FuncUI\Avalonia.FuncUI.fsproj" />
+      <ProjectReference Include="..\..\Avalonia.FuncUI.DataGrid\Avalonia.FuncUI.DataGrid.fsproj" />
     </ItemGroup>
 
     <ItemGroup>
