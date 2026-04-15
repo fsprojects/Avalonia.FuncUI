@@ -193,15 +193,13 @@ module Shell =
             base.Height <- 600.0
             base.MinWidth <- 526.0
             base.MinHeight <- 526.0
-            this.SystemDecorations <- SystemDecorations.Full
+            this.WindowDecorations <- WindowDecorations.Full
             
 
             //this.VisualRoot.VisualRoot.Renderer.DrawFps <- true
             //this.VisualRoot.VisualRoot.Renderer.DrawDirtyRects <- true
             let player = PlayerLib.getEmptyPlayer
-#if DEBUG
-            this.AttachDevTools(KeyGesture(Key.F12))
-#endif
+
             Program.mkProgram init (update this player) view
             |> Program.withHost this
             |> Program.withSubscription (Subs.registerSubscriptions player)

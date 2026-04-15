@@ -38,11 +38,11 @@ module InputElement =
 
             AttrBuilder<'t>.CreateProperty<KeyBinding list>(name, value, ValueSome getter, ValueSome setter, ValueSome compare, factory)
 
-        static member onGotFocus<'t when 't :> InputElement>(func: GotFocusEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<GotFocusEventArgs>(InputElement.GotFocusEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onGotFocus<'t when 't :> InputElement>(func: FocusChangedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<FocusChangedEventArgs>(InputElement.GotFocusEvent, func, ?subPatchOptions = subPatchOptions)
             
-        static member onLostFocus<'t when 't :> InputElement>(func: RoutedEventArgs -> unit, ?subPatchOptions) =
-            AttrBuilder<'t>.CreateSubscription<RoutedEventArgs>(InputElement.LostFocusEvent, func, ?subPatchOptions = subPatchOptions)
+        static member onLostFocus<'t when 't :> InputElement>(func: FocusChangedEventArgs -> unit, ?subPatchOptions) =
+            AttrBuilder<'t>.CreateSubscription<FocusChangedEventArgs>(InputElement.LostFocusEvent, func, ?subPatchOptions = subPatchOptions)
             
         static member onKeyDown<'t when 't :> InputElement>(func: KeyEventArgs -> unit, ?subPatchOptions) =
             AttrBuilder<'t>.CreateSubscription<KeyEventArgs>(InputElement.KeyDownEvent, func, ?subPatchOptions = subPatchOptions)

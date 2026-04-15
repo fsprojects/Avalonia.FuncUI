@@ -5,6 +5,7 @@ module CalendarDatePicker =
     open System
     open Avalonia.Controls
     open Avalonia.Layout
+    open Avalonia.Media
     open Avalonia.FuncUI.Types
     open Avalonia.FuncUI.Builder
     
@@ -106,9 +107,11 @@ module CalendarDatePicker =
         static member text<'t when 't :> CalendarDatePicker>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(CalendarDatePicker.TextProperty, value, ValueNone)
 
+        [<Obsolete("Use placeHolderText instead")>]
         static member watermark<'t when 't :> CalendarDatePicker>(value: string) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<string>(CalendarDatePicker.WatermarkProperty, value, ValueNone)
 
+        [<Obsolete("Use useFloatingPlaceholder instead")>]
         static member useFloatingWatermark<'t when 't :> CalendarDatePicker>(value: bool) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<bool>(CalendarDatePicker.UseFloatingWatermarkProperty, value, ValueNone)
 
@@ -117,3 +120,13 @@ module CalendarDatePicker =
 
         static member verticalContentAlignment<'t when 't :> CalendarDatePicker>(value: VerticalAlignment) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<VerticalAlignment>(CalendarDatePicker.VerticalContentAlignmentProperty, value, ValueNone)
+
+        static member placeHolderText<'t when 't :> CalendarDatePicker>(value: string) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<string>(CalendarDatePicker.PlaceholderTextProperty, value, ValueNone)
+
+        static member placeHolderForeground<'t when 't :> CalendarDatePicker>(value: IBrush) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<IBrush>(CalendarDatePicker.PlaceholderForegroundProperty , value, ValueNone)
+
+        static member useFloatingPlaceholder<'t when 't :> CalendarDatePicker>(value: bool) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty<bool>(CalendarDatePicker.UseFloatingPlaceholderProperty, value, ValueNone)
+
