@@ -65,6 +65,7 @@
     <Compile Include="DSL\Base\TextPresenter.fs" />
     <Compile Include="DSL\Base\Animatable.fs" />
     <Compile Include="DSL\Base\RenderOptions.fs" />
+    <Compile Include="DSL\Base\TextOptions.fs" />
     <Compile Include="DSL\Primitives\AdornerLayer.fs" />
     <Compile Include="DSL\Primitives\OverlayLayer.fs" />
     <Compile Include="DSL\Primitives\TemplatedControl.fs" />

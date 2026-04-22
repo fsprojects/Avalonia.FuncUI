@@ -38,15 +38,5 @@ module RenderOptions =
                 comparer = ValueNone
             )
 
-        static member textRenderingMode<'t when 't :> Visual>(mode: TextRenderingMode) : IAttr<'t> =
-            AttrBuilder<'t>.CreateProperty<TextRenderingMode>(
-                name = nameof TextRenderingMode,
-                value = mode,
-                getter = ValueSome RenderOptions.GetTextRenderingMode,
-                setter = ValueSome RenderOptions.SetTextRenderingMode,
-                comparer = ValueNone
-            )
-
-
     type RenderOptions with
         end
