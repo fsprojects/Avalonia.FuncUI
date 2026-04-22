@@ -26,13 +26,13 @@ jobs:
           10.x.x
 
     - name: Install workloads
-      run: dotnet workload restore src/Avalonia.FuncUI.sln
+      run: dotnet workload restore src/Avalonia.FuncUI.slnx
 
     - name: Restore dependencies
-      run: dotnet restore src/Avalonia.FuncUI.sln
+      run: dotnet restore src/Avalonia.FuncUI.slnx
 
     - name: Build
-      run: dotnet build src/Avalonia.FuncUI.sln --no-restore
+      run: dotnet build src/Avalonia.FuncUI.slnx --no-restore
 
     - name: Test
-      run: dotnet test src/Avalonia.FuncUI.sln --no-build --verbosity normal
+      run: dotnet test src/Avalonia.FuncUI.slnx --no-build --verbosity normal

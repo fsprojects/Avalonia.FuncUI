@@ -20,10 +20,10 @@ jobs:
           
       
     - name: install workloads
-      run: dotnet workload restore src/Avalonia.FuncUI.sln
+      run: dotnet workload restore src/Avalonia.FuncUI.slnx
       
     - name: Build & Test
-      run: dotnet test src/Avalonia.FuncUI.sln --verbosity normal
+      run: dotnet test src/Avalonia.FuncUI.slnx --verbosity normal
       
     - name: Build for release
       run: dotnet build src/Avalonia.FuncUI/Avalonia.FuncUI.fsproj -c Release

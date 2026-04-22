@@ -1,0 +1,48 @@
+<Solution>
+  <Folder Name="/ControlCatalog/">
+    <Project Path="Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog.Browser/Avalonia.FuncUI.ControlCatalog.Browser.fsproj" />
+    <Project Path="Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog.Desktop/Avalonia.FuncUI.ControlCatalog.Desktop.fsproj" />
+    <Project Path="Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog.fsproj" />
+  </Folder>
+  <Folder Name="/Examples/">
+    <Project Path="Examples/Examples.ChordParser/Examples.ChordParser.fsproj" />
+    <Project Path="Examples/Examples.ContactBook/Examples.ContactBook.fsproj" />
+    <Project Path="Examples/Examples.CounterApp/Examples.CounterApp.fsproj" />
+    <Project Path="Examples/Examples.DataGridPlayground/Examples.DataGridPlayground.fsproj" />
+    <Project Path="Examples/Examples.DrawingApp/Examples.DrawingApp.fsproj" />
+    <Project Path="Examples/Examples.EnvApp/Examples.EnvApp.fsproj" />
+    <Project Path="Examples/Examples.GeneticAlgorithm/Examples.GeneticAlgorithm.fsproj" />
+    <Project Path="Examples/Examples.InlineText/Examples.InlineText.fsproj" />
+    <Project Path="Examples/Examples.Presso/Examples.Presso.fsproj" />
+    <Project Path="Examples/Examples.SettingFocus/Examples.SettingFocus.fsproj" />
+    <Project Path="Examples/Examples.TodoApp/Examples.TodoApp.fsproj" />
+  </Folder>
+  <Folder Name="/Examples/Elmish/">
+    <Project Path="Examples/Elmish/Examples.Elmish.ClockApp/Examples.Elmish.ClockApp.fsproj" />
+    <Project Path="Examples/Elmish/Examples.Elmish.CounterApp/Examples.Elmish.CounterApp.fsproj" />
+    <Project Path="Examples/Elmish/Examples.Elmish.GameOfLife/Examples.Elmish.GameOfLife.fsproj" />
+    <Project Path="Examples/Elmish/Examples.Elmish.MusicPlayer/Examples.Elmish.MusicPlayer.fsproj" />
+    <Project Path="Examples/Elmish/Examples.Elmish.Presso/Examples.Elmish.Presso.fsproj" />
+    <Project Path="Examples/Elmish/Examples.Elmish.Tetris/Examples.Elmish.Tetris.fsproj" />
+  </Folder>
+  <Folder Name="/Examples/Experimantal/">
+    <Project Path="Examples/Experimental/Examples.Experimental.ViewModelComponent.CounterApp/Examples.Experimental.ViewModelComponent.CounterApp.fsproj" />
+  </Folder>
+  <Folder Name="/Examples/Mobile/">
+    <Project Path="Examples/Examples.Mobile.iOS/Examples.Mobile.iOS.fsproj" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Avalonia.FuncUI.Benchmarks/Avalonia.FuncUI.Benchmarks.fsproj" />
+    <Project Path="Avalonia.FuncUI.UnitTests/Avalonia.FuncUI.UnitTests.fsproj" />
+  </Folder>
+  <Folder Name="/_Solution Items/">
+    <File Path="../.github/workflows/publish.yml" />
+    <File Path="../.github/workflows/pull-requests.yml" />
+    <File Path="../README.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="NuGet.config" />
+  </Folder>
+  <Project Path="Avalonia.FuncUI.Diagnostics/Avalonia.FuncUI.Diagnostics.fsproj" />
+  <Project Path="Avalonia.FuncUI.Elmish/Avalonia.FuncUI.Elmish.fsproj" />
+  <Project Path="Avalonia.FuncUI/Avalonia.FuncUI.fsproj" />
+</Solution>
