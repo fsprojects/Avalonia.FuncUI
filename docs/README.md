@@ -12,7 +12,7 @@ Create a new F# console application targeting .net 8 or higher.&#x20;
 
 ## Step 2: Packages
 
-&#x20;Reference the following packages [Avalonia.Desktop](https://www.nuget.org/packages/Avalonia.Desktop/11.3.0), [Avalonia.Themes.Fluent](https://www.nuget.org/packages/Avalonia.Themes.Fluent/11.3.0) and [Avalonia.FuncUI](https://www.nuget.org/packages/Avalonia.FuncUI/1.6.0).
+&#x20;Reference the following packages [Avalonia.Desktop](https://www.nuget.org/packages/Avalonia.Desktop/12.0.0), [Avalonia.Themes.Fluent](https://www.nuget.org/packages/Avalonia.Themes.Fluent/12.0.0) and [Avalonia.FuncUI](https://www.nuget.org/packages/Avalonia.FuncUI/2.0.0-preview1).
 
 {% tabs %}
 {% tab title="dotnet CLI" %}
@@ -21,7 +21,7 @@ Run the following commands in your project directory:
 ```bash
 dotnet add package Avalonia.Desktop --version 12.0.0
 dotnet add package Avalonia.Themes.Fluent --version 12.0.0
-dotnet add package Avalonia.FuncUI --version 1.6.0
+dotnet add package Avalonia.FuncUI --version 2.0.0-preview1
 ```
 {% endtab %}
 
@@ -31,7 +31,7 @@ Paste the following package references to your fsproject file:
 ```html
 <PackageReference Include="Avalonia.Desktop" Version="12.0.0" />
 <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.0" />
-<PackageReference Include="Avalonia.FuncUI" Version="1.6.0" />
+<PackageReference Include="Avalonia.FuncUI" Version="2.0.0-preview1" />
 ```
 {% endtab %}
 {% endtabs %}
