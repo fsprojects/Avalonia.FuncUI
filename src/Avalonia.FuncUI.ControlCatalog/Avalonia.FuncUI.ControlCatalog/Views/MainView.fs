@@ -65,6 +65,10 @@ module MainView =
                     TabItem.content (ViewBuilder.Create<GridSplitterDemo.Host>([]))
                 ]
                 TabItem.create [
+                    TabItem.header "GroupBox Demo"
+                    TabItem.content (ViewBuilder.Create<GroupBoxDemo.Host>([]))
+                ]
+                TabItem.create [
                     TabItem.header "HyperlinkButton Demo"
                     TabItem.content (ViewBuilder.Create<HyperlinkButtonDemo.Host>([]))
                 ]
