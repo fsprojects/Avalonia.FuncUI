@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <AvaloniaVersion>12.1.0</AvaloniaVersion>
-    <FuncUIVersion>2.0.0-preview2</FuncUIVersion>
+    <FuncUIVersion>2.0.0</FuncUIVersion>
   </PropertyGroup>
 	
   <!-- Common NuGet package properties -->
