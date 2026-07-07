@@ -5,6 +5,7 @@
     <Project Path="Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog/Avalonia.FuncUI.ControlCatalog.fsproj" />
   </Folder>
   <Folder Name="/Examples/">
+    <Project Path="Examples/Examples.Canvas/Examples.Canvas.fsproj" />
     <Project Path="Examples/Examples.ChordParser/Examples.ChordParser.fsproj" />
     <Project Path="Examples/Examples.ContactBook/Examples.ContactBook.fsproj" />
     <Project Path="Examples/Examples.CounterApp/Examples.CounterApp.fsproj" />
