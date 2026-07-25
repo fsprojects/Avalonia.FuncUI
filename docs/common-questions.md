@@ -131,8 +131,8 @@ Component.create ("view", fun ctx ->
             ]
             TextBox.create [
                 TextBox.init textBoxB.Set
-                TextBox.onGotFocus (fun _ -> textBoxAFocus.Set true)
-                TextBox.onLostFocus (fun _ -> textBoxAFocus.Set false)
+                TextBox.onGotFocus (fun _ -> textBoxBFocus.Set true)
+                TextBox.onLostFocus (fun _ -> textBoxBFocus.Set false)
             ]
             StackPanel.create [
                 StackPanel.orientation Orientation.Horizontal
