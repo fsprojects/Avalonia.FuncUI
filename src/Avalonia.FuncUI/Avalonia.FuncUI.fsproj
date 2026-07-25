@@ -146,6 +146,7 @@
     <Compile Include="DSL\NativeControlHost.fs" />
     <Compile Include="DSL\Image.fs" />
     <Compile Include="DSL\ListBox.fs" />
+    <Compile Include="DSL\TableView.fs" />
     <Compile Include="DSL\RangeBase.fs" />
     <Compile Include="DSL\ListBoxItem.fs" />
     <Compile Include="DSL\MenuBase.fs" />

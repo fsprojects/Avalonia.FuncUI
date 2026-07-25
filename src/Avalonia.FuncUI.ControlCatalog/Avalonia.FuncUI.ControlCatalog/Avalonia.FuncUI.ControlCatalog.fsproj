@@ -31,6 +31,7 @@
         <Compile Include="Views\Tabs\AttachedEventDemo.fs" />
         <Compile Include="Views\Tabs\HyperlinkButtonDemo.fs" />
         <Compile Include="Views\Tabs\GroupBoxDemo.fs" />
+        <Compile Include="Views\Tabs\TableViewDemo.fs" />
         <Compile Include="Views\MainView.fs" />
 		<Compile Include="ControlCatalog.fs" />
         <AvaloniaResource Include="**\*.xaml" />
