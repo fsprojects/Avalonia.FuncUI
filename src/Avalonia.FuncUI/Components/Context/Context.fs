@@ -6,7 +6,8 @@ open Avalonia.FuncUI
 open Avalonia.FuncUI.Types
 open Avalonia.Threading
 
-type IComponentContext =
+/// State and effects shared by visual and application components.
+type IStateContext =
 
     /// <summary>
     /// Forces the component to be re-rendered.
@@ -180,6 +181,9 @@ type IComponentContext =
     /// <param name="triggers">list of effect triggers</param>
     abstract useEffect: handler: (unit ->  unit) * triggers: EffectTrigger list -> unit
 
+type IComponentContext =
+    inherit IStateContext
+
     /// <summary>
     /// <para>
     /// Specify attributes for the component.
@@ -209,7 +213,7 @@ type IComponentContext =
     /// </summary>
     abstract control: Avalonia.Controls.Border
 
-type Context (componentControl: Avalonia.Controls.Border) =
+type Context internal (componentControl: Avalonia.Controls.Border option) =
     let disposables = new DisposableBag ()
     let hooks = Dictionary<int, StateHook>()
     let effects = Dictionary<int, EffectHook>()
@@ -228,6 +232,8 @@ type Context (componentControl: Avalonia.Controls.Border) =
         result
 
     let render = Event<unit>()
+
+    new (componentControl: Avalonia.Controls.Border) = new Context(Some componentControl)
 
     member internal this.EffectQueue = effectQueue
 
@@ -260,7 +266,7 @@ type Context (componentControl: Avalonia.Controls.Border) =
                         state.Subscribe (fun _ ->
                             (* render the component when a hook's state changed. *)
                             Dispatcher.UIThread.Post(
-                                action = (fun _ -> (this :> IComponentContext).forceRender()),
+                                action = (fun _ -> (this :> IStateContext).forceRender()),
                                 priority = DispatcherPriority.Background
                             )
                         )
@@ -298,15 +304,12 @@ type Context (componentControl: Avalonia.Controls.Border) =
                         effectQueue.Enqueue effect
         )
 
-    interface IComponentContext with
+    interface IStateContext with
         member this.forceRender () =
             render.Trigger ()
 
         member this.trackDisposable (item: IDisposable) : unit =
             disposables.Add item
-
-        member this.attrs (attrs: IAttr<Avalonia.Controls.Border> list) : unit =
-            componentAttrs <- attrs
 
         member this.useEffect (effect: unit -> IDisposable, triggers: EffectTrigger list) : unit =
             this.useEffectHook (
@@ -371,7 +374,12 @@ type Context (componentControl: Avalonia.Controls.Border) =
                 )
             ) :?> IWritable<'value>
 
-        member this.control = componentControl
+    interface IComponentContext with
+        member this.attrs (attrs: IAttr<Avalonia.Controls.Border> list) : unit =
+            componentAttrs <- attrs
+
+        member this.control =
+            componentControl |> Option.defaultWith (fun () -> invalidOp "Application components have no control.")
 
     interface IDisposable with
         member this.Dispose () =

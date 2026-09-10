@@ -62,7 +62,7 @@ module rec Types =
     [<CustomEquality; NoComparison>]
     type Subscription =
         { Name: string
-          Subscribe: Control  * Delegate -> CancellationTokenSource
+          Subscribe: AvaloniaObject * Delegate -> CancellationTokenSource
           Func: Delegate
           FuncType: Type
           Scope: obj }

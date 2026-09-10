@@ -13,12 +13,36 @@ module internal rec Patcher =
     open Avalonia.FuncUI.Types
     open System.Threading
 
+    let private clearSubscriptions (target: AvaloniaObject) =
+        let subscriptions = ViewMetaData.GetViewSubscriptions target
+        if subscriptions <> null then
+            for subscription in subscriptions.Values do
+                subscription.Cancel()
+                subscription.Dispose()
+            subscriptions.Clear()
+
+    // Native objects have no logical-tree detach notification. Release only objects
+    // owned by native content bindings, not arbitrary user-supplied IDisposable values.
+    let internal releaseNative (value: obj) : unit =
+        match value with
+        | :? TrayIcon as icon ->
+            releaseNative icon.Menu
+            clearSubscriptions icon
+            icon.Dispose()
+        | :? NativeMenu as menu ->
+            for item in menu.Items do releaseNative item
+            clearSubscriptions menu
+        | :? NativeMenuItem as item ->
+            releaseNative item.Menu
+            clearSubscriptions item
+        | _ -> ()
+
     let private shouldPatch (value: obj, viewElement: ViewDelta) =
          value <> null
          && value.GetType() = viewElement.ViewType
          && not viewElement.KeyDidChange
 
-    let private patchSubscription (view: Control, attr: SubscriptionDelta) : unit =
+    let private patchSubscription (view: AvaloniaObject, attr: SubscriptionDelta) : unit =
         let subscriptions =
             match ViewMetaData.GetViewSubscriptions(view) with
             | null ->
@@ -36,6 +60,7 @@ module internal rec Patcher =
 
             let updateFactory = Func<string, CancellationTokenSource, CancellationTokenSource>(fun key old_cts ->
                 old_cts.Cancel()
+                old_cts.Dispose()
                 cts
             )
 
@@ -46,6 +71,7 @@ module internal rec Patcher =
             let hasValue, value = subscriptions.TryGetValue(attr.UniqueName)
             if hasValue then
                 value.Cancel()
+                value.Dispose()
                 subscriptions.TryRemove(attr.UniqueName) |> ignore
 
     let internal patchProperty (view: AvaloniaObject, attr: PropertyDelta) : unit =
@@ -86,8 +112,26 @@ module internal rec Patcher =
     let private patchContentMultiple (view: AvaloniaObject, accessor: Accessor, delta: ViewDelta list) : unit =
         (* often lists only have a get accessor *)
         let patch_IList (collection: IList) : unit =
+            let releaseItem (item: obj) =
+                match (view: AvaloniaObject), item with
+                | (:? Application as app), (:? TrayIcon as icon)
+                    when Object.ReferenceEquals(TrayIcon.GetIcons app, collection) ->
+                    // Avalonia disposes icons when removed from its attached collection.
+                    // Cancel our handlers, but do not dispose the native handle twice.
+                    releaseNative icon.Menu
+                    clearSubscriptions icon
+                | _ -> releaseNative item
+
             if List.isEmpty delta then
-                collection.Clear()
+                match collection with
+                | :? TrayIcons ->
+                    // RemoveAt supplies OldItems even when Clear would emit Reset.
+                    while collection.Count > 0 do
+                        releaseItem collection.[collection.Count - 1]
+                        collection.RemoveAt(collection.Count - 1)
+                | _ ->
+                    for item in collection do releaseItem item
+                    collection.Clear()
             else
                 delta |> List.iteri (fun index viewElement ->
                     // try patch / reuse
@@ -105,6 +149,7 @@ module internal rec Patcher =
                         else
                             // replace
                             let newItem = Patcher.create viewElement
+                            releaseItem item
                             collection.[index] <- newItem
                     else
                         // create
@@ -113,6 +158,7 @@ module internal rec Patcher =
                 )
 
                 while delta.Length < collection.Count do
+                    releaseItem collection.[collection.Count - 1]
                     collection.RemoveAt (collection.Count - 1)
 
         (* read only, so there must be a get accessor *)
@@ -173,9 +219,11 @@ module internal rec Patcher =
                     Patcher.patch(value :?> AvaloniaObject, viewElement)
                 else
                     let createdControl = Patcher.create viewElement
+                    releaseNative value
                     view.SetValue(property, createdControl)
                     |> ignore
             | None ->
+                releaseNative (view.GetValue property)
                 view.ClearValue(property)
 
         let patch_instance (property: PropertyAccessor) =
@@ -192,11 +240,17 @@ module internal rec Patcher =
                     let createdControl = Patcher.create(viewElement)
 
                     match property.Setter with
-                    | ValueSome setter -> setter(view, createdControl)
+                    | ValueSome setter ->
+                        releaseNative value
+                        setter(view, createdControl)
                     | _ -> failwith "Property Accessor needs a setter"
             | None ->
                 match property.Setter with
-                | ValueSome setter -> setter(view, null)
+                | ValueSome setter ->
+                    match property.Getter with
+                    | ValueSome getter -> releaseNative (getter view)
+                    | ValueNone -> ()
+                    setter(view, null)
                 | _ -> failwith "Property Accessor needs a setter"
 
         match accessor with
@@ -216,10 +270,7 @@ module internal rec Patcher =
             | AttrDelta.Property property -> patchProperty (view, property)
             | AttrDelta.Content content -> patchContent (view, content)
             | AttrDelta.Subscription subscription ->
-                match view with
-                | :? Control as control ->
-                    patchSubscription (control, subscription)
-                | _ -> failwith "Only controls can have subscriptions"
+                patchSubscription (view, subscription)
             | AttrDelta.SetupFunction _ ->
                 // setup/init functions are only called on control creation
                 ()
@@ -244,7 +295,7 @@ module internal rec Patcher =
         for attr in viewElement.Attrs do
             match attr with
             | AttrDelta.Content content -> Patcher.patchContent (control, content)
-            | AttrDelta.Subscription s -> Patcher.patchSubscription ((control :?> Control), s)
+            | AttrDelta.Subscription s -> Patcher.patchSubscription (control, s)
             | AttrDelta.Property property -> Patcher.patchProperty (control, property)
             | AttrDelta.SetupFunction setupFunction -> setupFunction.Function(control)
 

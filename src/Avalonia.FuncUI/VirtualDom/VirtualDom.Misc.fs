@@ -9,11 +9,11 @@ open System.Collections.Concurrent
 type ViewMetaData() =
     inherit AvaloniaObject()
 
-    static let viewId = AvaloniaProperty.RegisterAttached<ViewMetaData, Control, Guid>("ViewId")
+    static let viewId = AvaloniaProperty.RegisterAttached<ViewMetaData, AvaloniaObject, Guid>("ViewId")
 
     /// Avalonia automatically adds subscriptions that are setup in XAML to a disposable bag (or something along the lines).
     /// This basically is what FuncUI uses instead to make sure it cancels subscriptions.
-    static let viewSubscriptions = AvaloniaProperty.RegisterAttached<ViewMetaData, Control, ConcurrentDictionary<string, CancellationTokenSource>>("ViewSubscriptions")
+    static let viewSubscriptions = AvaloniaProperty.RegisterAttached<ViewMetaData, AvaloniaObject, ConcurrentDictionary<string, CancellationTokenSource>>("ViewSubscriptions")
 
     static member ViewIdProperty = viewId
 

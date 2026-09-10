@@ -42,6 +42,7 @@
     <Compile Include="Components\Context\Context.fs" />
     <Compile Include="Components\ComponentBase.fs" />
     <Compile Include="Components\Component.fs" />
+    <Compile Include="Components\ApplicationComponent.fs" />
     <Compile Include="Hosts.fs" />
     <Compile Include="DataTemplateView.fs" />
     <Compile Include="Helpers.fs" />
@@ -156,6 +157,8 @@
     <Compile Include="DSL\MenuItem.fs" />
     <Compile Include="DSL\NativeMenuItem.fs" />
     <Compile Include="DSL\TrayIcon.fs" />
+    <Compile Include="DSL\NativeMenuItemSeparator.fs" />
+    <Compile Include="DSL\Application.fs" />
     <Compile Include="DSL\GridSplitter.fs" />
     <Compile Include="DSL\DatePickerPresenter.fs" />
     <Compile Include="DSL\TimePickerPresenter.fs" />

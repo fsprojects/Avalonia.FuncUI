@@ -13,6 +13,16 @@ module TrayIcon =
         ViewBuilder.Create<TrayIcon>(attrs)
      
     type TrayIcon with
+        static member icon<'t when 't :> TrayIcon>(value: WindowIcon) : IAttr<'t> =
+            AttrBuilder<'t>.CreateProperty(TrayIcon.IconProperty, value, ValueNone)
+
+        static member onClicked<'t when 't :> TrayIcon>(func: System.EventArgs -> unit, ?subPatchOptions: SubPatchOptions) : IAttr<'t> =
+            let factory: SubscriptionFactory<System.EventArgs> = fun (target, handler, token) ->
+                let subscription = (target :?> TrayIcon).Clicked.Subscribe handler
+                token.Register(fun () -> subscription.Dispose()) |> ignore
+            let name = nameof Unchecked.defaultof<'t>.Clicked
+            AttrBuilder<'t>.CreateSubscription(name, factory, func, ?subPatchOptions = subPatchOptions)
+
         static member command<'t when 't :> TrayIcon>(command: ICommand) : IAttr<'t> =
             AttrBuilder<'t>.CreateProperty<ICommand>(TrayIcon.CommandProperty, command, ValueNone)
 

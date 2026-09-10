@@ -287,9 +287,9 @@ type AttrBuilder<'view>() =
 
         // subscribe to avalonia property
         // TODO: extract to helpers module
-        let subscribeFunc (control: Control, _handler: 'h) =
+        let subscribeFunc (control: AvaloniaObject, _handler: 'h) =
             let cts = new CancellationTokenSource()
-            control
+            (control :?> Control)
                 .GetObservable(routedEvent)
                 .Subscribe(func, cts.Token)
             cts
