@@ -18,6 +18,8 @@ type ComponentBase() as this =
 
     let mutable lastViewElement : IView option = None
     let mutable lastViewAttrs: IAttr list = List.empty
+    let mutable pending = false
+    let mutable disposed = false
 
     member internal this.Context with get () = context
     member internal this.ComponentId with get () = componentId
@@ -51,8 +53,15 @@ type ComponentBase() as this =
         context.EffectQueue.ProcessAfterRender ()
 
     member private this.Update () : unit =
-        Dispatcher.UIThread.Post (fun _ -> this.UIThreadUpdate ())
+        if not disposed && not pending then
+            pending <- true
+            Dispatcher.UIThread.Post (fun _ ->
+                // Allow requests made during rendering to schedule the next pass.
+                pending <- false
+                if not disposed then this.UIThreadUpdate ())
 
+    /// Queue a render. Requests made while a render is pending share that pass.
+    /// AfterRender effects run for actual renders, not for every request.
     member this.ForceRender () =
         this.Update ()
 
@@ -69,6 +78,7 @@ type ComponentBase() as this =
 
     override this.OnDetachedFromLogicalTree (eventArgs: Avalonia.LogicalTree.LogicalTreeAttachmentEventArgs) =
         base.OnDetachedFromLogicalTree eventArgs
+        disposed <- true
         (context :> IDisposable).Dispose ()
 
     override this.StyleKeyOverride = typeof<Border>

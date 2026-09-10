@@ -32,10 +32,11 @@ type internal EffectQueue () =
     let disposables = new DisposableBag()
 
     let mutable queue: EffectHook list = List.empty
+    let mutable disposed = false
 
     member this.Enqueue (effect: EffectHook) =
         lock sync (fun _ ->
-            queue <- effect :: queue
+            if not disposed then queue <- effect :: queue
         )
 
         this.ProcessIncoming ()
@@ -57,7 +58,7 @@ type internal EffectQueue () =
                         |> List.distinctBy (fun effect -> effect.Identity)
 
                     for effect in detached do
-                        disposables.Add (effect.Handler ())
+                        if not disposed then disposables.Add (effect.Handler ())
             ),
             priority = priority
         )
@@ -72,4 +73,7 @@ type internal EffectQueue () =
 
     interface IDisposable with
         member this.Dispose () =
+            lock sync (fun () ->
+                disposed <- true
+                queue <- [])
             (disposables :> IDisposable).Dispose()

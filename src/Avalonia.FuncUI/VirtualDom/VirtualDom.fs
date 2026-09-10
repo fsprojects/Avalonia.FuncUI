@@ -16,7 +16,7 @@ module rec VirtualDom =
         view
         |> createObject :?> Control
 
-    let update (root: Control, last: IView, next: IView) : unit =
+    let update (root: AvaloniaObject, last: IView, next: IView) : unit =
         let delta = Differ.diff(last, next)
         Patcher.patch(root, delta)
 
