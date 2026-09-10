@@ -5,6 +5,7 @@ open System.IO
 open Avalonia
 open Avalonia.Controls
 open Avalonia.Controls.ApplicationLifetimes
+open Avalonia.Markup.Xaml.Styling
 open Avalonia.Styling
 open Avalonia.Themes.Fluent
 open Avalonia.FuncUI
@@ -20,8 +21,12 @@ module Views =
                 StackPanel.margin 24.0
                 StackPanel.spacing 12.0
                 StackPanel.children [
-                    TextBlock.create [ TextBlock.text $"Count: {count.Current}" ]
+                    TextBlock.create [
+                        TextBlock.classes [ "counter" ]
+                        TextBlock.text $"Count: {count.Current}"
+                    ]
                     Button.create [
+                        Button.classes [ "increment" ]
                         Button.content "Increment"
                         Button.onClick (fun _ -> count.Set(count.Current + 1))
                     ]
@@ -97,6 +102,11 @@ type App() =
 
     override this.Initialize() =
         this.Styles.Add(FluentTheme())
+        // Register custom styles once, after the theme, rather than on each render.
+        this.Styles.Add(
+            StyleInclude(
+                Uri("avares://Examples.Application/"),
+                Source = Uri("avares://Examples.Application/AppStyles.axaml")))
 
     override this.OnFrameworkInitializationCompleted() =
         match this.ApplicationLifetime with

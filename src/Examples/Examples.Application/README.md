@@ -6,11 +6,28 @@ Run from the repository root:
 dotnet run --project src/Examples/Examples.Application
 ```
 
-`App.fs` mounts an `ApplicationComponent` on `HostApplication`. Its attributes patch the application created by `AppBuilder`; no XAML or second application instance is involved.
+`App.fs` mounts an `ApplicationComponent` on `HostApplication`. Its attributes patch the application created by `AppBuilder`. The application and views stay in F#, while custom styles live in `AppStyles.axaml`.
 
 The window, application menu and tray menu share a counter through `ctx.usePassed`. The application component also owns a dark-theme setting through `ctx.useState`. Increment from either menu or the window, and watch the menu labels and tray tooltip update. Use the window button to remove and recreate the tray icon.
 
 The native application menu contains a Counter submenu. Each menu description creates its own native objects, since Avalonia menus cannot share a parented instance.
+
+## Custom application styles
+
+`AppStyles.axaml` defines the custom styles in XAML, without an `App.axaml` or code-behind class. Avalonia's default build items include the `.axaml` file automatically. `App.Initialize` loads it through `Avalonia.Markup.Xaml.Styling.StyleInclude` after `FluentTheme`, once for the application's lifetime:
+
+```fsharp
+override this.Initialize() =
+    this.Styles.Add(FluentTheme())
+    this.Styles.Add(
+        StyleInclude(
+            Uri("avares://Examples.Application/"),
+            Source = Uri("avares://Examples.Application/AppStyles.axaml")))
+```
+
+The window applies them through `TextBlock.classes [ "counter" ]` and `Button.classes [ "increment" ]`. The counter gets larger, semibold text, and the increment button gets custom padding and font weight. Theme colors remain unchanged, so the styles work with the application's light/dark toggle.
+
+These styles apply to Avalonia controls in the window, not OS-rendered native menus or tray icons. There is no new application-style DSL; one-time style registration stays separate from the stateful application attributes.
 
 ## Platform behavior
 
