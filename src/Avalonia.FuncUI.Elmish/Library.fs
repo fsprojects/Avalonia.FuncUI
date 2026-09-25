@@ -1,6 +1,8 @@
 ﻿namespace Avalonia.FuncUI.Elmish
 
 open Elmish
+open Avalonia.Controls
+open Avalonia.FuncUI.DSL
 open Avalonia.FuncUI.Hosts
 open Avalonia.FuncUI.Types
 open Avalonia.Threading
@@ -15,8 +17,14 @@ module Program =
             
             if stateDiffers then
                 stateRef.Value <- Some state
-                let view = ((Program.view program) state dispatch)
-                host.Update (Some (view :> IView))
+                let userView = ((Program.view program) state dispatch) :> IView
+
+                match userView with
+                | :? IView<Avalonia.Controls.Window> as windowView ->
+                    host.Update(Some windowView)
+                | controlView ->
+                    let wrappedView = Window.create [ Window.child controlView ]
+                    host.Update(Some wrappedView)
 
         program
         |> Program.withSetState setState

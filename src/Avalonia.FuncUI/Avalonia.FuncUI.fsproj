@@ -180,6 +180,8 @@
     <Compile Include="DSL\SelectableTextBlock.fs" />
     <Compile Include="DSL\PathIcon.fs" />
     <Compile Include="DSL\DragDrop.fs" />
+    <Compile Include="DSL\Window.fs" />
+    <Compile Include="DSL\KeyBinding.fs" />
     <Compile Include="DSL\GroupBox.fs" />
   </ItemGroup>
 

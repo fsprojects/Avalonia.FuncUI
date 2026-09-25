@@ -21,6 +21,7 @@
     <Project Path="Examples/Elmish/Examples.Elmish.ClockApp/Examples.Elmish.ClockApp.fsproj" />
     <Project Path="Examples/Elmish/Examples.Elmish.CounterApp/Examples.Elmish.CounterApp.fsproj" />
     <Project Path="Examples/Elmish/Examples.Elmish.GameOfLife/Examples.Elmish.GameOfLife.fsproj" />
+    <Project Path="Examples/Elmish/Examples.Elmish.HelloWorld/Examples.Elmish.HelloWorld.fsproj" />
     <Project Path="Examples/Elmish/Examples.Elmish.MusicPlayer/Examples.Elmish.MusicPlayer.fsproj" />
     <Project Path="Examples/Elmish/Examples.Elmish.Presso/Examples.Elmish.Presso.fsproj" />
     <Project Path="Examples/Elmish/Examples.Elmish.Tetris/Examples.Elmish.Tetris.fsproj" />
